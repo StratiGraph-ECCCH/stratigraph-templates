@@ -171,6 +171,109 @@ Regole verificate: `term`/`term_list` **devono** avere un `vocabulary`;
 `unit_ref_list` **deve** avere verdetto `edge`; `choice` **deve** avere `options`
 con etichette in tutte le lingue dichiarate.
 
+### 1.6 · `recorded_in` — dove si compila quel campo
+
+```yaml
+- id: descrizione
+  labels: {it: "DESCRIZIONE"}
+  type: longtext
+  recorded_in: trench       # trench | lab | unknown — assente = unknown
+```
+
+Tre valori e nessun quarto:
+
+| valore | vuol dire |
+|---|---|
+| `trench` | si compila **durante l'atto di scavo**, da chi ha le mani nella terra |
+| `lab` | si compila **dopo quell'atto** — laboratorio, ufficio, archivio |
+| `unknown` | **la definizione non l'ha detto** — e questo è il default |
+
+**Perché questi nomi.** `recorded_in` nomina un **luogo e un momento**, non un
+rango: `priority` o `level` avrebbero detto che un campo da laboratorio conta
+meno, e non è vero — è scritto in un altro momento, spesso da un'altra persona.
+E `lab` è l'abbreviazione che la disciplina usa per «non mentre si scava»: non è
+un'affermazione su una stanza, e un numero di catalogo compilato in ufficio è
+`lab` come un'analisi al microscopio.
+
+**Il default è quello che non promette niente.** Un campo senza `recorded_in` è
+`unknown`, e un consumatore **non può** concluderne che sia da trincea. Se il
+formato tace, tace: chi monta una scheda telefono su `unknown` sta inventando
+una decisione che nessuno ha preso. Per la stessa ragione un valore che non è
+uno dei tre è un **errore** e non un ripiego silenzioso su `unknown`: una
+definizione che intendeva `trench` e ha scritto `Trench` sparirebbe dalla
+scheda telefono senza che niente, in nessun posto, dica perché.
+
+#### Come si decide — il criterio, e da dove viene
+
+Il criterio **non è un'opinione di chi scrive questo formato**. Ha due basi, e
+ognuna è citabile riga per riga.
+
+**Base A — le parole che una persona dice sul campo.** In
+`stratigraph-chatbot/app/tools.py` i sette intenti del field assistant sono nati
+dalla **scheda da campo di Elisa Dalla Longa**: un cartoncino in forex con i
+comandi vocali a colori, un artefatto di accessibilità che fa anche da specifica
+dei comandi. Il file lo dice così: *«i comandi che ci sono sopra SONO gli
+intenti, nelle parole che una persona dice con le mani nella terra.»* Quindi:
+**un campo che uno degli intenti nomina — come slot o dentro una frase
+riconosciuta — è un campo da trincea**, e la giustificazione è il numero di riga.
+
+**Base B — le parole dello standard stesso.** Alcune schede lo dicono da sole.
+La US ICCD 2021 ha `RESPONSABILE COMPILAZIONE SUL CAMPO` e `DATA RILEVAMENTO
+SUL CAMPO` e, poche righe sotto, `DATA RIELABORAZIONE` e `RESPONSABILE
+RIELABORAZIONE`: **è lo standard che distingue il campo dalla rielaborazione,
+nelle proprie etichette.** Dove una scheda fa quella distinzione, è la sua a
+valere.
+
+Tutto il resto è `unknown`, e va lasciato `unknown`. Una manciata di campi
+incerti dichiarati vale più di cinquantanove decisi da chi non scava.
+
+**Citare la base è obbligatorio quanto il marcatore.** Un criterio senza la sua
+provenienza diventa arbitrio alla prima discussione, quindi la definizione porta
+la giustificazione in `note` sul campo, o nella `notes` della scheda quando
+riguarda l'insieme.
+
+#### È PER STANDARD, e le due schede di questo repository lo dimostrano
+
+Non esiste un elenco universale di «campi da campo», e il formato non deve
+suggerire che ci sia. La scheda spagnola avrà un altro sottoinsieme, deciso da
+chi la scrive.
+
+Misurato sulle due definizioni qui dentro: **le dieci caselle dei rapporti della
+US ICCD 2021 sono `unknown`** — nessuno dei sette intenti le nomina — mentre le
+**cinque della `ficha ES demo` sono `trench`**, perché l'autore di quella scheda
+(demo) lo ha deciso. Stesso concetto, marcatore diverso, **e la differenza è la
+base, non il concetto**. Se le due schede finissero con lo stesso sottoinsieme,
+il marcatore starebbe descrivendo il nostro pregiudizio invece che lo standard.
+
+#### Le due domande a cui serve rispondere
+
+**Quali campi mostro sul telefono?** `template.recorded_in("trench")`. Il filtro
+sta nel modello e non nel consumatore, perché un consumatore che filtra da sé è
+una seconda lettura della stessa dichiarazione.
+
+**Cosa succede a un campo obbligatorio che non è da trincea?** Una scheda
+compilata in trincea è **incompleta per costruzione**, e non è un errore: è il
+mestiere. `required` e `recorded_in` sono **ortogonali** di proposito, e insieme
+rendono la distinzione calcolabile per campo:
+
+| `required` | `recorded_in` | valore assente vuol dire |
+|---|---|---|
+| `true` | `trench` | **manca qualcosa**: era compilabile sullo scavo |
+| `true` | `lab` | **incompleta per costruzione**, se la scheda è ancora di campo |
+| `true` | `unknown` | **non si può decidere** — ed è la risposta onesta |
+
+La terza riga è il motivo per cui `unknown` deve essere il default e non un
+sinonimo di `lab`: «non lo so» e «si compila dopo» portano un validatore a due
+conclusioni diverse, e una delle due assolverebbe una scheda incompleta senza
+averne il diritto.
+
+**Quello che questo formato NON può dire, e va detto qui:** la definizione rende
+la distinzione calcolabile **per campo**, ma per applicarla serve sapere se
+*quella scheda compilata* è ancora di campo o già rielaborata — e quello è uno
+stato del **record**, non della definizione. Oggi un record (§5) non lo dichiara.
+Un validatore di schede compilate, quando esisterà, avrà bisogno di quella sola
+dichiarazione in più; il resto ce l'ha già.
+
 ---
 
 ## 2 · Il legame al grafo — i verdetti

@@ -76,6 +76,8 @@ template:
     - id: contexto
       labels: {es: "CONTEXTO", it: "CONTESTO"}
       type: identifier
+      recorded_in: trench
+      # decisione dell'AUTORE di questa scheda (demo). Base diversa da quella della US ICCD: qui non c'è nessun intento misurato da citare — gli intenti del field assistant sono in italiano e non parlano di questa scheda — e la ficha è pensata per una squadra che registra con la stazione totale in mano.
       required: true
       graph:
         verdict: identity
@@ -83,6 +85,8 @@ template:
     - id: yacimiento
       labels: {es: "YACIMIENTO", it: "SITO"}
       type: text
+      recorded_in: trench
+      # decisione dell'AUTORE di questa scheda (demo). Base diversa da quella della US ICCD: qui non c'è nessun intento misurato da citare — gli intenti del field assistant sono in italiano e non parlano di questa scheda — e la ficha è pensata per una squadra che registra con la stazione totale in mano.
       required: true
       graph:
         verdict: node
@@ -94,6 +98,8 @@ template:
     - id: definicion
       labels: {es: "DEFINICIÓN", it: "DEFINIZIONE"}
       type: term
+      recorded_in: trench
+      # decisione dell'AUTORE di questa scheda (demo). Base diversa da quella della US ICCD: qui non c'è nessun intento misurato da citare — gli intenti del field assistant sono in italiano e non parlano di questa scheda — e la ficha è pensata per una squadra che registra con la stazione totale in mano. NB: l'analoga DEFINIZIONE della US ICCD 2021 è `unknown`, perché lì la base è un elenco di intenti misurato che non la nomina.
       required: true
       vocabulary:
         scheme: fx-ue-definicion-es
@@ -104,6 +110,8 @@ template:
     - id: descripcion
       labels: {es: "DESCRIPCIÓN", it: "DESCRIZIONE"}
       type: longtext
+      recorded_in: trench
+      # decisione dell'AUTORE di questa scheda (demo). Base diversa da quella della US ICCD: qui non c'è nessun intento misurato da citare — gli intenti del field assistant sono in italiano e non parlano di questa scheda — e la ficha è pensata per una squadra che registra con la stazione totale in mano.
       graph:
         verdict: property
         property_name: description
@@ -111,6 +119,8 @@ template:
     - id: interpretacion
       labels: {es: "INTERPRETACIÓN", it: "INTERPRETAZIONE"}
       type: longtext
+      recorded_in: trench
+      # decisione dell'AUTORE di questa scheda (demo). Base diversa da quella della US ICCD: qui non c'è nessun intento misurato da citare — gli intenti del field assistant sono in italiano e non parlano di questa scheda — e la ficha è pensata per una squadra che registra con la stazione totale in mano.
       provenance:
         enabled: true
         authors: [human, ai]
@@ -121,6 +131,8 @@ template:
     - id: igual_a
       labels: {es: "IGUAL A", it: "UGUALE A"}
       type: unit_ref_list
+      recorded_in: trench
+      # decisione dell'AUTORE di questa scheda (demo). Base diversa da quella della US ICCD: qui non c'è nessun intento misurato da citare — gli intenti del field assistant sono in italiano e non parlano di questa scheda — e la ficha è pensata per una squadra che registra con la stazione totale in mano. Le cinque caselle dei rapporti di questa ficha sono da trincea; le dieci della US ICCD sono `unknown`.
       repeatable: true
       graph:
         verdict: edge
@@ -131,6 +143,8 @@ template:
     - id: cubre
       labels: {es: "CUBRE", it: "COPRE"}
       type: unit_ref_list
+      recorded_in: trench
+      # decisione dell'AUTORE di questa scheda (demo). Base diversa da quella della US ICCD: qui non c'è nessun intento misurato da citare — gli intenti del field assistant sono in italiano e non parlano di questa scheda — e la ficha è pensata per una squadra che registra con la stazione totale in mano.
       repeatable: true
       graph:
         verdict: edge
@@ -141,6 +155,8 @@ template:
     - id: cubierto_por
       labels: {es: "CUBIERTO POR", it: "COPERTO DA"}
       type: unit_ref_list
+      recorded_in: trench
+      # decisione dell'AUTORE di questa scheda (demo). Base diversa da quella della US ICCD: qui non c'è nessun intento misurato da citare — gli intenti del field assistant sono in italiano e non parlano di questa scheda — e la ficha è pensata per una squadra che registra con la stazione totale in mano.
       repeatable: true
       graph:
         verdict: edge
@@ -151,6 +167,8 @@ template:
     - id: corta
       labels: {es: "CORTA", it: "TAGLIA"}
       type: unit_ref_list
+      recorded_in: trench
+      # decisione dell'AUTORE di questa scheda (demo). Base diversa da quella della US ICCD: qui non c'è nessun intento misurato da citare — gli intenti del field assistant sono in italiano e non parlano di questa scheda — e la ficha è pensata per una squadra che registra con la stazione totale in mano.
       repeatable: true
       graph:
         verdict: edge
@@ -161,6 +179,8 @@ template:
     - id: cortado_por
       labels: {es: "CORTADO POR", it: "TAGLIATO DA"}
       type: unit_ref_list
+      recorded_in: trench
+      # decisione dell'AUTORE di questa scheda (demo). Base diversa da quella della US ICCD: qui non c'è nessun intento misurato da citare — gli intenti del field assistant sono in italiano e non parlano di questa scheda — e la ficha è pensata per una squadra che registra con la stazione totale in mano.
       repeatable: true
       graph:
         verdict: edge
@@ -171,6 +191,8 @@ template:
     - id: coordenadas
       labels: {es: "COORDENADAS (E, N)", it: "COORDINATE (E, N)"}
       type: text
+      recorded_in: trench
+      # decisione dell'AUTORE di questa scheda (demo). Base diversa da quella della US ICCD: qui non c'è nessun intento misurato da citare — gli intenti del field assistant sono in italiano e non parlano di questa scheda — e la ficha è pensata per una squadra che registra con la stazione totale in mano. Un punto lo si batte sullo scavo, non dopo.
       graph:
         verdict: property
         qualia: absolute_position
@@ -178,6 +200,8 @@ template:
     - id: crs
       labels: {es: "SISTEMA DE REFERENCIA (EPSG)", it: "SISTEMA DI RIFERIMENTO (EPSG)"}
       type: text
+      recorded_in: lab
+      # decisione dell'AUTORE di questa scheda (demo): l'EPSG del cantiere si stabilisce una volta, all'apertura del progetto, non a ogni unità. Non è meno importante delle coordinate — è deciso in un altro momento, che è esattamente ciò che questo marcatore dice.
       graph:
         verdict: property
         property_name: crs
@@ -185,6 +209,8 @@ template:
     - id: cota
       labels: {es: "COTA", it: "QUOTA"}
       type: quantity_list
+      recorded_in: trench
+      # decisione dell'AUTORE di questa scheda (demo). Base diversa da quella della US ICCD: qui non c'è nessun intento misurato da citare — gli intenti del field assistant sono in italiano e non parlano di questa scheda — e la ficha è pensata per una squadra che registra con la stazione totale in mano.
       repeatable: true
       graph:
         verdict: property
@@ -193,6 +219,8 @@ template:
     - id: responsable
       labels: {es: "RESPONSABLE DEL REGISTRO", it: "RESPONSABILE DELLA REGISTRAZIONE"}
       type: person_ref
+      recorded_in: trench
+      # decisione dell'AUTORE di questa scheda (demo). Base diversa da quella della US ICCD: qui non c'è nessun intento misurato da citare — gli intenti del field assistant sono in italiano e non parlano di questa scheda — e la ficha è pensata per una squadra che registra con la stazione totale in mano.
       graph:
         verdict: node
         node_type: AuthorNode
@@ -203,6 +231,8 @@ template:
     - id: fecha
       labels: {es: "FECHA", it: "DATA"}
       type: date
+      recorded_in: trench
+      # decisione dell'AUTORE di questa scheda (demo). Base diversa da quella della US ICCD: qui non c'è nessun intento misurato da citare — gli intenti del field assistant sono in italiano e non parlano di questa scheda — e la ficha è pensata per una squadra che registra con la stazione totale in mano.
       graph:
         verdict: property
         property_name: recording_date

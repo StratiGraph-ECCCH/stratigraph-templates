@@ -131,6 +131,27 @@ class FieldProvenance:
     authors: List[str] = dc_field(default_factory=list)
 
 
+#: WHERE A FIELD IS RECORDED — the three admissible values, and no fourth.
+#:
+#: `TRENCH` is filled during the act of excavating, by somebody whose hands are
+#: dirty. `LAB` is filled after that act — the laboratory, the office, the
+#: archive; the word is the discipline's shorthand for «not while digging», not
+#: a claim about a room. `UNKNOWN` means the definition has not said.
+#:
+#: THE NAMES ARE A PLACE AND A MOMENT, NEVER A RANK. `priority` or `level` would
+#: have implied that a lab field matters less; it does not — it is written at
+#: another time, often by another person. Nothing here sorts.
+RECORDED_IN_TRENCH = "trench"
+RECORDED_IN_LAB = "lab"
+RECORDED_IN_UNKNOWN = "unknown"
+
+#: `unknown` is FIRST because it is the default, and the default is the value
+#: that promises nothing: a definition that stays silent must not let a consumer
+#: conclude «then it is a trench field». Silence is «not declared», and a
+#: consumer that shows a phone form has to treat it as such.
+RECORDED_IN_VALUES = (RECORDED_IN_UNKNOWN, RECORDED_IN_TRENCH, RECORDED_IN_LAB)
+
+
 @dataclass
 class Field:
     id: str
@@ -144,10 +165,29 @@ class Field:
     options: List[Option] = dc_field(default_factory=list)
     graph: Optional[GraphBinding] = None
     provenance: Optional[FieldProvenance] = None
+    #: Where this box is filled in. Defaults to `unknown` — see
+    #: `RECORDED_IN_VALUES` for why the default is the one that claims nothing,
+    #: and SPEC §1.6 for how a definition's author decides.
+    #:
+    #: ORTHOGONAL TO `required`, deliberately: the two together are what lets a
+    #: validator tell «incomplete because we are still on the dig» from
+    #: «incomplete because something is missing». Neither implies the other.
+    recorded_in: str = RECORDED_IN_UNKNOWN
     note: Optional[str] = None          # divergence from a local tool, in the datum itself
 
     def label(self, lang: str) -> str:
         return label_of(self.labels, lang, f"field '{self.id}'")
+
+    @property
+    def recorded_in_trench(self) -> bool:
+        """The one question a phone form asks. `unknown` answers False.
+
+        A property rather than a comparison at every call site, so that no
+        consumer has to remember which value is the default — and so that
+        `unknown` cannot be mistaken for a yes by somebody writing
+        `!= "lab"`, which is the shape this would most plausibly rot into.
+        """
+        return self.recorded_in == RECORDED_IN_TRENCH
 
 
 @dataclass
@@ -248,6 +288,31 @@ class Template:
 
     def edges(self) -> List[Field]:
         return [f for f in self.fields if f.graph and f.graph.verdict == "edge"]
+
+    def recorded_in(self, where: str) -> List[Field]:
+        """The fields this definition says are filled in `where`, in sheet order.
+
+        This is the answer to «what do I show on the phone»: ask for
+        `RECORDED_IN_TRENCH` and mount a form on what comes back. Kept HERE
+        rather than in the consumer, because a consumer that filters by itself
+        is a second reading of the same declaration — which is the class of
+        second-source-of-truth this repository exists to avoid.
+        """
+        if where not in RECORDED_IN_VALUES:
+            raise ValueError(
+                f"{self.id}: '{where}' is not a place a field is recorded in; "
+                f"the admissible values are {list(RECORDED_IN_VALUES)}")
+        return [f for f in self.fields if f.recorded_in == where]
+
+    def recorded_in_counts(self) -> Dict[str, int]:
+        """How many fields in each, including the undeclared ones.
+
+        Reported rather than computed by every caller, because the interesting
+        number is usually the third one: a definition whose fields are mostly
+        `unknown` has not been decided yet, and that should be visible.
+        """
+        return {value: len(self.recorded_in(value))
+                for value in RECORDED_IN_VALUES}
 
 
 @dataclass
