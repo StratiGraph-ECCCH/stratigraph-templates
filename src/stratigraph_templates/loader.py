@@ -14,6 +14,8 @@ from typing import Any, Dict, List, Optional
 import yaml
 
 from .model import (
+    RECORDED_IN_UNKNOWN,
+    RECORDED_IN_VALUES,
     BlockedOn,
     Cell,
     Field,
@@ -39,7 +41,7 @@ class TemplateSyntaxError(ValueError):
 
 _FIELD_KEYS = {
     "id", "labels", "type", "required", "repeatable", "max_len", "help",
-    "vocabulary", "graph", "provenance", "note", "options",
+    "vocabulary", "graph", "provenance", "note", "options", "recorded_in",
 }
 _GRAPH_KEYS = {
     "verdict", "node_type", "node_types", "edge_type", "direction", "qualia",
@@ -89,6 +91,27 @@ def _graph(doc: Any, where: str) -> GraphBinding:
     )
 
 
+def _recorded_in(doc: Dict[str, Any], where: str) -> str:
+    """Where the field is filled in — absent means `unknown`.
+
+    A VALUE THAT IS NOT ONE OF THE THREE IS AN ERROR, not a silent fall back to
+    `unknown`. The two readings are not equivalent: a definition that meant
+    `trench` and wrote `Trench` would, under a silent fallback, disappear from
+    the phone form with nothing anywhere to say why — and the author would have
+    no way to tell that from a field they deliberately left undeclared.
+    """
+    if "recorded_in" not in doc:
+        return RECORDED_IN_UNKNOWN
+    value = doc["recorded_in"]
+    if value not in RECORDED_IN_VALUES:
+        raise TemplateSyntaxError(
+            f"{where}: recorded_in={value!r} is not one of "
+            f"{list(RECORDED_IN_VALUES)}. Absent means "
+            f"{RECORDED_IN_UNKNOWN!r}, which is the value that promises "
+            f"nothing; it is not spelled by getting one of the others wrong.")
+    return str(value)
+
+
 def _field(doc: Any, index: int) -> Field:
     where = f"fields[{index}]"
     if not isinstance(doc, dict):
@@ -125,6 +148,7 @@ def _field(doc: Any, index: int) -> Field:
             if isinstance(prov, dict)
             else None
         ),
+        recorded_in=_recorded_in(doc, where),
         note=doc.get("note"),
     )
 

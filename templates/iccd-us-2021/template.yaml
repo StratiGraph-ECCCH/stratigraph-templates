@@ -100,6 +100,8 @@ template:
     - id: us
       labels: {it: "US", en: "SU"}
       type: identifier
+      recorded_in: trench
+      # Base A · tools.py:162 — Slot("us", "string", True, "il numero dell'unità"), lo slot OBBLIGATORIO di quattro dei sette intenti; e intent.py:78 riconosce «scheda numero 12».
       required: true
       graph:
         verdict: identity
@@ -151,6 +153,8 @@ template:
     - id: localita
       labels: {it: "LOCALITÀ", en: "LOCALITY"}
       type: text
+      recorded_in: trench
+      # Base A · tools.py:171 — Slot("sito", "string", False, "il sito, quando il record lo dice"). DIVERGENZA DICHIARATA: lo slot si chiama `sito`, la casella ICCD è LOCALITÀ. Sono vicini e non identici; il marcatore poggia sullo slot, non su un'equivalenza che nessuno ha dichiarato.
       required: true
       graph:
         verdict: node
@@ -163,6 +167,8 @@ template:
     - id: area
       labels: {it: "AREA/EDIFICIO/STRUTTURA", en: "AREA / BUILDING / STRUCTURE"}
       type: text
+      recorded_in: trench
+      # Base A · tools.py:172 — Slot("area", "string", False, "l'area: una US è unica dentro la sua").
       graph:
         verdict: node
         node_type: LocationNodeGroup
@@ -294,6 +300,8 @@ template:
     - id: fotografie
       labels: {it: "FOTOGRAFIE", en: "PHOTOGRAPHS"}
       type: resource_ref_list
+      recorded_in: trench
+      # Base A · tools.py:264-270 (attach_photo_to_su, intento «questa foto è per la US 12») e 315-319 (ingest_photos, «ti passo delle foto»).
       repeatable: true
       graph:
         verdict: node
@@ -305,6 +313,8 @@ template:
     - id: riferimenti_tabelle_materiali
       labels: {it: "RIFERIMENTI TABELLE MATERIALI", en: "FINDS TABLE REFERENCES"}
       type: record_ref_list
+      recorded_in: lab
+      # Strutturale, non un'opinione: è un `edge` verso un'ALTRA scheda (TMA). Un rimando a una scheda non si scrive prima che quella scheda esista, e la TMA nasce quando i reperti sono studiati.
       repeatable: true
       graph:
         verdict: edge
@@ -528,6 +538,8 @@ template:
     - id: descrizione
       labels: {it: "DESCRIZIONE", en: "DESCRIPTION"}
       type: longtext
+      recorded_in: trench
+      # Base A · tools.py:165 — Slot("description", "string", False, "cosa c'è (crm:P3_has_note)").
       graph:
         verdict: property
         property_name: description
@@ -542,6 +554,8 @@ template:
     - id: interpretazione
       labels: {it: "INTERPRETAZIONE", en: "INTERPRETATION"}
       type: longtext
+      recorded_in: trench
+      # Base A · tools.py:166-168 — Slot("interpretation", …, "cosa si pensa che sia — nota di campo, non ancora una property con la sua catena di evidenza"). Lo slot dice di sé che è una nota DI CAMPO.
       provenance:
         enabled: true
         authors: [human, ai]
@@ -660,6 +674,8 @@ template:
     - id: data_rilevamento
       labels: {it: "DATA RILEVAMENTO SUL CAMPO", en: "DATE OF FIELD RECORDING"}
       type: date
+      recorded_in: trench
+      # Base B · l'etichetta ICCD è «DATA RILEVAMENTO SUL CAMPO».
       graph:
         verdict: property
         property_name: field_recording_date
@@ -670,6 +686,8 @@ template:
     - id: responsabile_compilazione
       labels: {it: "RESPONSABILE COMPILAZIONE SUL CAMPO", en: "FIELD RECORDER"}
       type: person_ref
+      recorded_in: trench
+      # Base B · l'etichetta ICCD è «RESPONSABILE COMPILAZIONE SUL CAMPO»: lo dice lo standard, non noi.
       graph:
         verdict: node
         node_type: AuthorNode
@@ -680,6 +698,8 @@ template:
     - id: data_rielaborazione
       labels: {it: "DATA RIELABORAZIONE", en: "DATE OF REVISION"}
       type: date
+      recorded_in: lab
+      # Base B · «DATA RIELABORAZIONE», che lo standard mette in contrasto esplicito con le due caselle SUL CAMPO poche righe sopra.
       graph:
         verdict: property
         property_name: revision_date
@@ -688,6 +708,8 @@ template:
     - id: responsabile_rielaborazione
       labels: {it: "RESPONSABILE RIELABORAZIONE", en: "REVISION RESPONSIBLE"}
       type: person_ref
+      recorded_in: lab
+      # Base B · «RESPONSABILE RIELABORAZIONE», stessa contrapposizione.
       graph:
         verdict: node
         node_type: AuthorNode
