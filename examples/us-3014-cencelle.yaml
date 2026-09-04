@@ -1,0 +1,122 @@
+# Dati di prova: la stessa US ricca usata per il referto di stampa di
+# pyarchinit-mini (Cencelle, strato di crollo), così che il confronto sia sullo
+# stesso materiale. I dodici rapporti sono STRUTTURATI, non un blob: è la
+# differenza che fa arrivare le caselle piene sul foglio.
+
+record:
+  template: iccd-us-2021
+  uid: "01J9Z7QK4T8V2M6XW3B5Y0HRND"   # opaco, coniato da chi ha creato l'unità
+
+  values:
+    us: "3014"
+    ente_responsabile: "Università degli Studi della Tuscia — Dipartimento DISUCOM"
+    anno: 2026
+    ufficio_mic: "Soprintendenza ABAP per la provincia di Viterbo e l'Etruria meridionale"
+    identificativo_riferimento: "Saggio III — Edificio B, vano 2"
+    localita: "Leopoli-Cencelle (Tarquinia, VT)"
+    area: "Area 3000 — insula B"
+    saggio: "Saggio III"
+    ambiente: "Vano 2 (ambiente di servizio)"
+    posizione: "Al centro del vano, in appoggio al muro perimetrale nord"
+    settore: "3B"
+    quadrato: "K12"
+    quote:
+      - {qualia: elevation_max_absolute, label: "quota max assoluta", value: "142,38", unit: "m s.l.m."}
+      - {qualia: elevation_min_absolute, label: "quota min assoluta", value: "141,96", unit: "m s.l.m."}
+      - {qualia: elevation_relative, label: "quota relativa piano di riferimento", value: "-0,42", unit: "m"}
+    formazione_natura: artificiale
+    formazione_segno: positiva
+
+    piante: ["CE26_P_3014_pianta_1_20.dwg", "CE26_P_area3000_fase2.dwg"]
+    prospetti: ["CE26_PR_muro3011_est.dwg"]
+    sezioni: ["CE26_SZ_saggioIII_AA.dwg", "CE26_SZ_saggioIII_BB.dwg"]
+    fotografie: ["CE26_F_3014_0231.NEF", "CE26_F_3014_0232.NEF", "CE26_F_3014_0248.NEF"]
+    riferimenti_tabelle_materiali: ["RA 3014/1", "RA 3014/2", "RA 3014/7"]
+
+    definizione:
+      concept: "https://example.invalid/fixture/us-definizione-it/crollo"
+      label: "strato di crollo"
+    criteri_distinzione: >-
+      Distinto da US 3009 per la presenza massiccia di frammenti di laterizio e per il colore
+      più chiaro della matrice; il limite inferiore è netto sul piano pavimentale US 3018.
+    modo_formazione: >-
+      Crollo della copertura in laterizi e del paramento superiore del muro US 3011, con matrice
+      derivata dal dilavamento della malta.
+    componenti_inorganici: >-
+      Frammenti di tegole e coppi (abbondanti, 30-40%), scaglie di calcare (comuni), grumi di malta
+      biancastra (comuni), frammenti di intonaco dipinto (rari).
+    componenti_organici: "Carboni sparsi (rari), radici recenti (comuni), frammenti ossei animali (rari)."
+    consistenza: {concept: "urn:iccd:fixture:consistenza/friabile", label: "friabile"}
+    colore: {concept: "urn:iccd:fixture:colore/bruno-chiaro", label: "bruno chiaro (10YR 6/3)"}
+    misure:
+      - {qualia: length, label: "lunghezza", value: "4,80", unit: "m"}
+      - {qualia: width, label: "larghezza", value: "3,15", unit: "m"}
+      - {qualia: thickness, label: "spessore max", value: "0,42", unit: "m"}
+      - {qualia: thickness, label: "spessore min", value: "0,18", unit: "m"}
+      - {qualia: area, label: "superficie indagata", value: "15,10", unit: "mq"}
+      - {qualia: volume, label: "volume stimato", value: "4,50", unit: "mc"}
+    stato_conservazione: {concept: "urn:iccd:fixture:stato/buono", label: "buono"}
+
+    # --- i dodici rapporti, in dodici caselle ---
+    uguale_a: ["3021"]
+    si_lega_a: ["3011"]
+    posteriore_a: ["3018", "3019"]
+    anteriore_a: ["3009"]
+    gli_si_appoggia: ["3007"]
+    si_appoggia_a: ["3011"]
+    coperto_da: ["3009"]
+    copre: ["3018", "3020"]
+    tagliato_da: ["3005"]
+    taglia: ["3022"]
+    riempito_da: []
+    riempie: []
+
+    descrizione: >-
+      Strato a matrice sabbioso-limosa, di colore bruno chiaro, friabile, con inclusi abbondanti di
+      laterizio frammentario disposti in giacitura caotica e localmente sub-orizzontale. Lo strato
+      copre il piano pavimentale in cocciopesto US 3018 e si appoggia al paramento interno del muro
+      US 3011; è tagliato dalla fossa US 3005 nell'angolo sud-est del vano. Potenza variabile fra
+      0,18 e 0,42 m, maggiore lungo il muro nord.
+    osservazioni: >-
+      La concentrazione di tegole lungo il lato nord suggerisce che il crollo sia avvenuto per
+      rotazione verso l'interno del vano. Campionata la matrice per analisi micromorfologiche
+      (campione CE26/M/14).
+    interpretazione: >-
+      Crollo della copertura del vano 2 in seguito all'abbandono dell'edificio; l'assenza di
+      materiali post-quattrocenteschi nella matrice e la giacitura del laterizio indicano un evento
+      unico e rapido, non un degrado progressivo.
+
+    datazione: "seconda metà del XIV secolo — post 1350"
+    periodo: "Periodo IV — abbandono dell'insula B"
+    fase: "Fase IV.1 — crollo delle coperture"
+    attivita: "Attività 12 — dismissione del vano 2"
+    elementi_datanti: >-
+      Frammento di boccale in maiolica arcaica (RA 3014/2, seconda metà XIV sec.); moneta di
+      Bonifacio IX non leggibile in dettaglio (RA 3014/7).
+    dati_quantitativi:
+      - {label: "ceramica (frammenti)", value: "247", unit: "fr."}
+      - {label: "laterizi (peso)", value: "38,4", unit: "kg"}
+      - {label: "ossa animali (frammenti)", value: "62", unit: "fr."}
+      - {label: "metalli (frammenti)", value: "9", unit: "fr."}
+    campionature: "CE26/M/14 (micromorfologia, 1 kg); CE26/C/22 (carboni per 14C, 12 g)."
+    flottazione: "Eseguita su 40 litri di sedimento; recuperati semi carbonizzati (Triticum sp.)."
+    setacciatura: "Setaccio a maglia 2 mm su 120 litri; recuperati 62 frammenti ossei."
+
+    affidabilita: {concept: "urn:iccd:fixture:affidabilita/alta", label: "alta"}
+    responsabile_scientifico: {name: "Francesca Romana Stasolla", ref: "orcid:0000-0002-1825-0097"}
+    data_rilevamento: "2026-07-18"
+    responsabile_compilazione: {name: "E. Demetrescu"}
+    data_rielaborazione: "2026-09-02"
+    responsabile_rielaborazione: {name: "E. Demetrescu"}
+
+  # provenienza PER CAMPO: il campo dettato in trincea e ripulito da un modello
+  # porta l'autore AI e lo stato di validazione umana.
+  field_provenance:
+    interpretazione:
+      state: human_validated
+      by: "ai:whisper+llm · validato da E. Demetrescu"
+      ts: "2026-09-02T11:14:07Z"
+    descrizione:
+      state: ai_drafted
+      by: "ai:dettatura in trincea"
+      ts: "2026-07-18T09:02:41Z"

@@ -1,0 +1,254 @@
+# FICHA DE UNIDAD ESTRATIGRÁFICA — ficha DEMO, inventada.
+#
+# ATTENZIONE, ed è dichiarato anche nel dato (`invented: true`, e la stampa
+# porta il bollo FIXTURE): questa NON è una normativa spagnola reale. Non
+# avevamo la norma vera sottomano, e inventare una ficha plausibile è meglio che
+# fingere di citarne una.
+#
+# Serve come misura della serata: ha
+#   * etichette in un'altra lingua (spagnolo sorgente, italiano affiancato),
+#   * un paragrafo che l'ICCD non ha (GEORREFERENCIACIÓN: coordinate + EPSG),
+#   * una chiave umana di FORMA DIVERSA (yacimiento + contexto, senza area),
+#   * un vocabolario nazionale diverso, allineato al lato italiano con
+#     skos:exactMatch — così l'etichetta italiana di un concetto spagnolo
+#     arriva sul foglio senza che nessuno l'abbia scritta due volte.
+#
+# Se il renderer la mostra e la stampa senza una riga di codice nuova, la tesi
+# di questo repository regge.
+
+template:
+  id: es-ue-demo-2026
+  standard:
+    authority: "DEMO"
+    code: "UE"
+    version: "2026-demo"
+    kind: field_model
+    invented: true
+    title:
+      es: "Ficha de Unidad Estratigráfica (demo)"
+      it: "Scheda di Unità Stratigrafica (demo)"
+    source: "inventata per la prova — nessuna normativa reale è stata citata"
+    license: "CC BY-SA 4.0"
+    attribution: "stratigraph-templates (ficha demo)"
+
+  source_language: es
+  languages: [es, it]
+
+  identity:
+    human_key:
+      fields: [yacimiento, contexto]
+      pattern: "Contexto {contexto} · {yacimiento}"
+    uid:
+      policy: minted_by_creator
+      opaque: true
+      display: on_request
+      derive_from_human_key: false
+    deduplication: by_human_key_in_context
+
+  provenance:
+    per_field: true
+    authors: [human, ai]
+    states: [asserted, ai_drafted, human_validated]
+
+  vocabularies:
+    - fx-ue-definicion-es
+
+  paragraphs:
+    - id: cabecera
+      labels: {es: "Cabecera", it: "Intestazione"}
+      fields: [contexto, yacimiento, definicion]
+    - id: descripcion
+      labels: {es: "Descripción", it: "Descrizione"}
+      fields: [descripcion, interpretacion]
+    - id: secuencia
+      labels: {es: "Secuencia estratigráfica", it: "Sequenza stratigrafica"}
+      fields: [igual_a, cubre, cubierto_por, corta, cortado_por]
+    # Il paragrafo che l'ICCD non ha: la scheda US 2021 registra le QUOTE ma non
+    # coordinate né sistema di riferimento.
+    - id: georreferenciacion
+      labels: {es: "Georreferenciación", it: "Georeferenziazione"}
+      fields: [coordenadas, crs, cota]
+    - id: registro
+      labels: {es: "Registro", it: "Registrazione"}
+      fields: [responsable, fecha]
+
+  fields:
+    - id: contexto
+      labels: {es: "CONTEXTO", it: "CONTESTO"}
+      type: identifier
+      required: true
+      graph:
+        verdict: identity
+
+    - id: yacimiento
+      labels: {es: "YACIMIENTO", it: "SITO"}
+      type: text
+      required: true
+      graph:
+        verdict: node
+        node_type: LocationNodeGroup
+        edge_type: is_in_location
+        direction: outgoing
+        target: LocationNodeGroup
+
+    - id: definicion
+      labels: {es: "DEFINICIÓN", it: "DEFINIZIONE"}
+      type: term
+      required: true
+      vocabulary:
+        scheme: fx-ue-definicion-es
+      graph:
+        verdict: vocabulary
+        note: "Il valore è il CONCETTO: l'etichetta italiana arriva dall'allineamento exactMatch."
+
+    - id: descripcion
+      labels: {es: "DESCRIPCIÓN", it: "DESCRIZIONE"}
+      type: longtext
+      graph:
+        verdict: property
+        property_name: description
+
+    - id: interpretacion
+      labels: {es: "INTERPRETACIÓN", it: "INTERPRETAZIONE"}
+      type: longtext
+      provenance:
+        enabled: true
+        authors: [human, ai]
+      graph:
+        verdict: property
+        property_name: interpretation
+
+    - id: igual_a
+      labels: {es: "IGUAL A", it: "UGUALE A"}
+      type: unit_ref_list
+      repeatable: true
+      graph:
+        verdict: edge
+        edge_type: equals
+        direction: outgoing
+        target: stratigraphic_unit
+
+    - id: cubre
+      labels: {es: "CUBRE", it: "COPRE"}
+      type: unit_ref_list
+      repeatable: true
+      graph:
+        verdict: edge
+        edge_type: overlies
+        direction: outgoing
+        target: stratigraphic_unit
+
+    - id: cubierto_por
+      labels: {es: "CUBIERTO POR", it: "COPERTO DA"}
+      type: unit_ref_list
+      repeatable: true
+      graph:
+        verdict: edge
+        edge_type: overlies
+        direction: incoming
+        target: stratigraphic_unit
+
+    - id: corta
+      labels: {es: "CORTA", it: "TAGLIA"}
+      type: unit_ref_list
+      repeatable: true
+      graph:
+        verdict: edge
+        edge_type: cuts
+        direction: outgoing
+        target: stratigraphic_unit
+
+    - id: cortado_por
+      labels: {es: "CORTADO POR", it: "TAGLIATO DA"}
+      type: unit_ref_list
+      repeatable: true
+      graph:
+        verdict: edge
+        edge_type: cuts
+        direction: incoming
+        target: stratigraphic_unit
+
+    - id: coordenadas
+      labels: {es: "COORDENADAS (E, N)", it: "COORDINATE (E, N)"}
+      type: text
+      graph:
+        verdict: property
+        qualia: absolute_position
+
+    - id: crs
+      labels: {es: "SISTEMA DE REFERENCIA (EPSG)", it: "SISTEMA DI RIFERIMENTO (EPSG)"}
+      type: text
+      graph:
+        verdict: property
+        property_name: crs
+
+    - id: cota
+      labels: {es: "COTA", it: "QUOTA"}
+      type: quantity_list
+      repeatable: true
+      graph:
+        verdict: property
+        qualia: elevation
+
+    - id: responsable
+      labels: {es: "RESPONSABLE DEL REGISTRO", it: "RESPONSABILE DELLA REGISTRAZIONE"}
+      type: person_ref
+      graph:
+        verdict: node
+        node_type: AuthorNode
+        edge_type: has_author
+        direction: outgoing
+        target: AuthorNode
+
+    - id: fecha
+      labels: {es: "FECHA", it: "DATA"}
+      type: date
+      graph:
+        verdict: property
+        property_name: recording_date
+
+  sheet:
+    page: A4
+    margins_mm: {top: 14, right: 14, bottom: 14, left: 14}
+    sides:
+      - id: recto
+        labels: {es: "anverso", it: "fronte"}
+        rows:
+          - h: 10
+            cells:
+              - {field: contexto, w: 22}
+              - {field: yacimiento, w: 48}
+              - {field: definicion, w: 30}
+          - h: 55
+            cells: [{field: descripcion, w: 100}]
+          - h: 50
+            cells:
+              - block: secuencia
+                block_labels: {es: "SECUENCIA", it: "SEQUENZA"}
+                rotated: true
+                w: 100
+                rows:
+                  - h: 25
+                    cells:
+                      - {field: igual_a, w: 34}
+                      - {field: cubre, w: 33}
+                      - {field: cubierto_por, w: 33}
+                  - h: 25
+                    cells:
+                      - {field: corta, w: 50}
+                      - {field: cortado_por, w: 50}
+          - h: 22
+            cells:
+              - {field: coordenadas, w: 40}
+              - {field: crs, w: 30}
+              - {field: cota, w: 30}
+
+      - id: verso
+        labels: {es: "reverso", it: "retro"}
+        rows:
+          - h: 90
+            cells: [{field: interpretacion, w: 100}]
+          - h: 14
+            cells:
+              - {field: responsable, w: 70}
+              - {field: fecha, w: 30}

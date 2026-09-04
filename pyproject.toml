@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "stratigraph-templates"
+version = "0.1.0"
+description = "Declarative recording-sheet definitions (data, not code) and a reference implementation that reads them"
+requires-python = ">=3.11"
+license = { text = "EUPL-1.2" }
+authors = [{ name = "Emanuele Demetrescu", email = "emanuel.demetrescu@cnr.it" }]
+dependencies = ["PyYAML>=6.0"]
+
+[project.optional-dependencies]
+print = ["weasyprint>=60"]
+vocab = ["rdflib>=7.0"]
+dev = ["pytest>=8", "weasyprint>=60", "rdflib>=7.0"]
+
+[project.scripts]
+stratigraph-templates = "stratigraph_templates.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

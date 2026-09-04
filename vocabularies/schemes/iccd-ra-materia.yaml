@@ -1,0 +1,20 @@
+# Uno schema ICCD VERO, in SKOS, referenziato dove sta: sul disco, in
+# `Standard-catalografici/` (checkout separato, licenza CC BY-SA 3.0 IT).
+# Non è incorporato qui — un vocabolario ha un ciclo di vita suo.
+# Percorso ridefinibile con $STRATIGRAPH_ICCD_STANDARDS.
+scheme:
+  id: iccd-ra-materia
+  authority: ICCD
+  labels:
+    it: "Vocabolario per la definizione della materia (reperti archeologici)"
+    en: "Vocabulary for material definition (archaeological finds)"
+  status: resolvable
+  uri: "http://dati.beniculturali.it/vocabularies/reperti_archeologici/mat/"
+  license: "CC BY-SA 3.0 IT"
+  attribution: "ICCD — MiC; a cura di M. L. Mancinelli, C. Veninata, M. T. Natale, M. Porena"
+  binding_thes_id: "VC_MTC_RA"
+  resolve:
+    kind: external_skos_file
+    path: "strumenti-terminologici/beni archeologici/ICCD_Vocabolario_definizione della materia_reperti archeologici.rdf"
+  note: "Appartiene alla scheda RA (catalogo), non al modello US da campo: sta qui perché la libreria
+         degli schemi è condivisa fra le definizioni, e perché prova che il risolutore legge SKOS vero."

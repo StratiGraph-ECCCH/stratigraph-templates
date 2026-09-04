@@ -1,0 +1,44 @@
+# ALLINEAMENTO fra vocabolari nazionali — il posto dove si dichiara.
+#
+# Perché esiste da subito, anche se stanotte contiene cinque righe finte: se
+# l'archeologo italiano sceglie un termine dal thesaurus ICCD e quello spagnolo
+# dal suo, nel grafo finiscono due stringhe che non si incontreranno mai. SKOS
+# ha exactMatch e closeMatch esattamente per questo, e un campo di allineamento
+# aggiunto fra un anno è un campo che nessuno riempirà.
+#
+# `status: proposed` = lo ha proposto qualcuno; `verified` = lo ha verificato una
+# persona che risponde del giudizio. Parziale, incrementale, mai completo.
+
+alignments:
+  - source: {scheme: fx-ue-definicion-es, concept: "https://example.invalid/fixture/ue-definicion-es/estrato"}
+    match: exactMatch
+    target: {scheme: fx-us-definizione-it, concept: "https://example.invalid/fixture/us-definizione-it/strato"}
+    status: proposed
+    by: "FIXTURE"
+    note: "estrato ≡ strato"
+
+  - source: {scheme: fx-ue-definicion-es, concept: "https://example.invalid/fixture/ue-definicion-es/muro"}
+    match: exactMatch
+    target: {scheme: fx-us-definizione-it, concept: "https://example.invalid/fixture/us-definizione-it/muro"}
+    status: proposed
+    by: "FIXTURE"
+
+  - source: {scheme: fx-ue-definicion-es, concept: "https://example.invalid/fixture/ue-definicion-es/fosa"}
+    match: exactMatch
+    target: {scheme: fx-us-definizione-it, concept: "https://example.invalid/fixture/us-definizione-it/fossa"}
+    status: proposed
+    by: "FIXTURE"
+
+  - source: {scheme: fx-ue-definicion-es, concept: "https://example.invalid/fixture/ue-definicion-es/relleno"}
+    match: exactMatch
+    target: {scheme: fx-us-definizione-it, concept: "https://example.invalid/fixture/us-definizione-it/riempimento"}
+    status: proposed
+    by: "FIXTURE"
+
+  - source: {scheme: fx-ue-definicion-es, concept: "https://example.invalid/fixture/ue-definicion-es/derrumbe"}
+    match: closeMatch
+    target: {scheme: fx-us-definizione-it, concept: "https://example.invalid/fixture/us-definizione-it/crollo"}
+    status: proposed
+    by: "FIXTURE"
+    note: "closeMatch e non exactMatch: 'estrato de derrumbe' e 'strato di crollo' si somigliano ma la
+           tradizione di scavo li ritaglia in modo un po' diverso. La distinzione è il punto."

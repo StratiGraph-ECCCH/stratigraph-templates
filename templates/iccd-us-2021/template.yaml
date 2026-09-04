@@ -1,0 +1,850 @@
+# ICCD — US, Unità Stratigrafica: modello per il rilevamento sul campo, 2021.
+#
+# Fonte: "US_Unità Stratigrafica_modello per rilevamento sul campo_2021.doc"
+#        (MiC — ICCD, licenza CC BY-SA 4.0, dichiarata in calce al modello).
+# Questa definizione è ricostruita DALLA NORMATIVA, non dai template di alcun
+# software: campi, etichette, paragrafi e geometria del foglio vengono dal .doc
+# (misurato: 66 caselle, larghezza utile 504 pt, altezza totale 473 mm — cioè
+# più di una facciata A4, che è la ragione misurata del fronte-retro).
+#
+# Dove la scheda e la tabella `us_table` di pyarchinit divergono, VINCE LA
+# SCHEDA e la differenza è annotata sul campo stesso (chiave `note`).
+# Le cinque colonne giudicate malformate (cont_per, ref_n, modo_formazione
+# come duplicato, rapporti2, doc_usv) non entrano.
+
+template:
+  id: iccd-us-2021
+  standard:
+    authority: ICCD
+    code: US
+    version: "2021"
+    kind: field_model
+    title:
+      it: "Unità Stratigrafica — modello per il rilevamento sul campo"
+      en: "Stratigraphic Unit — field recording model"
+    source: "SCHEDE_ICCD/US_Unità Stratigrafica_modello per rilevamento sul campo_2021.doc"
+    license: "CC BY-SA 4.0"
+    attribution: "MiC — Istituto Centrale per il Catalogo e la Documentazione (ICCD)"
+
+  source_language: it
+  languages: [it, en]
+
+  identity:
+    human_key:
+      fields: [localita, area, us]
+      pattern: "US {us} — {area} ({localita})"
+    uid:
+      policy: minted_by_creator
+      opaque: true
+      display: on_request
+      derive_from_human_key: false
+    deduplication: by_human_key_in_context
+
+  provenance:
+    per_field: true
+    authors: [human, ai]
+    states: [asserted, ai_drafted, human_validated]
+    clock: s3dgraphy_crdt_field_clock
+
+  vocabularies:
+    - iccd-us-definizione
+    - iccd-us-consistenza
+    - iccd-us-colore
+    - iccd-us-stato-conservazione
+    - iccd-us-affidabilita
+
+  paragraphs:
+    - id: intestazione
+      labels: {it: "Intestazione", en: "Header"}
+      fields: [us, ente_responsabile, anno, ufficio_mic, identificativo_riferimento]
+    - id: localizzazione
+      labels: {it: "Localizzazione", en: "Location"}
+      fields: [localita, area, saggio, ambiente, posizione, settore, quadrato, quote,
+               formazione_natura, formazione_segno]
+    - id: documentazione_grafica
+      labels: {it: "Documentazione grafica e riferimenti", en: "Graphic documentation and references"}
+      fields: [piante, prospetti, sezioni, fotografie, riferimenti_tabelle_materiali]
+    - id: definizione_fisica
+      labels: {it: "Definizione e descrizione fisica", en: "Definition and physical description"}
+      fields: [definizione, criteri_distinzione, modo_formazione, componenti_inorganici,
+               componenti_organici, consistenza, colore, misure, stato_conservazione]
+    # Il raggruppamento viene dalla GEOMETRIA del modello ICCD (due etichette
+    # verticali, rowspan 6 ciascuna, larghezze 29.9+134.7+158.1 | 26.6+154.8):
+    # le dieci relazioni di CONTATTO stanno sotto SEQUENZA FISICA, e sotto
+    # SEQUENZA STRATIGRAFICA stanno solo posteriore a / anteriore a. È anche la
+    # partizione che l'ontologia conferma: AP11_has_physical_relation per i
+    # contatti, P120_occurs_before / AP28 per l'ordinamento temporale.
+    - id: sequenza_fisica
+      labels: {it: "Sequenza fisica", en: "Physical sequence"}
+      fields: [uguale_a, si_lega_a, gli_si_appoggia, si_appoggia_a, coperto_da, copre,
+               tagliato_da, taglia, riempito_da, riempie]
+    - id: sequenza_stratigrafica
+      labels: {it: "Sequenza stratigrafica", en: "Stratigraphic sequence"}
+      fields: [posteriore_a, anteriore_a]
+    - id: descrizione_interpretazione
+      labels: {it: "Descrizione e interpretazione", en: "Description and interpretation"}
+      fields: [descrizione, osservazioni, interpretazione]
+    - id: cronologia
+      labels: {it: "Cronologia", en: "Chronology"}
+      fields: [datazione, periodo, fase, attivita, elementi_datanti]
+    - id: quantificazione
+      labels: {it: "Quantificazione e campionature", en: "Quantification and sampling"}
+      fields: [dati_quantitativi, campionature, flottazione, setacciatura]
+    - id: responsabilita
+      labels: {it: "Affidabilità e responsabilità", en: "Reliability and responsibility"}
+      fields: [affidabilita, responsabile_scientifico, data_rilevamento, responsabile_compilazione,
+               data_rielaborazione, responsabile_rielaborazione]
+
+  fields:
+    # ---------------------------------------------------------------- intestazione
+    - id: us
+      labels: {it: "US", en: "SU"}
+      type: identifier
+      required: true
+      graph:
+        verdict: identity
+        note: "L'identificativo umano dell'unità: non è una property, è il nome con cui la si chiama."
+
+    - id: ente_responsabile
+      labels: {it: "ENTE RESPONSABILE", en: "RESPONSIBLE BODY"}
+      type: actor_ref
+      graph:
+        verdict: none
+        blocked_on:
+          needs: "attore istituzionale (E39_Actor / E74_Group): un ente non è né 'Author (human)' né 'AI Author'"
+          reported: "EM_design_setaccio-US §1 — decisione di E.D., non effetto collaterale"
+        note: "L'ICCD ha già la risposta normativa: scheda AUT (persone E ENTI). Finché s3Dgraphy non
+               dichiara il tipo, il campo si compila e si stampa ma NON entra nel grafo."
+
+    - id: anno
+      labels: {it: "ANNO", en: "YEAR"}
+      type: integer
+      max_len: "4"
+      graph:
+        verdict: property
+        property_name: campaign_year
+        attaches_to: excavation_activity
+        note: "È l'anno dell'ATTO di scavo, non una proprietà dell'unità."
+
+    - id: ufficio_mic
+      labels: {it: "UFFICIO MiC COMPETENTE PER TUTELA", en: "MiC OFFICE RESPONSIBLE FOR PROTECTION"}
+      type: actor_ref
+      graph:
+        verdict: none
+        blocked_on:
+          needs: "attore istituzionale (E39_Actor / E74_Group)"
+          reported: "EM_design_setaccio-US §1"
+
+    - id: identificativo_riferimento
+      labels:
+        it: "IDENTIFICATIVO DEL SAGGIO STRATIGRAFICO/DELL'EDIFICIO/DELLA STRUTTURA/DELLA DEPOSIZIONE FUNERARIA DI RIFERIMENTO"
+        en: "IDENTIFIER OF THE REFERENCE TRENCH / BUILDING / STRUCTURE / BURIAL"
+      type: text
+      graph:
+        verdict: node
+        node_type: FunctionalUnitNodeGroup
+        edge_type: is_in_functional_unit
+        direction: outgoing
+        target: FunctionalUnitNodeGroup
+
+    # -------------------------------------------------------------- localizzazione
+    - id: localita
+      labels: {it: "LOCALITÀ", en: "LOCALITY"}
+      type: text
+      required: true
+      graph:
+        verdict: node
+        node_type: LocationNodeGroup
+        edge_type: is_in_location
+        direction: outgoing
+        target: LocationNodeGroup
+        note: "Parte della chiave umana e, insieme, appartenenza spaziale nel grafo."
+
+    - id: area
+      labels: {it: "AREA/EDIFICIO/STRUTTURA", en: "AREA / BUILDING / STRUCTURE"}
+      type: text
+      graph:
+        verdict: node
+        node_type: LocationNodeGroup
+        edge_type: is_in_location
+        direction: outgoing
+        target: LocationNodeGroup
+
+    - id: saggio
+      labels: {it: "SAGGIO", en: "TRENCH"}
+      type: text
+      graph:
+        verdict: node
+        node_type: LocationNodeGroup
+        edge_type: is_in_location
+        direction: outgoing
+        target: LocationNodeGroup
+
+    - id: ambiente
+      labels: {it: "AMBIENTE/UNITÀ FUNZIONALE", en: "ROOM / FUNCTIONAL UNIT"}
+      type: text
+      graph:
+        verdict: node
+        node_type: FunctionalUnitNodeGroup
+        edge_type: is_in_functional_unit
+        direction: outgoing
+        target: FunctionalUnitNodeGroup
+
+    - id: posizione
+      labels: {it: "POSIZIONE", en: "POSITION"}
+      type: text
+      graph:
+        verdict: property
+        property_name: position
+        note: "Posizione descrittiva dell'unità nel saggio; non è una coordinata (quella è
+               georeferenziazione, e non sta su questa scheda)."
+
+    - id: settore
+      labels: {it: "SETTORE/I", en: "SECTOR(S)"}
+      type: text
+      graph:
+        verdict: node
+        node_type: LocationNodeGroup
+        edge_type: is_in_location
+        direction: outgoing
+        target: LocationNodeGroup
+
+    - id: quadrato
+      labels: {it: "QUADRATO/I", en: "SQUARE(S)"}
+      type: text
+      graph:
+        verdict: node
+        node_type: LocationNodeGroup
+        edge_type: is_in_location
+        direction: outgoing
+        target: LocationNodeGroup
+
+    - id: quote
+      labels: {it: "QUOTE", en: "ELEVATIONS"}
+      type: quantity_list
+      repeatable: true
+      graph:
+        verdict: property
+        qualia: elevation
+        note: "Ogni riga può dichiarare la propria qualia (elevation, elevation_relative,
+               elevation_min_absolute, elevation_max_absolute…): la casella è una, le quote sono molte."
+
+    - id: formazione_natura
+      labels: {it: "MODO DI FORMAZIONE (natura)", en: "MODE OF FORMATION (nature)"}
+      type: choice
+      options:
+        - {value: naturale, labels: {it: "NATURALE", en: "NATURAL"}}
+        - {value: artificiale, labels: {it: "ARTIFICIALE", en: "ARTIFICIAL"}}
+      graph:
+        verdict: property
+        property_name: formation_mode
+        note: "Sulla scheda sono due caselle da barrare, mutuamente esclusive: la definizione le
+               tiene in un campo unico con due opzioni, il foglio le disegna come due caselle."
+
+    - id: formazione_segno
+      labels: {it: "MODO DI FORMAZIONE (segno)", en: "MODE OF FORMATION (sign)"}
+      type: choice
+      options:
+        - {value: positiva, labels: {it: "POSITIVA", en: "POSITIVE"}}
+        - {value: negativa, labels: {it: "NEGATIVA", en: "NEGATIVE"}}
+      graph:
+        verdict: node_type
+        node_types:
+          positiva: US
+          negativa: USN
+        note: "Qui la scheda 2021 è più precisa di pyarchinit: il tipo di nodo (volume o interfaccia)
+               si legge da POSITIVA/NEGATIVA, non si indovina dalla definizione testuale."
+
+    # ------------------------------------------------------- documentazione grafica
+    - id: piante
+      labels: {it: "PIANTE", en: "PLANS"}
+      type: resource_ref_list
+      repeatable: true
+      graph:
+        verdict: node
+        node_type: DocumentNode
+        edge_type: has_documentation
+        direction: outgoing
+        target: DocumentNode
+        note: "La scheda distingue quattro voci (piante, prospetti, sezioni, fotografie) dove
+               `us_table` ha un solo campo `documentazione`."
+
+    - id: prospetti
+      labels: {it: "PROSPETTI", en: "ELEVATION DRAWINGS"}
+      type: resource_ref_list
+      repeatable: true
+      graph:
+        verdict: node
+        node_type: DocumentNode
+        edge_type: has_documentation
+        direction: outgoing
+        target: DocumentNode
+
+    - id: sezioni
+      labels: {it: "SEZIONI", en: "SECTIONS"}
+      type: resource_ref_list
+      repeatable: true
+      graph:
+        verdict: node
+        node_type: DocumentNode
+        edge_type: has_documentation
+        direction: outgoing
+        target: DocumentNode
+
+    - id: fotografie
+      labels: {it: "FOTOGRAFIE", en: "PHOTOGRAPHS"}
+      type: resource_ref_list
+      repeatable: true
+      graph:
+        verdict: node
+        node_type: DocumentNode
+        edge_type: has_documentation
+        direction: outgoing
+        target: DocumentNode
+
+    - id: riferimenti_tabelle_materiali
+      labels: {it: "RIFERIMENTI TABELLE MATERIALI", en: "FINDS TABLE REFERENCES"}
+      type: record_ref_list
+      repeatable: true
+      graph:
+        verdict: edge
+        edge_type: is_part_of
+        direction: incoming
+        target: special_find_record
+        note: "Il reperto è parte dell'unità: l'arco canonico va dal reperto all'US, quindi da questa
+               casella si scrive un arco ENTRANTE."
+
+    # ---------------------------------------------------------- definizione fisica
+    - id: definizione
+      labels: {it: "DEFINIZIONE", en: "DEFINITION"}
+      type: term
+      required: true
+      vocabulary:
+        scheme: iccd-us-definizione
+      graph:
+        verdict: vocabulary
+        note: "In pyarchinit `d_stratigrafica` determinava il node_type; sulla scheda 2021 il tipo si
+               legge da POSITIVA/NEGATIVA e questa casella resta il termine controllato."
+
+    - id: criteri_distinzione
+      labels: {it: "CRITERI DI DISTINZIONE", en: "CRITERIA OF DISTINCTION"}
+      type: longtext
+      graph:
+        verdict: property
+        property_name: criteria_of_distinction
+
+    - id: modo_formazione
+      labels: {it: "MODO DI FORMAZIONE", en: "MODE OF FORMATION"}
+      type: longtext
+      graph:
+        verdict: property
+        property_name: formation_mode_description
+        note: "In `us_table` la colonna omonima è stata giudicata malformata (duplicato di
+               `formazione`); sulla scheda è una riga a sé, discorsiva, accanto alle caselle
+               naturale/artificiale. La scheda vince."
+
+    - id: componenti_inorganici
+      labels: {it: "INORGANICI", en: "INORGANIC"}
+      type: longtext
+      graph:
+        verdict: property
+        property_name: inorganic_components
+
+    - id: componenti_organici
+      labels: {it: "ORGANICI", en: "ORGANIC"}
+      type: longtext
+      graph:
+        verdict: property
+        property_name: organic_components
+
+    - id: consistenza
+      labels: {it: "CONSISTENZA", en: "CONSISTENCY"}
+      type: term
+      vocabulary:
+        scheme: iccd-us-consistenza
+      graph:
+        verdict: vocabulary
+        qualia: texture
+
+    - id: colore
+      labels: {it: "COLORE", en: "COLOUR"}
+      type: term
+      vocabulary:
+        scheme: iccd-us-colore
+      graph:
+        verdict: vocabulary
+        qualia: color
+
+    - id: misure
+      labels: {it: "MISURE", en: "MEASUREMENTS"}
+      type: quantity_list
+      repeatable: true
+      graph:
+        verdict: property
+        property_name: measurements
+        note: "Le righe dichiarano la qualia (height, width, length, thickness…): sei misure passate
+               al generatore di pyarchinit-mini non arrivavano sul foglio perché la casella era una."
+
+    - id: stato_conservazione
+      labels: {it: "STATO DI CONSERVAZIONE", en: "STATE OF PRESERVATION"}
+      type: term
+      vocabulary:
+        scheme: iccd-us-stato-conservazione
+      graph:
+        verdict: vocabulary
+        qualia: conservation_state
+
+    # --------------------------------------------------------------- sequenza fisica
+    - id: uguale_a
+      labels: {it: "UGUALE A", en: "SAME AS"}
+      type: unit_ref_list
+      repeatable: true
+      graph:
+        verdict: edge
+        edge_type: equals
+        direction: outgoing
+        target: stratigraphic_unit
+        note: "Sequenza FISICA (AP11 con type_tag 'equals'): la norma e il grafo sono d'accordo fra
+               loro e in disaccordo con il campo unico `rapporti` della tabella. Tutte e dieci le
+               caselle di contatto sono AP11: è la ragione per cui la scheda le tiene in un solo
+               riquadro."
+
+    - id: si_lega_a
+      labels: {it: "SI LEGA A", en: "BONDED TO"}
+      type: unit_ref_list
+      repeatable: true
+      graph:
+        verdict: edge
+        edge_type: bonded_to
+        direction: outgoing
+        target: stratigraphic_unit
+
+    # -------------------------------------------------------- sequenza stratigrafica
+    - id: posteriore_a
+      labels: {it: "POSTERIORE A", en: "LATER THAN"}
+      type: unit_ref_list
+      repeatable: true
+      graph:
+        verdict: edge
+        edge_type: is_after
+        direction: outgoing
+        target: stratigraphic_unit
+        note: "SEQUENZA STRATIGRAFICA sul foglio = solo ordinamento temporale, e nel grafo è l'unico
+               arco che non passa per AP11: P120_occurs_before / AP28_occurs_before."
+
+    - id: anteriore_a
+      labels: {it: "ANTERIORE A", en: "EARLIER THAN"}
+      type: unit_ref_list
+      repeatable: true
+      graph:
+        verdict: edge
+        edge_type: is_after
+        direction: incoming
+        target: stratigraphic_unit
+        note: "Nel grafo esiste UNA direzione canonica (is_after, dal più recente al più antico):
+               'anteriore a' è lo stesso arco letto dall'altro capo, non un arco nuovo."
+
+    - id: gli_si_appoggia
+      labels: {it: "GLI SI APPOGGIA", en: "IS ABUTTED BY"}
+      type: unit_ref_list
+      repeatable: true
+      graph:
+        verdict: edge
+        edge_type: abuts
+        direction: incoming
+        target: stratigraphic_unit
+
+    - id: si_appoggia_a
+      labels: {it: "SI APPOGGIA A", en: "ABUTS"}
+      type: unit_ref_list
+      repeatable: true
+      graph:
+        verdict: edge
+        edge_type: abuts
+        direction: outgoing
+        target: stratigraphic_unit
+
+    - id: coperto_da
+      labels: {it: "COPERTO DA", en: "COVERED BY"}
+      type: unit_ref_list
+      repeatable: true
+      graph:
+        verdict: edge
+        edge_type: overlies
+        direction: incoming
+        target: stratigraphic_unit
+
+    - id: copre
+      labels: {it: "COPRE", en: "COVERS"}
+      type: unit_ref_list
+      repeatable: true
+      graph:
+        verdict: edge
+        edge_type: overlies
+        direction: outgoing
+        target: stratigraphic_unit
+
+    - id: tagliato_da
+      labels: {it: "TAGLIATO DA", en: "CUT BY"}
+      type: unit_ref_list
+      repeatable: true
+      graph:
+        verdict: edge
+        edge_type: cuts
+        direction: incoming
+        target: stratigraphic_unit
+
+    - id: taglia
+      labels: {it: "TAGLIA", en: "CUTS"}
+      type: unit_ref_list
+      repeatable: true
+      graph:
+        verdict: edge
+        edge_type: cuts
+        direction: outgoing
+        target: stratigraphic_unit
+
+    - id: riempito_da
+      labels: {it: "RIEMPITO DA", en: "FILLED BY"}
+      type: unit_ref_list
+      repeatable: true
+      graph:
+        verdict: edge
+        edge_type: fills
+        direction: incoming
+        target: stratigraphic_unit
+
+    - id: riempie
+      labels: {it: "RIEMPIE", en: "FILLS"}
+      type: unit_ref_list
+      repeatable: true
+      graph:
+        verdict: edge
+        edge_type: fills
+        direction: outgoing
+        target: stratigraphic_unit
+
+    # ------------------------------------------------------ descrizione e interpretazione
+    - id: descrizione
+      labels: {it: "DESCRIZIONE", en: "DESCRIPTION"}
+      type: longtext
+      graph:
+        verdict: property
+        property_name: description
+
+    - id: osservazioni
+      labels: {it: "OSSERVAZIONI", en: "OBSERVATIONS"}
+      type: longtext
+      graph:
+        verdict: property
+        property_name: observations
+
+    - id: interpretazione
+      labels: {it: "INTERPRETAZIONE", en: "INTERPRETATION"}
+      type: longtext
+      provenance:
+        enabled: true
+        authors: [human, ai]
+      graph:
+        verdict: property
+        property_name: interpretation
+        note: "Il campo dettato in trincea e ripulito da un modello: porta autore AI e stato di
+               validazione umana, per campo (Clock(ts, by) del CRDT)."
+
+    # -------------------------------------------------------------------- cronologia
+    - id: datazione
+      labels: {it: "DATAZIONE", en: "DATING"}
+      type: text
+      graph:
+        verdict: property
+        property_name: dating
+
+    - id: periodo
+      labels: {it: "PERIODO", en: "PERIOD"}
+      type: epoch_ref
+      graph:
+        verdict: node
+        node_type: EpochNode
+        edge_type: has_first_epoch
+        direction: outgoing
+        target: EpochNode
+
+    - id: fase
+      labels: {it: "FASE", en: "PHASE"}
+      type: epoch_ref
+      graph:
+        verdict: node
+        node_type: EpochNode
+        edge_type: has_first_epoch
+        direction: outgoing
+        target: EpochNode
+        note: "Periodo e fase sono entrambi EpochNode: la fase è una sotto-epoca (has_sub_epoch fra
+               epoche), non un secondo tipo di nodo."
+
+    - id: attivita
+      labels: {it: "ATTIVITÀ", en: "ACTIVITY"}
+      type: activity_ref
+      graph:
+        verdict: node
+        node_type: ActivityNodeGroup
+        edge_type: is_in_activity
+        direction: outgoing
+        target: ActivityNodeGroup
+
+    - id: elementi_datanti
+      labels: {it: "ELEMENTI DATANTI", en: "DATING ELEMENTS"}
+      type: longtext
+      graph:
+        verdict: node
+        node_type: ExtractorNode
+        edge_type: has_data_provenance
+        direction: outgoing
+        attaches_to: "property:dating"
+        target: ExtractorNode
+        note: "È già la catena EM: la datazione è una property la cui provenienza è un Extractor.
+               L'arco parte dalla property, non dall'unità."
+
+    # -------------------------------------------------------- quantificazione e campioni
+    - id: dati_quantitativi
+      labels: {it: "DATI QUANTITATIVI DEI REPERTI", en: "QUANTITATIVE FINDS DATA"}
+      type: quantity_list
+      repeatable: true
+      graph:
+        verdict: property
+        property_name: finds_quantities
+
+    - id: campionature
+      labels: {it: "CAMPIONATURE", en: "SAMPLING"}
+      type: longtext
+      graph:
+        verdict: none
+        blocked_on:
+          needs: "CRMsci S13_Sample — un campione di terreno non è un Special Find"
+          reported: "EM_design_setaccio-US §1, voce 'da decidere'"
+
+    - id: flottazione
+      labels: {it: "FLOTTAZIONE", en: "FLOTATION"}
+      type: longtext
+      graph:
+        verdict: property
+        property_name: flotation
+
+    - id: setacciatura
+      labels: {it: "SETACCIATURA", en: "SIEVING"}
+      type: longtext
+      graph:
+        verdict: property
+        property_name: sieving
+
+    # ---------------------------------------------------------------- responsabilità
+    - id: affidabilita
+      labels: {it: "AFFIDABILITÀ STRATIGRAFICA", en: "STRATIGRAPHIC RELIABILITY"}
+      type: term
+      vocabulary:
+        scheme: iccd-us-affidabilita
+      graph:
+        verdict: vocabulary
+        qualia: certainty_level
+        note: "È la certezza della Extended Matrix: una qualia epistemica, non una nota."
+
+    - id: responsabile_scientifico
+      labels: {it: "RESPONSABILE SCIENTIFICO DELLE INDAGINI", en: "SCIENTIFIC DIRECTOR OF INVESTIGATIONS"}
+      type: person_ref
+      graph:
+        verdict: node
+        node_type: AuthorNode
+        edge_type: has_author
+        direction: outgoing
+        target: AuthorNode
+
+    - id: data_rilevamento
+      labels: {it: "DATA RILEVAMENTO SUL CAMPO", en: "DATE OF FIELD RECORDING"}
+      type: date
+      graph:
+        verdict: property
+        property_name: field_recording_date
+        attaches_to: recording_act
+        note: "La scheda nomina tre atti distinti (rilevamento, rielaborazione, responsabilità
+               scientifica) con le loro date: la tabella li appiattiva accanto all'unità."
+
+    - id: responsabile_compilazione
+      labels: {it: "RESPONSABILE COMPILAZIONE SUL CAMPO", en: "FIELD RECORDER"}
+      type: person_ref
+      graph:
+        verdict: node
+        node_type: AuthorNode
+        edge_type: has_author
+        direction: outgoing
+        target: AuthorNode
+
+    - id: data_rielaborazione
+      labels: {it: "DATA RIELABORAZIONE", en: "DATE OF REVISION"}
+      type: date
+      graph:
+        verdict: property
+        property_name: revision_date
+        attaches_to: revision_act
+
+    - id: responsabile_rielaborazione
+      labels: {it: "RESPONSABILE RIELABORAZIONE", en: "REVISION RESPONSIBLE"}
+      type: person_ref
+      graph:
+        verdict: node
+        node_type: AuthorNode
+        edge_type: has_author
+        direction: outgoing
+        target: AuthorNode
+
+  sheet:
+    page: A4
+    margins_mm: {top: 10, right: 12, bottom: 10, left: 12}
+    sides:
+      - id: recto
+        labels: {it: "fronte", en: "recto"}
+        rows:
+          - h: 9
+            cells:
+              - {field: us, w: 11.6}
+              - {field: ente_responsabile, w: 73.2}
+              - {field: anno, w: 15.2}
+          - h: 15
+            cells:
+              - {field: ufficio_mic, w: 53.4}
+              - {field: identificativo_riferimento, w: 46.6}
+          - h: 9
+            cells:
+              - {field: localita, w: 100}
+          - h: 10
+            cells:
+              - {field: area, w: 65.1}
+              - {field: saggio, w: 34.9}
+          - h: 15
+            cells:
+              - {field: ambiente, w: 19.0}
+              - {field: posizione, w: 17.0}
+              - {field: settore, w: 9.5}
+              - {field: quadrato, w: 9.5}
+              - {field: quote, w: 21.0}
+              - block: formazione
+                label: none
+                w: 24.0
+                rows:
+                  - h: 7.5
+                    cells: [{field: formazione_natura, w: 100, label: none}]
+                  - h: 7.5
+                    cells: [{field: formazione_segno, w: 100, label: none}]
+          - h: 26
+            cells:
+              - {field: piante, w: 12.9}
+              - {field: prospetti, w: 14.0}
+              - {field: sezioni, w: 21.2}
+              - {field: fotografie, w: 16.9}
+              - {field: riferimenti_tabelle_materiali, w: 35.0}
+          - h: 14
+            cells: [{field: definizione, w: 100}]
+          - h: 16
+            cells: [{field: criteri_distinzione, w: 100}]
+          - h: 14
+            cells: [{field: modo_formazione, w: 100}]
+          - h: 26
+            cells:
+              - block: componenti
+                block_labels: {it: "COMPONENTI", en: "COMPONENTS"}
+                rotated: true
+                w: 100
+                rows:
+                  - h: 26
+                    cells:
+                      - {field: componenti_inorganici, w: 42.3}
+                      - {field: componenti_organici, w: 57.7}
+          - h: 19
+            cells:
+              - {field: consistenza, w: 32.7}
+              - {field: colore, w: 30.9}
+              - {field: misure, w: 36.4}
+          - h: 13
+            cells: [{field: stato_conservazione, w: 100}]
+          - h: 52
+            cells:
+              - block: sequenza_fisica
+                block_labels: {it: "SEQUENZA FISICA", en: "PHYSICAL SEQUENCE"}
+                rotated: true
+                w: 64
+                rows:
+                  - h: 10.4
+                    cells:
+                      - {field: uguale_a, w: 46}
+                      - {field: si_lega_a, w: 54}
+                  - h: 10.4
+                    cells:
+                      - {field: gli_si_appoggia, w: 46}
+                      - {field: si_appoggia_a, w: 54}
+                  - h: 10.4
+                    cells:
+                      - {field: coperto_da, w: 46}
+                      - {field: copre, w: 54}
+                  - h: 10.4
+                    cells:
+                      - {field: tagliato_da, w: 46}
+                      - {field: taglia, w: 54}
+                  - h: 10.4
+                    cells:
+                      - {field: riempito_da, w: 46}
+                      - {field: riempie, w: 54}
+              - block: sequenza_stratigrafica
+                block_labels: {it: "SEQUENZA STRATIGRAFICA", en: "STRATIGRAPHIC SEQUENCE"}
+                rotated: true
+                w: 36
+                rows:
+                  - h: 26
+                    cells: [{field: posteriore_a, w: 100}]
+                  - h: 26
+                    cells: [{field: anteriore_a, w: 100}]
+
+      - id: verso
+        labels: {it: "retro", en: "verso"}
+        rows:
+          - h: 46
+            cells: [{field: descrizione, w: 100}]
+          - h: 30
+            cells: [{field: osservazioni, w: 100}]
+          - h: 45
+            cells: [{field: interpretazione, w: 100}]
+          - h: 16
+            cells:
+              - {field: datazione, w: 34.1}
+              - {field: periodo, w: 16.9}
+              - {field: fase, w: 18.3}
+              - {field: attivita, w: 30.7}
+          - h: 20
+            cells: [{field: elementi_datanti, w: 100}]
+          - h: 18
+            cells: [{field: dati_quantitativi, w: 100}]
+          - h: 20
+            cells:
+              - {field: campionature, w: 34.1}
+              - {field: flottazione, w: 35.2}
+              - {field: setacciatura, w: 30.7}
+          - h: 11
+            cells: [{field: affidabilita, w: 100}]
+          - h: 10
+            cells: [{field: responsabile_scientifico, w: 100}]
+          - h: 10
+            cells:
+              - {field: data_rilevamento, w: 34.1}
+              - {field: responsabile_compilazione, w: 65.9}
+          - h: 10
+            cells:
+              - {field: data_rielaborazione, w: 34.1}
+              - {field: responsabile_rielaborazione, w: 65.9}
+
+  notes:
+    measured_source:
+      cells_in_word_model: 66
+      content_width_pt: 504
+      content_height_mm: 473
+      why_two_sides: "473 mm di contenuto contro 277 mm di altezza utile per facciata A4"
+    divergences_from_pyarchinit_us_table:
+      excluded_malformed_columns: [cont_per, ref_n, modo_formazione_duplicato, rapporti2, doc_usv]
+      usm_columns_not_here: 46
+      language_twin_columns_not_here: 13

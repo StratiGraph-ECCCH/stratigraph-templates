@@ -1,0 +1,64 @@
+# ROTTA: un'etichetta verticale lunga in un blocco basso: stamperebbe tagliata.
+# La definizione minima VALIDA: base delle rotture che le stanno accanto.
+# Due campi, un paragrafo, un fronte e un retro.
+template:
+  id: broken-rotated-label
+  standard:
+    authority: TEST
+    code: MIN
+    version: "1"
+    kind: field_model
+    invented: true
+    title: {it: "Minima"}
+  source_language: it
+  languages: [it]
+  identity:
+    human_key:
+      fields: [numero]
+      pattern: "MIN {numero}"
+    uid:
+      policy: minted_by_creator
+      derive_from_human_key: false
+  provenance:
+    per_field: true
+  paragraphs:
+    - id: tutto
+      labels: {it: "Tutto"}
+      fields: [numero, copre, nota]
+  fields:
+    - id: numero
+      labels: {it: "NUMERO"}
+      type: identifier
+      required: true
+      graph: {verdict: identity}
+    - id: copre
+      labels: {it: "COPRE"}
+      type: unit_ref_list
+      graph: {verdict: edge, edge_type: overlies, direction: outgoing, target: stratigraphic_unit}
+    - id: nota
+      labels: {it: "NOTA"}
+      type: longtext
+      graph: {verdict: property, property_name: note}
+  sheet:
+    page: A4
+    margins_mm: {top: 12, right: 12, bottom: 12, left: 12}
+    sides:
+      - id: recto
+        labels: {it: "fronte"}
+        rows:
+          - h: 10
+            cells:
+              - {field: numero, w: 30}
+              - {field: copre, w: 70}
+      - id: verso
+        labels: {it: "retro"}
+        rows:
+          - h: 10
+            cells:
+              - block: gruppo
+                block_labels: {it: "SEQUENZA STRATIGRAFICA"}
+                rotated: true
+                w: 100
+                rows:
+                  - h: 10
+                    cells: [{field: nota, w: 100}]

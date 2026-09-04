@@ -1,0 +1,25 @@
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix fx:   <https://example.invalid/fixture/ue-definicion-es/> .
+
+fx: a skos:ConceptScheme ;
+    skos:prefLabel "FIXTURE — definición de la unidad estratigráfica (ES)"@es .
+
+fx:estrato a skos:Concept ;
+    skos:inScheme fx: ;
+    skos:prefLabel "estrato"@es .
+
+fx:muro a skos:Concept ;
+    skos:inScheme fx: ;
+    skos:prefLabel "muro"@es .
+
+fx:fosa a skos:Concept ;
+    skos:inScheme fx: ;
+    skos:prefLabel "fosa"@es .
+
+fx:relleno a skos:Concept ;
+    skos:inScheme fx: ;
+    skos:prefLabel "relleno"@es .
+
+fx:derrumbe a skos:Concept ;
+    skos:inScheme fx: ;
+    skos:prefLabel "estrato de derrumbe"@es .
