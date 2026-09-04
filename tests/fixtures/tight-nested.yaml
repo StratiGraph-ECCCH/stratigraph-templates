@@ -1,0 +1,67 @@
+# Il caso STRETTO: quattro caselle da 25% dentro un blocco etichettato, cioè la
+# forma in cui il foglio ICCD mette le dodici caselle. Se il renderer somma il
+# padding SOPRA la percentuale, questa riga esce dalla pagina — ed è esattamente
+# il difetto che il cancello test_nothing_spills_outside_the_printable_area
+# deve prendere. Nessuna tolleranza da regalare: 25+25+25+25 = 100.
+template:
+  id: tight-nested
+  standard:
+    authority: TEST
+    code: TIGHT
+    version: "1"
+    kind: field_model
+    invented: true
+    title: {it: "Riga stretta"}
+  source_language: it
+  languages: [it]
+  identity:
+    human_key: {fields: [numero], pattern: "T {numero}"}
+    uid: {policy: minted_by_creator, derive_from_human_key: false}
+  provenance: {per_field: true}
+  paragraphs:
+    - id: tutto
+      labels: {it: "Tutto"}
+      fields: [numero, a, b, c, d]
+  fields:
+    - id: numero
+      labels: {it: "N"}
+      type: identifier
+      graph: {verdict: identity}
+    - id: a
+      labels: {it: "COPRE"}
+      type: unit_ref_list
+      graph: {verdict: edge, edge_type: overlies, direction: outgoing, target: stratigraphic_unit}
+    - id: b
+      labels: {it: "COPERTO DA"}
+      type: unit_ref_list
+      graph: {verdict: edge, edge_type: overlies, direction: incoming, target: stratigraphic_unit}
+    - id: c
+      labels: {it: "TAGLIA"}
+      type: unit_ref_list
+      graph: {verdict: edge, edge_type: cuts, direction: outgoing, target: stratigraphic_unit}
+    - id: d
+      labels: {it: "TAGLIATO DA"}
+      type: unit_ref_list
+      graph: {verdict: edge, edge_type: cuts, direction: incoming, target: stratigraphic_unit}
+  sheet:
+    page: A4
+    margins_mm: {top: 12, right: 12, bottom: 12, left: 12}
+    sides:
+      - id: recto
+        labels: {it: "fronte"}
+        rows:
+          - h: 10
+            cells: [{field: numero, w: 100}]
+          - h: 30
+            cells:
+              - block: sequenza
+                block_labels: {it: "SEQUENZA"}
+                rotated: true
+                w: 100
+                rows:
+                  - h: 30
+                    cells:
+                      - {field: a, w: 25}
+                      - {field: b, w: 25}
+                      - {field: c, w: 25}
+                      - {field: d, w: 25}

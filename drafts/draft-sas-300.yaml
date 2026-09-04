@@ -1,0 +1,2890 @@
+# DRAFT — proposta estratta da ICCD_normativa_SAS_3.00_102019.xsd
+#
+# Struttura, etichette (alias), obbligatorietà, ripetibilità e legami ai vocabolari
+# vengono dall'XSD e sono AFFIDABILI. Due cose non ci sono e non possono esserci:
+#
+#  1. il LEGAME AL GRAFO: ogni campo esce con `verdict: undecided`, e il validatore
+#     rifiuta una definizione che porti ancora quel marcatore. Lo decide una persona.
+#  2. il FOGLIO: un XSD non dice dove sta una casella sulla carta. Qui c'è una riga per
+#     campo perché non si perda nulla, non perché sia un impaginato.
+#
+# Estratto da: /Users/emanueldemetrescu/Documents/GitHub/Standard-catalografici/schede-di-catalogo/beni archeologici/SAS 3.00/ICCD_normativa_SAS_3.00_102019.xsd
+
+template:
+  id: draft-sas-300
+  standard:
+    authority: ICCD
+    code: SAS
+    version: "3.00"
+    kind: catalogue_record
+    title:
+      it: "Bozza estratta dalla normativa SAS 3.00"
+    source: "ICCD_normativa_SAS_3.00_102019.xsd"
+    license: "CC BY-SA"
+    attribution: "MiC — ICCD"
+  source_language: it
+  languages: [it]
+  identity:
+    human_key:
+      fields: []          # DA DECIDERE: quali campi compongono l'identificativo umano
+      pattern: ""
+    uid:
+      policy: minted_by_creator
+      derive_from_human_key: false
+  provenance:
+    per_field: true
+  vocabularies:
+    - iccd-sas-va_acqt
+    - iccd-sas-va_admp
+    - iccd-sas-va_aint
+    - iccd-sas-va_alnt
+    - iccd-sas-va_cmnt_sas
+    - iccd-sas-va_cronologia
+    - iccd-sas-va_drat
+    - iccd-sas-va_dscm
+    - iccd-sas-va_dsct
+    - iccd-sas-va_fntp
+    - iccd-sas-va_ftap
+    - iccd-sas-va_nvct
+    - iccd-sas-va_ogtd_sas
+    - iccd-sas-va_vdcp
+    - iccd-sas-vc_admx
+    - iccd-sas-vc_ads_3_00
+    - iccd-sas-vc_bibx
+    - iccd-sas-vc_cdgg
+    - iccd-sas-vc_ctl_sas
+    - iccd-sas-vc_drax
+    - iccd-sas-vc_dtm
+    - iccd-sas-vc_dtsl
+    - iccd-sas-vc_dtsv
+    - iccd-sas-vc_dtzs
+    - iccd-sas-vc_ftax
+    - iccd-sas-vc_gal_sas
+    - iccd-sas-vc_gam_3_00
+    - iccd-sas-vc_gpl_sas
+    - iccd-sas-vc_gpm_3_00
+    - iccd-sas-vc_gpp_glp_gap
+    - iccd-sas-vc_gpt_glt_gat
+    - iccd-sas-vc_lir
+    - iccd-sas-vc_localizzazione
+    - iccd-sas-vc_misr
+    - iccd-sas-vc_mist
+    - iccd-sas-vc_misu_sas
+    - iccd-sas-vc_mtpa_sas
+    - iccd-sas-vc_mtps_sas
+    - iccd-sas-vc_pve_pre
+    - iccd-sas-vc_rser_sas
+    - iccd-sas-vc_rset
+    - iccd-sas-vc_tsk_sas
+    - iccd-sas-vc_vdcx
+  paragraphs:
+    - id: cd
+      labels: {it: "CODICI"}
+      fields:
+        - sas_cd_tsk
+        - sas_cd_lir
+        - cd_nct
+        - cd_nct_nctr
+        - cd_nct_nctn
+        - cd_nct_ncts
+        - sas_cd_esc
+        - sas_cd_ecp
+    - id: rv
+      labels: {it: "RELAZIONI"}
+      fields:
+        - rv_rve
+        - rv_rve_rvel
+        - rv_rve_rver
+        - rv_rve_rves
+        - rv_rse
+        - rv_rse_rser
+        - rv_rse_rset
+        - rv_rse_rsec
+        - sas_rv_roz
+    - id: ac
+      labels: {it: "ALTRI CODICI"}
+      fields:
+        - sas_ac_acc
+        - ac_acs
+        - ac_acs_acse
+        - ac_acs_acsc
+        - ac_acs_acss
+    - id: og
+      labels: {it: "OGGETTO"}
+      fields:
+        - og_ogt
+        - og_ogt_ogtd
+        - og_ogt_ogti
+        - og_ogt_ogtx
+        - og_ogt_ogty
+        - og_ogt_ogtz
+        - sas_og_ali
+    - id: lc
+      labels: {it: "LOCALIZZAZIONE GEOGRAFICO AMMINISTRATIVA"}
+      fields:
+        - lc_pvc
+        - lc_pvc_pvcs
+        - lc_pvc_pvcr
+        - lc_pvc_pvcp
+        - lc_pvc_pvcc
+        - lc_pvc_pvcl
+        - lc_pvc_pvce
+        - lc_pvc_pvci
+        - lc_pvc_pvcv
+        - sas_lc_pvl
+        - sas_lc_pve
+    - id: cs
+      labels: {it: "LOCALIZZAZIONE CATASTALE"}
+      fields:
+        - sas_cs_ctl
+        - cs_cts
+        - cs_cts_ctsc
+        - cs_cts_ctsf
+        - cs_cts_ctsn
+        - cs_cts_ctsp
+        - cs_cts_ctse
+    - id: gp
+      labels: {it: "GEOREFERENZIAZIONE TRAMITE PUNTO"}
+      fields:
+        - sas_gp_gpl
+        - gp_gpd
+        - gp_gpd_gpdp
+        - gp_gpd_gpdp_gpdpx
+        - gp_gpd_gpdp_gpdpy
+        - gp_gpc
+        - gp_gpc_gpct
+        - gp_gpc_gpcl
+        - gp_gpc_gpci
+        - gp_gpc_gpcs
+        - sas_gp_gpm
+        - sas_gp_gpt
+        - sas_gp_gpp
+        - gp_gpb
+        - gp_gpb_gpbb
+        - gp_gpb_gpbt
+        - gp_gpb_gpbo
+    - id: ga
+      labels: {it: "GEOREFERENZIAZIONE TRAMITE AREA"}
+      fields:
+        - sas_ga_gal
+        - ga_gad
+        - ga_gad_gadp
+        - ga_gad_gadp_gadpx
+        - ga_gad_gadp_gadpy
+        - ga_gaq
+        - ga_gaq_gaqi
+        - ga_gaq_gaqs
+        - sas_ga_gam
+        - sas_ga_gat
+        - sas_ga_gap
+        - ga_gab
+        - ga_gab_gabb
+        - ga_gab_gabt
+        - ga_gab_gabo
+    - id: re
+      labels: {it: "MODALITA' DI REPERIMENTO"}
+      fields:
+        - re_dsc
+        - re_dsc_ncun
+        - re_dsc_scan
+        - re_dsc_dscf
+        - re_dsc_dsca
+        - re_dsc_dsct
+        - re_dsc_dscm
+        - re_dsc_dscd
+        - re_dsc_dsch
+        - re_dsc_dscz
+        - re_dsc_dscn
+        - re_ain
+        - re_ain_aint
+        - re_ain_aind
+        - re_ain_ainr
+        - sas_re_res
+    - id: dt
+      labels: {it: "CRONOLOGIA"}
+      fields:
+        - dt_dtz
+        - dt_dtz_dtzg
+        - dt_dtz_dtzs
+        - dt_dts
+        - dt_dts_dtsi
+        - dt_dts_dtsv
+        - dt_dts_dtsf
+        - dt_dts_dtsl
+        - sas_dt_dtc
+        - sas_dt_dtm
+        - sas_dt_adt
+    - id: mt
+      labels: {it: "DATI TECNICI"}
+      fields:
+        - mt_pos
+        - mt_pos_posn
+        - mt_pos_posd
+        - mt_mis
+        - mt_mis_misu
+        - mt_mis_misf
+        - mt_mis_misl
+        - mt_mis_misn
+        - mt_mis_misv
+        - mt_mis_misr
+        - mt_mis_mist
+    - id: ca
+      labels: {it: "CARATTERI AMBIENTALI"}
+      fields:
+        - ca_gef
+        - ca_gef_gefd
+        - ca_gef_gefi
+        - ca_geo
+        - ca_geo_geod
+        - ca_gel
+        - ca_gel_geld
+        - ca_gel_gelc
+        - ca_ped
+        - ca_ped_pedd
+        - ca_ped_pede
+        - ca_ped_pedc
+        - sas_ca_agr
+        - ca_usd
+        - ca_usd_usdt
+        - ca_usd_usdc
+    - id: da
+      labels: {it: "DATI ANALITICI"}
+      fields:
+        - da_des
+        - da_des_deso
+        - sas_da_con
+        - sas_da_sca
+        - sas_da_nrl
+        - sas_da_nsc
+        - sas_da_ncs
+        - da_mtp
+        - da_mtp_mtpd
+        - da_mtp_mtps
+        - da_mtp_mtpe
+        - da_mtp_mtpa
+    - id: mc
+      labels: {it: "CAMPIONI E ANALISI"}
+      fields:
+        - mc_cmn
+        - mc_cmn_cmnt
+        - mc_cmn_cmnd
+        - mc_cmn_cmnn
+        - mc_cmn_cmnp
+        - mc_alb
+        - mc_alb_albt
+        - mc_alb_albn
+        - mc_alb_albd
+    - id: tu
+      labels: {it: "CONDIZIONE GIURIDICA E VINCOLI"}
+      fields:
+        - tu_acq
+        - tu_acq_acqt
+        - tu_acq_acqn
+        - tu_acq_acqd
+        - tu_acq_acql
+        - tu_cdg
+        - tu_cdg_cdgg
+        - tu_cdg_cdgs
+        - tu_cdg_cdgi
+        - tu_nvc
+        - tu_nvc_nvct
+        - tu_nvc_nvce
+        - tu_nvc_nvcd
+        - tu_nvc_nvcr
+        - tu_nvc_nvcp
+        - tu_nvc_nvci
+        - tu_aln
+        - tu_aln_alnt
+        - tu_aln_alnd
+        - tu_aln_alnn
+        - tu_stu
+        - tu_stu_stut
+        - tu_stu_stun
+        - tu_stu_stua
+    - id: do
+      labels: {it: "FONTI E DOCUMENTI DI RIFERIMENTO"}
+      fields:
+        - do_fta
+        - do_fta_ftax
+        - do_fta_ftap
+        - do_fta_ftaa
+        - do_fta_ftad
+        - do_fta_ftae
+        - do_fta_ftac
+        - do_fta_ftan
+        - do_fta_ftat
+        - do_fta_ftaf
+        - do_dra
+        - do_dra_drax
+        - do_dra_drat
+        - do_dra_drao
+        - do_dra_dras
+        - do_dra_drae
+        - do_dra_drac
+        - do_dra_dran
+        - do_dra_draa
+        - do_dra_drad
+        - do_vdc
+        - do_vdc_vdcx
+        - do_vdc_vdcp
+        - do_vdc_vdcr
+        - do_vdc_vdcd
+        - do_vdc_vdce
+        - do_vdc_vdca
+        - do_vdc_vdcc
+        - do_vdc_vdcn
+        - do_vdc_vdct
+        - do_fnt
+        - do_fnt_fntp
+        - do_fnt_fnta
+        - do_fnt_fntt
+        - do_fnt_fntd
+        - do_fnt_fntf
+        - do_fnt_fntn
+        - do_fnt_fnts
+        - do_fnt_fnti
+        - do_adm
+        - do_adm_admx
+        - do_adm_admp
+        - do_adm_adma
+        - do_adm_admd
+        - do_adm_adme
+        - do_adm_admc
+        - do_adm_admn
+        - do_adm_admt
+        - do_bib
+        - do_bib_bibx
+        - do_bib_ncun
+        - do_bib_biba
+        - do_bib_bibd
+        - do_bib_bibh
+        - do_bib_bibn
+        - do_bib_bibi
+        - sas_do_bil
+    - id: ad
+      labels: {it: "ACCESSO AI DATI"}
+      fields:
+        - ad_ads
+        - ad_ads_adsp
+        - ad_ads_adsm
+        - ad_ads_adsd
+    - id: cm
+      labels: {it: "COMPILAZIONE"}
+      fields:
+        - cm_cmp
+        - cm_cmp_cmpd
+        - cm_cmp_cmpn
+        - sas_cm_rsr
+        - sas_cm_fur
+        - cm_rvm
+        - cm_rvm_rvmd
+        - cm_rvm_rvmn
+        - cm_agg
+        - cm_agg_aggd
+        - cm_agg_aggn
+        - cm_agg_agge
+        - cm_agg_aggr
+        - cm_agg_aggf
+        - cm_isp
+        - cm_isp_ispd
+        - cm_isp_ispn
+    - id: an
+      labels: {it: "ANNOTAZIONI"}
+      fields:
+        - sas_an_oss
+  fields:
+    - id: sas_cd_tsk
+      labels: {it: "Tipo scheda"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      required: true
+      max_len: "0,4"
+      vocabulary:
+        scheme: iccd-sas-vc_tsk_sas
+        binding: "VC_TSK_SAS"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_SAS_CD_TSK"
+    - id: sas_cd_lir
+      labels: {it: "Livello ricerca"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      required: true
+      max_len: "0,5"
+      vocabulary:
+        scheme: iccd-sas-vc_lir
+        binding: "VC_LIR"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_SAS_CD_LIR"
+    - id: cd_nct
+      labels: {it: "CODICE UNIVOCO"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      required: true
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: campostrutturato_CD_NCT"
+    - id: cd_nct_nctr
+      labels: {it: "Codice regione"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      required: true
+      max_len: "0,2"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_CD_NCT_NCTR"
+    - id: cd_nct_nctn
+      labels: {it: "Numero catalogo generale"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      required: true
+      max_len: "0,8"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_CD_NCT_NCTN"
+    - id: cd_nct_ncts
+      labels: {it: "Suffisso numero catalogo generale"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,2"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_CD_NCT_NCTS"
+    - id: sas_cd_esc
+      labels: {it: "Ente schedatore"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      required: true
+      max_len: "0,25"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_SAS_CD_ESC"
+    - id: sas_cd_ecp
+      labels: {it: "Ente competente"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      required: true
+      max_len: "0,25"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_SAS_CD_ECP"
+    - id: rv_rve
+      labels: {it: "STRUTTURA COMPLESSA"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: campostrutturato_RV_RVE"
+    - id: rv_rve_rvel
+      labels: {it: "Livello"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,25"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_RV_RVE_RVEL"
+    - id: rv_rve_rver
+      labels: {it: "Codice bene radice"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,25"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_RV_RVE_RVER"
+    - id: rv_rve_rves
+      labels: {it: "Codice bene componente"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      repeatable: true
+      max_len: "0,25"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_RV_RVE_RVES"
+    - id: rv_rse
+      labels: {it: "RELAZIONI DIRETTE"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      repeatable: true
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: campostrutturato_RV_RSE"
+    - id: rv_rse_rser
+      labels: {it: "Tipo relazione"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,70"
+      vocabulary:
+        scheme: iccd-sas-vc_rser_sas
+        binding: "VC_RSER_SAS"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_RV_RSE_RSER"
+    - id: rv_rse_rset
+      labels: {it: "Tipo scheda"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,10"
+      vocabulary:
+        scheme: iccd-sas-vc_rset
+        binding: "VC_RSET"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_RV_RSE_RSET"
+    - id: rv_rse_rsec
+      labels: {it: "Codice bene"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,25"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_RV_RSE_RSEC"
+    - id: sas_rv_roz
+      labels: {it: "Altre relazioni"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      repeatable: true
+      max_len: "0,25"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_SAS_RV_ROZ"
+    - id: sas_ac_acc
+      labels: {it: "Altro codice bene"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      repeatable: true
+      max_len: "0,25"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_SAS_AC_ACC"
+    - id: ac_acs
+      labels: {it: "SCHEDE CORRELATE"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      repeatable: true
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: campostrutturato_AC_ACS"
+    - id: ac_acs_acse
+      labels: {it: "Ente"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,25"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_AC_ACS_ACSE"
+    - id: ac_acs_acsc
+      labels: {it: "Codice"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,25"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_AC_ACS_ACSC"
+    - id: ac_acs_acss
+      labels: {it: "Specifiche"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,100"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_AC_ACS_ACSS"
+    - id: og_ogt
+      labels: {it: "OGGETTO"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      required: true
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: campostrutturato_OG_OGT"
+    - id: og_ogt_ogtd
+      labels: {it: "Definizione"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      required: true
+      max_len: "0,50"
+      vocabulary:
+        scheme: iccd-sas-va_ogtd_sas
+        binding: "VA_OGTD_SAS"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_OG_OGT_OGTD"
+    - id: og_ogt_ogti
+      labels: {it: "Sigla"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,25"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_OG_OGT_OGTI"
+    - id: og_ogt_ogtx
+      labels: {it: "Ambiente"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,25"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_OG_OGT_OGTX"
+    - id: og_ogt_ogty
+      labels: {it: "Settore"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,25"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_OG_OGT_OGTY"
+    - id: og_ogt_ogtz
+      labels: {it: "Quadrato"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      repeatable: true
+      max_len: "0,25"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_OG_OGT_OGTZ"
+    - id: sas_og_ali
+      labels: {it: "Altre indicazioni"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,100"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_SAS_OG_ALI"
+    - id: lc_pvc
+      labels: {it: "LOCALIZZAZIONE GEOGRAFICO AMMINISTRATIVA"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      required: true
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: campostrutturato_LC_PVC"
+    - id: lc_pvc_pvcs
+      labels: {it: "Stato"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      required: true
+      max_len: "0,50"
+      vocabulary:
+        scheme: iccd-sas-vc_localizzazione
+        binding: "VC_Localizzazione"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_LC_PVC_PVCS"
+    - id: lc_pvc_pvcr
+      labels: {it: "Regione"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      required: true
+      max_len: "0,25"
+      vocabulary:
+        scheme: iccd-sas-vc_localizzazione
+        binding: "VC_Localizzazione"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_LC_PVC_PVCR"
+    - id: lc_pvc_pvcp
+      labels: {it: "Provincia"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      required: true
+      max_len: "0,3"
+      vocabulary:
+        scheme: iccd-sas-vc_localizzazione
+        binding: "VC_Localizzazione"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_LC_PVC_PVCP"
+    - id: lc_pvc_pvcc
+      labels: {it: "Comune"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      required: true
+      max_len: "0,50"
+      vocabulary:
+        scheme: iccd-sas-vc_localizzazione
+        binding: "VC_Localizzazione"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_LC_PVC_PVCC"
+    - id: lc_pvc_pvcl
+      labels: {it: "Località"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,50"
+      vocabulary:
+        scheme: iccd-sas-vc_localizzazione
+        binding: "VC_Localizzazione"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_LC_PVC_PVCL"
+    - id: lc_pvc_pvce
+      labels: {it: "Altra ripartizione amministrativa o località estera"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,250"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_LC_PVC_PVCE"
+    - id: lc_pvc_pvci
+      labels: {it: "Indirizzo"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,250"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_LC_PVC_PVCI"
+    - id: lc_pvc_pvcv
+      labels: {it: "Altre vie di comunicazione"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,1000"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_LC_PVC_PVCV"
+    - id: sas_lc_pvl
+      labels: {it: "Altra località"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      repeatable: true
+      max_len: "0,250"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_SAS_LC_PVL"
+    - id: sas_lc_pve
+      labels: {it: "Diocesi"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      repeatable: true
+      max_len: "0,50"
+      vocabulary:
+        scheme: iccd-sas-vc_pve_pre
+        binding: "VC_PVE_PRE"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_SAS_LC_PVE"
+    - id: sas_cs_ctl
+      labels: {it: "Tipo di localizzazione"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,40"
+      vocabulary:
+        scheme: iccd-sas-vc_ctl_sas
+        binding: "VC_CTL_SAS"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_SAS_CS_CTL"
+    - id: cs_cts
+      labels: {it: "LOCALIZZAZIONE CATASTALE"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      repeatable: true
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: campostrutturato_CS_CTS"
+    - id: cs_cts_ctsc
+      labels: {it: "Comune"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,50"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_CS_CTS_CTSC"
+    - id: cs_cts_ctsf
+      labels: {it: "Foglio Data"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      repeatable: true
+      max_len: "0,100"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_CS_CTS_CTSF"
+    - id: cs_cts_ctsn
+      labels: {it: "Particelle"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      repeatable: true
+      max_len: "0,500"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_CS_CTS_CTSN"
+    - id: cs_cts_ctsp
+      labels: {it: "Proprietari"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      repeatable: true
+      max_len: "0,500"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_CS_CTS_CTSP"
+    - id: cs_cts_ctse
+      labels: {it: "Particelle ed altri elementi di confine"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,1000"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_CS_CTS_CTSE"
+    - id: sas_gp_gpl
+      labels: {it: "Tipo di localizzazione"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,40"
+      vocabulary:
+        scheme: iccd-sas-vc_gpl_sas
+        binding: "VC_GPL_SAS"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_SAS_GP_GPL"
+    - id: gp_gpd
+      labels: {it: "DESCRIZIONE DEL PUNTO"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: campostrutturato_GP_GPD"
+    - id: gp_gpd_gpdp
+      labels: {it: "PUNTO"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: campostrutturato_GP_GPD_GPDP"
+    - id: gp_gpd_gpdp_gpdpx
+      labels: {it: "Coordinata X"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,12"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_GP_GPD_GPDP_GPDPX"
+    - id: gp_gpd_gpdp_gpdpy
+      labels: {it: "Coordinata Y"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,12"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_GP_GPD_GPDP_GPDPY"
+    - id: gp_gpc
+      labels: {it: "CARATTERISTICHE DEL PUNTO"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: campostrutturato_GP_GPC"
+    - id: gp_gpc_gpct
+      labels: {it: "Tipo"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,50"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_GP_GPC_GPCT"
+    - id: gp_gpc_gpcl
+      labels: {it: "Quota s.l.m."}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,12"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_GP_GPC_GPCL"
+    - id: gp_gpc_gpci
+      labels: {it: "Quota minima s.l.m. dell'area rappresentata dal punto"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,12"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_GP_GPC_GPCI"
+    - id: gp_gpc_gpcs
+      labels: {it: "Quota massima s.l.m. dell'area rappresentata dal punto"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,12"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_GP_GPC_GPCS"
+    - id: sas_gp_gpm
+      labels: {it: "Metodo di georeferenziazione"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,70"
+      vocabulary:
+        scheme: iccd-sas-vc_gpm_3_00
+        binding: "VC_GPM_3.00"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_SAS_GP_GPM"
+    - id: sas_gp_gpt
+      labels: {it: "Tecnica di georeferenziazione"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,70"
+      vocabulary:
+        scheme: iccd-sas-vc_gpt_glt_gat
+        binding: "VC_GPT_GLT_GAT"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_SAS_GP_GPT"
+    - id: sas_gp_gpp
+      labels: {it: "Proiezione e Sistema di riferimento"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,50"
+      vocabulary:
+        scheme: iccd-sas-vc_gpp_glp_gap
+        binding: "VC_GPP_GLP_GAP"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_SAS_GP_GPP"
+    - id: gp_gpb
+      labels: {it: "BASE DI RIFERIMENTO"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: campostrutturato_GP_GPB"
+    - id: gp_gpb_gpbb
+      labels: {it: "Descrizione sintetica"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,20"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_GP_GPB_GPBB"
+    - id: gp_gpb_gpbt
+      labels: {it: "Data"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,10"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_GP_GPB_GPBT"
+    - id: gp_gpb_gpbo
+      labels: {it: "Note"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,250"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_GP_GPB_GPBO"
+    - id: sas_ga_gal
+      labels: {it: "Tipo di localizzazione"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,40"
+      vocabulary:
+        scheme: iccd-sas-vc_gal_sas
+        binding: "VC_GAL_SAS"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_SAS_GA_GAL"
+    - id: ga_gad
+      labels: {it: "DESCRIZIONE DEL POLIGONO"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: campostrutturato_GA_GAD"
+    - id: ga_gad_gadp
+      labels: {it: "PUNTO DEL POLIGONO"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      repeatable: true
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: campostrutturato_GA_GAD_GADP"
+    - id: ga_gad_gadp_gadpx
+      labels: {it: "Coordinata X"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,12"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_GA_GAD_GADP_GADPX"
+    - id: ga_gad_gadp_gadpy
+      labels: {it: "Coordinata Y"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,12"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_GA_GAD_GADP_GADPY"
+    - id: ga_gaq
+      labels: {it: "ALTIMETRIA DELL'AREA"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: campostrutturato_GA_GAQ"
+    - id: ga_gaq_gaqi
+      labels: {it: "Quota minima s.l.m."}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,12"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_GA_GAQ_GAQI"
+    - id: ga_gaq_gaqs
+      labels: {it: "Quota massima s.l.m."}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,12"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_GA_GAQ_GAQS"
+    - id: sas_ga_gam
+      labels: {it: "Metodo di georeferenziazione"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,70"
+      vocabulary:
+        scheme: iccd-sas-vc_gam_3_00
+        binding: "VC_GAM_3.00_"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_SAS_GA_GAM"
+    - id: sas_ga_gat
+      labels: {it: "Tecnica di georeferenziazione"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,70"
+      vocabulary:
+        scheme: iccd-sas-vc_gpt_glt_gat
+        binding: "VC_GPT_GLT_GAT"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_SAS_GA_GAT"
+    - id: sas_ga_gap
+      labels: {it: "Proiezione e Sistema di riferimento"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,50"
+      vocabulary:
+        scheme: iccd-sas-vc_gpp_glp_gap
+        binding: "VC_GPP_GLP_GAP"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_SAS_GA_GAP"
+    - id: ga_gab
+      labels: {it: "BASE DI RIFERIMENTO"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: campostrutturato_GA_GAB"
+    - id: ga_gab_gabb
+      labels: {it: "Descrizione sintetica"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,20"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_GA_GAB_GABB"
+    - id: ga_gab_gabt
+      labels: {it: "Data"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,10"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_GA_GAB_GABT"
+    - id: ga_gab_gabo
+      labels: {it: "Note"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,250"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_GA_GAB_GABO"
+    - id: re_dsc
+      labels: {it: "DATI DI SCAVO"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: campostrutturato_RE_DSC"
+    - id: re_dsc_ncun
+      labels: {it: "Codice univoco ICCD"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,8"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_RE_DSC_NCUN"
+    - id: re_dsc_scan
+      labels: {it: "Denominazione dello scavo"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,100"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_RE_DSC_SCAN"
+    - id: re_dsc_dscf
+      labels: {it: "Ente responsabile"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      repeatable: true
+      max_len: "0,100"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_RE_DSC_DSCF"
+    - id: re_dsc_dsca
+      labels: {it: "Responsabile scientifico"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      repeatable: true
+      max_len: "0,100"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_RE_DSC_DSCA"
+    - id: re_dsc_dsct
+      labels: {it: "Motivo"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,100"
+      vocabulary:
+        scheme: iccd-sas-va_dsct
+        binding: "VA_DSCT"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_RE_DSC_DSCT"
+    - id: re_dsc_dscm
+      labels: {it: "Metodo"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,100"
+      vocabulary:
+        scheme: iccd-sas-va_dscm
+        binding: "VA_DSCM"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_RE_DSC_DSCM"
+    - id: re_dsc_dscd
+      labels: {it: "Data"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,50"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_RE_DSC_DSCD"
+    - id: re_dsc_dsch
+      labels: {it: "Sigla per citazione"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,8"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_RE_DSC_DSCH"
+    - id: re_dsc_dscz
+      labels: {it: "Bibliografia specifica"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      repeatable: true
+      max_len: "0,1000"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_RE_DSC_DSCZ"
+    - id: re_dsc_dscn
+      labels: {it: "Specifiche"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,5000"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_RE_DSC_DSCN"
+    - id: re_ain
+      labels: {it: "ALTRE INDAGINI"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      repeatable: true
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: campostrutturato_RE_AIN"
+    - id: re_ain_aint
+      labels: {it: "Tipo"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,100"
+      vocabulary:
+        scheme: iccd-sas-va_aint
+        binding: "VA_AINT"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_RE_AIN_AINT"
+    - id: re_ain_aind
+      labels: {it: "Data"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,50"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_RE_AIN_AIND"
+    - id: re_ain_ainr
+      labels: {it: "Responsabile"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,100"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_RE_AIN_AINR"
+    - id: sas_re_res
+      labels: {it: "Specifiche di reperimento"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,5000"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_SAS_RE_RES"
+    - id: dt_dtz
+      labels: {it: "CRONOLOGIA GENERICA"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      required: true
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: campostrutturato_DT_DTZ"
+    - id: dt_dtz_dtzg
+      labels: {it: "Fascia cronologica di riferimento"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      required: true
+      max_len: "0,50"
+      vocabulary:
+        scheme: iccd-sas-va_cronologia
+        binding: "VA_Cronologia"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DT_DTZ_DTZG"
+    - id: dt_dtz_dtzs
+      labels: {it: "Frazione cronologica"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,25"
+      vocabulary:
+        scheme: iccd-sas-vc_dtzs
+        binding: "VC_DTZS"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DT_DTZ_DTZS"
+    - id: dt_dts
+      labels: {it: "CRONOLOGIA SPECIFICA"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: campostrutturato_DT_DTS"
+    - id: dt_dts_dtsi
+      labels: {it: "Da"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,15"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DT_DTS_DTSI"
+    - id: dt_dts_dtsv
+      labels: {it: "Validità"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,25"
+      vocabulary:
+        scheme: iccd-sas-vc_dtsv
+        binding: "VC_DTSV"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DT_DTS_DTSV"
+    - id: dt_dts_dtsf
+      labels: {it: "A"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,15"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DT_DTS_DTSF"
+    - id: dt_dts_dtsl
+      labels: {it: "Validità"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,25"
+      vocabulary:
+        scheme: iccd-sas-vc_dtsl
+        binding: "VC_DTSL"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DT_DTS_DTSL"
+    - id: sas_dt_dtc
+      labels: {it: "Sequenza culturale"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,5000"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_SAS_DT_DTC"
+    - id: sas_dt_dtm
+      labels: {it: "Motivazione cronologia"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      required: true
+      repeatable: true
+      max_len: "0,250"
+      vocabulary:
+        scheme: iccd-sas-vc_dtm
+        binding: "VC_DTM"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_SAS_DT_DTM"
+    - id: sas_dt_adt
+      labels: {it: "Altre datazioni"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      repeatable: true
+      max_len: "0,250"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_SAS_DT_ADT"
+    - id: mt_pos
+      labels: {it: "POSIZIONE SAGGIO"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: campostrutturato_MT_POS"
+    - id: mt_pos_posn
+      labels: {it: "Numero area"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,25"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_MT_POS_POSN"
+    - id: mt_pos_posd
+      labels: {it: "Descrizione"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,500"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_MT_POS_POSD"
+    - id: mt_mis
+      labels: {it: "MISURE"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: campostrutturato_MT_MIS"
+    - id: mt_mis_misu
+      labels: {it: "Unità"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,5"
+      vocabulary:
+        scheme: iccd-sas-vc_misu_sas
+        binding: "VC_MISU_SAS"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_MT_MIS_MISU"
+    - id: mt_mis_misf
+      labels: {it: "Superficie"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,25"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_MT_MIS_MISF"
+    - id: mt_mis_misl
+      labels: {it: "Larghezza"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,6"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_MT_MIS_MISL"
+    - id: mt_mis_misn
+      labels: {it: "Lunghezza"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,6"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_MT_MIS_MISN"
+    - id: mt_mis_misv
+      labels: {it: "Varie"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,250"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_MT_MIS_MISV"
+    - id: mt_mis_misr
+      labels: {it: "Mancanza"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,3"
+      vocabulary:
+        scheme: iccd-sas-vc_misr
+        binding: "VC_MISR"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_MT_MIS_MISR"
+    - id: mt_mis_mist
+      labels: {it: "Validità"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,3"
+      vocabulary:
+        scheme: iccd-sas-vc_mist
+        binding: "VC_MIST"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_MT_MIS_MIST"
+    - id: ca_gef
+      labels: {it: "GEOGRAFIA"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: campostrutturato_CA_GEF"
+    - id: ca_gef_gefd
+      labels: {it: "Descrizione"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,1000"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_CA_GEF_GEFD"
+    - id: ca_gef_gefi
+      labels: {it: "Sistema idrico di superficie"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,1000"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_CA_GEF_GEFI"
+    - id: ca_geo
+      labels: {it: "GEOMORFOLOGIA"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: campostrutturato_CA_GEO"
+    - id: ca_geo_geod
+      labels: {it: "Definizione"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,1000"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_CA_GEO_GEOD"
+    - id: ca_gel
+      labels: {it: "GEOLOGIA"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: campostrutturato_CA_GEL"
+    - id: ca_gel_geld
+      labels: {it: "Definizione"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,1000"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_CA_GEL_GELD"
+    - id: ca_gel_gelc
+      labels: {it: "Riferimento carta geologica"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,250"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_CA_GEL_GELC"
+    - id: ca_ped
+      labels: {it: "PEDOLOGIA"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: campostrutturato_CA_PED"
+    - id: ca_ped_pedd
+      labels: {it: "Definizione"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,1000"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_CA_PED_PEDD"
+    - id: ca_ped_pede
+      labels: {it: "Esame dei campioni"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,1000"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_CA_PED_PEDE"
+    - id: ca_ped_pedc
+      labels: {it: "Riferimento carta pedologica"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,250"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_CA_PED_PEDC"
+    - id: sas_ca_agr
+      labels: {it: "Situazione agraria e naturalistica"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,1000"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_SAS_CA_AGR"
+    - id: ca_usd
+      labels: {it: "USO DEL SUOLO"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: campostrutturato_CA_USD"
+    - id: ca_usd_usdt
+      labels: {it: "Tipo di utilizzo"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,250"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_CA_USD_USDT"
+    - id: ca_usd_usdc
+      labels: {it: "Riferimento carta utilizzazione dei suoli"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,250"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_CA_USD_USDC"
+    - id: da_des
+      labels: {it: "DESCRIZIONE"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: campostrutturato_DA_DES"
+    - id: da_des_deso
+      labels: {it: "Descrizione"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,7000"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DA_DES_DESO"
+    - id: sas_da_con
+      labels: {it: "Condizioni a scavo ultimato"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,500"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_SAS_DA_CON"
+    - id: sas_da_sca
+      labels: {it: "Proposte scavi da effettuare"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,500"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_SAS_DA_SCA"
+    - id: sas_da_nrl
+      labels: {it: "Notizie raccolte sul luogo"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,5000"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_SAS_DA_NRL"
+    - id: sas_da_nsc
+      labels: {it: "Notizie storico critiche"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,5000"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_SAS_DA_NSC"
+    - id: sas_da_ncs
+      labels: {it: "Interpretazione"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,2000"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_SAS_DA_NCS"
+    - id: da_mtp
+      labels: {it: "MATERIALI PRESENTI"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      repeatable: true
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: campostrutturato_DA_MTP"
+    - id: da_mtp_mtpd
+      labels: {it: "Definizione tipo percentuale"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      repeatable: true
+      max_len: "0,250"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DA_MTP_MTPD"
+    - id: da_mtp_mtps
+      labels: {it: "Densità"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,10"
+      vocabulary:
+        scheme: iccd-sas-vc_mtps_sas
+        binding: "VC_MTPS_SAS"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DA_MTP_MTPS"
+    - id: da_mtp_mtpe
+      labels: {it: "Periodo"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,50"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DA_MTP_MTPE"
+    - id: da_mtp_mtpa
+      labels: {it: "Assenza"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,3"
+      vocabulary:
+        scheme: iccd-sas-vc_mtpa_sas
+        binding: "VC_MTPA_SAS"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DA_MTP_MTPA"
+    - id: mc_cmn
+      labels: {it: "CAMPIONI"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      repeatable: true
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: campostrutturato_MC_CMN"
+    - id: mc_cmn_cmnt
+      labels: {it: "Tipo"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,50"
+      vocabulary:
+        scheme: iccd-sas-va_cmnt_sas
+        binding: "VA_CMNT_SAS"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_MC_CMN_CMNT"
+    - id: mc_cmn_cmnd
+      labels: {it: "Definizione"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,250"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_MC_CMN_CMND"
+    - id: mc_cmn_cmnn
+      labels: {it: "Numero"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,15"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_MC_CMN_CMNN"
+    - id: mc_cmn_cmnp
+      labels: {it: "Posizione"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,50"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_MC_CMN_CMNP"
+    - id: mc_alb
+      labels: {it: "ANALISI"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      repeatable: true
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: campostrutturato_MC_ALB"
+    - id: mc_alb_albt
+      labels: {it: "Tipo"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,50"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_MC_ALB_ALBT"
+    - id: mc_alb_albn
+      labels: {it: "Numero"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,15"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_MC_ALB_ALBN"
+    - id: mc_alb_albd
+      labels: {it: "Data"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,10"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_MC_ALB_ALBD"
+    - id: tu_acq
+      labels: {it: "ACQUISIZIONE"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: campostrutturato_TU_ACQ"
+    - id: tu_acq_acqt
+      labels: {it: "Tipo acquisizione"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,50"
+      vocabulary:
+        scheme: iccd-sas-va_acqt
+        binding: "VA_ACQT"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_TU_ACQ_ACQT"
+    - id: tu_acq_acqn
+      labels: {it: "Nome"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,50"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_TU_ACQ_ACQN"
+    - id: tu_acq_acqd
+      labels: {it: "Data acquisizione"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,25"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_TU_ACQ_ACQD"
+    - id: tu_acq_acql
+      labels: {it: "Luogo acquisizione"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,50"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_TU_ACQ_ACQL"
+    - id: tu_cdg
+      labels: {it: "CONDIZIONE GIURIDICA"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      required: true
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: campostrutturato_TU_CDG"
+    - id: tu_cdg_cdgg
+      labels: {it: "Indicazione generica"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      required: true
+      max_len: "0,50"
+      vocabulary:
+        scheme: iccd-sas-vc_cdgg
+        binding: "VC_CDGG"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_TU_CDG_CDGG"
+    - id: tu_cdg_cdgs
+      labels: {it: "Indicazione specifica"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      repeatable: true
+      max_len: "0,250"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_TU_CDG_CDGS"
+    - id: tu_cdg_cdgi
+      labels: {it: "Indirizzo"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      repeatable: true
+      max_len: "0,250"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_TU_CDG_CDGI"
+    - id: tu_nvc
+      labels: {it: "PROVVEDIMENTI DI TUTELA"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      repeatable: true
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: campostrutturato_TU_NVC"
+    - id: tu_nvc_nvct
+      labels: {it: "Tipo provvedimento"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,50"
+      vocabulary:
+        scheme: iccd-sas-va_nvct
+        binding: "VA_NVCT"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_TU_NVC_NVCT"
+    - id: tu_nvc_nvce
+      labels: {it: "Estremi provvedimento"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,25"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_TU_NVC_NVCE"
+    - id: tu_nvc_nvcd
+      labels: {it: "Data notificazione"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,25"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_TU_NVC_NVCD"
+    - id: tu_nvc_nvcr
+      labels: {it: "Data di registrazione o G.U."}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,50"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_TU_NVC_NVCR"
+    - id: tu_nvc_nvcp
+      labels: {it: "Estensione del vincolo"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,50"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_TU_NVC_NVCP"
+    - id: tu_nvc_nvci
+      labels: {it: "Estremi provvedimento in itinere"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,25"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_TU_NVC_NVCI"
+    - id: tu_aln
+      labels: {it: "MUTAMENTI TITOLARITA'/POSSESSO/DETENZIONE"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      repeatable: true
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: campostrutturato_TU_ALN"
+    - id: tu_aln_alnt
+      labels: {it: "Tipo evento"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,50"
+      vocabulary:
+        scheme: iccd-sas-va_alnt
+        binding: "VA_ALNT"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_TU_ALN_ALNT"
+    - id: tu_aln_alnd
+      labels: {it: "Data evento"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,25"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_TU_ALN_ALND"
+    - id: tu_aln_alnn
+      labels: {it: "Note"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,250"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_TU_ALN_ALNN"
+    - id: tu_stu
+      labels: {it: "STRUMENTI URBANISTICI"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: campostrutturato_TU_STU"
+    - id: tu_stu_stut
+      labels: {it: "Strumenti in vigore"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,250"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_TU_STU_STUT"
+    - id: tu_stu_stun
+      labels: {it: "Sintesi normativa"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,250"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_TU_STU_STUN"
+    - id: tu_stu_stua
+      labels: {it: "Vincoli altre amministrazioni"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,250"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_TU_STU_STUA"
+    - id: do_fta
+      labels: {it: "DOCUMENTAZIONE FOTOGRAFICA"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      required: true
+      repeatable: true
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: campostrutturato_DO_FTA"
+    - id: do_fta_ftax
+      labels: {it: "Genere"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      required: true
+      max_len: "0,50"
+      vocabulary:
+        scheme: iccd-sas-vc_ftax
+        binding: "VC_FTAX"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DO_FTA_FTAX"
+    - id: do_fta_ftap
+      labels: {it: "Tipo"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      required: true
+      max_len: "0,50"
+      vocabulary:
+        scheme: iccd-sas-va_ftap
+        binding: "VA_FTAP"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DO_FTA_FTAP"
+    - id: do_fta_ftaa
+      labels: {it: "Autore"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,50"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DO_FTA_FTAA"
+    - id: do_fta_ftad
+      labels: {it: "Data"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,25"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DO_FTA_FTAD"
+    - id: do_fta_ftae
+      labels: {it: "Ente proprietario"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,250"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DO_FTA_FTAE"
+    - id: do_fta_ftac
+      labels: {it: "Collocazione"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,50"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DO_FTA_FTAC"
+    - id: do_fta_ftan
+      labels: {it: "Codice identificativo"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      required: true
+      max_len: "0,25"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DO_FTA_FTAN"
+    - id: do_fta_ftat
+      labels: {it: "Note"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,250"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DO_FTA_FTAT"
+    - id: do_fta_ftaf
+      labels: {it: "Formato"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,25"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DO_FTA_FTAF"
+    - id: do_dra
+      labels: {it: "DOCUMENTAZIONE GRAFICA"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      repeatable: true
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: campostrutturato_DO_DRA"
+    - id: do_dra_drax
+      labels: {it: "Genere"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,25"
+      vocabulary:
+        scheme: iccd-sas-vc_drax
+        binding: "VC_DRAX"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DO_DRA_DRAX"
+    - id: do_dra_drat
+      labels: {it: "Tipo"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,50"
+      vocabulary:
+        scheme: iccd-sas-va_drat
+        binding: "VA_DRAT"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DO_DRA_DRAT"
+    - id: do_dra_drao
+      labels: {it: "Note"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,250"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DO_DRA_DRAO"
+    - id: do_dra_dras
+      labels: {it: "Scala"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,25"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DO_DRA_DRAS"
+    - id: do_dra_drae
+      labels: {it: "Ente proprietario"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,250"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DO_DRA_DRAE"
+    - id: do_dra_drac
+      labels: {it: "Collocazione"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,50"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DO_DRA_DRAC"
+    - id: do_dra_dran
+      labels: {it: "Codice identificativo"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,25"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DO_DRA_DRAN"
+    - id: do_dra_draa
+      labels: {it: "Autore"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,50"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DO_DRA_DRAA"
+    - id: do_dra_drad
+      labels: {it: "Data"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,25"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DO_DRA_DRAD"
+    - id: do_vdc
+      labels: {it: "DOCUMENTAZIONE VIDEO-CINEMATOGRAFICA"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      repeatable: true
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: campostrutturato_DO_VDC"
+    - id: do_vdc_vdcx
+      labels: {it: "Genere"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,25"
+      vocabulary:
+        scheme: iccd-sas-vc_vdcx
+        binding: "VC_VDCX"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DO_VDC_VDCX"
+    - id: do_vdc_vdcp
+      labels: {it: "Tipo"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,50"
+      vocabulary:
+        scheme: iccd-sas-va_vdcp
+        binding: "VA_VDCP"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DO_VDC_VDCP"
+    - id: do_vdc_vdcr
+      labels: {it: "Autore"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,50"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DO_VDC_VDCR"
+    - id: do_vdc_vdcd
+      labels: {it: "Data"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,25"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DO_VDC_VDCD"
+    - id: do_vdc_vdce
+      labels: {it: "Ente proprietario"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,250"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DO_VDC_VDCE"
+    - id: do_vdc_vdca
+      labels: {it: "Titolo"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,50"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DO_VDC_VDCA"
+    - id: do_vdc_vdcc
+      labels: {it: "Collocazione"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,50"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DO_VDC_VDCC"
+    - id: do_vdc_vdcn
+      labels: {it: "Codice identificativo"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,25"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DO_VDC_VDCN"
+    - id: do_vdc_vdct
+      labels: {it: "Note"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,250"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DO_VDC_VDCT"
+    - id: do_fnt
+      labels: {it: "FONTI E DOCUMENTI"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      repeatable: true
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: campostrutturato_DO_FNT"
+    - id: do_fnt_fntp
+      labels: {it: "Tipo"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,50"
+      vocabulary:
+        scheme: iccd-sas-va_fntp
+        binding: "VA_FNTP"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DO_FNT_FNTP"
+    - id: do_fnt_fnta
+      labels: {it: "Autore"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,50"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DO_FNT_FNTA"
+    - id: do_fnt_fntt
+      labels: {it: "Denominazione"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,250"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DO_FNT_FNTT"
+    - id: do_fnt_fntd
+      labels: {it: "Data"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,25"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DO_FNT_FNTD"
+    - id: do_fnt_fntf
+      labels: {it: "Foglio/Carta"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,25"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DO_FNT_FNTF"
+    - id: do_fnt_fntn
+      labels: {it: "Nome archivio"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,250"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DO_FNT_FNTN"
+    - id: do_fnt_fnts
+      labels: {it: "Posizione"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,50"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DO_FNT_FNTS"
+    - id: do_fnt_fnti
+      labels: {it: "Codice identificativo"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,25"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DO_FNT_FNTI"
+    - id: do_adm
+      labels: {it: "ALTRA DOCUMENTAZIONE MULTIMEDIALE"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      repeatable: true
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: campostrutturato_DO_ADM"
+    - id: do_adm_admx
+      labels: {it: "Genere"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,25"
+      vocabulary:
+        scheme: iccd-sas-vc_admx
+        binding: "VC_ADMX"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DO_ADM_ADMX"
+    - id: do_adm_admp
+      labels: {it: "Tipo"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,50"
+      vocabulary:
+        scheme: iccd-sas-va_admp
+        binding: "VA_ADMP"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DO_ADM_ADMP"
+    - id: do_adm_adma
+      labels: {it: "Autore"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,50"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DO_ADM_ADMA"
+    - id: do_adm_admd
+      labels: {it: "Data"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,25"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DO_ADM_ADMD"
+    - id: do_adm_adme
+      labels: {it: "Ente proprietario"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,250"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DO_ADM_ADME"
+    - id: do_adm_admc
+      labels: {it: "Collocazione"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,50"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DO_ADM_ADMC"
+    - id: do_adm_admn
+      labels: {it: "Codice identificativo"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,25"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DO_ADM_ADMN"
+    - id: do_adm_admt
+      labels: {it: "Note"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,250"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DO_ADM_ADMT"
+    - id: do_bib
+      labels: {it: "BIBLIOGRAFIA"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      repeatable: true
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: campostrutturato_DO_BIB"
+    - id: do_bib_bibx
+      labels: {it: "Genere"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,25"
+      vocabulary:
+        scheme: iccd-sas-vc_bibx
+        binding: "VC_BIBX"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DO_BIB_BIBX"
+    - id: do_bib_ncun
+      labels: {it: "Codice univoco ICCD"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,8"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DO_BIB_NCUN"
+    - id: do_bib_biba
+      labels: {it: "Autore"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,250"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DO_BIB_BIBA"
+    - id: do_bib_bibd
+      labels: {it: "Anno di edizione"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,10"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DO_BIB_BIBD"
+    - id: do_bib_bibh
+      labels: {it: "Sigla per citazione"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,8"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DO_BIB_BIBH"
+    - id: do_bib_bibn
+      labels: {it: "V., pp., nn."}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,50"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DO_BIB_BIBN"
+    - id: do_bib_bibi
+      labels: {it: "V., tavv., figg."}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,50"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_DO_BIB_BIBI"
+    - id: sas_do_bil
+      labels: {it: "Citazione completa"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      repeatable: true
+      max_len: "0,500"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_SAS_DO_BIL"
+    - id: ad_ads
+      labels: {it: "SPECIFICHE DI ACCESSO AI DATI"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      required: true
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: campostrutturato_AD_ADS"
+    - id: ad_ads_adsp
+      labels: {it: "Profilo di accesso"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      required: true
+      max_len: "0,1"
+      vocabulary:
+        scheme: iccd-sas-vc_ads_3_00
+        binding: "VC_ADS_3.00"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_AD_ADS_ADSP"
+    - id: ad_ads_adsm
+      labels: {it: "Motivazione"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      required: true
+      max_len: "0,70"
+      vocabulary:
+        scheme: iccd-sas-vc_ads_3_00
+        binding: "VC_ADS_3.00"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_AD_ADS_ADSM"
+    - id: ad_ads_adsd
+      labels: {it: "Indicazioni sulla data di scadenza"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,25"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_AD_ADS_ADSD"
+    - id: cm_cmp
+      labels: {it: "COMPILAZIONE"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      required: true
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: campostrutturato_CM_CMP"
+    - id: cm_cmp_cmpd
+      labels: {it: "Data"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      required: true
+      max_len: "0,4"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_CM_CMP_CMPD"
+    - id: cm_cmp_cmpn
+      labels: {it: "Nome"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      required: true
+      repeatable: true
+      max_len: "0,70"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_CM_CMP_CMPN"
+    - id: sas_cm_rsr
+      labels: {it: "Referente scientifico"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      repeatable: true
+      max_len: "0,70"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_SAS_CM_RSR"
+    - id: sas_cm_fur
+      labels: {it: "Funzionario responsabile"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      required: true
+      repeatable: true
+      max_len: "0,70"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_SAS_CM_FUR"
+    - id: cm_rvm
+      labels: {it: "TRASCRIZIONE PER INFORMATIZZAZIONE"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: campostrutturato_CM_RVM"
+    - id: cm_rvm_rvmd
+      labels: {it: "Data"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,4"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_CM_RVM_RVMD"
+    - id: cm_rvm_rvmn
+      labels: {it: "Nome"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,70"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_CM_RVM_RVMN"
+    - id: cm_agg
+      labels: {it: "AGGIORNAMENTO REVISIONE"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      repeatable: true
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: campostrutturato_CM_AGG"
+    - id: cm_agg_aggd
+      labels: {it: "Data"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,4"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_CM_AGG_AGGD"
+    - id: cm_agg_aggn
+      labels: {it: "Nome"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,70"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_CM_AGG_AGGN"
+    - id: cm_agg_agge
+      labels: {it: "Ente"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,70"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_CM_AGG_AGGE"
+    - id: cm_agg_aggr
+      labels: {it: "Referente scientifico"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      repeatable: true
+      max_len: "0,70"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_CM_AGG_AGGR"
+    - id: cm_agg_aggf
+      labels: {it: "Funzionario responsabile"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      repeatable: true
+      max_len: "0,70"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_CM_AGG_AGGF"
+    - id: cm_isp
+      labels: {it: "ISPEZIONI"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      repeatable: true
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: campostrutturato_CM_ISP"
+    - id: cm_isp_ispd
+      labels: {it: "Data"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,4"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_CM_ISP_ISPD"
+    - id: cm_isp_ispn
+      labels: {it: "Funzionario responsabile"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,70"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_CM_ISP_ISPN"
+    - id: sas_an_oss
+      labels: {it: "Osservazioni"}
+      type: text          # DA DECIDERE: l'XSD dà la lunghezza, non il tipo di dato
+      max_len: "0,5000"
+      graph:
+        verdict: undecided   # DA DECIDERE da una persona
+        note: "xsd: camposemplice_SAS_AN_OSS"
+  sheet:
+    page: A4
+    margins_mm: {top: 12, right: 12, bottom: 12, left: 12}
+    sides:
+      - id: recto
+        labels: {it: fronte}
+        rows:   # NON è un impaginato: una riga per campo, da rifare a mano
+          - h: 8
+            cells: [{field: sas_cd_tsk, w: 100}]
+          - h: 8
+            cells: [{field: sas_cd_lir, w: 100}]
+          - h: 8
+            cells: [{field: cd_nct, w: 100}]
+          - h: 8
+            cells: [{field: cd_nct_nctr, w: 100}]
+          - h: 8
+            cells: [{field: cd_nct_nctn, w: 100}]
+          - h: 8
+            cells: [{field: cd_nct_ncts, w: 100}]
+          - h: 8
+            cells: [{field: sas_cd_esc, w: 100}]
+          - h: 8
+            cells: [{field: sas_cd_ecp, w: 100}]
+          - h: 8
+            cells: [{field: rv_rve, w: 100}]
+          - h: 8
+            cells: [{field: rv_rve_rvel, w: 100}]
+          - h: 8
+            cells: [{field: rv_rve_rver, w: 100}]
+          - h: 8
+            cells: [{field: rv_rve_rves, w: 100}]
+          - h: 8
+            cells: [{field: rv_rse, w: 100}]
+          - h: 8
+            cells: [{field: rv_rse_rser, w: 100}]
+          - h: 8
+            cells: [{field: rv_rse_rset, w: 100}]
+          - h: 8
+            cells: [{field: rv_rse_rsec, w: 100}]
+          - h: 8
+            cells: [{field: sas_rv_roz, w: 100}]
+          - h: 8
+            cells: [{field: sas_ac_acc, w: 100}]
+          - h: 8
+            cells: [{field: ac_acs, w: 100}]
+          - h: 8
+            cells: [{field: ac_acs_acse, w: 100}]
+          - h: 8
+            cells: [{field: ac_acs_acsc, w: 100}]
+          - h: 8
+            cells: [{field: ac_acs_acss, w: 100}]
+          - h: 8
+            cells: [{field: og_ogt, w: 100}]
+          - h: 8
+            cells: [{field: og_ogt_ogtd, w: 100}]
+          - h: 8
+            cells: [{field: og_ogt_ogti, w: 100}]
+          - h: 8
+            cells: [{field: og_ogt_ogtx, w: 100}]
+          - h: 8
+            cells: [{field: og_ogt_ogty, w: 100}]
+          - h: 8
+            cells: [{field: og_ogt_ogtz, w: 100}]
+          - h: 8
+            cells: [{field: sas_og_ali, w: 100}]
+          - h: 8
+            cells: [{field: lc_pvc, w: 100}]
+          - h: 8
+            cells: [{field: lc_pvc_pvcs, w: 100}]
+          - h: 8
+            cells: [{field: lc_pvc_pvcr, w: 100}]
+          - h: 8
+            cells: [{field: lc_pvc_pvcp, w: 100}]
+          - h: 8
+            cells: [{field: lc_pvc_pvcc, w: 100}]
+          - h: 8
+            cells: [{field: lc_pvc_pvcl, w: 100}]
+          - h: 8
+            cells: [{field: lc_pvc_pvce, w: 100}]
+          - h: 8
+            cells: [{field: lc_pvc_pvci, w: 100}]
+          - h: 8
+            cells: [{field: lc_pvc_pvcv, w: 100}]
+          - h: 8
+            cells: [{field: sas_lc_pvl, w: 100}]
+          - h: 8
+            cells: [{field: sas_lc_pve, w: 100}]
+          - h: 8
+            cells: [{field: sas_cs_ctl, w: 100}]
+          - h: 8
+            cells: [{field: cs_cts, w: 100}]
+          - h: 8
+            cells: [{field: cs_cts_ctsc, w: 100}]
+          - h: 8
+            cells: [{field: cs_cts_ctsf, w: 100}]
+          - h: 8
+            cells: [{field: cs_cts_ctsn, w: 100}]
+          - h: 8
+            cells: [{field: cs_cts_ctsp, w: 100}]
+          - h: 8
+            cells: [{field: cs_cts_ctse, w: 100}]
+          - h: 8
+            cells: [{field: sas_gp_gpl, w: 100}]
+          - h: 8
+            cells: [{field: gp_gpd, w: 100}]
+          - h: 8
+            cells: [{field: gp_gpd_gpdp, w: 100}]
+          - h: 8
+            cells: [{field: gp_gpd_gpdp_gpdpx, w: 100}]
+          - h: 8
+            cells: [{field: gp_gpd_gpdp_gpdpy, w: 100}]
+          - h: 8
+            cells: [{field: gp_gpc, w: 100}]
+          - h: 8
+            cells: [{field: gp_gpc_gpct, w: 100}]
+          - h: 8
+            cells: [{field: gp_gpc_gpcl, w: 100}]
+          - h: 8
+            cells: [{field: gp_gpc_gpci, w: 100}]
+          - h: 8
+            cells: [{field: gp_gpc_gpcs, w: 100}]
+          - h: 8
+            cells: [{field: sas_gp_gpm, w: 100}]
+          - h: 8
+            cells: [{field: sas_gp_gpt, w: 100}]
+          - h: 8
+            cells: [{field: sas_gp_gpp, w: 100}]
+          - h: 8
+            cells: [{field: gp_gpb, w: 100}]
+          - h: 8
+            cells: [{field: gp_gpb_gpbb, w: 100}]
+          - h: 8
+            cells: [{field: gp_gpb_gpbt, w: 100}]
+          - h: 8
+            cells: [{field: gp_gpb_gpbo, w: 100}]
+          - h: 8
+            cells: [{field: sas_ga_gal, w: 100}]
+          - h: 8
+            cells: [{field: ga_gad, w: 100}]
+          - h: 8
+            cells: [{field: ga_gad_gadp, w: 100}]
+          - h: 8
+            cells: [{field: ga_gad_gadp_gadpx, w: 100}]
+          - h: 8
+            cells: [{field: ga_gad_gadp_gadpy, w: 100}]
+          - h: 8
+            cells: [{field: ga_gaq, w: 100}]
+          - h: 8
+            cells: [{field: ga_gaq_gaqi, w: 100}]
+          - h: 8
+            cells: [{field: ga_gaq_gaqs, w: 100}]
+          - h: 8
+            cells: [{field: sas_ga_gam, w: 100}]
+          - h: 8
+            cells: [{field: sas_ga_gat, w: 100}]
+          - h: 8
+            cells: [{field: sas_ga_gap, w: 100}]
+          - h: 8
+            cells: [{field: ga_gab, w: 100}]
+          - h: 8
+            cells: [{field: ga_gab_gabb, w: 100}]
+          - h: 8
+            cells: [{field: ga_gab_gabt, w: 100}]
+          - h: 8
+            cells: [{field: ga_gab_gabo, w: 100}]
+          - h: 8
+            cells: [{field: re_dsc, w: 100}]
+          - h: 8
+            cells: [{field: re_dsc_ncun, w: 100}]
+          - h: 8
+            cells: [{field: re_dsc_scan, w: 100}]
+          - h: 8
+            cells: [{field: re_dsc_dscf, w: 100}]
+          - h: 8
+            cells: [{field: re_dsc_dsca, w: 100}]
+          - h: 8
+            cells: [{field: re_dsc_dsct, w: 100}]
+          - h: 8
+            cells: [{field: re_dsc_dscm, w: 100}]
+          - h: 8
+            cells: [{field: re_dsc_dscd, w: 100}]
+          - h: 8
+            cells: [{field: re_dsc_dsch, w: 100}]
+          - h: 8
+            cells: [{field: re_dsc_dscz, w: 100}]
+          - h: 8
+            cells: [{field: re_dsc_dscn, w: 100}]
+          - h: 8
+            cells: [{field: re_ain, w: 100}]
+          - h: 8
+            cells: [{field: re_ain_aint, w: 100}]
+          - h: 8
+            cells: [{field: re_ain_aind, w: 100}]
+          - h: 8
+            cells: [{field: re_ain_ainr, w: 100}]
+          - h: 8
+            cells: [{field: sas_re_res, w: 100}]
+          - h: 8
+            cells: [{field: dt_dtz, w: 100}]
+          - h: 8
+            cells: [{field: dt_dtz_dtzg, w: 100}]
+          - h: 8
+            cells: [{field: dt_dtz_dtzs, w: 100}]
+          - h: 8
+            cells: [{field: dt_dts, w: 100}]
+          - h: 8
+            cells: [{field: dt_dts_dtsi, w: 100}]
+          - h: 8
+            cells: [{field: dt_dts_dtsv, w: 100}]
+          - h: 8
+            cells: [{field: dt_dts_dtsf, w: 100}]
+          - h: 8
+            cells: [{field: dt_dts_dtsl, w: 100}]
+          - h: 8
+            cells: [{field: sas_dt_dtc, w: 100}]
+          - h: 8
+            cells: [{field: sas_dt_dtm, w: 100}]
+          - h: 8
+            cells: [{field: sas_dt_adt, w: 100}]
+          - h: 8
+            cells: [{field: mt_pos, w: 100}]
+          - h: 8
+            cells: [{field: mt_pos_posn, w: 100}]
+          - h: 8
+            cells: [{field: mt_pos_posd, w: 100}]
+          - h: 8
+            cells: [{field: mt_mis, w: 100}]
+          - h: 8
+            cells: [{field: mt_mis_misu, w: 100}]
+          - h: 8
+            cells: [{field: mt_mis_misf, w: 100}]
+          - h: 8
+            cells: [{field: mt_mis_misl, w: 100}]
+          - h: 8
+            cells: [{field: mt_mis_misn, w: 100}]
+          - h: 8
+            cells: [{field: mt_mis_misv, w: 100}]
+          - h: 8
+            cells: [{field: mt_mis_misr, w: 100}]
+          - h: 8
+            cells: [{field: mt_mis_mist, w: 100}]
+          - h: 8
+            cells: [{field: ca_gef, w: 100}]
+          - h: 8
+            cells: [{field: ca_gef_gefd, w: 100}]
+          - h: 8
+            cells: [{field: ca_gef_gefi, w: 100}]
+          - h: 8
+            cells: [{field: ca_geo, w: 100}]
+          - h: 8
+            cells: [{field: ca_geo_geod, w: 100}]
+          - h: 8
+            cells: [{field: ca_gel, w: 100}]
+          - h: 8
+            cells: [{field: ca_gel_geld, w: 100}]
+          - h: 8
+            cells: [{field: ca_gel_gelc, w: 100}]
+          - h: 8
+            cells: [{field: ca_ped, w: 100}]
+          - h: 8
+            cells: [{field: ca_ped_pedd, w: 100}]
+          - h: 8
+            cells: [{field: ca_ped_pede, w: 100}]
+          - h: 8
+            cells: [{field: ca_ped_pedc, w: 100}]
+          - h: 8
+            cells: [{field: sas_ca_agr, w: 100}]
+          - h: 8
+            cells: [{field: ca_usd, w: 100}]
+          - h: 8
+            cells: [{field: ca_usd_usdt, w: 100}]
+          - h: 8
+            cells: [{field: ca_usd_usdc, w: 100}]
+          - h: 8
+            cells: [{field: da_des, w: 100}]
+          - h: 8
+            cells: [{field: da_des_deso, w: 100}]
+          - h: 8
+            cells: [{field: sas_da_con, w: 100}]
+          - h: 8
+            cells: [{field: sas_da_sca, w: 100}]
+          - h: 8
+            cells: [{field: sas_da_nrl, w: 100}]
+          - h: 8
+            cells: [{field: sas_da_nsc, w: 100}]
+          - h: 8
+            cells: [{field: sas_da_ncs, w: 100}]
+          - h: 8
+            cells: [{field: da_mtp, w: 100}]
+          - h: 8
+            cells: [{field: da_mtp_mtpd, w: 100}]
+          - h: 8
+            cells: [{field: da_mtp_mtps, w: 100}]
+          - h: 8
+            cells: [{field: da_mtp_mtpe, w: 100}]
+          - h: 8
+            cells: [{field: da_mtp_mtpa, w: 100}]
+          - h: 8
+            cells: [{field: mc_cmn, w: 100}]
+          - h: 8
+            cells: [{field: mc_cmn_cmnt, w: 100}]
+          - h: 8
+            cells: [{field: mc_cmn_cmnd, w: 100}]
+          - h: 8
+            cells: [{field: mc_cmn_cmnn, w: 100}]
+          - h: 8
+            cells: [{field: mc_cmn_cmnp, w: 100}]
+          - h: 8
+            cells: [{field: mc_alb, w: 100}]
+          - h: 8
+            cells: [{field: mc_alb_albt, w: 100}]
+          - h: 8
+            cells: [{field: mc_alb_albn, w: 100}]
+          - h: 8
+            cells: [{field: mc_alb_albd, w: 100}]
+          - h: 8
+            cells: [{field: tu_acq, w: 100}]
+          - h: 8
+            cells: [{field: tu_acq_acqt, w: 100}]
+          - h: 8
+            cells: [{field: tu_acq_acqn, w: 100}]
+          - h: 8
+            cells: [{field: tu_acq_acqd, w: 100}]
+          - h: 8
+            cells: [{field: tu_acq_acql, w: 100}]
+          - h: 8
+            cells: [{field: tu_cdg, w: 100}]
+          - h: 8
+            cells: [{field: tu_cdg_cdgg, w: 100}]
+          - h: 8
+            cells: [{field: tu_cdg_cdgs, w: 100}]
+          - h: 8
+            cells: [{field: tu_cdg_cdgi, w: 100}]
+          - h: 8
+            cells: [{field: tu_nvc, w: 100}]
+          - h: 8
+            cells: [{field: tu_nvc_nvct, w: 100}]
+          - h: 8
+            cells: [{field: tu_nvc_nvce, w: 100}]
+          - h: 8
+            cells: [{field: tu_nvc_nvcd, w: 100}]
+          - h: 8
+            cells: [{field: tu_nvc_nvcr, w: 100}]
+          - h: 8
+            cells: [{field: tu_nvc_nvcp, w: 100}]
+          - h: 8
+            cells: [{field: tu_nvc_nvci, w: 100}]
+          - h: 8
+            cells: [{field: tu_aln, w: 100}]
+          - h: 8
+            cells: [{field: tu_aln_alnt, w: 100}]
+          - h: 8
+            cells: [{field: tu_aln_alnd, w: 100}]
+          - h: 8
+            cells: [{field: tu_aln_alnn, w: 100}]
+          - h: 8
+            cells: [{field: tu_stu, w: 100}]
+          - h: 8
+            cells: [{field: tu_stu_stut, w: 100}]
+          - h: 8
+            cells: [{field: tu_stu_stun, w: 100}]
+          - h: 8
+            cells: [{field: tu_stu_stua, w: 100}]
+          - h: 8
+            cells: [{field: do_fta, w: 100}]
+          - h: 8
+            cells: [{field: do_fta_ftax, w: 100}]
+          - h: 8
+            cells: [{field: do_fta_ftap, w: 100}]
+          - h: 8
+            cells: [{field: do_fta_ftaa, w: 100}]
+          - h: 8
+            cells: [{field: do_fta_ftad, w: 100}]
+          - h: 8
+            cells: [{field: do_fta_ftae, w: 100}]
+          - h: 8
+            cells: [{field: do_fta_ftac, w: 100}]
+          - h: 8
+            cells: [{field: do_fta_ftan, w: 100}]
+          - h: 8
+            cells: [{field: do_fta_ftat, w: 100}]
+          - h: 8
+            cells: [{field: do_fta_ftaf, w: 100}]
+          - h: 8
+            cells: [{field: do_dra, w: 100}]
+          - h: 8
+            cells: [{field: do_dra_drax, w: 100}]
+          - h: 8
+            cells: [{field: do_dra_drat, w: 100}]
+          - h: 8
+            cells: [{field: do_dra_drao, w: 100}]
+          - h: 8
+            cells: [{field: do_dra_dras, w: 100}]
+          - h: 8
+            cells: [{field: do_dra_drae, w: 100}]
+          - h: 8
+            cells: [{field: do_dra_drac, w: 100}]
+          - h: 8
+            cells: [{field: do_dra_dran, w: 100}]
+          - h: 8
+            cells: [{field: do_dra_draa, w: 100}]
+          - h: 8
+            cells: [{field: do_dra_drad, w: 100}]
+          - h: 8
+            cells: [{field: do_vdc, w: 100}]
+          - h: 8
+            cells: [{field: do_vdc_vdcx, w: 100}]
+          - h: 8
+            cells: [{field: do_vdc_vdcp, w: 100}]
+          - h: 8
+            cells: [{field: do_vdc_vdcr, w: 100}]
+          - h: 8
+            cells: [{field: do_vdc_vdcd, w: 100}]
+          - h: 8
+            cells: [{field: do_vdc_vdce, w: 100}]
+          - h: 8
+            cells: [{field: do_vdc_vdca, w: 100}]
+          - h: 8
+            cells: [{field: do_vdc_vdcc, w: 100}]
+          - h: 8
+            cells: [{field: do_vdc_vdcn, w: 100}]
+          - h: 8
+            cells: [{field: do_vdc_vdct, w: 100}]
+          - h: 8
+            cells: [{field: do_fnt, w: 100}]
+          - h: 8
+            cells: [{field: do_fnt_fntp, w: 100}]
+          - h: 8
+            cells: [{field: do_fnt_fnta, w: 100}]
+          - h: 8
+            cells: [{field: do_fnt_fntt, w: 100}]
+          - h: 8
+            cells: [{field: do_fnt_fntd, w: 100}]
+          - h: 8
+            cells: [{field: do_fnt_fntf, w: 100}]
+          - h: 8
+            cells: [{field: do_fnt_fntn, w: 100}]
+          - h: 8
+            cells: [{field: do_fnt_fnts, w: 100}]
+          - h: 8
+            cells: [{field: do_fnt_fnti, w: 100}]
+          - h: 8
+            cells: [{field: do_adm, w: 100}]
+          - h: 8
+            cells: [{field: do_adm_admx, w: 100}]
+          - h: 8
+            cells: [{field: do_adm_admp, w: 100}]
+          - h: 8
+            cells: [{field: do_adm_adma, w: 100}]
+          - h: 8
+            cells: [{field: do_adm_admd, w: 100}]
+          - h: 8
+            cells: [{field: do_adm_adme, w: 100}]
+          - h: 8
+            cells: [{field: do_adm_admc, w: 100}]
+          - h: 8
+            cells: [{field: do_adm_admn, w: 100}]
+          - h: 8
+            cells: [{field: do_adm_admt, w: 100}]
+          - h: 8
+            cells: [{field: do_bib, w: 100}]
+          - h: 8
+            cells: [{field: do_bib_bibx, w: 100}]
+          - h: 8
+            cells: [{field: do_bib_ncun, w: 100}]
+          - h: 8
+            cells: [{field: do_bib_biba, w: 100}]
+          - h: 8
+            cells: [{field: do_bib_bibd, w: 100}]
+          - h: 8
+            cells: [{field: do_bib_bibh, w: 100}]
+          - h: 8
+            cells: [{field: do_bib_bibn, w: 100}]
+          - h: 8
+            cells: [{field: do_bib_bibi, w: 100}]
+          - h: 8
+            cells: [{field: sas_do_bil, w: 100}]
+          - h: 8
+            cells: [{field: ad_ads, w: 100}]
+          - h: 8
+            cells: [{field: ad_ads_adsp, w: 100}]
+          - h: 8
+            cells: [{field: ad_ads_adsm, w: 100}]
+          - h: 8
+            cells: [{field: ad_ads_adsd, w: 100}]
+          - h: 8
+            cells: [{field: cm_cmp, w: 100}]
+          - h: 8
+            cells: [{field: cm_cmp_cmpd, w: 100}]
+          - h: 8
+            cells: [{field: cm_cmp_cmpn, w: 100}]
+          - h: 8
+            cells: [{field: sas_cm_rsr, w: 100}]
+          - h: 8
+            cells: [{field: sas_cm_fur, w: 100}]
+          - h: 8
+            cells: [{field: cm_rvm, w: 100}]
+          - h: 8
+            cells: [{field: cm_rvm_rvmd, w: 100}]
+          - h: 8
+            cells: [{field: cm_rvm_rvmn, w: 100}]
+          - h: 8
+            cells: [{field: cm_agg, w: 100}]
+          - h: 8
+            cells: [{field: cm_agg_aggd, w: 100}]
+          - h: 8
+            cells: [{field: cm_agg_aggn, w: 100}]
+          - h: 8
+            cells: [{field: cm_agg_agge, w: 100}]
+          - h: 8
+            cells: [{field: cm_agg_aggr, w: 100}]
+          - h: 8
+            cells: [{field: cm_agg_aggf, w: 100}]
+          - h: 8
+            cells: [{field: cm_isp, w: 100}]
+          - h: 8
+            cells: [{field: cm_isp_ispd, w: 100}]
+          - h: 8
+            cells: [{field: cm_isp_ispn, w: 100}]
+          - h: 8
+            cells: [{field: sas_an_oss, w: 100}]

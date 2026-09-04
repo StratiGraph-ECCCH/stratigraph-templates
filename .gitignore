@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+out/
+.pytest_cache/
+
+# piani e referti di lavoro: non si committano (regola di casa)
+.claude/

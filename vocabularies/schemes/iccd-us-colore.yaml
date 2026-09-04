@@ -1,0 +1,15 @@
+# Il modello ICCD US 2021 prescrive un termine controllato per questa casella,
+# ma l'ICCD non ha (ancora) pubblicato uno schema SKOS per i modelli DA CAMPO:
+# gli strumenti terminologici in RDF coprono le schede di CATALOGO (RA, SI...).
+# Quindi lo schema è DICHIARATO e non risolvibile: chi compila porta il termine,
+# e il giorno in cui esce lo SKOS basta aggiungere 'resolve:' qui.
+scheme:
+  id: iccd-us-colore
+  authority: ICCD
+  labels:
+    it: "Termini per «COLORE» (scheda US da campo)"
+    en: "Terms for «Colour» (US field model)"
+  status: declared
+  license: "CC BY-SA 4.0 (modello US 2021) — vocabolario non ancora pubblicato in SKOS"
+  attribution: "MiC — ICCD"
+  note: "Nessun binding_thesId: quello lo danno le normative di catalogo in XSD, non i modelli da campo."

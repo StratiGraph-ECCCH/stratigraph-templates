@@ -1,0 +1,13 @@
+scheme:
+  id: fx-us-definizione-it
+  authority: FIXTURE
+  labels:
+    it: "FIXTURE — definizione US (italiano)"
+    es: "FIXTURE — definición UE (italiano)"
+  status: resolvable
+  fixture: true
+  uri: "https://example.invalid/fixture/us-definizione-it/"
+  resolve:
+    kind: skos_file
+    path: "vocabularies/fixtures/us-definizione-it.fixture.ttl"
+  note: "Concetti inventati. Serve a provare la risoluzione dell'etichetta e l'allineamento."

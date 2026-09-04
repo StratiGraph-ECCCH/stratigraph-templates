@@ -1,0 +1,12 @@
+scheme:
+  id: fx-ue-definicion-es
+  authority: FIXTURE
+  labels:
+    es: "FIXTURE — definición de la UE (español)"
+    it: "FIXTURE — definizione dell'UE (spagnolo)"
+  status: resolvable
+  fixture: true
+  uri: "https://example.invalid/fixture/ue-definicion-es/"
+  resolve:
+    kind: skos_file
+    path: "vocabularies/fixtures/ue-definicion-es.fixture.ttl"

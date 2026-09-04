@@ -1,0 +1,404 @@
+# SPEC — che cos'è una definizione di scheda
+
+Una **definizione** (in questo repository: un *template*) è un file dichiarativo,
+versionato e citabile, che descrive una scheda di rilevamento archeologico in modo
+che una macchina possa fare tre cose diverse con lo stesso dato:
+
+1. mostrare un **modulo** da compilare,
+2. stampare un **foglio A4 fronte-retro**,
+3. dire al **grafo** che cosa significa ciò che è stato scritto.
+
+Se queste tre cose vivono in tre posti diversi, si perde la coesione che rende la
+scheda un dato; qui stanno in un file solo, e questa specifica dice come.
+
+Chi legge questa pagina e guarda `templates/iccd-us-2021/template.yaml` deve
+poter scrivere la scheda del proprio paese **senza chiedere niente a nessuno**.
+Se serve leggere del codice, la specifica è sbagliata: apri una issue.
+
+---
+
+## 0 · Perché YAML
+
+Due righe, come chiesto:
+
+1. **I commenti sono parte del dato.** Una definizione registra dove la scheda e
+   una tabella preesistente divergono, e perché una casella è stata letta così:
+   JSON non ha commenti e quelle annotazioni finirebbero in un file a parte, cioè
+   si perderebbero. YAML tiene commento e campo sulla stessa riga di sguardo.
+2. **Si scrive a mano.** Testi lunghi (etichette normative di quaranta parole,
+   note) stanno su più righe senza escape, e l'indentazione fa vedere la
+   struttura a paragrafi che la scheda ha già sulla carta.
+
+Il modello dei dati resta però **JSON-compatibile** (nessun tag YAML, nessuna
+ancora, nessun tipo esotico): un consumatore che preferisce JSON converte con
+`yaml.safe_load` + `json.dump` e non perde nulla tranne i commenti.
+
+---
+
+## 1 · Struttura di un file
+
+```yaml
+template:
+  id: <slug>                  # = nome della cartella sotto templates/
+  standard: {...}             # chi lo pubblica, quale codice, quale versione
+  source_language: it         # la lingua della NORMA
+  languages: [it, en]         # tutte le lingue in cui la scheda si può rendere
+  identity: {...}             # la coppia identificativo umano / UID
+  provenance: {...}           # la provenienza per campo
+  vocabularies: [<scheme id>] # gli schemi di vocabolario a cui i campi rimandano
+  paragraphs: [...]           # la SOSTANZA: come i campi si raggruppano
+  fields: [...]               # la SOSTANZA + IL LEGAME AL GRAFO, campo per campo
+  sheet: {...}                # IL FOGLIO: dove sta ogni casella
+  notes: {...}                # libero: misure, provenienza della ricostruzione
+```
+
+### 1.1 · `standard`
+
+| chiave | obbligo | significato |
+|---|---|---|
+| `authority` | sì | chi pubblica la norma (`ICCD`, `DAI`, …) |
+| `code` | sì | il codice della scheda (`US`, `USM`, `SAS`) |
+| `version` | sì | la versione della norma, come stringa (`"2021"`, `"3.00"`) |
+| `kind` | sì | `field_model` (modello da campo) o `catalogue_record` (normativa di catalogo) |
+| `title` | sì | titolo per lingua |
+| `source` | no | da dove viene la ricostruzione |
+| `license` | no | la licenza della NORMA (non del codice) |
+| `attribution` | no | l'attribuzione da riportare |
+| `invented` | no | `true` = definizione demo/inventata. La stampa porta il bollo `FIXTURE` |
+
+La distinzione `kind` non è decorativa: l'ICCD pubblica i **modelli per il
+rilevamento sul campo** come documenti Word e le **normative di catalogo** come
+XSD, e un tool da campo bersaglia i primi. Vedi §7.
+
+### 1.2 · `identity` — l'identità è una COPPIA
+
+```yaml
+identity:
+  human_key:
+    fields: [localita, area, us]        # quali campi compongono l'ID umano
+    pattern: "US {us} — {area} ({localita})"
+  uid:
+    policy: minted_by_creator           # unico valore ammesso
+    opaque: true
+    display: on_request
+    derive_from_human_key: false        # deve essere false
+  deduplication: by_human_key_in_context
+```
+
+* l'**identificativo umano** (`US 3014`, `Contexto 13`) è quello che si scrive
+  sulla busta e si urla in trincea. Quali campi lo compongono **dipende dallo
+  standard**, e per questo lo dichiara la definizione, non il codice;
+* l'**UID** è opaco e lo **conia chi crea l'unità per primo**. Non si mostra se
+  non su richiesta.
+
+`derive_from_human_key: true` è **rifiutato dal validatore**. La deduplicazione
+fra strumenti si fa riconoscendo un identificativo umano già presente nel
+contesto, non costringendo due strumenti a calcolare la stessa funzione. (Un
+singolo strumento può derivare i propri id in modo deterministico per ritrovare
+i propri nodi alla riconsegna: è un fatto suo, non una regola del formato.)
+
+### 1.3 · `provenance` — la provenienza per campo
+
+```yaml
+provenance:
+  per_field: true
+  authors: [human, ai]
+  states: [asserted, ai_drafted, human_validated]
+  clock: s3dgraphy_crdt_field_clock
+```
+
+Un campo dettato in trincea e ripulito da un modello è scritto da un **autore
+AI** e **può essere validato da un umano**: nei dati (`record.field_provenance`)
+ogni campo può portare `state`, `by`, `ts`, e la stampa lo segna con un bollo
+(`AI`, `AI✓`). Il meccanismo su cui questo si appoggia esiste già: `Clock(ts, by)`
+per campo del CRDT di s3Dgraphy.
+
+Questo **non** è il meccanismo `aux_volatile` del contratto: quello risponde alla
+domanda della *residenza* (un dato che vive altrove), non a quella
+dell'*autorialità*.
+
+### 1.4 · `paragraphs`
+
+Ogni campo appartiene a **esattamente un** paragrafo (il validatore lo verifica).
+I paragrafi sono la struttura logica della scheda — quella che il modulo usa per
+la navigazione e che la norma stampa in grassetto.
+
+### 1.5 · `fields` — la sostanza
+
+```yaml
+- id: copre
+  labels: {it: "COPRE", en: "COVERS"}
+  type: unit_ref_list
+  required: false
+  repeatable: true
+  max_len: "0,25"           # come lo scrive l'ICCD, se lo scrive
+  help: {it: "…"}
+  vocabulary: {scheme: <id>, binding: "VC_…", level_expr: "$1"}
+  options: [...]            # solo per type: choice
+  provenance: {enabled: true, authors: [human, ai]}
+  graph: {...}              # vedi §2
+  note: "…"                 # divergenze e ragioni, dentro il dato
+```
+
+**Le etichette sono un dizionario per lingua, dentro la definizione.** Non
+esiste un file di traduzione generico e non esiste un fallback: chiedere una
+lingua che la definizione non dichiara è un errore, non una modalità degradata.
+È l'errore misurato nel generatore di pyarchinit-mini («Notifica» al posto di
+FLOTTAZIONE) e non si ripete per costruzione.
+
+#### Tipi di campo ammessi
+
+| tipo | valore nei dati | note |
+|---|---|---|
+| `identifier` | stringa | l'ID umano o una sua parte |
+| `text` | stringa | una riga |
+| `longtext` | stringa | più righe |
+| `integer`, `decimal` | numero | |
+| `date` | `YYYY-MM-DD` | |
+| `term` | `{concept: <uri>, label: <str>}` | **un concetto**, non una stringa (§3) |
+| `term_list` | lista di quanto sopra | |
+| `choice` | stringa = `options[].value` | caselle da barrare mutuamente esclusive |
+| `checkbox` | booleano | una casella sola |
+| `unit_ref_list` | lista di id di unità | le caselle dei rapporti (§2, verdetto `edge`) |
+| `record_ref_list` | lista di id di schede | rimandi ad altre schede (RA, TMA…) |
+| `resource_ref_list` | lista di nomi/riferimenti | piante, sezioni, fotografie |
+| `person_ref` | `{name, ref}` | una persona |
+| `actor_ref` | `{name, ref}` | un ente (§2, nota su `blocked_on`) |
+| `epoch_ref`, `activity_ref` | stringa o `{ref}` | periodo, fase, attività |
+| `quantity_list` | lista di `{qualia, label, value, unit}` | misure, quote, conteggi |
+
+Regole verificate: `term`/`term_list` **devono** avere un `vocabulary`;
+`unit_ref_list` **deve** avere verdetto `edge`; `choice` **deve** avere `options`
+con etichette in tutte le lingue dichiarate.
+
+---
+
+## 2 · Il legame al grafo — i verdetti
+
+Ogni campo dichiara che cosa **significa**. I verdetti ammessi sono sette:
+
+| verdetto | vuol dire | chiavi obbligatorie |
+|---|---|---|
+| `identity` | è (parte di) l'identificativo umano | il campo deve stare in `identity.human_key` |
+| `property` | è una proprietà di un nodo che esiste | `qualia` **oppure** `property_name` |
+| `node_type` | **decide** il tipo di nodo | `node_types: {termine: NodeType}` |
+| `node` | è un nodo a sé, raggiunto da un arco | `node_type` **e** `edge_type` |
+| `edge` | è una relazione verso un'altra unità | `edge_type` **e** `direction` |
+| `vocabulary` | è un termine controllato | il campo deve avere `vocabulary`; `qualia` opzionale |
+| `none` | presentazione pura: la scheda lo dice, il grafo no | — |
+
+Chiavi comuni: `attaches_to` (a che cosa si attacca, default `self` = l'unità
+descritta dalla scheda), `target` (che cosa sta all'altro capo di un arco),
+`note`, `blocked_on`.
+
+### 2.1 · Il cancello: i nomi devono esistere
+
+`node_type`, `edge_type` e `qualia` sono verificati contro **quello che
+s3Dgraphy dichiara oggi** (datamodel dei nodi, datamodel delle connessioni, tipi
+di qualia). Un nome che non esiste è un **errore**, non un avviso.
+
+Non è pedanteria: è il modo in cui «non aggiungere tipi al datamodel» si fa
+rispettare da sé. La crescita del datamodel è una decisione, non un effetto
+collaterale di una definizione scritta di notte.
+
+Il registro viene letto da un s3Dgraphy importabile (installato, o
+`$STRATIGRAPH_S3DGRAPHY_SRC`, o il checkout accanto a questo repository);
+in mancanza, da `registry/s3dgraphy-snapshot.json`, che dichiara da dove è stato
+preso. **Se non si può leggere nessuno dei due, non si valida niente**: non
+esiste una terza modalità in cui ogni tipo va bene.
+
+### 2.2 · `blocked_on` — quando la scheda dice più del grafo
+
+```yaml
+graph:
+  verdict: none
+  blocked_on:
+    needs: "attore istituzionale (E39_Actor / E74_Group)"
+    reported: "EM_design_setaccio-US §1 — decisione di E.D."
+```
+
+Un campo il cui legame onesto richiederebbe un tipo che s3Dgraphy non ha **non
+viene silenziosamente degradato a presentazione**: porta scritto che cosa
+servirebbe e a chi è stato riportato. Il verdetto deve essere `none` (finché la
+decisione non c'è, il campo non atterra da nessuna parte) e `validate` li conta
+e li stampa. Nella US 2021 sono tre: `ente_responsabile`, `ufficio_mic`
+(l'attore istituzionale) e `campionature` (`CRMsci S13_Sample`).
+
+### 2.3 · Gli archi hanno UNA direzione canonica
+
+La scheda ha due caselle per la stessa relazione (`COPRE` e `COPERTO DA`); il
+grafo ha un arco. Quindi:
+
+```yaml
+- id: copre        → {verdict: edge, edge_type: overlies, direction: outgoing}
+- id: coperto_da   → {verdict: edge, edge_type: overlies, direction: incoming}
+```
+
+`direction: incoming` significa: l'arco canonico va **dall'unità citata a
+questa**. `edge_type` deve essere una chiave del datamodel delle connessioni; i
+nomi inversi (`is_overlain_by`) **non** sono tipi di arco e non si scrivono qui.
+
+Misurato su s3Dgraphy 1.6.13: le dodici caselle della scheda US sono **sette
+tipi di arco** per **due direzioni** — `equals`, `bonded_to`, `abuts`,
+`overlies`, `cuts`, `fills` (tutti `AP11_has_physical_relation` con `type_tag`) e
+`is_after` (`P120_occurs_before` / `AP28`).
+
+---
+
+## 3 · Il vocabolario, e l'allineamento fra paesi
+
+Una definizione **riferisce** un thesaurus, non lo incorpora: un vocabolario ha
+un ciclo di vita e una licenza propri. Gli schemi stanno in
+`vocabularies/schemes/<id>.yaml`:
+
+```yaml
+scheme:
+  id: iccd-ra-materia
+  authority: ICCD
+  labels: {it: "…", en: "…"}
+  status: resolvable            # oppure: declared
+  uri: "http://dati.beniculturali.it/vocabularies/…"
+  license: "CC BY-SA 3.0 IT"
+  attribution: "ICCD — MiC; …"
+  binding_thes_id: "VC_MTC_RA"
+  resolve:
+    kind: external_skos_file    # oppure skos_file (dentro il repo)
+    path: "strumenti-terminologici/…/….rdf"
+```
+
+* `declared` = la norma prescrive un vocabolario controllato, ma non esiste (o
+  non è a portata) uno SKOS leggibile. È il caso dei modelli **da campo**
+  dell'ICCD: gli strumenti terminologici in RDF coprono le schede di catalogo.
+* `resolvable` = c'è un file SKOS. `skos_file` sta nel repository (solo
+  *fixture*); `external_skos_file` sta sul disco, sotto
+  `$STRATIGRAPH_ICCD_STANDARDS` (default `~/Documents/GitHub/Standard-catalografici`).
+
+**Nel grafo finisce il CONCETTO** (l'URI SKOS), non l'etichetta: la risoluzione
+etichetta-in-lingua avviene alla lettura. Se scrivi la stringa italiana nel
+grafo, hai perso.
+
+### 3.1 · L'allineamento
+
+`vocabularies/alignments/*.yaml`:
+
+```yaml
+alignments:
+  - source: {scheme: fx-ue-definicion-es, concept: "…/estrato"}
+    match: exactMatch          # exactMatch | closeMatch | broadMatch | narrowMatch
+    target: {scheme: fx-us-definizione-it, concept: "…/strato"}
+    status: proposed           # proposed | verified
+    by: "…"
+    note: "…"
+```
+
+Ordine di risoluzione di un'etichetta: **schema proprio → allineamento
+(`exactMatch` prima) → etichetta portata dal dato** (dichiarata come tale nel
+tracciato `--explain-vocab`). Se nessuna delle tre strade dà una parola nella
+lingua richiesta, il renderer **rifiuta**.
+
+Questo campo esiste da subito, anche vuoto, per una ragione sola: un campo di
+allineamento aggiunto fra un anno è un campo che nessuno riempirà.
+
+---
+
+## 4 · Il foglio — A4 fronte-retro
+
+Il foglio è una griglia di righe e celle, per facciata:
+
+```yaml
+sheet:
+  page: A4
+  margins_mm: {top: 10, right: 12, bottom: 10, left: 12}
+  sides:
+    - id: recto                 # recto | verso
+      labels: {it: "fronte", en: "recto"}
+      rows:
+        - h: 15                 # altezza in MILLIMETRI
+          cells:
+            - {field: ufficio_mic, w: 53.4}    # larghezza in % della riga
+            - {field: identificativo_riferimento, w: 46.6}
+```
+
+Una cella è una di tre cose:
+
+* **un campo**: `{field: <id>, w: <%>, label: auto|none}`;
+* **un blocco**: una griglia annidata, con o senza etichetta propria —
+  `{block: <id>, block_labels: {...}, rotated: true, w: <%>, rows: [...]}`.
+  `rotated: true` disegna l'etichetta in verticale su una striscia a sinistra,
+  come fa la scheda ICCD per SEQUENZA FISICA e SEQUENZA STRATIGRAFICA. I blocchi
+  si annidano, e questo dà la potenza dei `rowspan` senza avere i rowspan;
+* **uno spazio**: `{w: <%>}` senza `field` né `rows`.
+
+Regole verificate:
+
+* la somma delle `w` di una riga non supera 100;
+* ogni campo ha **esattamente una** casella (un campo in cui nessuno può
+  scrivere non è un campo; due caselle per lo stesso campo sono un errore);
+* le facciate si chiamano `recto` e `verso`, e non si ripetono;
+* **l'altezza dichiarata di una facciata deve stare in una facciata A4** (297 mm
+  meno i margini meno 9 mm di intestazione corrente);
+* un'etichetta ruotata deve stare nell'altezza del suo blocco, altrimenti
+  stamperebbe tagliata.
+
+L'altezza di una riga è un **minimo di progetto**, non una ghigliottina: se un
+dato è più alto della casella, la casella cresce e il comando dice quante pagine
+è costato (`2 side(s) → 3 page(s)`). Non si taglia mai ciò che qualcuno ha
+scritto.
+
+---
+
+## 5 · I dati
+
+```yaml
+record:
+  template: iccd-us-2021
+  uid: "01J9Z7QK…"              # opaco
+  values:
+    us: "3014"
+    copre: ["3018", "3020"]
+    definizione: {concept: "…", label: "strato di crollo"}
+    misure: [{qualia: thickness, label: "spessore max", value: "0,42", unit: "m"}]
+  field_provenance:
+    interpretazione: {state: human_validated, by: "ai:… · validato da …", ts: "…"}
+```
+
+Il file dei dati non è la scheda: dichiara solo quale definizione segue.
+
+---
+
+## 6 · Che cosa NON c'è, per scelta
+
+Nessun server, nessuna autenticazione, nessuna sessione, nessun database.
+Nessuna matrice di Harris (l'editor di grafo è EMStudio). Nessun GIS (è di
+pyarchinit). Nessun record di catalogo ministeriale (è del Catalog, come
+proiezione, più tardi). Nessun tipo nuovo in s3Dgraphy. Nessuna gestione di
+asset (esistono già: SHA-256 + IIIF). Nessuna identità, coda offline o ingresso
+in stanza (esistono già, provati nel field assistant).
+
+---
+
+## 7 · La bozza estratta da un XSD
+
+`stratigraph-templates extract-xsd <file.xsd> --code SAS --version 3.00` legge
+una normativa di catalogo ICCD e **propone** una definizione: struttura,
+paragrafi, alias, obbligatorietà, ripetibilità, legami ai vocabolari.
+
+Due cose non ci sono e non possono esserci:
+
+* **il legame al grafo**: ogni campo esce con `verdict: undecided`, e il
+  validatore **rifiuta** una definizione che porti ancora quel marcatore. Lo
+  decide una persona;
+* **il foglio**: un XSD non dice dove sta una casella. La bozza mette una riga
+  per campo perché non si perda nulla, e lo dichiara.
+
+## 8 · Un export documento-per-record (iDAI.field)
+
+Il formato descrive una scheda, non un archivio, e i dati di un record sono un
+dizionario piatto di `field_id → valore`. Un export documento-per-record — come
+quello di `iDAI.field` / Field Desktop, che replica **a livello di documento**
+mentre qui si replica a livello di **campo** — entra come una sequenza di
+`record:`, uno per documento, purché il produttore dichiari a quale definizione
+ciascun documento risponde. Ciò che *non* entra automaticamente è la loro
+struttura di categorie configurabile: quella va scritta come una definizione
+(che è precisamente il lavoro che questo formato rende possibile fare una volta e
+non per ogni tool).
