@@ -1,0 +1,168 @@
+# RÉTEGLEÍRÁS — scheda di strato, DEMO, inventata.
+#
+# ATTENZIONE, ed è dichiarato anche nel dato (`invented: true`, e la stampa
+# porta il bollo FIXTURE): questa NON è una normativa ungherese reale. Non
+# avevamo la norma vera sottomano, e inventare una scheda plausibile è meglio
+# che fingere di citarne una.
+#
+# ── PERCHÉ QUESTA SCHEDA ESISTE, e perché è PERMANENTE ─────────────────────
+#
+# È nata la notte del 2026-09-23 come prova del vincolo più importante del
+# progetto — «una definizione mai vista arriva al browser senza toccare il
+# front-end» — ed è comparsa nel telefono con il diff dell'implementazione
+# vuoto. Poi è stata cancellata, e della prova sono rimasti un commento e un
+# referto.
+#
+# **Una prova che vive in un documento non è una prova: è un ricordo.** Fra due
+# mesi qualcuno aggiunge un campo condizionale al renderer e niente si accorge
+# che una definizione mai vista ha smesso di comparire. Quindi la terza scheda
+# resta, e un test la usa come regressione della tesi.
+#
+# ── E PORTA UNA COSA CHE LE ALTRE DUE NON HANNO ────────────────────────────
+#
+# **Il designatore NON è l'ultimo campo della chiave umana.**
+#
+#     iccd-us-2021      [localita, area, us]        → us          (ultimo)
+#     es-ue-demo-2026   [yacimiento, contexto]      → contexto    (ultimo)
+#     hu-rl-demo-2026   [retegszam, lelohely]       → retegszam   (PRIMO)
+#
+# Fino al 2026-09-23 un consumatore prendeva l'ultimo campo, e su tre definizioni
+# su tre era giusto. Questa scheda è il quarto caso, ed è quello in cui quella
+# regola sbaglia — in silenzio, perché una chiave con il designatore sbagliato
+# non solleva niente: produce un'etichetta plausibile e un confronto che manca
+# bersaglio. L'ordine è quello naturale in ungherese, dove il determinante
+# precede: «Réteg 12 · Cencelle».
+#
+# Serve inoltre come misura di:
+#   * una terza lingua sorgente (ungherese, con l'italiano affiancato),
+#   * una chiave umana di forma diversa dalle altre due,
+#   * un sottoinsieme da trincea che non è né 8/59 né 14/15.
+
+template:
+  id: hu-rl-demo-2026
+  standard:
+    authority: "DEMO"
+    code: "RL"
+    version: "2026-demo"
+    kind: field_model
+    invented: true
+    title:
+      hu: "Rétegleírás (demo)"
+      it: "Scheda di strato (demo)"
+    source: "inventata per la prova — nessuna normativa reale è stata citata"
+    license: "CC BY-SA 4.0"
+    attribution: "stratigraph-templates (scheda demo)"
+
+  source_language: hu
+  languages: [hu, it]
+
+  identity:
+    human_key:
+      fields: [retegszam, lelohely]
+      pattern: "Réteg {retegszam} · {lelohely}"
+      # IL DESIGNATORE, ed è il PRIMO campo: `retegszam` è il numero di strato,
+      # `lelohely` è il sito che lo disambigua. Dichiarato, come SPEC §1.2
+      # pretende su ogni chiave composta — e qui la dichiarazione non è una
+      # formalità, perché dedurlo «dall'ultimo» darebbe il sito.
+      unit_field: retegszam
+    uid:
+      policy: minted_by_creator
+      opaque: true
+      display: on_request
+      derive_from_human_key: false
+    deduplication: by_human_key_in_context
+
+  provenance:
+    per_field: true
+
+  paragraphs:
+    - id: fejlec
+      labels: {hu: "Fejléc", it: "Intestazione"}
+      fields: [lelohely, retegszam, leiras]
+    - id: ertelmezes
+      labels: {hu: "Értelmezés", it: "Interpretazione"}
+      fields: [ertelmezes, biztossag]
+    - id: meret
+      labels: {hu: "Méretek", it: "Misure"}
+      fields: [melyseg]
+
+  fields:
+    - id: lelohely
+      labels: {hu: "LELŐHELY", it: "SITO"}
+      type: text
+      required: true
+      recorded_in: trench
+      # decisione dell'AUTORE di questa scheda (demo): chi scava sa dove sta.
+      # `LocationNodeGroup` / `is_in_location`, come la ficha spagnola: sono i
+      # nomi che s3Dgraphy DICHIARA. La prima versione di questa riga aveva
+      # `site` / `is_in_site`, inventati, e il cancello di `validate` li ha
+      # rifiutati nominando i due datamodel — che è esattamente il suo mestiere.
+      graph:
+        verdict: node
+        node_type: LocationNodeGroup
+        edge_type: is_in_location
+        direction: outgoing
+        target: LocationNodeGroup
+
+    - id: retegszam
+      labels: {hu: "RÉTEGSZÁM", it: "NUMERO DI STRATO"}
+      type: identifier
+      required: true
+      recorded_in: trench
+      graph: {verdict: identity}
+
+    - id: leiras
+      labels: {hu: "LEÍRÁS", it: "DESCRIZIONE"}
+      type: longtext
+      recorded_in: trench
+      help:
+        hu: "Amit látsz, nem amit gondolsz."
+        it: "Quello che vedi, non quello che pensi."
+      graph: {verdict: property, property_name: description}
+
+    - id: ertelmezes
+      labels: {hu: "ÉRTELMEZÉS", it: "INTERPRETAZIONE"}
+      type: longtext
+      recorded_in: trench
+      graph: {verdict: property, property_name: interpretation}
+
+    # …e due da LABORATORIO, così il sottoinsieme da trincea non è «tutto».
+    - id: biztossag
+      labels: {hu: "BIZTOSSÁG", it: "AFFIDABILITÀ"}
+      type: choice
+      recorded_in: lab
+      options:
+        - {value: biztos,    labels: {hu: "biztos",    it: "certa"}}
+        - {value: valoszinu, labels: {hu: "valószínű", it: "probabile"}}
+      graph: {verdict: none, note: "presentazione: il grafo non ha un posto per questo"}
+
+    - id: melyseg
+      labels: {hu: "MÉLYSÉG", it: "PROFONDITÀ"}
+      type: quantity_list
+      recorded_in: lab
+      graph: {verdict: property, qualia: depth}
+
+  sheet:
+    page: A4
+    margins_mm: {top: 12, right: 12, bottom: 12, left: 12}
+    sides:
+      - id: recto
+        labels: {hu: "előlap", it: "fronte"}
+        rows:
+          - h: 12
+            cells:
+              - {field: lelohely, w: 60}
+              - {field: retegszam, w: 40}
+          - h: 45
+            cells: [{field: leiras, w: 100}]
+          - h: 45
+            cells: [{field: ertelmezes, w: 100}]
+          - h: 14
+            cells:
+              - {field: biztossag, w: 50}
+              - {field: melyseg, w: 50}
+
+  notes:
+    designator: >
+      Il designatore è il PRIMO campo della chiave umana, non l'ultimo: è il
+      caso che rende necessaria la dichiarazione esplicita di SPEC §1.2.

@@ -38,6 +38,9 @@ template:
     human_key:
       fields: [yacimiento, contexto]
       pattern: "Contexto {contexto} · {yacimiento}"
+      # el designador es `contexto`: YACIMIENTO es el contexto que lo
+        # desambigua. Declarado y no deducido — vease SPEC 1.2.
+      unit_field: contexto
     uid:
       policy: minted_by_creator
       opaque: true

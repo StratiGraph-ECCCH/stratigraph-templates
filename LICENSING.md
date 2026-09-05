@@ -42,14 +42,17 @@ lo dichiarano nel loro README.
 
 `src/`, `tests/`.
 
-**Proposta: EUPL-1.2** — è la licenza pensata per il software di progetti
-europei, è copyleft debole e ha una lista di compatibilità che include GPL-3.0 e
-CC BY-SA 4.0 per le opere combinate.
+**EUPL-1.2 — CONFERMATA da E. Demetrescu il 2026-09-24.** È la licenza pensata
+per il software di progetti europei, è copyleft debole e ha una lista di
+compatibilità che include GPL-3.0 e CC BY-SA 4.0 per le opere combinate.
 
-**Questa scelta è una proposta e va confermata da E. Demetrescu**: la decisione
-di licenza di un repository nuovo non è un effetto collaterale della prima
-notte di lavoro. Fino alla conferma, `pyproject.toml` dichiara `EUPL-1.2` e
-questo paragrafo dice che è in attesa di conferma.
+Il **testo ufficiale** sta in `./LICENSE`, 287 righe, preso da
+`joinup.ec.europa.eu` (il sito della Commissione) e non riscritto a memoria: una
+licenza approssimata è peggio di una licenza assente, perché sembra una licenza.
+
+`pyproject.toml` dichiara `EUPL-1.2` e porta accanto, in un commento, la
+ripartizione per parti — perché i metadati di un pacchetto Python sanno
+esprimere UNA licenza e questo repository ne ha tre.
 
 ## 4 · Attribuzione delle misure
 

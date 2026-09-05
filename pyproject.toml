@@ -7,8 +7,25 @@ name = "stratigraph-templates"
 version = "0.1.0"
 description = "Declarative recording-sheet definitions (data, not code) and a reference implementation that reads them"
 requires-python = ">=3.11"
+# ── LA LICENZA È PER PARTI, e questo campo ne dichiara UNA ─────────────────
+#
+# Questo repository ha due strati con due licenze, e `LICENSING.md` li spiega
+# per esteso. Il campo qui sotto è quello che i metadati di un pacchetto Python
+# possono esprimere — **il CODICE** — e non è l'intera verità:
+#
+#   src/ · tools/ · tests/         EUPL-1.2          (testo in ./LICENSE)
+#   templates/ · vocabularies/     CC BY-SA 4.0      per derivazione dalla norma
+#   i thesauri ICCD                CC BY-SA 3.0 IT   REFERENZIATI, non copiati
+#
+# La terza riga è la più importante e la più facile da sbagliare: i vocabolari
+# qui dentro dichiarano un `scheme` e un binding, e i termini restano dove
+# stanno. Copiarli qui li porterebbe sotto una licenza che non è la loro.
 license = { text = "EUPL-1.2" }
+license-files = ["LICENSE", "LICENSING.md"]
 authors = [{ name = "Emanuele Demetrescu", email = "emanuel.demetrescu@cnr.it" }]
+classifiers = [
+  "License :: OSI Approved :: European Union Public Licence 1.2 (EUPL 1.2)",
+]
 dependencies = ["PyYAML>=6.0"]
 
 [project.optional-dependencies]

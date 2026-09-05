@@ -148,11 +148,20 @@ def test_asking_the_selector_for_a_place_that_does_not_exist_refuses(
 # ── 3 · le due definizioni vere, e i loro conteggi ──────────────────────────
 
 def test_the_iccd_sheet_carries_the_three_counts():
-    """Misurato il 2026-09-22. Se questi numeri cambiano, è perché qualcuno ha
-    marcato altri campi — e allora deve aver citato la riga che lo giustifica."""
+    """Se questi numeri cambiano, è perché qualcuno ha marcato altri campi — e
+    allora deve aver citato la riga che lo giustifica.
+
+    2026-09-22:  8 trincea · 3 lab · 48 senza marcatore
+    2026-09-24: 25 trincea · 3 lab · 31 senza marcatore
+
+    I diciassette in più non sono un ripensamento: sono **parole nuove**. Il
+    field assistant ha imparato a sentirsi dire `definizione`, le quote, le
+    misure, il colore e la consistenza, e le dodici caselle dei rapporti erano
+    coperte da `relate_su` dal 21 settembre e nessuno era tornato a marcarle. Il
+    criterio non è cambiato: si è allargato ciò che si può dire."""
     t = find_template("iccd-us-2021")
-    assert t.recorded_in_counts() == {RECORDED_IN_UNKNOWN: 48,
-                                      RECORDED_IN_TRENCH: 8,
+    assert t.recorded_in_counts() == {RECORDED_IN_UNKNOWN: 31,
+                                      RECORDED_IN_TRENCH: 25,
                                       RECORDED_IN_LAB: 3}
     assert len(t.fields) == 59
 
@@ -170,7 +179,7 @@ def test_every_marked_iccd_field_carries_its_justification():
     text = pathlib.Path(find_template("iccd-us-2021").path).read_text(encoding="utf-8")
     lines = text.split("\n")
     marked = [i for i, line in enumerate(lines) if "recorded_in:" in line]
-    assert len(marked) == 11, f"marcati {len(marked)}, attesi 11"
+    assert len(marked) == 28, f"marcati {len(marked)}, attesi 28"
 
     for i in marked:
         following = lines[i + 1].strip()
@@ -190,66 +199,94 @@ def test_the_demo_sheet_was_marked_too():
 
 # ── 4 · È PER STANDARD, e questo è il test che lo tiene vero ────────────────
 
-def test_the_two_sheets_do_not_agree_on_the_same_concepts():
-    """SE LE DUE SCHEDE FINISCONO CON LO STESSO SOTTOINSIEME, il marcatore sta
+def test_the_sheets_do_not_all_agree_on_the_same_concepts():
+    """SE LE SCHEDE FINISSERO CON LO STESSO SOTTOINSIEME, il marcatore starebbe
     descrivendo il nostro pregiudizio invece che lo standard.
 
-    Le coppie sono accostate a mano perché le due schede non condividono gli id
-    dei campi — che è esattamente il motivo per cui il marcatore è per standard.
-    Misurato: 7 delle 13 coppie hanno un marcatore diverso.
+    ── COSA È CAMBIATO IL 2026-09-24, e perché non è una resa ────────────────
+
+    Il 22 settembre sette coppie su tredici fra US ICCD e ficha ES avevano
+    marcatori diversi, e le divergenze erano `definizione` e le dieci caselle
+    dei rapporti: `unknown` di qua, `trench` di là. **Oggi coincidono**, e la
+    ragione non è che qualcuno ha uniformato: è che il field assistant ha
+    imparato a dire quelle cose, quindi la Base A ora le giustifica anche per
+    l'ICCD. Stessa risposta, e ora anche la stessa base.
+
+    Quindi il confronto si sposta dove le schede restano diverse — ed è il
+    motivo per cui la terza esiste. `hu-rl-demo-2026` ha quattro campi da
+    trincea su sei, e due da laboratorio che le altre non hanno.
     """
-    us = find_template("iccd-us-2021")
-    ue = find_template("es-ue-demo-2026")
-    pairs = [("us", "contexto"), ("localita", "yacimiento"),
-             ("definizione", "definicion"), ("descrizione", "descripcion"),
-             ("interpretazione", "interpretacion"), ("uguale_a", "igual_a"),
-             ("copre", "cubre"), ("coperto_da", "cubierto_por"),
-             ("taglia", "corta"), ("tagliato_da", "cortado_por"),
-             ("quote", "cota"),
-             ("responsabile_compilazione", "responsable"),
-             ("data_rilevamento", "fecha")]
+    import pathlib
 
-    disagree = [(a, b) for a, b in pairs
-                if us.field(a).recorded_in != ue.field(b).recorded_in]
-    assert len(disagree) == 7, (
-        f"{len(disagree)} coppie in disaccordo su 13 — se scende a zero il "
-        f"marcatore ha smesso di essere per standard: {disagree}")
+    from stratigraph_templates.loader import load_template
 
-    # e le due divergenze che portano più significato, nominate
-    assert us.field("definizione").recorded_in == RECORDED_IN_UNKNOWN
-    assert ue.field("definicion").recorded_in == RECORDED_IN_TRENCH
-    assert all(us.field(f).recorded_in == RECORDED_IN_UNKNOWN
-               for f in ("copre", "coperto_da", "taglia", "tagliato_da"))
-    assert all(ue.field(f).recorded_in == RECORDED_IN_TRENCH
-               for f in ("cubre", "cubierto_por", "corta", "cortado_por"))
+    root = pathlib.Path(__file__).resolve().parents[1] / "templates"
+    sheets = {p.name: load_template(p / "template.yaml")
+              for p in sorted(root.iterdir()) if p.is_dir()}
+    assert len(sheets) == 3, sorted(sheets)
+
+    # I TRE SOTTOINSIEMI SONO TRE NUMERI DIVERSI. Se collassassero a uno, il
+    # marcatore avrebbe smesso di descrivere lo standard.
+    trench = {n: s.recorded_in_counts()["trench"] for n, s in sheets.items()}
+    assert len(set(trench.values())) == 3, trench
+
+    # …e la proporzione è diversa, non solo il numero assoluto
+    share = {n: round(s.recorded_in_counts()["trench"] / len(s.fields), 2)
+             for n, s in sheets.items()}
+    assert len(set(share.values())) == 3, share
+
+    # LA COSA CHE SOLO L'ICCD HA: campi che nessuno ha ancora deciso. Le due
+    # schede demo sono state decise dal loro autore in un colpo; la scheda vera
+    # ha 31 caselle su cui il criterio non si è ancora pronunciato, ed è la
+    # forma onesta di una norma di 59 campi.
+    undecided = {n: s.recorded_in_counts()["unknown"] for n, s in sheets.items()}
+    assert undecided["iccd-us-2021"] > 0
+    assert undecided["es-ue-demo-2026"] == 0
+    assert undecided["hu-rl-demo-2026"] == 0
 
 
 # ── 5 · `required` e `recorded_in` sono ortogonali ─────────────────────────
 
-def test_required_and_recorded_in_are_independent():
-    """La tabella di SPEC §1.6, sui dati veri.
+def test_every_required_field_can_now_be_filled_in_the_trench():
+    """UN RISULTATO, e va letto come tale.
 
-    È la coppia che rende esprimibile «incompleta perché siamo ancora sullo
-    scavo» contro «incompleta perché manca qualcosa» — e il caso che conta
-    esiste davvero nella US ICCD: DEFINIZIONE è obbligatoria e il suo
-    `recorded_in` è `unknown`, quindi la risposta onesta di un validatore è
-    «non si può decidere».
+    Il 22 settembre `definizione` era obbligatoria e senza marcatore, e quello
+    era il caso vivo della terza riga della tabella di SPEC §1.6: un
+    obbligatorio su cui **non si può decidere**. Una scheda da trincea non
+    poteva chiudere, e non si sapeva nemmeno dire perché.
+
+    Oggi, in tutte e tre le schede, **ogni campo obbligatorio è `trench`**. Non
+    perché qualcuno abbia allentato il criterio: perché il field assistant ha
+    imparato le parole che mancavano. Una scheda da trincea adesso chiude.
     """
+    import pathlib
+
+    from stratigraph_templates.loader import load_template
+
+    root = pathlib.Path(__file__).resolve().parents[1] / "templates"
+    for folder in sorted(root.iterdir()):
+        if not folder.is_dir():
+            continue
+        sheet = load_template(folder / "template.yaml")
+        undecided = [f.id for f in sheet.fields
+                     if f.required and f.recorded_in == RECORDED_IN_UNKNOWN]
+        assert not undecided, (
+            f"{sheet.id}: {undecided} sono obbligatori e senza marcatore. Non è "
+            f"vietato — SPEC §1.6 dice che la risposta onesta è «non si può "
+            f"decidere» — ma è tornato un caso in cui una scheda da trincea non "
+            f"chiude, e va deciso invece che scoperto.")
+
+
+def test_required_and_recorded_in_stay_independent():
+    """La tabella di SPEC §1.6 vive sull'ORTOGONALITÀ dei due assi, e quella
+    resta anche ora che nessun obbligatorio è indeciso: ci sono campi da
+    trincea non obbligatori, e campi obbligatori da trincea."""
     t = find_template("iccd-us-2021")
-    required = [f for f in t.fields if f.required]
-    assert {f.id for f in required} == {"us", "localita", "definizione"}
-
-    by_stage = {f.id: f.recorded_in for f in required}
-    assert by_stage["us"] == RECORDED_IN_TRENCH
-    assert by_stage["localita"] == RECORDED_IN_TRENCH
-    assert by_stage["definizione"] == RECORDED_IN_UNKNOWN, (
-        "il caso interessante è sparito: senza un obbligatorio `unknown` la "
-        "terza riga della tabella di SPEC §1.6 non ha più un esempio")
-
-    # e l'indipendenza nell'altro senso: dei marcati, non tutti sono obbligatori
     trench = t.recorded_in(RECORDED_IN_TRENCH)
     assert any(not f.required for f in trench)
     assert any(f.required for f in trench)
+    # …e l'asse `lab` non è vuoto, altrimenti il marcatore avrebbe un valore solo
+    assert t.recorded_in(RECORDED_IN_LAB)
 
 
 def test_a_lab_field_is_not_ranked_below_a_trench_one():

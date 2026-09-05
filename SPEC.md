@@ -77,6 +77,7 @@ identity:
   human_key:
     fields: [localita, area, us]        # quali campi compongono l'ID umano
     pattern: "US {us} — {area} ({localita})"
+    unit_field: us                      # QUALE dei tre È l'unità (v. sotto)
   uid:
     policy: minted_by_creator           # unico valore ammesso
     opaque: true
@@ -84,6 +85,40 @@ identity:
     derive_from_human_key: false        # deve essere false
   deduplication: by_human_key_in_context
 ```
+
+#### `unit_field` — quale campo È l'unità, e perché va DICHIARATO
+
+`fields` dice quali caselle **compongono** il nome. Non dice quale di esse sia
+**l'unità** e quali il **contesto** che la disambigua, e sono due informazioni
+diverse: chiunque debba rispondere a «di che unità è questa scheda» ha bisogno
+della seconda — il modulo che la disegna, l'adattatore che la consegna a un
+grafo, il validatore di una scheda compilata.
+
+**Obbligatorio quando la chiave ha più di un campo.** Con un campo solo non c'è
+niente da scegliere, dedurlo non è indovinare, e si può omettere. Con due o più,
+una definizione che tace non è servibile e il validatore la rifiuta.
+
+**Perché non si deduce.** Fino al 2026-09-23 un consumatore prendeva l'ULTIMO
+campo della chiave, e su tre definizioni su tre era giusto. Poi è arrivata la
+quarta:
+
+```
+iccd-us-2021      [localita, area, us]      → us          (l'ultimo)
+es-ue-demo-2026   [yacimiento, contexto]    → contexto    (l'ultimo)
+hu-rl-demo-2026   [retegszam, lelohely]     → retegszam   (il PRIMO)
+```
+
+In ungherese il determinante precede: «Réteg 12 · Cencelle». Con la deduzione,
+una scheda di strato sarebbe stata indirizzata **col nome del sito** — e
+**nessuno se ne sarebbe accorto**, perché una chiave umana con il designatore
+sbagliato non solleva niente: produce un'etichetta che sembra giusta e un
+confronto che manca bersaglio. È il tipo di errore che si trova due anni dopo,
+guardando perché due scavi «hanno la stessa unità».
+
+**Una regolarità osservata su tre casi non è una regola.** Il designatore si
+dichiara.
+
+
 
 * l'**identificativo umano** (`US 3014`, `Contexto 13`) è quello che si scrive
   sulla busta e si urla in trincea. Quali campi lo compongono **dipende dallo

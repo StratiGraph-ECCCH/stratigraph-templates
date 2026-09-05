@@ -240,11 +240,40 @@ class Sheet:
 class Identity:
     human_key: List[str] = dc_field(default_factory=list)
     pattern: str = ""
+    #: WHICH of the human key's fields designates the unit itself.
+    #:
+    #: The rest of the key is the CONTEXT that disambiguates it — a place, a
+    #: trench — and the difference matters to every consumer that has to say
+    #: «which unit is this record about»: `create_su` takes the designator as
+    #: the unit number and the context as ordinary data.
+    #:
+    #: DECLARED, not deduced. Until 2026-09-23 a consumer took the LAST field of
+    #: the key, which was true of all three definitions that existed — and that
+    #: is a regularity observed on three cases, not a rule. It would have been
+    #: false on the fourth sheet, and false IN SILENCE: a human key with the
+    #: wrong designator raises nothing. It produces a label that looks right and
+    #: a comparison that misses.
+    #:
+    #: Empty is legal only for a key of ONE field, where there is nothing to
+    #: choose. `unit_field_of()` is the one place that resolves it.
+    unit_field: str = ""
     uid_policy: str = "minted_by_creator"
     uid_opaque: bool = True
     uid_display: str = "on_request"
     uid_derive_from_human_key: bool = False
     deduplication: str = "by_human_key_in_context"
+
+
+    def unit_field_of(self) -> str:
+        """The designator — declared, or the only field there is.
+
+        The single-field case is not an exception to «declared»: with one field
+        there is no choice to make, so nothing is being guessed. With two or
+        more, `validate_template` refuses a definition that does not say.
+        """
+        if self.unit_field:
+            return self.unit_field
+        return self.human_key[0] if len(self.human_key) == 1 else ""
 
 
 @dataclass

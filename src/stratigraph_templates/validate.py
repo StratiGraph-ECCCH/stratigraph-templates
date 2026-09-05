@@ -431,6 +431,43 @@ def _check_structure(t: Template, problems: List[Problem], known_schemes: Option
                 "human identifier for this standard",
             )
         )
+    # ── IL DESIGNATORE, e perché è obbligatorio su una chiave composta ──────
+    #
+    # La chiave umana dice quali campi COMPONGONO il nome («US 3014 — 1
+    # (Cencelle)»); non dice quale dei tre sia l'unità e quali siano il contesto
+    # che la disambigua. Sono due informazioni diverse, e la seconda serve a
+    # chiunque debba rispondere a «di che unità è questa scheda» — il modulo che
+    # la disegna, l'adattatore che la consegna a `create_su`.
+    #
+    # Fino al 2026-09-23 un consumatore prendeva l'ULTIMO campo, ed era vero
+    # sulle tre definizioni che esistevano. **Una regolarità osservata su tre
+    # casi non è una regola**: sarebbe stata falsa alla quarta scheda, e falsa
+    # IN SILENZIO — una chiave con il designatore sbagliato non solleva niente,
+    # produce un'etichetta che sembra giusta e un confronto che manca bersaglio.
+    #
+    # Con UN campo solo non c'è niente da scegliere e dedurlo è lecito. Con due
+    # o più, la scheda lo dichiara o non è servibile.
+    #
+    # (Il testo qui sopra evita di proposito la parola italiana per «scheda
+    #  definita»: è anche l'id di un campo della US ICCD, e il cancello di
+    #  `test_no_standard_is_named_in_the_implementation` la prende — e ha
+    #  ragione a prenderla, perché non può sapere che era prosa.)
+    if len(t.identity.human_key) > 1 and not t.identity.unit_field:
+        problems.append(Problem(
+            "template.identity",
+            f"human_key has {len(t.identity.human_key)} fields "
+            f"({t.identity.human_key}) and does not declare `unit_field`: with "
+            f"a composite key the sheet must say WHICH field designates "
+            f"the unit itself — the others are the context that disambiguates "
+            f"it. Deducing it (the last one, the first one) is a guess that "
+            f"fails silently on the sheet that does it differently."))
+    if t.identity.unit_field and t.identity.unit_field not in t.identity.human_key:
+        problems.append(Problem(
+            "template.identity",
+            f"unit_field '{t.identity.unit_field}' is not among "
+            f"human_key.fields {t.identity.human_key}: the designator has to be "
+            f"one of the fields that spell the name"))
+
     for fid in t.identity.human_key:
         if not t.has_field(fid):
             problems.append(Problem("template.identity", f"human_key names unknown field '{fid}'"))

@@ -33,6 +33,11 @@ template:
     human_key:
       fields: [localita, area, us]
       pattern: "US {us} — {area} ({localita})"
+      # il designatore e' `us`: LOCALITA' e AREA sono il contesto che lo
+        # disambigua — una US «1» esiste in ogni area di ogni scavo. E' anche
+        # come `create_su` li tratta: `sito` e `area` sono dati a parte, `us`
+        # e' il numero dell'unita'.
+      unit_field: us
     uid:
       policy: minted_by_creator
       opaque: true
@@ -228,6 +233,8 @@ template:
     - id: quote
       labels: {it: "QUOTE", en: "ELEVATIONS"}
       type: quantity_list
+      recorded_in: trench
+      # Base A · tools.py:400 — SPOKEN_FIELDS["quote"], frasi «la quota è», «quota». In trincea si dice a voce mentre si tiene il metro.
       repeatable: true
       graph:
         verdict: property
@@ -328,6 +335,8 @@ template:
     - id: definizione
       labels: {it: "DEFINIZIONE", en: "DEFINITION"}
       type: term
+      recorded_in: trench
+      # Base A · tools.py:398 — SPOKEN_FIELDS["definizione"], frasi «la definizione è», «è uno…». Aggiunto il 2026-09-24: era OBBLIGATORIA e non c'era modo di dirla a voce, ed e' il motivo per cui la scheda da trincea non chiudeva.
       required: true
       vocabulary:
         scheme: iccd-us-definizione
@@ -370,6 +379,8 @@ template:
     - id: consistenza
       labels: {it: "CONSISTENZA", en: "CONSISTENCY"}
       type: term
+      recorded_in: trench
+      # Base A · tools.py:403 — SPOKEN_FIELDS["consistenza"], frase «la consistenza è».
       vocabulary:
         scheme: iccd-us-consistenza
       graph:
@@ -379,6 +390,8 @@ template:
     - id: colore
       labels: {it: "COLORE", en: "COLOUR"}
       type: term
+      recorded_in: trench
+      # Base A · tools.py:402 — SPOKEN_FIELDS["colore"], frase «il colore è».
       vocabulary:
         scheme: iccd-us-colore
       graph:
@@ -388,6 +401,8 @@ template:
     - id: misure
       labels: {it: "MISURE", en: "MEASUREMENTS"}
       type: quantity_list
+      recorded_in: trench
+      # Base A · tools.py:401 — SPOKEN_FIELDS["misure"], frasi «le misure sono», «misura».
       repeatable: true
       graph:
         verdict: property
@@ -408,6 +423,8 @@ template:
     - id: uguale_a
       labels: {it: "UGUALE A", en: "SAME AS"}
       type: unit_ref_list
+      recorded_in: trench
+      # Base A · tools.py:462 — RELATIONS["uguale a"] → is_physically_equal_to (simmetrico).
       repeatable: true
       graph:
         verdict: edge
@@ -422,6 +439,8 @@ template:
     - id: si_lega_a
       labels: {it: "SI LEGA A", en: "BONDED TO"}
       type: unit_ref_list
+      recorded_in: trench
+      # Base A · tools.py:461 — RELATIONS["si lega a"] → is_bonded_to (simmetrico).
       repeatable: true
       graph:
         verdict: edge
@@ -433,6 +452,8 @@ template:
     - id: posteriore_a
       labels: {it: "POSTERIORE A", en: "LATER THAN"}
       type: unit_ref_list
+      recorded_in: trench
+      # Base A · tools.py:449 — RELATIONS["posteriore a"] → is_after.
       repeatable: true
       graph:
         verdict: edge
@@ -445,6 +466,8 @@ template:
     - id: anteriore_a
       labels: {it: "ANTERIORE A", en: "EARLIER THAN"}
       type: unit_ref_list
+      recorded_in: trench
+      # Base A · tools.py:450 — RELATIONS["anteriore a"] → is_after a capi scambiati.
       repeatable: true
       graph:
         verdict: edge
@@ -457,6 +480,8 @@ template:
     - id: gli_si_appoggia
       labels: {it: "GLI SI APPOGGIA", en: "IS ABUTTED BY"}
       type: unit_ref_list
+      recorded_in: trench
+      # Base A · tools.py:459 — RELATIONS["gli si appoggia"] → abuts a capi scambiati.
       repeatable: true
       graph:
         verdict: edge
@@ -467,6 +492,8 @@ template:
     - id: si_appoggia_a
       labels: {it: "SI APPOGGIA A", en: "ABUTS"}
       type: unit_ref_list
+      recorded_in: trench
+      # Base A · tools.py:457 — RELATIONS["si appoggia a"] → abuts.
       repeatable: true
       graph:
         verdict: edge
@@ -477,6 +504,8 @@ template:
     - id: coperto_da
       labels: {it: "COPERTO DA", en: "COVERED BY"}
       type: unit_ref_list
+      recorded_in: trench
+      # Base A · tools.py:447 — RELATIONS["coperto da"] → is_after a capi scambiati.
       repeatable: true
       graph:
         verdict: edge
@@ -487,6 +516,8 @@ template:
     - id: copre
       labels: {it: "COPRE", en: "COVERS"}
       type: unit_ref_list
+      recorded_in: trench
+      # Base A · tools.py:446 — RELATIONS["copre"] → is_after. `relate_su` esiste dal 2026-09-21 e queste caselle erano rimaste `unknown` perche' il marcatore si mette QUI e non li'.
       repeatable: true
       graph:
         verdict: edge
@@ -497,6 +528,8 @@ template:
     - id: tagliato_da
       labels: {it: "TAGLIATO DA", en: "CUT BY"}
       type: unit_ref_list
+      recorded_in: trench
+      # Base A · tools.py:452 — RELATIONS["tagliato da"] → cuts a capi scambiati.
       repeatable: true
       graph:
         verdict: edge
@@ -507,6 +540,8 @@ template:
     - id: taglia
       labels: {it: "TAGLIA", en: "CUTS"}
       type: unit_ref_list
+      recorded_in: trench
+      # Base A · tools.py:451 — RELATIONS["taglia"] → cuts.
       repeatable: true
       graph:
         verdict: edge
@@ -517,6 +552,8 @@ template:
     - id: riempito_da
       labels: {it: "RIEMPITO DA", en: "FILLED BY"}
       type: unit_ref_list
+      recorded_in: trench
+      # Base A · tools.py:455 — RELATIONS["riempito da"] → fills a capi scambiati.
       repeatable: true
       graph:
         verdict: edge
@@ -527,6 +564,8 @@ template:
     - id: riempie
       labels: {it: "RIEMPIE", en: "FILLS"}
       type: unit_ref_list
+      recorded_in: trench
+      # Base A · tools.py:454 — RELATIONS["riempie"] → fills.
       repeatable: true
       graph:
         verdict: edge
