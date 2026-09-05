@@ -234,6 +234,7 @@ def parse_template(doc: Dict[str, Any], path: Optional[str] = None) -> Template:
         identity=Identity(
             human_key=list((ident.get("human_key") or {}).get("fields") or []),
             pattern=str((ident.get("human_key") or {}).get("pattern", "")),
+            unit_field=str((ident.get("human_key") or {}).get("unit_field", "")),
             uid_policy=str((ident.get("uid") or {}).get("policy", "minted_by_creator")),
             uid_opaque=bool((ident.get("uid") or {}).get("opaque", True)),
             uid_display=str((ident.get("uid") or {}).get("display", "on_request")),
