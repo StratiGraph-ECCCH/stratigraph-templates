@@ -1,0 +1,30 @@
+# Il PRIMO schema ORIGINATO qui, e il banco di prova della governance.
+#
+# `origin: originated` non e' un dettaglio burocratico: cambia chi risponde del
+# contenuto. Uno schema `external` lo dichiariamo e lo risolviamo dove sta —
+# licenza e attribuzione sono di altri, e un aggiornamento arriva da fuori. Uno
+# schema `originated` lo manteniamo noi: ha un namespace nostro, una versione
+# nostra, e un dovere di citazione verso la fonte scientifica che riformula.
+scheme:
+  id: em-taph-weathering
+  authority: Extended Matrix
+  origin: originated
+  version: "0.1.0"
+  labels:
+    en: "Bone weathering stages (Behrensmeyer 1978)"
+    it: "Stadi di alterazione dell'osso (Behrensmeyer 1978)"
+  status: resolvable
+  uri: "https://w3id.org/extendedmatrix/vocab/taph-weathering/"
+  license: "CC BY 4.0"
+  attribution: "Extended Matrix — vocabolario originato in StratiGraph WP3 (CNR-ISPC). Stadi da Behrensmeyer, A. K. 1978, Paleobiology 4(2): 150-162; definizioni riformulate, non trascritte."
+  resolve:
+    kind: skos_file
+    path: "vocabularies/skos/taph-weathering-behrensmeyer.ttl"
+  note: >
+    L'authority e' Extended Matrix, non StratiGraph, e la differenza e'
+    deliberata: StratiGraph e' un progetto con una data di fine, Extended Matrix
+    e' l'ecosistema che gli sopravvive. Un vocabolario che ORIGINIAMO deve stare
+    dalla parte che dura, altrimenti nel 2029 i suoi URI sono orfani. Il
+    progetto resta citato nell'attribuzione, che e' il posto giusto per dire
+    dove e quando e' nato. Sei concetti, scala ordinale 0-5, notazione in
+    skos:notation.

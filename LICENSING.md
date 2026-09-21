@@ -26,6 +26,35 @@ strada scelta qui è pulita per costruzione, non per fortuna.
 La definizione `es-ue-demo-2026` è **inventata** (`invented: true`, e la stampa
 porta il bollo `FIXTURE`): non cita nessuna normativa nazionale reale.
 
+## 1-bis · I vocabolari che ORIGINIAMO noi
+
+`vocabularies/skos/`, dichiarati con `origin: originated` in
+`vocabularies/schemes/`.
+
+Sono una categoria a sé e vanno tenuti distinti dagli strumenti altrui: qui non
+stiamo referenziando il lavoro di un ente, lo stiamo facendo. Quindi rispondiamo
+noi del contenuto, e il validatore pretende tre cose senza le quali un modulo
+nostro è incitabile — `version`, `license`, `uri`.
+
+Il primo è **`em-taph-weathering`**: i sei stadi di alterazione dell'osso di
+Behrensmeyer 1978, **CC BY 4.0**, attribuzione StratiGraph WP3 — CNR-ISPC.
+
+**Perché è lecito, ed è la stessa ragione della scheda ICCD.** I sei stadi sono
+un fatto scientifico pubblicato e non sono coperti da copyright; la **prosa** di
+Behrensmeyer sì. Le definizioni del modulo sono perciò **riformulate e non
+trascritte**, e la fonte è citata su ogni singolo concetto oltre che sullo
+scheme. Ricostruire la scala dalla letteratura è permesso; ricopiarne le
+descrizioni sarebbe un'opera derivata dell'articolo.
+
+**Perché esiste.** È lo standard *de facto* della tafonomia da mezzo secolo e non
+ha mai avuto un identificatore: esiste solo come tabella dentro un articolo del
+1978. Verificato a settembre 2026: Getty AAT non ha `cut marks`, `gnawing`,
+`trampling`; PACTOLS e TAABA hanno `tafonomia` con zero *narrower*. La disciplina
+è nominata ovunque, i suoi oggetti da nessuna parte.
+
+⚠ Il redirect **`w3id.org/extendedmatrix` non è ancora registrato**: gli URI sono
+stabili nell'intenzione ma non risolvibili. Va chiesto prima di pubblicare.
+
 ## 2 · I vocabolari (referenziati, non incorporati)
 
 Gli strumenti terminologici dell'ICCD sono SKOS/RDF con licenza

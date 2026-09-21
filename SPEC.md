@@ -395,6 +395,7 @@ scheme:
   authority: ICCD
   labels: {it: "…", en: "…"}
   status: resolvable            # oppure: declared
+  origin: external              # oppure: originated
   uri: "http://dati.beniculturali.it/vocabularies/…"
   license: "CC BY-SA 3.0 IT"
   attribution: "ICCD — MiC; …"
@@ -407,9 +408,38 @@ scheme:
 * `declared` = la norma prescrive un vocabolario controllato, ma non esiste (o
   non è a portata) uno SKOS leggibile. È il caso dei modelli **da campo**
   dell'ICCD: gli strumenti terminologici in RDF coprono le schede di catalogo.
-* `resolvable` = c'è un file SKOS. `skos_file` sta nel repository (solo
-  *fixture*); `external_skos_file` sta sul disco, sotto
-  `$STRATIGRAPH_ICCD_STANDARDS` (default `~/Documents/GitHub/Standard-catalografici`).
+* `resolvable` = c'è un file SKOS. `skos_file` sta nel repository;
+  `external_skos_file` sta sul disco, sotto `$STRATIGRAPH_ICCD_STANDARDS`
+  (default `~/Documents/GitHub/Standard-catalografici`).
+
+`status` e `origin` rispondono a due domande diverse e non vanno confusi.
+`status` dice **posso risolverlo?**, `origin` dice **di chi è?**.
+
+* `origin: external` (default) = è di altri. Lo dichiariamo, lo risolviamo dove
+  sta, licenza e attribuzione sono loro, e un aggiornamento arriva da fuori.
+* `origin: originated` = lo manteniamo noi. Porta un namespace proprio, una
+  `version` propria e un dovere di citazione verso la fonte scientifica che
+  riformula. Il validatore **pretende** `version`, `license` e `uri`: un modulo
+  nostro senza una di quelle tre è incitabile, e un vocabolario incitabile non
+  serve a nessuno. I file stanno in `vocabularies/skos/`, non in `fixtures/` —
+  un modulo che scriviamo non è una prova.
+
+Il primo modulo originato è `em-taph-weathering`: i sei stadi di alterazione
+dell'osso di Behrensmeyer 1978, che sono lo standard *de facto* della tafonomia
+da mezzo secolo e **non hanno mai avuto un identificatore**. I concetti sono un
+fatto scientifico pubblicato; la prosa dell'autrice no, quindi le definizioni
+sono **riformulate e non trascritte**, con la fonte su ogni concetto.
+
+Il prefisso `em-` e il namespace `w3id.org/extendedmatrix` non sono un dettaglio
+di naming. Un modulo `external` lo dichiariamo e basta, e se il progetto finisce
+non succede niente a nessuno. Un modulo **originato** porta URI che altri
+citeranno: se li appendiamo a StratiGraph, che ha una data di fine, nel 2029
+sono orfani. Stanno quindi su Extended Matrix, che è l'ecosistema che sopravvive
+al progetto; StratiGraph resta nell'`attribution`, che è il posto giusto per
+dire dove e quando il modulo è nato. La pubblicazione è a
+`extendedmatrix.org/vocab/<modulo>/`, con la sorgente qui: la copia pubblicata
+porta in testa il commit da cui viene, perché due copie di un vocabolario
+divergono e quella risolvibile che diventa vecchia è il guasto peggiore.
 
 **Nel grafo finisce il CONCETTO** (l'URI SKOS), non l'etichetta: la risoluzione
 etichetta-in-lingua avviene alla lettura. Se scrivi la stringa italiana nel
