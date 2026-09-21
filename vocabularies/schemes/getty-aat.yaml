@@ -1,0 +1,20 @@
+# Dichiarato per poter ANCORARE i nostri concetti, non per risolverne le
+# etichette: il file non ce l'abbiamo sul disco e non lo copiamo. Serve a dare
+# un'identita' allo schema bersaglio degli allineamenti.
+scheme:
+  id: getty-aat
+  authority: "Getty Research Institute"
+  origin: external
+  labels:
+    en: "Art & Architecture Thesaurus"
+    it: "Art & Architecture Thesaurus (Getty)"
+  status: declared
+  uri: "http://vocab.getty.edu/aat/"
+  license: "ODC-By 1.0"
+  attribution: "J. Paul Getty Trust"
+  note: >
+    E' la spine su cui ARIADNE ha mappato 59 vocabolari e oltre 19.000 termini.
+    ⚠ Getty sta dismettendo XML e Web Services: usare solo il LOD su
+    vocab.getty.edu. Nei mapping ARIADNE solo il 37% e' exactMatch e il 35% e'
+    broadMatch: la spine perde risoluzione proprio dove il dato di scavo e' fine,
+    ed e' la ragione per cui uno schema originato ha senso.

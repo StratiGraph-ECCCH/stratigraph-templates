@@ -1,0 +1,79 @@
+# Stadi di weathering osseo (Behrensmeyer 1978) — modulo SKOS originato in Extended Matrix.
+#
+# PERCHE' ESISTE. E' lo standard de facto della tafonomia da mezzo secolo e non
+# ha mai avuto un identificatore: esiste solo come tabella dentro un articolo del
+# 1978. Verificato nel set. 2026: Getty AAT non ha `cut marks`, `gnawing`,
+# `trampling`, `weathering stage`; PACTOLS e TAABA hanno `tafonomia` con zero
+# narrower. La disciplina e' nominata ovunque, i suoi oggetti da nessuna parte.
+#
+# COSA C'E' E COSA NON C'E'. I sei stadi sono un fatto scientifico pubblicato e
+# non sono coperti da copyright; la PROSA di Behrensmeyer si'. Le definizioni qui
+# sotto sono quindi RIFORMULATE, non trascritte, e la fonte e' citata su ogni
+# concetto. Chi vuole il testo originale va all'articolo.
+#
+# NAMESPACE. w3id.org/extendedmatrix, non /stratigraph: StratiGraph e' un
+# progetto con una data di fine, Extended Matrix e' l'ecosistema che gli
+# sopravvive, e un URI va appeso alla parte che dura. Il prefisso era gia' stato
+# verificato libero su w3id.org prima di scegliere. Il redirect e' in corso di
+# registrazione (PR a perma-id/w3id.org); finche' non e' attivo questi URI sono
+# stabili nell'intenzione ma non ancora risolvibili.
+
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix em:   <https://w3id.org/extendedmatrix/vocab/taph-weathering/> .
+
+em: a skos:ConceptScheme ;
+    dct:title "Bone weathering stages (Behrensmeyer 1978)"@en ;
+    dct:title "Stadi di alterazione dell'osso (Behrensmeyer 1978)"@it ;
+    dct:description """A six-stage ordinal scale describing the progressive surface alteration of
+        bone exposed on or near the ground surface. Definitions here are restatements, not
+        transcriptions, of the stages published by A. K. Behrensmeyer in 1978."""@en ;
+    dct:source "Behrensmeyer, A. K. 1978. Taphonomic and ecologic information from bone weathering. Paleobiology 4(2): 150-162." ;
+    dct:creator "Extended Matrix — StratiGraph WP3, CNR-ISPC" ;
+    dct:license <https://creativecommons.org/licenses/by/4.0/> ;
+    owl:versionInfo "0.1.0" ;
+    dct:issued "2026-09-20"^^<http://www.w3.org/2001/XMLSchema#date> ;
+    skos:hasTopConcept em:stage-0, em:stage-1, em:stage-2, em:stage-3, em:stage-4, em:stage-5 .
+
+em:stage-0 a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:notation "0" ;
+    skos:prefLabel "Weathering stage 0"@en ; skos:prefLabel "Stadio di alterazione 0"@it ;
+    skos:definition "Surface intact and greasy in appearance, with no cracking or flaking; soft tissue may still adhere."@en ;
+    skos:definition "Superficie integra e di aspetto untuoso, senza fessurazioni ne' sfaldature; puo' esserci ancora tessuto molle aderente."@it ;
+    dct:source "Behrensmeyer 1978, Paleobiology 4(2): 150-162 (restated)" .
+
+em:stage-1 a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:notation "1" ;
+    skos:prefLabel "Weathering stage 1"@en ; skos:prefLabel "Stadio di alterazione 1"@it ;
+    skos:definition "First cracking appears, running parallel to the fibre structure of the bone; articular surfaces may show a mosaic pattern of fine cracks."@en ;
+    skos:definition "Compaiono le prime fessurazioni, parallele alla struttura fibrosa dell'osso; le superfici articolari possono mostrare un reticolo a mosaico di fessure sottili."@it ;
+    dct:source "Behrensmeyer 1978, Paleobiology 4(2): 150-162 (restated)" .
+
+em:stage-2 a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:notation "2" ;
+    skos:prefLabel "Weathering stage 2"@en ; skos:prefLabel "Stadio di alterazione 2"@it ;
+    skos:definition "The outermost layers of compact bone begin to flake away, usually along existing cracks; flakes are thin and still partly attached, and cracking has deepened."@en ;
+    skos:definition "Gli strati piu' esterni dell'osso compatto cominciano a sfaldarsi, di norma lungo le fessure gia' presenti; le scaglie sono sottili e ancora in parte aderenti, e le fessurazioni si sono approfondite."@it ;
+    dct:source "Behrensmeyer 1978, Paleobiology 4(2): 150-162 (restated)" .
+
+em:stage-3 a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:notation "3" ;
+    skos:prefLabel "Weathering stage 3"@en ; skos:prefLabel "Stadio di alterazione 3"@it ;
+    skos:definition "Patches of rough, uniformly altered compact bone appear, with a fibrous texture; alteration penetrates roughly one to one and a half millimetres and the original surface is no longer preserved in those patches."@en ;
+    skos:definition "Compaiono chiazze di osso compatto ruvido e alterato in modo uniforme, di tessitura fibrosa; l'alterazione penetra all'incirca uno-un millimetro e mezzo e in quelle chiazze la superficie originaria non e' piu' conservata."@it ;
+    dct:source "Behrensmeyer 1978, Paleobiology 4(2): 150-162 (restated)" .
+
+em:stage-4 a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:notation "4" ;
+    skos:prefLabel "Weathering stage 4"@en ; skos:prefLabel "Stadio di alterazione 4"@it ;
+    skos:definition "The whole surface is coarsely fibrous and rough; splinters are loose and detach easily, and the alteration reaches the inner cavities of the bone."@en ;
+    skos:definition "L'intera superficie e' grossolanamente fibrosa e ruvida; le schegge sono mobili e si staccano con facilita', e l'alterazione raggiunge le cavita' interne dell'osso."@it ;
+    dct:source "Behrensmeyer 1978, Paleobiology 4(2): 150-162 (restated)" .
+
+em:stage-5 a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:notation "5" ;
+    skos:prefLabel "Weathering stage 5"@en ; skos:prefLabel "Stadio di alterazione 5"@it ;
+    skos:definition "The bone is disintegrating in place into large splinters; the original shape of the element may no longer be determinable."@en ;
+    skos:definition "L'osso si sta disgregando in posto in schegge grandi; la forma originaria dell'elemento puo' non essere piu' determinabile."@it ;
+    dct:source "Behrensmeyer 1978, Paleobiology 4(2): 150-162 (restated)" .

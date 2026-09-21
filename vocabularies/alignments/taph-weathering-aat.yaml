@@ -1,0 +1,40 @@
+# Ancoraggio del modulo originato alla spine Getty. Deliberatamente broadMatch e
+# non exactMatch: AAT ha UN concetto di `weathering` (300054115) come processo di
+# alterazione, non ha gli stadi. Dichiarare exactMatch sarebbe falso e
+# collasserebbe sei concetti in uno.
+#
+# `status: proposed` = proposto, non ancora verificato da una persona che ne
+# risponda. Questa distinzione e' esattamente cio' che nella metodologia ARIADNE
+# non esiste (nessun meccanismo documentato di gestione del disaccordo).
+alignments:
+  - source: {scheme: em-taph-weathering, concept: "https://w3id.org/extendedmatrix/vocab/taph-weathering/stage-0"}
+    match: broadMatch
+    target: {scheme: getty-aat, concept: "http://vocab.getty.edu/aat/300054115"}
+    status: proposed
+    by: "StratiGraph WP3"
+    note: "aat:300054115 = weathering (processo). Vale per tutti e sei gli stadi; qui uno per concetto."
+  - source: {scheme: em-taph-weathering, concept: "https://w3id.org/extendedmatrix/vocab/taph-weathering/stage-1"}
+    match: broadMatch
+    target: {scheme: getty-aat, concept: "http://vocab.getty.edu/aat/300054115"}
+    status: proposed
+    by: "StratiGraph WP3"
+  - source: {scheme: em-taph-weathering, concept: "https://w3id.org/extendedmatrix/vocab/taph-weathering/stage-2"}
+    match: broadMatch
+    target: {scheme: getty-aat, concept: "http://vocab.getty.edu/aat/300054115"}
+    status: proposed
+    by: "StratiGraph WP3"
+  - source: {scheme: em-taph-weathering, concept: "https://w3id.org/extendedmatrix/vocab/taph-weathering/stage-3"}
+    match: broadMatch
+    target: {scheme: getty-aat, concept: "http://vocab.getty.edu/aat/300054115"}
+    status: proposed
+    by: "StratiGraph WP3"
+  - source: {scheme: em-taph-weathering, concept: "https://w3id.org/extendedmatrix/vocab/taph-weathering/stage-4"}
+    match: broadMatch
+    target: {scheme: getty-aat, concept: "http://vocab.getty.edu/aat/300054115"}
+    status: proposed
+    by: "StratiGraph WP3"
+  - source: {scheme: em-taph-weathering, concept: "https://w3id.org/extendedmatrix/vocab/taph-weathering/stage-5"}
+    match: broadMatch
+    target: {scheme: getty-aat, concept: "http://vocab.getty.edu/aat/300054115"}
+    status: proposed
+    by: "StratiGraph WP3"

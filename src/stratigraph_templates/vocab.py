@@ -7,6 +7,15 @@ Two decisions live here.
    terms.  A scheme may be ``declared`` (the standard prescribes a controlled
    vocabulary, but no machine-readable scheme is published) or ``resolvable``
    (a SKOS file can be read, in the repo or on the machine).
+
+   ``status`` answers *can I resolve it?*; ``origin`` answers *whose is it?*,
+   and the two are independent.  An ``external`` scheme is somebody else's: we
+   declare it, we resolve it where it lives, and an update arrives from outside.
+   An ``originated`` scheme is ours to maintain — it carries its own namespace,
+   its own ``version``, and a duty of citation towards whatever scientific
+   source it restates.  Originated schemes are the reason ``skos_file`` is no
+   longer reserved to fixtures: a module we author lives in the repository and
+   is not a fixture.
 2. What lands in the graph is the CONCEPT, and the label is resolved at reading
    time in the requested language.  When the concept has no label in that
    language, an ALIGNMENT (``skos:exactMatch`` / ``closeMatch``) to another
@@ -43,7 +52,9 @@ class Scheme:
     id: str
     authority: str
     labels: Dict[str, str]
-    status: str                       # declared | resolvable
+    status: str                       # declared | resolvable  -- can I resolve it?
+    origin: str = "external"          # external | originated   -- whose is it?
+    version: Optional[str] = None     # originated schemes carry their own
     uri: Optional[str] = None
     license: Optional[str] = None
     attribution: Optional[str] = None
@@ -121,11 +132,29 @@ class Vocabularies:
                     f"{p.name}: scheme '{s['id']}' status must be 'declared' or 'resolvable', "
                     f"got {s.get('status')!r}"
                 )
+            origin = s.get("origin", "external")
+            if origin not in ("external", "originated"):
+                raise VocabularyError(
+                    f"{p.name}: scheme '{s['id']}' origin must be 'external' or 'originated', "
+                    f"got {origin!r}"
+                )
+            # A module we maintain must say WHICH version somebody is citing, and
+            # under what terms. An external scheme is excused both: they are the
+            # other side's to declare.
+            if origin == "originated":
+                for required in ("version", "license", "uri"):
+                    if not s.get(required):
+                        raise VocabularyError(
+                            f"{p.name}: scheme '{s['id']}' is originated, so it must declare "
+                            f"'{required}' — a module we maintain without one is unciteable"
+                        )
             schemes[s["id"]] = Scheme(
                 id=s["id"],
                 authority=s.get("authority", "?"),
                 labels=s.get("labels") or {},
                 status=s["status"],
+                origin=origin,
+                version=s.get("version"),
                 uri=s.get("uri"),
                 license=s.get("license"),
                 attribution=s.get("attribution"),
