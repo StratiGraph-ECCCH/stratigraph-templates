@@ -18,6 +18,9 @@
 
 template:
   id: es-ue-demo-2026
+  # versione della definizione (SPEC §1.1): 0.x perché è una demo inventata,
+  # non una lettura di una norma che qualcuno cita
+  version: "0.1.0"
   standard:
     authority: "DEMO"
     code: "UE"

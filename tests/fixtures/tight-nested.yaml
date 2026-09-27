@@ -5,6 +5,7 @@
 # deve prendere. Nessuna tolleranza da regalare: 25+25+25+25 = 100.
 template:
   id: tight-nested
+  version: "0.0.1"
   standard:
     authority: TEST
     code: TIGHT

@@ -284,6 +284,12 @@ class Provenance:
     clock: str = "s3dgraphy_crdt_field_clock"
 
 
+#: The version of a DEFINITION — semver, MAJOR.MINOR.PATCH with an optional
+#: pre-release. Not the version of the norm (`standard.version`): a correction
+#: to our reading of ICCD 2021 is a new definition of the same norm.
+SEMVER_PATTERN = r"^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-[0-9A-Za-z.-]+)?$"
+
+
 @dataclass
 class Template:
     id: str
@@ -298,6 +304,9 @@ class Template:
     vocabularies: List[str] = dc_field(default_factory=list)
     graph_defaults: Dict[str, Any] = dc_field(default_factory=dict)
     notes: Dict[str, Any] = dc_field(default_factory=dict)
+    #: The version of THIS DEFINITION (SPEC §1.1). Empty = not declared, which the
+    #: validator refuses: an unversioned definition cannot be cited by a record.
+    version: str = ""
     path: Optional[str] = None
 
     def __post_init__(self) -> None:
@@ -348,6 +357,8 @@ class Template:
 class Record:
     """Filled data for one unit — the other half of what a renderer needs."""
     template: str
+    #: which version of the definition the record followed (SPEC §5)
+    template_version: str = ""
     values: Dict[str, Any] = dc_field(default_factory=dict)
     field_provenance: Dict[str, Any] = dc_field(default_factory=dict)
     uid: Optional[str] = None

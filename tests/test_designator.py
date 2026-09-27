@@ -33,7 +33,7 @@ def a_sheet(**identity):
     key = {"fields": ["sito", "numero"], "pattern": "US {numero} · {sito}"}
     key.update(identity)
     return {"template": {
-        "id": "prova", "source_language": "it", "languages": ["it"],
+        "id": "prova", "version": "0.0.1", "source_language": "it", "languages": ["it"],
         "standard": {"authority": "TEST", "code": "P", "version": "1",
                      "kind": "field_model", "invented": True,
                      "title": {"it": "Prova"}},

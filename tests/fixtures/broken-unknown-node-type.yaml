@@ -4,6 +4,7 @@
 # Due campi, un paragrafo, un fronte e un retro.
 template:
   id: broken-unknown-node-type
+  version: "0.0.1"
   standard:
     authority: TEST
     code: MIN

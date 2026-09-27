@@ -30,7 +30,8 @@ vocabularies/schemes/          gli schemi di vocabolario, REFERENZIATI non incor
 vocabularies/alignments/       gli allineamenti SKOS fra vocabolari nazionali
 vocabularies/fixtures/         micro-schemi finti, per le prove
 examples/                      dati di prova
-registry/                      istantanea di ciò che s3Dgraphy dichiara
+registry/                      istantanea di ciò che s3Dgraphy dichiara — LA fonte di validate e build
+dist/schede/                   le definizioni COMPILATE (JSON autosufficiente): ciò che un'app vendora
 src/stratigraph_templates/     l'implementazione di riferimento (legge, valida, rende)
 drafts/                        bozze estratte da normative XSD: proposte, non verità
 tests/                         la suite, e le definizioni rotte che i cancelli devono prendere
@@ -52,6 +53,8 @@ La specifica del formato è in **[SPEC.md](SPEC.md)**.
 python3 -m venv .venv && .venv/bin/pip install -e '.[dev]'
 
 .venv/bin/stratigraph-templates validate
+.venv/bin/stratigraph-templates build                 # → dist/schede/<id>/<versione>.json + index.json
+.venv/bin/stratigraph-templates registry-snapshot     # solo quando s3Dgraphy è cambiato: è una decisione
 .venv/bin/stratigraph-templates info iccd-us-2021
 .venv/bin/stratigraph-templates print iccd-us-2021 --record examples/us-3014-demo.yaml --lang it -o out/us.pdf
 .venv/bin/stratigraph-templates form  iccd-us-2021 --record examples/us-3014-demo.yaml --lang it -o out/us.html
@@ -71,9 +74,26 @@ s3Dgraphy dichiara oggi**: un nome che non esiste è un errore, non un avviso �
 così che «non aggiungere tipi al datamodel» si fa rispettare da sé invece che a
 parole.
 
-Se s3Dgraphy non è leggibile si usa `registry/s3dgraphy-snapshot.json`, che dice
-da dove è stato preso. Se non si può leggere nessuno dei due **non si valida
+La fonte è **una sola**: `registry/s3dgraphy-snapshot.json`, committato, che
+dice da quale commit di s3Dgraphy e con quali versioni dei datamodel è stato
+preso. Se il checkout di s3Dgraphy è su questa macchina, `validate` e `build` lo
+confrontano con lo snapshot e, **se divergono, lo dicono e si fermano**: non
+scelgono da soli. Rigenerare lo snapshot (`registry-snapshot`) è la decisione,
+e il diff di `registry/` ne è il documento. Senza snapshot **non si valida
 niente**: non esiste una terza modalità permissiva.
+
+## La forma compilata — come una definizione arriva a un programma
+
+`build` scrive, per ogni definizione valida, un JSON autosufficiente in
+`dist/schede/<id>/<versione>.json` (più un `index.json`): testata con versione
+della definizione, digest e datamodel di s3Dgraphy contro cui è stata validata;
+una **metà visiva** (campi, etichette in tutte le lingue, foglio); una **ricetta**
+che dice, campo per campo, quali delle cinque operazioni CRDT di s3Dgraphy
+produrre — senza valori. L'orchestratore è StratiGraph Server: chi compila la
+scheda manda quelle operazioni alla stanza. Lo stesso patto di `sync-brand.sh` e
+`sync-datamodels.sh`: **qui si produce, l'app vendora e committa la copia**.
+Una versione pubblicata non cambia: un contenuto diverso sotto lo stesso numero
+è rifiutato. SPEC §9.
 
 ## Licenze — due strati, e la ragione per cui questa strada è pulita
 

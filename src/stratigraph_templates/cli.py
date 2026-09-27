@@ -10,7 +10,8 @@ from typing import List, Optional
 
 from .loader import find_template, load_record, templates_dir
 from .model import MissingLabel
-from .registry import RegistryUnavailable, registry, write_snapshot
+from .compile import CompileError, build, summary
+from .registry import RegistryDivergence, RegistryUnavailable, registry, write_snapshot
 from .render import RenderError, VocabTrace, sheet_html, write_pdf
 from .validate import ValidationError, blocked_fields, validate_template
 from .vocab import Vocabularies, VocabularyError
@@ -48,8 +49,13 @@ def _validate_one(name: str, reg, vocab: Vocabularies, quiet: bool = False) -> i
     return 0
 
 
+def _registry(args):
+    """The ONE registry every checking command uses (registry.registry)."""
+    return registry(check_live=not args.snapshot)
+
+
 def cmd_validate(args) -> int:
-    reg = registry(prefer_snapshot=args.snapshot)
+    reg = _registry(args)
     print(reg.provenance())
     vocab = _vocab()
     names = args.templates or _all_template_ids()
@@ -85,8 +91,17 @@ def cmd_info(args) -> int:
     return 0
 
 
-def _record(args):
-    return load_record(args.record) if args.record else None
+def _record(args, t=None):
+    rec = load_record(args.record) if args.record else None
+    if rec is not None and t is not None:
+        # the record says which definition and which version it followed (SPEC §5):
+        # a different id is an error, a different version is said out loud
+        if rec.template != t.id:
+            raise FileNotFoundError(f"{args.record} follows '{rec.template}', not '{t.id}'")
+        if rec.template_version != t.version:
+            print(f"  ! {args.record} was filled with {t.id} {rec.template_version}; "
+                  f"printing it with {t.version}", file=sys.stderr)
+    return rec
 
 
 def _explain(trace: VocabTrace) -> None:
@@ -105,14 +120,14 @@ def _explain(trace: VocabTrace) -> None:
 
 
 def cmd_print(args) -> int:
-    reg = registry(prefer_snapshot=args.snapshot)
+    reg = _registry(args)
     vocab = _vocab()
     t = find_template(args.template)
     validate_template(t, reg, known_schemes=vocab.scheme_ids())
     trace = VocabTrace()
     out = args.out or f"out/{t.id}.pdf"
     Path(out).parent.mkdir(parents=True, exist_ok=True)
-    pages = write_pdf(t, _record(args), out, lang=args.lang, vocab=vocab, trace=trace)
+    pages = write_pdf(t, _record(args, t), out, lang=args.lang, vocab=vocab, trace=trace)
     sides = len(t.sheet.sides)
     print(f"{out} — {t.standard.authority} {t.standard.code} {t.standard.version}, "
           f"{sides} side(s) → {pages} page(s), language '{args.lang or t.source_language}'")
@@ -129,19 +144,43 @@ def cmd_print(args) -> int:
 
 
 def cmd_form(args) -> int:
-    reg = registry(prefer_snapshot=args.snapshot)
+    reg = _registry(args)
     vocab = _vocab()
     t = find_template(args.template)
     validate_template(t, reg, known_schemes=vocab.scheme_ids())
     trace = VocabTrace()
     out = args.out or f"out/{t.id}-form.html"
     Path(out).parent.mkdir(parents=True, exist_ok=True)
-    doc = sheet_html(t, _record(args), lang=args.lang, mode="form", vocab=vocab, trace=trace)
+    doc = sheet_html(t, _record(args, t), lang=args.lang, mode="form", vocab=vocab, trace=trace)
     Path(out).write_text(doc, encoding="utf-8")
     print(f"{out} — form, language '{args.lang or t.source_language}'")
     if args.explain_vocab:
         _explain(trace)
     return 0
+
+
+def cmd_build(args) -> int:
+    reg = _registry(args)
+    print(reg.provenance())
+    vocab = _vocab()
+    names = args.templates or _all_template_ids()
+    out = Path(args.out)
+    written, refused = build([find_template(n) for n in names], reg, vocab, out)
+    for tid, path, what in written:
+        doc = json.loads(path.read_text(encoding="utf-8"))
+        s = summary(doc)
+        print(f"✓ {tid} {doc['header']['version']} → {path} ({what})")
+        print(f"    {doc['header']['digest']}")
+        print(f"    verdicts {s['verdicts']} · steps {s['steps']} · open {s['open']}")
+        for item in doc["recipe"]["open"]:
+            print(f"      open: {item['field'] or '(unit)'} — {item['what']}")
+    for tid, why in refused:
+        print(f"✗ {tid} does not compile", file=sys.stderr)
+        for line in why.splitlines()[1:] or [why]:
+            print(f"  {line}", file=sys.stderr)
+    if written:
+        print(f"{out / 'index.json'} — {len(written)} definition(s) compiled")
+    return 1 if refused else 0
 
 
 def cmd_extract_xsd(args) -> int:
@@ -181,8 +220,9 @@ def cmd_vocab(args) -> int:
 def main(argv: Optional[List[str]] = None) -> int:
     ap = argparse.ArgumentParser(prog="stratigraph-templates", description=__doc__)
     ap.add_argument("--snapshot", action="store_true",
-                    help="check graph bindings against the recorded registry snapshot instead of a "
-                         "live s3Dgraphy")
+                    help="use the registry snapshot WITHOUT comparing it to the s3Dgraphy working "
+                         "tree (the snapshot is the source either way; this skips the check, "
+                         "declared)")
     sub = ap.add_subparsers(dest="cmd", required=True)
 
     p = sub.add_parser("validate", help="check definitions (shape + graph bindings)")
@@ -209,6 +249,11 @@ def main(argv: Optional[List[str]] = None) -> int:
     p.add_argument("--explain-vocab", action="store_true")
     p.set_defaults(func=cmd_form)
 
+    p = sub.add_parser("build", help="compile definitions to self-sufficient JSON (dist/schede/)")
+    p.add_argument("templates", nargs="*")
+    p.add_argument("-o", "--out", default=str(Path(__file__).resolve().parents[2] / "dist" / "schede"))
+    p.set_defaults(func=cmd_build)
+
     p = sub.add_parser("extract-xsd", help="propose a draft definition from an ICCD catalogue XSD")
     p.add_argument("xsd")
     p.add_argument("--authority", default="ICCD")
@@ -230,7 +275,7 @@ def main(argv: Optional[List[str]] = None) -> int:
     try:
         return args.func(args)
     except (ValidationError, RenderError, VocabularyError, MissingLabel, RegistryUnavailable,
-            FileNotFoundError) as exc:
+            RegistryDivergence, CompileError, FileNotFoundError) as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 2
 

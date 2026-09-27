@@ -14,6 +14,12 @@
 
 template:
   id: iccd-us-2021
+  # La versione di QUESTA DEFINIZIONE (SPEC §1.1), non della norma: la norma è
+  # `standard.version` («2021»). Una correzione alla nostra lettura del modello
+  # ICCD 2021 alza questa, e la norma resta quella che è. 1.0.0 = la lettura
+  # misurata dall'audit del 2026-10-17 (a4b5365), la prima che un programma
+  # compila e consuma.
+  version: "1.0.0"
   standard:
     authority: ICCD
     code: US

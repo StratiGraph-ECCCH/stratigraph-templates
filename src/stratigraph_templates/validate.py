@@ -15,7 +15,7 @@ import re
 from dataclasses import dataclass
 from typing import Dict, List, Optional, Set
 
-from .model import EDGE_DIRECTIONS, FIELD_TYPES, GRAPH_VERDICTS, Template
+from .model import EDGE_DIRECTIONS, FIELD_TYPES, GRAPH_VERDICTS, SEMVER_PATTERN, Template
 from .registry import Registry, registry
 from .render import STRIP_FONT_PT
 
@@ -315,6 +315,27 @@ def _check_graph(t: Template, reg: Registry, problems: List[Problem]) -> None:
             )
 
 
+def _check_version(t: Template, problems: List[Problem]) -> None:
+    """The definition has a version of its own, and it is semver.
+
+    `standard.version` is the version of the NORM and says nothing about ours: a
+    correction to how a box is read is a new definition of the same norm. A
+    record cites the pair (id, version), and a compiled definition is filed
+    under it — so a definition without one cannot be compiled, and cannot be
+    cited.
+    """
+    if not t.version:
+        problems.append(Problem(
+            "template.version",
+            "missing: the definition must declare its own version (semver, e.g. \"1.0.0\"). "
+            f"standard.version ({t.standard.version!r}) is the version of the norm, not of this "
+            "reading of it"))
+    elif not re.match(SEMVER_PATTERN, t.version):
+        problems.append(Problem(
+            "template.version",
+            f"{t.version!r} is not semver (MAJOR.MINOR.PATCH, optional -pre-release)"))
+
+
 def _check_structure(t: Template, problems: List[Problem], known_schemes: Optional[Set[str]]) -> None:
     ids = [f.id for f in t.fields]
     dupes = sorted({i for i in ids if ids.count(i) > 1})
@@ -505,6 +526,7 @@ def validate_template(
     """Return the problems; raise ValidationError when strict and there are any."""
     reg = reg or registry()
     problems: List[Problem] = []
+    _check_version(t, problems)
     _check_structure(t, problems, known_schemes)
     _check_labels(t, problems)
     _check_widths(t, problems)

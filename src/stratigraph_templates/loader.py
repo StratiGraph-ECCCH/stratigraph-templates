@@ -216,8 +216,10 @@ def parse_template(doc: Dict[str, Any], path: Optional[str] = None) -> Template:
     std = _need(t, "standard", "template")
     ident = t.get("identity") or {}
     prov = t.get("provenance") or {}
+    version = t.get("version")
     return Template(
         id=str(tid),
+        version="" if version is None else str(version),
         standard=Standard(
             authority=str(_need(std, "authority", "template.standard")),
             code=str(_need(std, "code", "template.standard")),
@@ -284,6 +286,9 @@ def load_record(path: str | Path) -> Record:
     r = doc["record"]
     return Record(
         template=str(_need(r, "template", "record")),
+        # a record says WHICH VERSION of the definition it followed (SPEC §5):
+        # without it, reading it back means guessing the recipe
+        template_version=str(_need(r, "template_version", "record")),
         values=r.get("values") or {},
         field_provenance=r.get("field_provenance") or {},
         uid=r.get("uid"),

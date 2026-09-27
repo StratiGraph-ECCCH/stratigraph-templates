@@ -1,8 +1,24 @@
 {
-  "source": "s3dgraphy at /Users/emanueldemetrescu/Documents/GitHub/s3Dgraphy/src/s3dgraphy/JSON_config",
-  "node_datamodel_version": "1.6.4",
-  "connections_version": "1.6.13",
+  "snapshot_format": 2,
+  "source": "s3dgraphy working tree at ../s3Dgraphy/src/s3dgraphy/JSON_config",
+  "taken_from": {
+    "config_dir": "../s3Dgraphy/src/s3dgraphy/JSON_config",
+    "git_commit": "8b91867aef7443a7de37fed46812d5f1bba39327",
+    "git_dirty": false
+  },
+  "taken_on": "2026-09-27",
+  "node_datamodel_version": "1.6.8",
+  "connections_version": "1.6.19",
   "qualia_version": "1.6.1",
+  "em_ttl_version": "1.6.2",
+  "s3dgraphy_version": "1.6.0.dev20",
+  "operations": [
+    "add_node",
+    "update_field",
+    "remove_node",
+    "add_edge",
+    "remove_edge"
+  ],
   "node_types": [
     "ActivityNodeGroup",
     "AnnotationRegionNode",
@@ -11,6 +27,7 @@
     "BR",
     "CombinerNode",
     "DTCAcquisitionNode",
+    "DTCDeviceNode",
     "DTCProcessNode",
     "DocumentNode",
     "EmbargoNode",
@@ -35,6 +52,7 @@
     "RegistrationTransformNode",
     "RepresentationModelDocNode",
     "RepresentationModelNode",
+    "RepresentationModelNodeGroup",
     "RepresentationModelSpecialFindNode",
     "ResourceNode",
     "SE",
@@ -58,6 +76,63 @@
     "serUSVn",
     "serUSVs"
   ],
+  "node_classes": {
+    "ActivityNodeGroup": "ActivityNodeGroup",
+    "AnnotationRegionNode": "annotation_region",
+    "AuthorAINode": "author_ai",
+    "AuthorNode": "author",
+    "CombinerNode": "combiner",
+    "ContinuityNode": "BR",
+    "DTCAcquisitionNode": "dtc_acquisition",
+    "DTCDeviceNode": "dtc_device",
+    "DTCProcessNode": "dtc_process",
+    "DocumentNode": "document",
+    "DocumentaryStratigraphicUnit": "USD",
+    "EmbargoNode": "embargo",
+    "EpochNode": "EpochNode",
+    "ExtractorNode": "extractor",
+    "FunctionalUnitNodeGroup": "FunctionalUnitNodeGroup",
+    "GCPSetNode": "gcp_set",
+    "GeoPositionNode": "geo_position",
+    "GraphNode": "graph",
+    "GroupNode": "Group",
+    "HDTNode": "hdt",
+    "HeritageEntityNode": "heritage_entity",
+    "LicenseNode": "license",
+    "LocationNodeGroup": "LocationNodeGroup",
+    "NarrativeNode": "narrative",
+    "NegativeStratigraphicUnit": "USN",
+    "NeutralStratigraphicUnit": "USNt",
+    "Node": "Node",
+    "NonStructuralVirtualStratigraphicUnit": "USVn",
+    "ParadataNode": "ParadataNode",
+    "ParadataNodeGroup": "ParadataNodeGroup",
+    "ProjectNode": "project",
+    "PropertyNode": "property",
+    "RegistrationTransformNode": "registration_transform",
+    "RepresentationModelDocNode": "representation_model_doc",
+    "RepresentationModelNode": "representation_model",
+    "RepresentationModelNodeGroup": "RepresentationModelNodeGroup",
+    "RepresentationModelSpecialFindNode": "representation_model_sf",
+    "ResourceNode": "resource",
+    "ReusedSpecialFind": "RSF",
+    "SemanticShapeNode": "semantic_shape",
+    "SeriesOfDocumentaryStratigraphicUnit": "serUSD",
+    "SeriesOfNonStructuralVirtualStratigraphicUnit": "serUSVn",
+    "SeriesOfStratigraphicUnit": "serSU",
+    "SeriesOfStructuralVirtualStratigraphicUnit": "serUSVs",
+    "SpecialFindUnit": "SF",
+    "StratigraphicEventNode": "SE",
+    "StratigraphicNode": "StratigraphicNode",
+    "StratigraphicUnit": "US",
+    "StructuralVirtualStratigraphicUnit": "USVs",
+    "StudyNode": "study",
+    "TimeBranchNodeGroup": "TimeBranchNodeGroup",
+    "TransformationStratigraphicUnit": "TSU",
+    "UnknownNode": "unknown",
+    "VirtualSpecialFindUnit": "VSF",
+    "WorkingUnit": "UL"
+  },
   "edge_types": [
     "abuts",
     "bonded_to",
@@ -69,6 +144,7 @@
     "dtc_derived_from",
     "dtc_had_input",
     "dtc_had_output",
+    "dtc_happened_on_device",
     "equals",
     "extracted_from",
     "fills",
@@ -104,6 +180,7 @@
     "is_in_functional_unit",
     "is_in_location",
     "is_in_paradata_nodegroup",
+    "is_in_representation_model_group",
     "is_in_timebranch",
     "is_on_resource",
     "is_part_of",
@@ -114,6 +191,680 @@
     "survive_in_epoch",
     "validated_by"
   ],
+  "edges": {
+    "abuts": {
+      "reverse": "is_abutted_by",
+      "symmetric": false,
+      "type_tag": "abuts",
+      "deprecated": false,
+      "rdf": {
+        "predicate": "http://www.cidoc-crm.org/extensions/crmarchaeo/AP11_has_physical_relation_to",
+        "subproperty": "https://w3id.org/em/ontology#abuts",
+        "extension": null,
+        "subject": "source"
+      }
+    },
+    "bonded_to": {
+      "reverse": null,
+      "symmetric": true,
+      "type_tag": "bonded to",
+      "deprecated": false,
+      "rdf": {
+        "predicate": "http://www.cidoc-crm.org/extensions/crmarchaeo/AP11_has_physical_relation_to",
+        "subproperty": "https://w3id.org/em/ontology#bondedTo",
+        "extension": null,
+        "subject": "source"
+      }
+    },
+    "changed_from": {
+      "reverse": "changed_to",
+      "symmetric": false,
+      "type_tag": null,
+      "deprecated": false,
+      "rdf": {
+        "predicate": "http://www.cidoc-crm.org/cidoc-crm/P123i_resulted_from",
+        "subproperty": null,
+        "extension": "http://www.cidoc-crm.org/extensions/crmarchaeo/AP4_produced_surface",
+        "subject": "source"
+      }
+    },
+    "combines": {
+      "reverse": "is_combined_by",
+      "symmetric": false,
+      "type_tag": null,
+      "deprecated": false,
+      "rdf": {
+        "predicate": "http://www.cidoc-crm.org/cidoc-crm/P16_used_specific_object",
+        "subproperty": null,
+        "extension": null,
+        "subject": "source"
+      }
+    },
+    "contains_proposition_set": {
+      "reverse": "is_proposition_set_of",
+      "symmetric": false,
+      "type_tag": null,
+      "deprecated": false,
+      "rdf": {
+        "predicate": "https://w3id.org/hdto/ontology#HP33_contains",
+        "subproperty": null,
+        "extension": null,
+        "subject": "source"
+      }
+    },
+    "contrasts_with": {
+      "reverse": null,
+      "symmetric": true,
+      "type_tag": null,
+      "deprecated": false,
+      "rdf": {
+        "predicate": null,
+        "subproperty": null,
+        "extension": "https://w3id.org/em/ontology#contrastsWith",
+        "subject": "source"
+      }
+    },
+    "cuts": {
+      "reverse": "is_cut_by",
+      "symmetric": false,
+      "type_tag": "cuts",
+      "deprecated": false,
+      "rdf": {
+        "predicate": "http://www.cidoc-crm.org/extensions/crmarchaeo/AP11_has_physical_relation_to",
+        "subproperty": "https://w3id.org/em/ontology#cuts",
+        "extension": null,
+        "subject": "source"
+      }
+    },
+    "dtc_derived_from": {
+      "reverse": "dtc_derivation_source_for",
+      "symmetric": false,
+      "type_tag": null,
+      "deprecated": false,
+      "rdf": {
+        "predicate": "http://www.cidoc-crm.org/extensions/crmdig/L21_used_as_derivation_source",
+        "subproperty": null,
+        "extension": "http://www.w3.org/ns/prov#wasDerivedFrom",
+        "subject": "source"
+      }
+    },
+    "dtc_had_input": {
+      "reverse": "dtc_was_input_of",
+      "symmetric": false,
+      "type_tag": null,
+      "deprecated": false,
+      "rdf": {
+        "predicate": "http://www.cidoc-crm.org/extensions/crmdig/L10_had_input",
+        "subproperty": null,
+        "extension": "http://www.w3.org/ns/prov#used",
+        "subject": "source"
+      }
+    },
+    "dtc_had_output": {
+      "reverse": "dtc_was_output_of",
+      "symmetric": false,
+      "type_tag": null,
+      "deprecated": false,
+      "rdf": {
+        "predicate": "http://www.cidoc-crm.org/extensions/crmdig/L11_had_output",
+        "subproperty": null,
+        "extension": "http://www.w3.org/ns/prov#generated",
+        "subject": "source"
+      }
+    },
+    "dtc_happened_on_device": {
+      "reverse": "dtc_was_device_of",
+      "symmetric": false,
+      "type_tag": null,
+      "deprecated": false,
+      "rdf": {
+        "predicate": "http://www.cidoc-crm.org/extensions/crmdig/L12_happened_on_device",
+        "subproperty": null,
+        "extension": null,
+        "subject": "source"
+      }
+    },
+    "equals": {
+      "reverse": null,
+      "symmetric": true,
+      "type_tag": "equals",
+      "deprecated": false,
+      "rdf": {
+        "predicate": "http://www.cidoc-crm.org/extensions/crmarchaeo/AP11_has_physical_relation_to",
+        "subproperty": "https://w3id.org/em/ontology#physicallyEquals",
+        "extension": null,
+        "subject": "source"
+      }
+    },
+    "extracted_from": {
+      "reverse": "is_source_for_extraction",
+      "symmetric": false,
+      "type_tag": null,
+      "deprecated": false,
+      "rdf": {
+        "predicate": "http://www.cidoc-crm.org/cidoc-crm/P67_refers_to",
+        "subproperty": null,
+        "extension": null,
+        "subject": "source"
+      }
+    },
+    "fills": {
+      "reverse": "is_filled_by",
+      "symmetric": false,
+      "type_tag": "fills",
+      "deprecated": false,
+      "rdf": {
+        "predicate": "http://www.cidoc-crm.org/extensions/crmarchaeo/AP11_has_physical_relation_to",
+        "subproperty": "https://w3id.org/em/ontology#fills",
+        "extension": null,
+        "subject": "source"
+      }
+    },
+    "generic_connection": {
+      "reverse": null,
+      "symmetric": true,
+      "type_tag": null,
+      "deprecated": false,
+      "rdf": {
+        "predicate": "http://www.cidoc-crm.org/cidoc-crm/P130_shows_features_of",
+        "subproperty": null,
+        "extension": "http://www.cidoc-crm.org/extensions/crmarchaeo/AP11_has_physical_relation_to",
+        "subject": "source"
+      }
+    },
+    "has_author": {
+      "reverse": "is_author_of",
+      "symmetric": false,
+      "type_tag": null,
+      "deprecated": false,
+      "rdf": {
+        "predicate": "http://www.w3.org/ns/prov#wasAttributedTo",
+        "subproperty": null,
+        "extension": "https://w3id.org/em/ontology#hasAuthor",
+        "subject": "source"
+      }
+    },
+    "has_data_provenance": {
+      "reverse": "is_data_provenance_of",
+      "symmetric": false,
+      "type_tag": null,
+      "deprecated": false,
+      "rdf": {
+        "predicate": "http://www.cidoc-crm.org/cidoc-crm/P70i_is_documented_in",
+        "subproperty": null,
+        "extension": null,
+        "subject": "source"
+      }
+    },
+    "has_digital_object_part": {
+      "reverse": "is_digital_object_part_of",
+      "symmetric": false,
+      "type_tag": null,
+      "deprecated": false,
+      "rdf": {
+        "predicate": "https://w3id.org/hdto/ontology#HP29_has_digital_object_part",
+        "subproperty": null,
+        "extension": "http://www.cidoc-crm.org/cidoc-crm/P106_is_composed_of",
+        "subject": "source"
+      }
+    },
+    "has_digital_twin": {
+      "reverse": "is_digital_twin_of",
+      "symmetric": false,
+      "type_tag": null,
+      "deprecated": false,
+      "rdf": {
+        "predicate": "https://w3id.org/hdto/ontology#HP1_has_digital_twin",
+        "subproperty": null,
+        "extension": null,
+        "subject": "source"
+      }
+    },
+    "has_digital_twin_component": {
+      "reverse": "is_digital_twin_component_of",
+      "symmetric": false,
+      "type_tag": null,
+      "deprecated": false,
+      "rdf": {
+        "predicate": "https://w3id.org/hdto/ontology#HP3i_has_digital_twin_component",
+        "subproperty": null,
+        "extension": null,
+        "subject": "source"
+      }
+    },
+    "has_documentation": {
+      "reverse": "is_documentation_of",
+      "symmetric": false,
+      "type_tag": null,
+      "deprecated": false,
+      "rdf": {
+        "predicate": "http://www.cidoc-crm.org/cidoc-crm/P70i_is_documented_in",
+        "subproperty": null,
+        "extension": null,
+        "subject": "source"
+      }
+    },
+    "has_embargo": {
+      "reverse": "is_embargo_of",
+      "symmetric": false,
+      "type_tag": null,
+      "deprecated": false,
+      "rdf": {
+        "predicate": "http://www.cidoc-crm.org/cidoc-crm/P104_is_subject_to",
+        "subproperty": null,
+        "extension": null,
+        "subject": "source"
+      }
+    },
+    "has_first_epoch": {
+      "reverse": "is_first_epoch_of",
+      "symmetric": false,
+      "type_tag": null,
+      "deprecated": false,
+      "rdf": {
+        "predicate": "http://www.cidoc-crm.org/cidoc-crm/P10_falls_within",
+        "subproperty": null,
+        "extension": "https://w3id.org/em/ontology#firstAttestedInEpoch",
+        "subject": "source"
+      }
+    },
+    "has_gcp_set": {
+      "reverse": "controlled_registration",
+      "symmetric": false,
+      "type_tag": null,
+      "deprecated": false,
+      "rdf": {
+        "predicate": null,
+        "subproperty": null,
+        "extension": "http://www.w3.org/ns/prov#wasDerivedFrom",
+        "subject": "source"
+      }
+    },
+    "has_geoposition": {
+      "reverse": "is_geoposition_of",
+      "symmetric": false,
+      "type_tag": null,
+      "deprecated": false,
+      "rdf": {
+        "predicate": "http://www.cidoc-crm.org/cidoc-crm/P53_has_former_or_current_location",
+        "subproperty": null,
+        "extension": null,
+        "subject": "source"
+      }
+    },
+    "has_license": {
+      "reverse": "is_license_of",
+      "symmetric": false,
+      "type_tag": null,
+      "deprecated": false,
+      "rdf": {
+        "predicate": "http://www.cidoc-crm.org/cidoc-crm/P104_is_subject_to",
+        "subproperty": null,
+        "extension": null,
+        "subject": "source"
+      }
+    },
+    "has_linked_resource": {
+      "reverse": "is_linked_resource_of",
+      "symmetric": false,
+      "type_tag": null,
+      "deprecated": false,
+      "rdf": {
+        "predicate": "http://www.cidoc-crm.org/cidoc-crm/P67_refers_to",
+        "subproperty": null,
+        "extension": null,
+        "subject": "source"
+      }
+    },
+    "has_paradata_nodegroup": {
+      "reverse": "is_paradata_nodegroup_of",
+      "symmetric": false,
+      "type_tag": null,
+      "deprecated": false,
+      "rdf": {
+        "predicate": "http://www.cidoc-crm.org/cidoc-crm/P129i_is_subject_of",
+        "subproperty": null,
+        "extension": null,
+        "subject": "source"
+      }
+    },
+    "has_property": {
+      "reverse": "is_property_of",
+      "symmetric": false,
+      "type_tag": null,
+      "deprecated": false,
+      "rdf": {
+        "predicate": "http://www.cidoc-crm.org/cidoc-crm/P43_has_dimension",
+        "subproperty": null,
+        "extension": "https://w3id.org/em/ontology#hasQualia",
+        "subject": "source"
+      }
+    },
+    "has_registration_transform": {
+      "reverse": "places",
+      "symmetric": false,
+      "type_tag": null,
+      "deprecated": false,
+      "rdf": {
+        "predicate": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
+        "subproperty": null,
+        "extension": null,
+        "subject": "source"
+      }
+    },
+    "has_representation_model": {
+      "reverse": "is_representation_model_of",
+      "symmetric": false,
+      "type_tag": null,
+      "deprecated": false,
+      "rdf": {
+        "predicate": "http://www.cidoc-crm.org/cidoc-crm/P138i_has_representation",
+        "subproperty": null,
+        "extension": null,
+        "subject": "source"
+      }
+    },
+    "has_representation_model_doc": {
+      "reverse": "is_doc_representation_model_of",
+      "symmetric": false,
+      "type_tag": null,
+      "deprecated": false,
+      "rdf": {
+        "predicate": "http://www.cidoc-crm.org/cidoc-crm/P138i_has_representation",
+        "subproperty": null,
+        "extension": null,
+        "subject": "source"
+      }
+    },
+    "has_representation_model_sf": {
+      "reverse": "is_sf_representation_model_of",
+      "symmetric": false,
+      "type_tag": null,
+      "deprecated": false,
+      "rdf": {
+        "predicate": "http://www.cidoc-crm.org/cidoc-crm/P138i_has_representation",
+        "subproperty": null,
+        "extension": null,
+        "subject": "source"
+      }
+    },
+    "has_same_time": {
+      "reverse": null,
+      "symmetric": true,
+      "type_tag": null,
+      "deprecated": false,
+      "rdf": {
+        "predicate": "http://www.cidoc-crm.org/extensions/crmarchaeo/AP22_is_equal_in_time_to",
+        "subproperty": null,
+        "extension": null,
+        "subject": "source"
+      }
+    },
+    "has_semantic_shape": {
+      "reverse": "is_semantic_shape_of",
+      "symmetric": false,
+      "type_tag": null,
+      "deprecated": false,
+      "rdf": {
+        "predicate": "http://www.cidoc-crm.org/cidoc-crm/P138i_has_representation",
+        "subproperty": null,
+        "extension": "https://w3id.org/em/ontology#hasSemanticShape",
+        "subject": "source"
+      }
+    },
+    "has_sub_epoch": {
+      "reverse": "is_in_epoch",
+      "symmetric": false,
+      "type_tag": null,
+      "deprecated": false,
+      "rdf": {
+        "predicate": "http://www.cidoc-crm.org/cidoc-crm/P10_falls_within",
+        "subproperty": null,
+        "extension": "https://w3id.org/em/ontology#hasSubEpoch",
+        "subject": "source"
+      }
+    },
+    "has_timebranch": {
+      "reverse": "is_timebranch_of",
+      "symmetric": false,
+      "type_tag": null,
+      "deprecated": true,
+      "rdf": {
+        "predicate": "http://www.cidoc-crm.org/cidoc-crm/P67_refers_to",
+        "subproperty": null,
+        "extension": "https://w3id.org/em/ontology#belongsToAlternative",
+        "subject": "source"
+      }
+    },
+    "has_visual_reference": {
+      "reverse": "is_visual_reference_of",
+      "symmetric": false,
+      "type_tag": null,
+      "deprecated": false,
+      "rdf": {
+        "predicate": "http://www.cidoc-crm.org/cidoc-crm/P138i_has_representation",
+        "subproperty": null,
+        "extension": "https://w3id.org/em/ontology#hasVisualReference",
+        "subject": "source"
+      }
+    },
+    "heritage_part_of": {
+      "reverse": "heritage_has_part",
+      "symmetric": false,
+      "type_tag": null,
+      "deprecated": false,
+      "rdf": {
+        "predicate": "http://www.cidoc-crm.org/cidoc-crm/P46i_forms_part_of",
+        "subproperty": null,
+        "extension": "http://www.cidoc-crm.org/cidoc-crm/P46i_forms_part_of",
+        "subject": "source"
+      }
+    },
+    "includes_study": {
+      "reverse": "is_study_of_project",
+      "symmetric": false,
+      "type_tag": null,
+      "deprecated": false,
+      "rdf": {
+        "predicate": "http://www.cidoc-crm.org/cidoc-crm/P9_consists_of",
+        "subproperty": null,
+        "extension": "http://www.cidoc-crm.org/cidoc-crm/P9_consists_of",
+        "subject": "source"
+      }
+    },
+    "is_after": {
+      "reverse": "is_before",
+      "symmetric": false,
+      "type_tag": null,
+      "deprecated": false,
+      "rdf": {
+        "predicate": "http://www.cidoc-crm.org/extensions/crmarchaeo/AP28_occurs_before",
+        "subproperty": null,
+        "extension": null,
+        "subject": "target"
+      }
+    },
+    "is_bonded_to": {
+      "reverse": null,
+      "symmetric": true,
+      "type_tag": "is bonded to",
+      "deprecated": false,
+      "rdf": {
+        "predicate": "http://www.cidoc-crm.org/extensions/crmarchaeo/AP11_has_physical_relation_to",
+        "subproperty": "https://w3id.org/em/ontology#bondedTo",
+        "extension": null,
+        "subject": "source"
+      }
+    },
+    "is_in_activity": {
+      "reverse": "includes_in_activity",
+      "symmetric": false,
+      "type_tag": null,
+      "deprecated": false,
+      "rdf": {
+        "predicate": null,
+        "subproperty": null,
+        "extension": "https://w3id.org/em/ontology#isInActivity",
+        "subject": "source"
+      }
+    },
+    "is_in_functional_unit": {
+      "reverse": "includes_in_functional_unit",
+      "symmetric": false,
+      "type_tag": null,
+      "deprecated": false,
+      "rdf": {
+        "predicate": "http://www.cidoc-crm.org/cidoc-crm/P46i_forms_part_of",
+        "subproperty": null,
+        "extension": null,
+        "subject": "source"
+      }
+    },
+    "is_in_location": {
+      "reverse": "includes_location",
+      "symmetric": false,
+      "type_tag": null,
+      "deprecated": false,
+      "rdf": {
+        "predicate": "http://www.cidoc-crm.org/cidoc-crm/P53_has_former_or_current_location",
+        "subproperty": null,
+        "extension": null,
+        "subject": "source"
+      }
+    },
+    "is_in_paradata_nodegroup": {
+      "reverse": "contains_paradata_node",
+      "symmetric": false,
+      "type_tag": null,
+      "deprecated": false,
+      "rdf": {
+        "predicate": "http://www.cidoc-crm.org/cidoc-crm/P106i_forms_part_of",
+        "subproperty": null,
+        "extension": null,
+        "subject": "source"
+      }
+    },
+    "is_in_representation_model_group": {
+      "reverse": "includes_representation_model",
+      "symmetric": false,
+      "type_tag": null,
+      "deprecated": false,
+      "rdf": {
+        "predicate": "http://www.cidoc-crm.org/cidoc-crm/P46i_forms_part_of",
+        "subproperty": null,
+        "extension": null,
+        "subject": "source"
+      }
+    },
+    "is_in_timebranch": {
+      "reverse": "contains_in_timebranch",
+      "symmetric": false,
+      "type_tag": null,
+      "deprecated": false,
+      "rdf": {
+        "predicate": "http://www.cidoc-crm.org/cidoc-crm/P67_refers_to",
+        "subproperty": null,
+        "extension": "https://w3id.org/em/ontology#belongsToAlternative",
+        "subject": "source"
+      }
+    },
+    "is_on_resource": {
+      "reverse": "has_annotation_region",
+      "symmetric": false,
+      "type_tag": null,
+      "deprecated": false,
+      "rdf": {
+        "predicate": "http://www.cidoc-crm.org/cidoc-crm/P106i_forms_part_of",
+        "subproperty": null,
+        "extension": "https://w3id.org/em/ontology#isOnResource",
+        "subject": "source"
+      }
+    },
+    "is_part_of": {
+      "reverse": "has_part",
+      "symmetric": false,
+      "type_tag": null,
+      "deprecated": false,
+      "rdf": {
+        "predicate": "http://www.cidoc-crm.org/cidoc-crm/P46i_forms_part_of",
+        "subproperty": null,
+        "extension": "http://www.cidoc-crm.org/extensions/crmarchaeo/AP21i_is_contained_in",
+        "subject": "source"
+      }
+    },
+    "is_physically_equal_to": {
+      "reverse": null,
+      "symmetric": true,
+      "type_tag": "equals",
+      "deprecated": false,
+      "rdf": {
+        "predicate": "http://www.cidoc-crm.org/extensions/crmarchaeo/AP11_has_physical_relation_to",
+        "subproperty": "https://w3id.org/em/ontology#physicallyEquals",
+        "extension": null,
+        "subject": "source"
+      }
+    },
+    "overlies": {
+      "reverse": "is_overlain_by",
+      "symmetric": false,
+      "type_tag": "overlies",
+      "deprecated": false,
+      "rdf": {
+        "predicate": "http://www.cidoc-crm.org/extensions/crmarchaeo/AP11_has_physical_relation_to",
+        "subproperty": "https://w3id.org/em/ontology#overlies",
+        "extension": null,
+        "subject": "source"
+      }
+    },
+    "study_about_heritage": {
+      "reverse": "was_subject_of_study",
+      "symmetric": false,
+      "type_tag": null,
+      "deprecated": false,
+      "rdf": {
+        "predicate": "https://w3id.org/hdto/ontology#HP23_was_about",
+        "subproperty": null,
+        "extension": "http://www.cidoc-crm.org/cidoc-crm/P16_used_specific_object",
+        "subject": "source"
+      }
+    },
+    "study_produced_proposition_set": {
+      "reverse": "was_created_by_study",
+      "symmetric": false,
+      "type_tag": null,
+      "deprecated": false,
+      "rdf": {
+        "predicate": "https://w3id.org/hdto/ontology#HP25_has_created",
+        "subproperty": null,
+        "extension": "http://www.cidoc-crm.org/cidoc-crm/P94_has_created",
+        "subject": "source"
+      }
+    },
+    "survive_in_epoch": {
+      "reverse": "contains_surviving",
+      "symmetric": false,
+      "type_tag": null,
+      "deprecated": false,
+      "rdf": {
+        "predicate": "http://www.cidoc-crm.org/cidoc-crm/P132_spatiotemporally_overlaps_with",
+        "subproperty": null,
+        "extension": "https://w3id.org/em/ontology#survivesInEpoch",
+        "subject": "source"
+      }
+    },
+    "validated_by": {
+      "reverse": "validated",
+      "symmetric": false,
+      "type_tag": null,
+      "deprecated": false,
+      "rdf": {
+        "predicate": "http://www.w3.org/ns/prov#wasInfluencedBy",
+        "subproperty": null,
+        "extension": "https://w3id.org/em/ontology#validatedBy",
+        "subject": "source"
+      }
+    }
+  },
   "qualia": [
     "absolute_position",
     "absolute_time_end",
@@ -213,12 +964,13 @@
     "BR": "E64 End of Existence",
     "CombinerNode": "crminf:I5_Inference_Making",
     "DTCAcquisitionNode": "crmdig:D12_Data_Transfer_Event",
+    "DTCDeviceNode": "crmdig:D8_Digital_Device",
     "DTCProcessNode": "crmdig:D7_Digital_Machine_Event",
     "DocumentNode": "E31 Document",
     "EpochNode": "E4 Period",
     "ExtractorNode": "crminf:I7_Belief_Adoption",
     "FunctionalUnitNodeGroup": "E24 Physical Human-Made Thing",
-    "GroupNode": "E78 Collection",
+    "GroupNode": "E73 Information Object",
     "HDTNode": "hdto:HC2_Heritage_Digital_Twin",
     "HeritageEntityNode": "hdto:HC1_Heritage_Entity",
     "LicenseNode": "E30 Right",
@@ -228,9 +980,7 @@
     "ParadataNode": "crminf:I1_Argumentation",
     "ProjectNode": "hdto:HC13_Project",
     "RepresentationModelNode": "D1 Digital Object",
-    "ResourceNode": "E73 Information Object",
     "SF": "E19 Physical Object",
-    "SemanticShapeNode": "SP5 Geometric Place Expression",
     "StratigraphicNode": "A8 Stratigraphic Unit",
     "StudyNode": "hdto:HC9_Study",
     "TSU": "A5 Stratigraphic Modification",
@@ -238,5 +988,93 @@
     "US": "A2 Stratigraphic Volume Unit",
     "USN": "A3 Stratigraphic Interface",
     "VSF": "E89 Propositional Object"
-  }
+  },
+  "em_ttl_terms": [
+    "https://w3id.org/em/ontology#AIAuthor",
+    "https://w3id.org/em/ontology#AnnotationRegion",
+    "https://w3id.org/em/ontology#Author",
+    "https://w3id.org/em/ontology#Combiner",
+    "https://w3id.org/em/ontology#ContinuityNode",
+    "https://w3id.org/em/ontology#DisplacedSpecialFind",
+    "https://w3id.org/em/ontology#DocumentaryRepresentation",
+    "https://w3id.org/em/ontology#DocumentaryVirtualSU",
+    "https://w3id.org/em/ontology#EMGraph",
+    "https://w3id.org/em/ontology#Embargo",
+    "https://w3id.org/em/ontology#Extractor",
+    "https://w3id.org/em/ontology#FunctionalUnit",
+    "https://w3id.org/em/ontology#GCPSet",
+    "https://w3id.org/em/ontology#GeoPositionNode",
+    "https://w3id.org/em/ontology#HumanAuthor",
+    "https://w3id.org/em/ontology#License",
+    "https://w3id.org/em/ontology#LocationNodeGroup",
+    "https://w3id.org/em/ontology#Narrative",
+    "https://w3id.org/em/ontology#NegativeSU",
+    "https://w3id.org/em/ontology#NeutralSU",
+    "https://w3id.org/em/ontology#Node",
+    "https://w3id.org/em/ontology#NodeGroup",
+    "https://w3id.org/em/ontology#NonStructuralVirtualSU",
+    "https://w3id.org/em/ontology#Paradata",
+    "https://w3id.org/em/ontology#ParadataNodeGroup",
+    "https://w3id.org/em/ontology#Qualia",
+    "https://w3id.org/em/ontology#RegistrationTransform",
+    "https://w3id.org/em/ontology#RepresentationModel",
+    "https://w3id.org/em/ontology#RepresentationModelNodeGroup",
+    "https://w3id.org/em/ontology#ReusedSpecialFind",
+    "https://w3id.org/em/ontology#SemanticShape",
+    "https://w3id.org/em/ontology#SeriesOfDocumentarySU",
+    "https://w3id.org/em/ontology#SeriesOfNonStructuralVirtualSU",
+    "https://w3id.org/em/ontology#SeriesOfSU",
+    "https://w3id.org/em/ontology#SeriesOfStructuralVirtualSU",
+    "https://w3id.org/em/ontology#SpecialFindRepresentation",
+    "https://w3id.org/em/ontology#StratigraphicEvent",
+    "https://w3id.org/em/ontology#StratigraphicRepresentation",
+    "https://w3id.org/em/ontology#StructuralVirtualSU",
+    "https://w3id.org/em/ontology#TimeBranch",
+    "https://w3id.org/em/ontology#TransformationSU",
+    "https://w3id.org/em/ontology#UnknownNode",
+    "https://w3id.org/em/ontology#VirtualSU",
+    "https://w3id.org/em/ontology#VirtualSpecialFind",
+    "https://w3id.org/em/ontology#WorkingUnit",
+    "https://w3id.org/em/ontology#abuts",
+    "https://w3id.org/em/ontology#belongsToAlternative",
+    "https://w3id.org/em/ontology#bondedTo",
+    "https://w3id.org/em/ontology#checksum",
+    "https://w3id.org/em/ontology#confidenceLevel",
+    "https://w3id.org/em/ontology#contrastsWith",
+    "https://w3id.org/em/ontology#convexShape",
+    "https://w3id.org/em/ontology#createdBy",
+    "https://w3id.org/em/ontology#cuts",
+    "https://w3id.org/em/ontology#derivedFromDocument",
+    "https://w3id.org/em/ontology#fills",
+    "https://w3id.org/em/ontology#firstAttestedInEpoch",
+    "https://w3id.org/em/ontology#hasAuthor",
+    "https://w3id.org/em/ontology#hasQualia",
+    "https://w3id.org/em/ontology#hasQualiaType",
+    "https://w3id.org/em/ontology#hasSelector",
+    "https://w3id.org/em/ontology#hasSemanticShape",
+    "https://w3id.org/em/ontology#hasSubEpoch",
+    "https://w3id.org/em/ontology#hasVisualReference",
+    "https://w3id.org/em/ontology#hypothesizedBy",
+    "https://w3id.org/em/ontology#isInActivity",
+    "https://w3id.org/em/ontology#isOnResource",
+    "https://w3id.org/em/ontology#lastEditedBy",
+    "https://w3id.org/em/ontology#modelIdentifier",
+    "https://w3id.org/em/ontology#modifiedAt",
+    "https://w3id.org/em/ontology#onPage",
+    "https://w3id.org/em/ontology#orcidVerified",
+    "https://w3id.org/em/ontology#overlies",
+    "https://w3id.org/em/ontology#physicallyEquals",
+    "https://w3id.org/em/ontology#promptReference",
+    "https://w3id.org/em/ontology#propagation",
+    "https://w3id.org/em/ontology#reconstructsAbsent",
+    "https://w3id.org/em/ontology#reconstructsFrom",
+    "https://w3id.org/em/ontology#removedAt",
+    "https://w3id.org/em/ontology#removedBy",
+    "https://w3id.org/em/ontology#residency",
+    "https://w3id.org/em/ontology#resourceScope",
+    "https://w3id.org/em/ontology#sphere",
+    "https://w3id.org/em/ontology#survivesInEpoch",
+    "https://w3id.org/em/ontology#validatedBy",
+    "https://w3id.org/em/ontology#wasReusedFrom"
+  ]
 }

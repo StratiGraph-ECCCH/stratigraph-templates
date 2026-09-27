@@ -40,7 +40,8 @@ ancora, nessun tipo esotico): un consumatore che preferisce JSON converte con
 ```yaml
 template:
   id: <slug>                  # = nome della cartella sotto templates/
-  standard: {...}             # chi lo pubblica, quale codice, quale versione
+  version: "1.0.0"            # la versione di QUESTA DEFINIZIONE (semver), §1.1
+  standard: {...}             # chi lo pubblica, quale codice, quale versione della NORMA
   source_language: it         # la lingua della NORMA
   languages: [it, en]         # tutte le lingue in cui la scheda si può rendere
   identity: {...}             # la coppia identificativo umano / UID
@@ -65,6 +66,32 @@ template:
 | `license` | no | la licenza della NORMA (non del codice) |
 | `attribution` | no | l'attribuzione da riportare |
 | `invented` | no | `true` = definizione demo/inventata. La stampa porta il bollo `FIXTURE` |
+
+#### `template.version` — la definizione ha una versione sua
+
+`standard.version` è la versione della **norma** (`"2021"`, `"3.00"`). Non dice
+niente della **definizione**: una correzione alla nostra lettura del modello ICCD
+2021 — un verdetto rivisto, un'etichetta inglese migliore, una casella spostata —
+non è una nuova norma, ed è comunque una definizione diversa. Quindi ogni
+definizione porta, accanto a `id`, una versione propria:
+
+| chiave | obbligo | significato |
+|---|---|---|
+| `version` | **sì** | semver `MAJOR.MINOR.PATCH` (con pre-release opzionale, `1.1.0-rc.1`) |
+
+* **obbligatoria**: il validatore rifiuta una definizione senza, e una che
+  scriva al suo posto l'anno della norma (`"2021"` non è semver). Una
+  definizione senza versione non si compila (§9) e un record non la può citare;
+* **come si alza**: MAJOR quando un record compilato con la versione precedente
+  si leggerebbe diversamente (un verdetto cambiato, un campo tolto o rinominato,
+  un tipo cambiato); MINOR quando si aggiunge senza cambiare il significato di
+  ciò che c'era (una lingua, un campo facoltativo, un'opzione); PATCH per ciò che
+  non tocca né i dati né il grafo (una nota, un aiuto, un refuso in un'etichetta);
+* **una versione pubblicata non cambia**: `build` rifiuta di riscrivere
+  `dist/schede/<id>/<versione>.json` con un contenuto diverso (§9.4). Se il
+  digest cambia, cambia il numero.
+
+Le demo inventate stanno sotto `1.0.0` (`0.x`): nessuno le cita.
 
 La distinzione `kind` non è decorativa: l'ICCD pubblica i **modelli per il
 rilevamento sul campo** come documenti Word e le **normative di catalogo** come
@@ -339,11 +366,29 @@ Non è pedanteria: è il modo in cui «non aggiungere tipi al datamodel» si fa
 rispettare da sé. La crescita del datamodel è una decisione, non un effetto
 collaterale di una definizione scritta di notte.
 
-Il registro viene letto da un s3Dgraphy importabile (installato, o
-`$STRATIGRAPH_S3DGRAPHY_SRC`, o il checkout accanto a questo repository);
-in mancanza, da `registry/s3dgraphy-snapshot.json`, che dichiara da dove è stato
-preso. **Se non si può leggere nessuno dei due, non si valida niente**: non
-esiste una terza modalità in cui ogni tipo va bene.
+**La fonte è una sola: `registry/s3dgraphy-snapshot.json`.** È committato, quindi
+è la stessa per chiunque; dichiara da dove è stato preso (commit di s3Dgraphy,
+`git_dirty`, data) e con quali versioni (datamodel dei nodi, delle connessioni,
+qualia, `em.ttl`). `validate` e `build` leggono **quello** — prima del
+2026-10-18 `validate` leggeva il working tree di s3Dgraphy quando c'era e lo
+snapshot quando no, e la stessa definizione era validata contro 1.6.19 su una
+macchina e 1.6.13 su un'altra.
+
+Il working tree di s3Dgraphy (`$STRATIGRAPH_S3DGRAPHY_SRC`, o il checkout accanto
+a questo repository), quando c'è, serve a **una domanda sola**: lo snapshot è
+ancora ciò che s3Dgraphy dichiara? Il confronto è sul **contenuto**, non sul
+commit. Se divergono, il comando lo dice — con le differenze — e **si ferma**:
+non sceglie da solo. Rigenerare (`registry-snapshot`) è la decisione, e il diff
+di `registry/` ne è il documento. `--snapshot` salta il confronto, e la riga di
+provenienza lo dichiara.
+
+Oltre ai nomi, lo snapshot tiene ciò che serve per dire che cosa **produrre**
+(§9): la grafia em.json di ogni classe (`DocumentNode` → `document`), il reverse
+e la simmetria di ogni arco, i predicati RDF che l'esportatore di s3Dgraphy
+emette per ciascuno (chiesti al suo codice, non riletti), i termini `em:`
+dichiarati in `em.ttl`, e l'insieme chiuso delle operazioni CRDT. **Se lo
+snapshot non c'è, non si valida niente**: non esiste una terza modalità in cui
+ogni tipo va bene.
 
 ### 2.2 · `blocked_on` — quando la scheda dice più del grafo
 
@@ -520,6 +565,7 @@ scritto.
 ```yaml
 record:
   template: iccd-us-2021
+  template_version: "1.0.0"     # OBBLIGATORIO: quale versione della definizione ha seguito
   uid: "01J9Z7QK…"              # opaco
   values:
     us: "3014"
@@ -530,7 +576,11 @@ record:
     interpretazione: {state: human_validated, by: "ai:… · validato da …", ts: "…"}
 ```
 
-Il file dei dati non è la scheda: dichiara solo quale definizione segue.
+Il file dei dati non è la scheda: dichiara solo quale definizione segue, **e in
+quale versione** (`template` + `template_version`, la coppia che §9 usa per
+archiviare la forma compilata). Senza la versione, rileggere un record vorrebbe
+dire indovinare con quale ricetta è stato scritto. `print` e `form` rifiutano un
+record di un'altra definizione e segnalano una versione diversa.
 
 ---
 
@@ -570,3 +620,188 @@ ciascun documento risponde. Ciò che *non* entra automaticamente è la loro
 struttura di categorie configurabile: quella va scritta come una definizione
 (che è precisamente il lavoro che questo formato rende possibile fare una volta e
 non per ogni tool).
+
+---
+
+## 9 · La forma compilata — `stratigraph-templates build`
+
+Una definizione in YAML è fatta per chi la scrive. Un programma che la usa —
+StratiField che disegna il modulo e, a scheda compilata, **manda le operazioni
+alla stanza** — ha bisogno di un'altra cosa: un file che prende e usa **senza
+leggerla in tempo reale**, che non cambia sotto i piedi, e che dice contro quale
+s3Dgraphy è stato verificato. `build` lo produce. È lo stesso patto del tema
+(`sync-brand.sh`) e dei datamodel (`sync-datamodels.sh`): **qui si produce,
+l'app vendora e committa la copia**.
+
+```
+dist/schede/index.json                   ogni definizione, ogni versione, digest, datamodel
+dist/schede/<id>/<versione>.json         la definizione compilata
+```
+
+`dist/` è versionata nel repository, e un test verifica che corrisponda a ciò
+che le definizioni compilano oggi: una definizione modificata senza `build`
+lascerebbe alle app una copia vecchia che sembra ufficiale.
+
+**Chi non compila.** `build` compila ciò che valida (§1–§4): una definizione
+senza `version`, o con un verdetto `undecided` (la bozza di un XSD, §7), non
+compila; le altre sì, e il comando esce con errore se anche una sola è stata
+rifiutata.
+
+### 9.1 · La testata
+
+```json
+"header": {
+  "id": "iccd-us-2021",
+  "version": "1.0.0",
+  "standard": {"authority": "ICCD", "code": "US", "version": "2021", "kind": "field_model",
+               "title": {...}, "license": "CC BY-SA 4.0", "invented": false, ...},
+  "source_language": "it",
+  "languages": ["it", "en"],
+  "vocabularies": [{"id": "iccd-us-consistenza", "status": "declared", ...}, ...],
+  "digest": "sha256:<64 hex>",
+  "datamodel": {"nodes": "1.6.8", "connections": "1.6.19", "qualia": "1.6.1",
+                "em_ttl": "1.6.2", "s3dgraphy": "1.6.0.dev20",
+                "taken_from": {"git_commit": "8b91867…", "git_dirty": false},
+                "snapshot": "registry/s3dgraphy-snapshot.json"},
+  "compiled_by": {"name": "stratigraph-templates", "version": "0.1.0"}
+}
+```
+
+`datamodel` è **letto dallo snapshot** (§2.1), che a sua volta l'ha letto dai file
+di configurazione di s3Dgraphy: nessuna versione è scritta a mano.
+
+**Il digest** è SHA-256 sul JSON canonico (chiavi ordinate, nessuno spazio) del
+documento **senza** `digest`, `datamodel` e `compiled_by`. Quindi:
+
+* ricompilare la stessa definizione dà lo stesso digest, byte per byte;
+* cambiare la definizione — anche solo un'etichetta — cambia il digest;
+* ricompilare contro un datamodel più recente **che non cambia la ricetta**
+  lascia il digest com'è (la riga `datamodel` si aggiorna); un datamodel che la
+  cambia — un arco rinominato, una grafia em.json diversa — cambia il digest,
+  perché la ricetta è dentro.
+
+### 9.2 · La metà visiva
+
+Ciò che serve a un modulo e a un foglio, così com'è nella definizione:
+`identity` (chiave umana, `pattern`, `unit_field` risolto, politica dell'UID),
+`provenance`, `paragraphs`, `fields` (tipo, `required`, `repeatable`,
+`recorded_in`, `max_len`, etichette **in tutte le lingue dichiarate**, `help`,
+`options`, `vocabulary`, `note`, e il paragrafo di appartenenza), `sheet` com'è,
+`notes`. Nessuna etichetta di ripiego: se una lingua è dichiarata, c'è.
+
+### 9.3 · La metà ontologica — la ricetta
+
+Per ogni campo, **che cosa produrre nel vocabolario delle cinque operazioni CRDT
+di s3Dgraphy** — `add_node`, `update_field`, `remove_node`, `add_edge`,
+`remove_edge` (`s3dgraphy/crdt.py:66`, `api.make_op`) — e **nessun valore**.
+L'orchestratore è StratiGraph Server: chi entra in una stanza manda operazioni,
+la stanza le applica con `em.apply_op` e le rilancia. Una ricetta che dicesse
+«fai questo grafo» avrebbe bisogno di un applicatore accanto alla stanza, fuori
+dall'orchestrazione; questa dice **quali operazioni mandare**.
+
+Una voce ha dei **passi**; un passo `emit`-te un'operazione nella forma esatta
+del filo (quella di `crdt.apply_op_to_section`), con **riferimenti** dove andrà
+un valore:
+
+| riferimento | che cos'è |
+|---|---|
+| `$unit` | l'unità che la scheda descrive |
+| `$value`, `$value.<k>` | il valore del campo; una sua chiave (`$value.concept`, `$value.name`) |
+| `$item`, `$item.<k>` | un elemento di un valore lista (la voce ha `each: true`: i passi si ripetono per elemento) |
+| `$node` | il nodo che il passo trova o crea (vedi `resolve`) |
+| `$prop` | la PropertyNode che il passo conia |
+| `$field.<id>.prop` | la PropertyNode coniata dalla voce di un ALTRO campo (la voce ha `after: [<id>]`) |
+| `$anchor.<nome>` | qualcosa che la definizione nomina e non definisce (vedi `open`) |
+
+`when: created` su un passo = mandalo solo se `resolve` ha **creato** il nodo
+invece di trovarlo. Gli **id li conia chi crea** (`identity.uid.policy`): la
+ricetta non ne scrive mai uno. `name` e `description` di un nodo em.json sono
+stringhe: chi sostituisce un valore numerico lo scrive come testo.
+
+**L'unità** (`recipe.unit`) si trova per chiave umana nel contesto
+(`identity.deduplication`) o si crea con un `add_node`; il suo `node_type` lo
+decide il campo con verdetto `node_type`, se c'è. Si decide **alla creazione**:
+`update_field` indirizza solo `name`, `description` e `data.*`
+(`crdt.py:749`), quindi il tipo di un'unità esistente non si cambia con
+un'operazione di questo vocabolario — e la ricetta lo dice.
+
+**Verdetto per verdetto:**
+
+| verdetto | passi |
+|---|---|
+| `identity` | nessuno: il campo compone il nome dell'unità (`names: $unit`, `designator`) |
+| `none` | **nessuno**, dichiarato: `reason`, oppure `blocked_on` |
+| `node_type` | nessuno: `decides: unit.node_type` + la tabella valore → `{class, node_type}` |
+| `property`, nome nativo | `update_field {node_id: $unit, field: description, value: $value}` |
+| `property`, altrimenti | `add_node` PropertyNode + `add_edge has_property` (v. sotto) |
+| `vocabulary` | come `property`, con `property_type` = la qualia e **valore = il concetto** (`$value.concept`, §3) |
+| `node` | `add_node` (`when: created`) del nodo trovato per nome/ref + `add_edge` nella direzione dichiarata |
+| `edge` | un `add_edge` per elemento; `outgoing` = `$unit → $item`, `incoming` = `$item → $unit` |
+
+**La proprietà: la forma che s3Dgraphy e EMStudio usano davvero**, non una
+nuova:
+
+```json
+{"op": "add_node", "node": {"id": "$prop", "node_type": "property", "name": "texture",
+                            "description": "$value.concept",
+                            "data": {"property_type": "texture"}}}
+{"op": "add_edge", "edge_type": "has_property", "source": "$unit", "target": "$prop"}
+```
+
+* PropertyNode con `name` = `data.property_type` = la qualia, appesa al soggetto
+  con `has_property` **dal soggetto alla proprietà**: EMStudio
+  `frontend/src/model.ts:924-938` e `frontend/src/em-data.ts:605-632`
+  (`addQualiaClaim`), s3Dgraphy `importer/base_importer.py:666-713`
+  (`_create_property`) e `importer/unified_xlsx_importer.py:612-639`
+  (`_handle_qualia`);
+* **il valore sta in `description`**: è la convenzione che EMStudio dichiara
+  (`model.ts:924`, «A PropertyNode's VALUE lives in `description`») e che
+  `_create_property` e `addQualiaClaim` seguono; `_handle_qualia` lo mette in
+  `value` (sollevato in `data.value` da `emjson_exporter.py:60`). Le due grafie
+  convivono oggi in s3Dgraphy; la ricetta segue quella dell'orchestrato;
+* **le unità di misura** in `data.units` (`_handle_qualia`, `:632`);
+* un `quantity_list` fa **una PropertyNode per riga**, con la qualia della riga
+  (`$item.qualia`, e `defaults` se il campo ne dichiara una);
+* `property_name: description` è il **campo del nodo** e diventa `update_field`
+  su `description` (audit B9: finiva in `data.<id della casella>`);
+* un `property_name` che non è una qualia registrata diventa comunque una
+  PropertyNode con quel `property_type` — è ciò che fa `_create_property` con i
+  nomi di colonna — e la voce lo dichiara (`registered_qualia: false`).
+
+**Un nodo raggiunto da un arco** si trova prima di crearsi: per nome
+(`LocationNodeGroup`, `EpochNode`…), per `ref` e poi nome (`person_ref`,
+`epoch_ref`), per **percorso** se è un riferimento a file (`resource_ref_list` →
+DocumentNode con `data.url` = il riferimento, deduplicato per percorso come
+`pyarchinit_importer._add_path_document`, `:797-808`). Un `longtext` è un
+**contenuto**, non un nome: il nodo si conia e lo porta in `description`.
+
+**Gli archi.** `edge_type` è la chiave del datamodel delle connessioni, cioè la
+forma canonica; `edge` riporta ciò che s3Dgraphy dichiara di quell'arco —
+`symmetric`, `reverse`, e l'RDF **che l'esportatore di s3Dgraphy emette**
+(`exporter/rdf_exporter.py:199`, `:300`, `:332`: predicato, sottoproprietà AP11,
+estensione, `subject: target` quando la mappatura inverte). `same_rdf_as` elenca
+gli altri tipi d'arco che diventano **la stessa proprietà**: `bonded_to` ≡
+`is_bonded_to` (`em:bondedTo`), `equals` ≡ `is_physically_equal_to`
+(`em:physicallyEquals`, `em.ttl:528`, `:536`). Entrambi i nomi sono validi e la
+definizione ICCD usa le forme che il datamodel chiama canoniche; il compilato lo
+dice, così un consumatore non raddoppia le frecce.
+
+**`open` — ciò che la definizione non decide, dichiarato.** La ricetta non
+inventa: dove la definizione tace, lo scrive. Oggi, per la US ICCD:
+`definizione` (verdetto `vocabulary` senza qualia né `property_name`: nessuna
+operazione finché non lo dice), e tre `attaches_to` che nominano atti non
+definiti (`excavation_activity`, `recording_act`, `revision_act` →
+`$anchor.<nome>`, in `recipe.anchors`). Per le due demo, anche il tipo dell'unità
+(nessun campo `node_type`). Il compilatore **rifiuta** invece ciò che è
+incoerente: un `attaches_to: property:<x>` che nessun campo produce, un nome che
+non ha grafia em.json, un arco deprecato o la cui proprietà RDF `em:` non è in
+`em.ttl`, un'operazione fuori dalle cinque.
+
+### 9.4 · Le versioni pubblicate non cambiano
+
+`build` rifiuta di riscrivere `dist/schede/<id>/<versione>.json` se il nuovo
+digest è diverso da quello già scritto: **alza `template.version`**. Lo stesso
+digest riscrive il file (la riga `datamodel` può essersi aggiornata) e lo dice.
+L'indice elenca ogni versione presente e la più recente (`latest`, ordine
+semver): le versioni vecchie restano, perché un record compilato con una di
+esse va riletto con quella.
