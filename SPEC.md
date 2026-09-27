@@ -733,6 +733,7 @@ un'operazione di questo vocabolario — e la ricetta lo dice.
 | `none` | **nessuno**, dichiarato: `reason`, oppure `blocked_on` |
 | `node_type` | nessuno: `decides: unit.node_type` + la tabella valore → `{class, node_type}` |
 | `property`, nome nativo | `update_field {node_id: $unit, field: description, value: $value}` |
+| `property`, **elemento del nodo** | `update_field {node_id: $unit, field: <em_json dell'elemento>, value: $value}` — oggi `definition` → `data.definition` (v. sotto) |
 | `property`, altrimenti | `add_node` PropertyNode + `add_edge has_property` (v. sotto) |
 | `vocabulary` | come `property`, con `property_type` = la qualia e **valore = il concetto** (`$value.concept`, §3) |
 | `node` | `add_node` (`when: created`) del nodo trovato per nome/ref + `add_edge` nella direzione dichiarata |
@@ -764,6 +765,17 @@ nuova:
   (`$item.qualia`, e `defaults` se il campo ne dichiara una);
 * `property_name: description` è il **campo del nodo** e diventa `update_field`
   su `description` (audit B9: finiva in `data.<id della casella>`);
+* un `property_name` che il datamodel dei nodi dichiara come **elemento del
+  nodo** (`properties.<nome>` con `kind: node_element`, oggi solo
+  `StratigraphicNode.properties.definition`, nodi 1.6.9) **non** è una qualia:
+  diventa un `update_field` sul posto em.json che il datamodel nomina
+  (`data.definition`), con il valore **intero** (`$value` = `{concept, label}`),
+  e la voce porta `element: {name, declared_on, value, rdf}`. Nome, posto e RDF
+  vengono dallo snapshot (`node_elements`, formato 3), non da questo repository.
+  Il compilatore rifiuta un tipo di campo che non scrive quel valore (un
+  `concept` lo scrive solo un `term`) e un tipo di unità che non eredita
+  l'elemento (decisione di E.D., 2026-10-21: la DEFINIZIONE della US è un
+  elemento del nodo);
 * un `property_name` che non è una qualia registrata diventa comunque una
   PropertyNode con quel `property_type` — è ciò che fa `_create_property` con i
   nomi di colonna — e la voce lo dichiara (`registered_qualia: false`).

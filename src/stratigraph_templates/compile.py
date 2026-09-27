@@ -57,6 +57,16 @@ FORMAT_VERSION = "1"
 #: name is spelled by the human key.
 NATIVE_FIELDS = ("description",)
 
+#: How a NODE ELEMENT's declared `value` kind is written by a field, and which
+#: field types can write it. A node element (`registry.node_elements`, read from
+#: the node datamodel: `StratigraphicNode.properties.definition`) is the node's
+#: own field like `description`, but it lives in em.json at the place the
+#: datamodel names (`data.definition`) and it holds the WHOLE value — a concept
+#: element keeps `{concept, label}`, because the label is what the recorder saw
+#: and the datamodel's shape carries it. Only the pairing is written here; the
+#: element, its em.json place and its RDF are the datamodel's.
+ELEMENT_VALUE_TYPES = {"concept": ("term",)}
+
 #: The em.json `node_type` of a PropertyNode and the edge that hangs it on its
 #: subject. Not literals of this module's opinion: `em_node_type` resolves the
 #: class and the edge is checked against the registry like any other.
@@ -205,6 +215,12 @@ class _Ctx:
         if entry.get("deprecated"):
             self.problems.append(f"{where}: edge type '{name}' is deprecated in the connections "
                                  f"datamodel {self.reg.connections_version}")
+        if entry.get("spelling_of"):
+            # the datamodel accepts it on READ and names the one to WRITE
+            self.problems.append(f"{where}: edge type '{name}' is an older spelling of "
+                                 f"'{entry['spelling_of']}' in the connections datamodel "
+                                 f"{self.reg.connections_version}: a recipe writes the canonical")
+        spellings = sorted(k for k, e in self.reg.edges.items() if e.get("spelling_of") == name)
         rdf = entry.get("rdf") or {}
         key = (rdf.get("predicate"), rdf.get("subproperty"))
         same = sorted(k for k, e in self.reg.edges.items()
@@ -222,6 +238,7 @@ class _Ctx:
             "reverse": entry.get("reverse"),
             "rdf": _drop_empty(rdf),
             "same_rdf_as": same,
+            "spellings": spellings,
         })
 
     def anchor(self, f: Field) -> Tuple[str, List[str]]:
@@ -280,6 +297,40 @@ def _property_steps(ctx: _Ctx, f: Field, property_type: str, anchor: str,
     return entry
 
 
+def _element_steps(ctx: _Ctx, f: Field, name: str, anchor: str) -> Dict[str, Any]:
+    """A field that writes a NODE ELEMENT of the unit: one `update_field` on the
+    em.json place the datamodel declares, with the whole value."""
+    rule = ctx.reg.node_elements[name]
+    where = f"field '{f.id}'"
+    field = rule.get("em_json")
+    if not field or not (field in NATIVE_FIELDS or field.startswith("data.")):
+        ctx.problems.append(f"{where}: node element '{name}' is declared with em_json {field!r}, "
+                            f"which update_field cannot address (name, description, data.*)")
+    if anchor != "$unit":
+        ctx.problems.append(f"{where}: node element '{name}' is an element of the UNIT; the field "
+                            f"attaches to {anchor}")
+    fits = ELEMENT_VALUE_TYPES.get(rule.get("value"))
+    if fits is None or f.type not in fits:
+        ctx.problems.append(f"{where}: node element '{name}' holds a {rule.get('value')!r} "
+                            f"value, which a field of type '{f.type}' does not write "
+                            f"(writes it: {list(fits or ())})")
+    unit_classes = sorted({ctx.node(nt, where)["class"] for nt in
+                           next((d.graph.node_types for d in ctx.t.fields
+                                 if d.graph and d.graph.verdict == "node_type"), {}).values()})
+    outside = [c for c in unit_classes if c not in rule.get("applies_to", [])]
+    if outside:
+        ctx.problems.append(f"{where}: node element '{name}' is declared on "
+                            f"{rule.get('declared_on')} and the unit can be {outside}, which do "
+                            f"not inherit it (node datamodel {ctx.reg.node_datamodel_version})")
+    return {
+        "each": False,
+        "element": _drop_empty({"name": name, "declared_on": rule.get("declared_on"),
+                                "value": rule.get("value"), "rdf": rule.get("rdf")}),
+        "steps": [{"emit": {"op": "update_field", "node_id": anchor, "field": field,
+                            "value": "$value"}}],
+    }
+
+
 def _node_key(f: Field) -> Dict[str, Any]:
     """How the node a `node` field points at is FOUND before it is created."""
     if f.type in ("person_ref", "actor_ref"):
@@ -317,7 +368,10 @@ def _entry(ctx: _Ctx, f: Field) -> Dict[str, Any]:
 
     if v == "property":
         name = g.property_name or g.qualia
-        if name in NATIVE_FIELDS and f.type not in LIST_TYPES:
+        if g.property_name and g.property_name in ctx.reg.node_elements:
+            out = {**base, **_element_steps(ctx, f, g.property_name, anchor)}
+            out["scheme"] = f.vocabulary.scheme if f.vocabulary else None
+        elif name in NATIVE_FIELDS and f.type not in LIST_TYPES:
             out = {**base, "each": False, "steps": [
                 {"emit": {"op": "update_field", "node_id": anchor, "field": name,
                           "value": _value_ref(f)}}]}

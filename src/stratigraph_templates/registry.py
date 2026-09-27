@@ -40,8 +40,10 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 SNAPSHOT_PATH = REPO_ROOT / "registry" / "s3dgraphy-snapshot.json"
 
 #: Bumped when the SHAPE of the snapshot file changes. 1 = names only (≤ 2026-09);
-#: 2 = names + spellings + edge semantics + RDF + operations.
-SNAPSHOT_FORMAT = 2
+#: 2 = names + spellings + edge semantics + RDF + operations;
+#: 3 = + the NODE ELEMENTS (`properties.<x>` declared as an object, e.g.
+#: `StratigraphicNode.properties.definition`) and each edge's `spelling_of`.
+SNAPSHOT_FORMAT = 3
 
 #: Where to look for a source checkout of s3Dgraphy, in order.
 _CANDIDATE_SRC = (
@@ -93,6 +95,10 @@ class Registry:
     operations: List[str] = dc_field(default_factory=list)
     #: em: IRIs declared as subjects in em.ttl
     em_ttl_terms: Set[str] = dc_field(default_factory=set)
+    #: element -> {declared_on, applies_to, em_json, value, rdf}: the fields of
+    #: a NODE (like name and description) that the node datamodel declares
+    #: beyond them — not qualia, not PropertyNodes. Read, never listed here.
+    node_elements: Dict[str, Dict[str, Any]] = dc_field(default_factory=dict)
     node_datamodel_version: str = ""
     connections_version: str = ""
     qualia_version: str = ""
@@ -154,6 +160,7 @@ class Registry:
             "qualia": sorted(self.qualia),
             "mapping_targets": dict(sorted(self.mapping_targets.items())),
             "em_ttl_terms": sorted(self.em_ttl_terms),
+            "node_elements": {k: self.node_elements[k] for k in sorted(self.node_elements)},
         }
 
     def to_json(self) -> Dict[str, Any]:
@@ -219,6 +226,59 @@ def _collect_qualia(qualia_doc: Dict) -> Set[str]:
     return out
 
 
+def _node_elements(node_datamodel: Dict, classes: Dict) -> Dict[str, Dict[str, Any]]:
+    """The node elements the datamodel declares, and the classes that carry each.
+
+    A node element is a `properties.<name>` entry given as an object with
+    `kind: node_element` (a plain string there — `"name": "P1_is_identified_by"`
+    — is a mapping note). It is
+    declared ONCE, on the class that introduces it, and inherited: `applies_to`
+    is that class and every class whose `parent` chain in
+    `node_registry.generated.json` reaches it — the same answer s3Dgraphy's
+    `_Datamodel.get_node_element_rule` gives by walking the MRO.
+    """
+    parents = {cls: body.get("parent") for cls, body in (classes.get("node_types") or {}).items()
+               if isinstance(body, dict)}
+
+    def descends(cls: str, root: str) -> bool:
+        seen = set()
+        while cls and cls not in seen:
+            if cls == root:
+                return True
+            seen.add(cls)
+            cls = parents.get(cls)
+        return False
+
+    def entries():
+        for section, block in node_datamodel.items():
+            if not isinstance(block, dict) or section == "referenced_ontology_versions":
+                continue
+            for key, body in block.items():
+                if key.startswith("_") or not isinstance(body, dict):
+                    continue
+                yield body.get("class") or key, body
+                for skey, sub in (body.get("subtypes") or {}).items():
+                    if not skey.startswith("_") and isinstance(sub, dict):
+                        yield sub.get("class") or skey, sub
+
+    out: Dict[str, Dict[str, Any]] = {}
+    for cls, body in entries():
+        for name, rule in (body.get("properties") or {}).items():
+            # only what the datamodel itself calls a node element: other object
+            # entries (FunctionalUnitNodeGroup.geometry_type_ref) are notes
+            if not isinstance(rule, dict) or rule.get("kind") != "node_element" or name in out:
+                continue
+            out[name] = {
+                "declared_on": cls,
+                "applies_to": sorted(c for c in parents if descends(c, cls)),
+                "kind": rule.get("kind"),
+                "em_json": rule.get("em_json"),
+                "value": rule.get("value"),
+                "rdf": rule.get("rdf"),
+            }
+    return out
+
+
 def _git(cfg: Path, *args: str) -> Optional[str]:
     try:
         out = subprocess.run(["git", "-C", str(cfg), *args], capture_output=True, text=True,
@@ -254,6 +314,7 @@ def _edges(conns: Dict, cfg: Path) -> Dict[str, Dict[str, Any]]:
             "symmetric": reverse is None,
             "type_tag": type_tag,
             "deprecated": bool(deprecated),
+            "spelling_of": entry.get("spelling_of"),
             "rdf": {
                 "predicate": str(predicate) if predicate else None,
                 "subproperty": str(sub) if sub else None,
@@ -328,6 +389,7 @@ def from_s3dgraphy() -> Registry:
         edges=edges,
         operations=list(OPS),
         em_ttl_terms=ttl_terms,
+        node_elements=_node_elements(nodes, classes),
         node_datamodel_version=str(nodes.get("s3Dgraphy_data_model_version", "?")),
         connections_version=str(conns.get("s3Dgraphy_connections_model_version", "?")),
         qualia_version=str((qual.get("metadata") or {}).get("version", "?")),
@@ -363,6 +425,7 @@ def from_snapshot(path: Optional[Path] = None) -> Registry:
         edges=dict(doc.get("edges", {})),
         operations=list(doc.get("operations", [])),
         em_ttl_terms=set(doc.get("em_ttl_terms", [])),
+        node_elements=dict(doc.get("node_elements", {})),
         node_datamodel_version=doc.get("node_datamodel_version", "?"),
         connections_version=doc.get("connections_version", "?"),
         qualia_version=doc.get("qualia_version", "?"),

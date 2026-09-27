@@ -99,9 +99,10 @@ def test_build_writes_the_valid_ones_and_reports_the_rest(tmp_path, reg, vocab):
     written, refused = build([find_template(ICCD), broken], reg, vocab, out)
     assert [w[0] for w in written] == [ICCD]
     assert [r[0] for r in refused] == ["minimal"]
-    assert (out / ICCD / "1.0.0.json").is_file()
+    version = find_template(ICCD).version
+    assert (out / ICCD / f"{version}.json").is_file()
     index = json.loads((out / "index.json").read_text())
-    assert index["schede"][ICCD]["latest"] == "1.0.0"
+    assert index["schede"][ICCD]["latest"] == version
     assert "minimal" not in index["schede"]
 
 
@@ -205,6 +206,55 @@ def test_the_box_that_is_the_nodes_description_writes_the_nodes_description(iccd
         {"op": "update_field", "node_id": "$unit", "field": "description", "value": "$value"}]
 
 
+# ── DEFINIZIONE: an element of the node, not a qualia (E.D., 2026-10-21) ──────
+
+@pytest.mark.parametrize("tid,fid", [(ICCD, "definizione"), ("es-ue-demo-2026", "definicion")])
+def test_the_definition_is_the_units_own_element_written_by_update_field(tid, fid, reg, vocab):
+    """One `update_field` on the em.json place the node datamodel declares, with
+    the WHOLE term ({concept, label}): no PropertyNode, no has_property."""
+    entry = compile_template(find_template(tid), reg, vocab)["recipe"]["fields"][fid]
+    rule = reg.node_elements["definition"]
+    assert [s["emit"] for s in entry["steps"]] == [
+        {"op": "update_field", "node_id": "$unit", "field": rule["em_json"], "value": "$value"}]
+    assert rule["em_json"] == "data.definition"          # read from s3Dgraphy, not typed
+    assert entry["element"]["declared_on"] == "StratigraphicNode"
+    assert entry["element"]["rdf"]["with_concept"] == "crm:P2_has_type"
+    assert "resolve" not in entry and "property" not in entry
+
+
+def test_the_unit_types_the_sheet_decides_inherit_the_element(iccd, reg):
+    classes = {v["class"] for v in iccd["recipe"]["unit"]["node_type"]["table"].values()}
+    assert classes == {"StratigraphicUnit", "NegativeStratigraphicUnit"}
+    assert classes <= set(reg.node_elements["definition"]["applies_to"])
+
+
+def test_an_element_written_by_the_wrong_field_type_does_not_compile(tmp_path, reg, vocab):
+    doc = yaml.safe_load((ROOT / "templates" / ICCD / "template.yaml").read_text())
+    f = next(x for x in doc["template"]["fields"] if x["id"] == "definizione")
+    f["type"] = "text"
+    f.pop("vocabulary")
+    from stratigraph_templates.compile import CompileError
+    with pytest.raises(CompileError, match="holds a 'concept' value"):
+        compile_template(_written(tmp_path, doc), reg, vocab)
+
+
+def test_an_older_spelling_of_an_edge_does_not_compile(tmp_path, reg, vocab):
+    """`is_bonded_to` is read (spelling_of: bonded_to) and never written."""
+    doc = yaml.safe_load((ROOT / "templates" / ICCD / "template.yaml").read_text())
+    f = next(x for x in doc["template"]["fields"] if x["id"] == "si_lega_a")
+    f["graph"]["edge_type"] = "is_bonded_to"
+    from stratigraph_templates.compile import CompileError
+    with pytest.raises(CompileError, match="older spelling of 'bonded_to'"):
+        compile_template(_written(tmp_path, doc), reg, vocab)
+
+
+def test_the_canonical_edge_names_its_spellings(iccd):
+    f = iccd["recipe"]["fields"]
+    assert f["si_lega_a"]["edge"]["spellings"] == ["is_bonded_to"]
+    assert f["uguale_a"]["edge"]["spellings"] == ["is_physically_equal_to"]
+    assert "spellings" not in f["copre"]["edge"]
+
+
 def test_a_property_is_a_property_node_hung_by_has_property(iccd):
     entry = iccd["recipe"]["fields"]["consistenza"]
     add_node, add_edge = (s["emit"] for s in entry["steps"])
@@ -235,7 +285,8 @@ def test_the_aliases_that_are_one_rdf_property_are_declared(iccd):
 
 def test_what_the_definition_leaves_open_is_declared_not_decided(iccd):
     open_ = {(o["field"], o["what"].split(":")[0]) for o in iccd["recipe"]["open"]}
-    assert ("definizione", "verdict 'vocabulary' without qualia or property_name") in open_
+    # DEFINIZIONE was open until 1.0.1: it is now the node element `definition`
+    assert not any(f == "definizione" for f, _ in open_)
     assert set(iccd["recipe"]["anchors"]) == {"excavation_activity", "recording_act",
                                               "revision_act"}
 
@@ -244,9 +295,9 @@ def test_the_numbers(iccd):
     assert summary(iccd) == {
         "fields": 59,
         "verdicts": {"edge": 13, "identity": 1, "node": 18, "node_type": 1, "none": 3,
-                     "property": 18, "vocabulary": 5},
-        "steps": {"add_edge": 52, "add_node": 39, "update_field": 1},
-        "open": 4,
+                     "property": 19, "vocabulary": 4},
+        "steps": {"add_edge": 52, "add_node": 39, "update_field": 2},
+        "open": 3,
     }
 
 

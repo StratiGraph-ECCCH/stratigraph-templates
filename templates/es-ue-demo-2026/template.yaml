@@ -20,7 +20,8 @@ template:
   id: es-ue-demo-2026
   # versione della definizione (SPEC §1.1): 0.x perché è una demo inventata,
   # non una lettura di una norma che qualcuno cita
-  version: "0.1.0"
+  version: "0.1.1"
+  # 0.1.1 (2026-10-21): DEFINICIÓN è l'elemento `definition` del nodo
   standard:
     authority: "DEMO"
     code: "UE"
@@ -109,9 +110,13 @@ template:
       required: true
       vocabulary:
         scheme: fx-ue-definicion-es
+      # come la DEFINIZIONE della US ICCD (decisione di E.D., 2026-10-21): un
+      # elemento del nodo, `definition`, non una qualia.
       graph:
-        verdict: vocabulary
-        note: "Il valore è il CONCETTO: l'etichetta italiana arriva dall'allineamento exactMatch."
+        verdict: property
+        property_name: definition
+        note: "Il valore è il CONCETTO (con l'etichetta vista): l'etichetta italiana arriva
+               dall'allineamento exactMatch."
 
     - id: descripcion
       labels: {es: "DESCRIPCIÓN", it: "DESCRIZIONE"}

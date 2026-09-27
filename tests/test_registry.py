@@ -102,5 +102,23 @@ def test_the_snapshot_records_where_and_which_versions():
     assert doc["taken_from"]["git_commit"] and doc["taken_on"]
     assert not doc["taken_from"]["config_dir"].startswith("/Users/")   # any machine
     for key in ("node_datamodel_version", "connections_version", "qualia_version",
-                "em_ttl_version", "operations", "node_classes", "edges"):
+                "em_ttl_version", "operations", "node_classes", "edges", "node_elements"):
         assert doc[key], key
+
+
+def test_the_node_elements_are_read_from_the_node_datamodel(reg):
+    """`definition` is declared ONCE on StratigraphicNode (node datamodel 1.6.9)
+    and every stratigraphic class inherits it; an object that is not
+    `kind: node_element` (FunctionalUnitNodeGroup.geometry_type_ref) is not one."""
+    assert set(reg.node_elements) == {"definition"}
+    rule = reg.node_elements["definition"]
+    assert (rule["declared_on"], rule["em_json"], rule["value"]) == (
+        "StratigraphicNode", "data.definition", "concept")
+    assert {"StratigraphicUnit", "NegativeStratigraphicUnit",
+            "SpecialFindUnit"} <= set(rule["applies_to"])
+    assert "LocationNodeGroup" not in rule["applies_to"]
+
+
+def test_the_older_spellings_say_which_name_they_spell(reg):
+    spelt = {k: e["spelling_of"] for k, e in reg.edges.items() if e.get("spelling_of")}
+    assert spelt == {"is_bonded_to": "bonded_to", "is_physically_equal_to": "equals"}

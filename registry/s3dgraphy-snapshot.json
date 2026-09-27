@@ -1,16 +1,16 @@
 {
-  "snapshot_format": 2,
+  "snapshot_format": 3,
   "source": "s3dgraphy working tree at ../s3Dgraphy/src/s3dgraphy/JSON_config",
   "taken_from": {
     "config_dir": "../s3Dgraphy/src/s3dgraphy/JSON_config",
-    "git_commit": "8b91867aef7443a7de37fed46812d5f1bba39327",
+    "git_commit": "f0de0a1d04169acb34ce6e93ab97e56c1e234c70",
     "git_dirty": false
   },
   "taken_on": "2026-09-27",
-  "node_datamodel_version": "1.6.8",
-  "connections_version": "1.6.19",
+  "node_datamodel_version": "1.6.9",
+  "connections_version": "1.6.20",
   "qualia_version": "1.6.1",
-  "em_ttl_version": "1.6.2",
+  "em_ttl_version": "1.6.5",
   "s3dgraphy_version": "1.6.0.dev20",
   "operations": [
     "add_node",
@@ -197,6 +197,7 @@
       "symmetric": false,
       "type_tag": "abuts",
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": "http://www.cidoc-crm.org/extensions/crmarchaeo/AP11_has_physical_relation_to",
         "subproperty": "https://w3id.org/em/ontology#abuts",
@@ -209,6 +210,7 @@
       "symmetric": true,
       "type_tag": "bonded to",
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": "http://www.cidoc-crm.org/extensions/crmarchaeo/AP11_has_physical_relation_to",
         "subproperty": "https://w3id.org/em/ontology#bondedTo",
@@ -221,6 +223,7 @@
       "symmetric": false,
       "type_tag": null,
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P123i_resulted_from",
         "subproperty": null,
@@ -233,6 +236,7 @@
       "symmetric": false,
       "type_tag": null,
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P16_used_specific_object",
         "subproperty": null,
@@ -245,6 +249,7 @@
       "symmetric": false,
       "type_tag": null,
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": "https://w3id.org/hdto/ontology#HP33_contains",
         "subproperty": null,
@@ -257,6 +262,7 @@
       "symmetric": true,
       "type_tag": null,
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": null,
         "subproperty": null,
@@ -269,6 +275,7 @@
       "symmetric": false,
       "type_tag": "cuts",
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": "http://www.cidoc-crm.org/extensions/crmarchaeo/AP11_has_physical_relation_to",
         "subproperty": "https://w3id.org/em/ontology#cuts",
@@ -281,6 +288,7 @@
       "symmetric": false,
       "type_tag": null,
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": "http://www.cidoc-crm.org/extensions/crmdig/L21_used_as_derivation_source",
         "subproperty": null,
@@ -293,6 +301,7 @@
       "symmetric": false,
       "type_tag": null,
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": "http://www.cidoc-crm.org/extensions/crmdig/L10_had_input",
         "subproperty": null,
@@ -305,6 +314,7 @@
       "symmetric": false,
       "type_tag": null,
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": "http://www.cidoc-crm.org/extensions/crmdig/L11_had_output",
         "subproperty": null,
@@ -317,6 +327,7 @@
       "symmetric": false,
       "type_tag": null,
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": "http://www.cidoc-crm.org/extensions/crmdig/L12_happened_on_device",
         "subproperty": null,
@@ -329,6 +340,7 @@
       "symmetric": true,
       "type_tag": "equals",
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": "http://www.cidoc-crm.org/extensions/crmarchaeo/AP11_has_physical_relation_to",
         "subproperty": "https://w3id.org/em/ontology#physicallyEquals",
@@ -341,6 +353,7 @@
       "symmetric": false,
       "type_tag": null,
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P67_refers_to",
         "subproperty": null,
@@ -353,6 +366,7 @@
       "symmetric": false,
       "type_tag": "fills",
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": "http://www.cidoc-crm.org/extensions/crmarchaeo/AP11_has_physical_relation_to",
         "subproperty": "https://w3id.org/em/ontology#fills",
@@ -365,6 +379,7 @@
       "symmetric": true,
       "type_tag": null,
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P130_shows_features_of",
         "subproperty": null,
@@ -377,6 +392,7 @@
       "symmetric": false,
       "type_tag": null,
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": "http://www.w3.org/ns/prov#wasAttributedTo",
         "subproperty": null,
@@ -389,6 +405,7 @@
       "symmetric": false,
       "type_tag": null,
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P70i_is_documented_in",
         "subproperty": null,
@@ -401,6 +418,7 @@
       "symmetric": false,
       "type_tag": null,
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": "https://w3id.org/hdto/ontology#HP29_has_digital_object_part",
         "subproperty": null,
@@ -413,6 +431,7 @@
       "symmetric": false,
       "type_tag": null,
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": "https://w3id.org/hdto/ontology#HP1_has_digital_twin",
         "subproperty": null,
@@ -425,6 +444,7 @@
       "symmetric": false,
       "type_tag": null,
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": "https://w3id.org/hdto/ontology#HP3i_has_digital_twin_component",
         "subproperty": null,
@@ -437,6 +457,7 @@
       "symmetric": false,
       "type_tag": null,
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P70i_is_documented_in",
         "subproperty": null,
@@ -449,6 +470,7 @@
       "symmetric": false,
       "type_tag": null,
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P104_is_subject_to",
         "subproperty": null,
@@ -461,6 +483,7 @@
       "symmetric": false,
       "type_tag": null,
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P10_falls_within",
         "subproperty": null,
@@ -473,6 +496,7 @@
       "symmetric": false,
       "type_tag": null,
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": null,
         "subproperty": null,
@@ -485,6 +509,7 @@
       "symmetric": false,
       "type_tag": null,
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P53_has_former_or_current_location",
         "subproperty": null,
@@ -497,6 +522,7 @@
       "symmetric": false,
       "type_tag": null,
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P104_is_subject_to",
         "subproperty": null,
@@ -509,6 +535,7 @@
       "symmetric": false,
       "type_tag": null,
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P67_refers_to",
         "subproperty": null,
@@ -521,6 +548,7 @@
       "symmetric": false,
       "type_tag": null,
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P129i_is_subject_of",
         "subproperty": null,
@@ -533,6 +561,7 @@
       "symmetric": false,
       "type_tag": null,
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P43_has_dimension",
         "subproperty": null,
@@ -545,6 +574,7 @@
       "symmetric": false,
       "type_tag": null,
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
         "subproperty": null,
@@ -557,6 +587,7 @@
       "symmetric": false,
       "type_tag": null,
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P138i_has_representation",
         "subproperty": null,
@@ -569,6 +600,7 @@
       "symmetric": false,
       "type_tag": null,
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P138i_has_representation",
         "subproperty": null,
@@ -581,6 +613,7 @@
       "symmetric": false,
       "type_tag": null,
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P138i_has_representation",
         "subproperty": null,
@@ -593,6 +626,7 @@
       "symmetric": true,
       "type_tag": null,
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": "http://www.cidoc-crm.org/extensions/crmarchaeo/AP22_is_equal_in_time_to",
         "subproperty": null,
@@ -605,6 +639,7 @@
       "symmetric": false,
       "type_tag": null,
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P138i_has_representation",
         "subproperty": null,
@@ -617,6 +652,7 @@
       "symmetric": false,
       "type_tag": null,
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P10_falls_within",
         "subproperty": null,
@@ -629,6 +665,7 @@
       "symmetric": false,
       "type_tag": null,
       "deprecated": true,
+      "spelling_of": null,
       "rdf": {
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P67_refers_to",
         "subproperty": null,
@@ -641,6 +678,7 @@
       "symmetric": false,
       "type_tag": null,
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P138i_has_representation",
         "subproperty": null,
@@ -653,6 +691,7 @@
       "symmetric": false,
       "type_tag": null,
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P46i_forms_part_of",
         "subproperty": null,
@@ -665,6 +704,7 @@
       "symmetric": false,
       "type_tag": null,
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P9_consists_of",
         "subproperty": null,
@@ -677,6 +717,7 @@
       "symmetric": false,
       "type_tag": null,
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": "http://www.cidoc-crm.org/extensions/crmarchaeo/AP28_occurs_before",
         "subproperty": null,
@@ -689,6 +730,7 @@
       "symmetric": true,
       "type_tag": "is bonded to",
       "deprecated": false,
+      "spelling_of": "bonded_to",
       "rdf": {
         "predicate": "http://www.cidoc-crm.org/extensions/crmarchaeo/AP11_has_physical_relation_to",
         "subproperty": "https://w3id.org/em/ontology#bondedTo",
@@ -701,6 +743,7 @@
       "symmetric": false,
       "type_tag": null,
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": null,
         "subproperty": null,
@@ -713,6 +756,7 @@
       "symmetric": false,
       "type_tag": null,
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P46i_forms_part_of",
         "subproperty": null,
@@ -725,6 +769,7 @@
       "symmetric": false,
       "type_tag": null,
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P53_has_former_or_current_location",
         "subproperty": null,
@@ -737,6 +782,7 @@
       "symmetric": false,
       "type_tag": null,
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P106i_forms_part_of",
         "subproperty": null,
@@ -749,6 +795,7 @@
       "symmetric": false,
       "type_tag": null,
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P46i_forms_part_of",
         "subproperty": null,
@@ -761,6 +808,7 @@
       "symmetric": false,
       "type_tag": null,
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P67_refers_to",
         "subproperty": null,
@@ -773,6 +821,7 @@
       "symmetric": false,
       "type_tag": null,
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P106i_forms_part_of",
         "subproperty": null,
@@ -785,6 +834,7 @@
       "symmetric": false,
       "type_tag": null,
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P46i_forms_part_of",
         "subproperty": null,
@@ -797,6 +847,7 @@
       "symmetric": true,
       "type_tag": "equals",
       "deprecated": false,
+      "spelling_of": "equals",
       "rdf": {
         "predicate": "http://www.cidoc-crm.org/extensions/crmarchaeo/AP11_has_physical_relation_to",
         "subproperty": "https://w3id.org/em/ontology#physicallyEquals",
@@ -809,6 +860,7 @@
       "symmetric": false,
       "type_tag": "overlies",
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": "http://www.cidoc-crm.org/extensions/crmarchaeo/AP11_has_physical_relation_to",
         "subproperty": "https://w3id.org/em/ontology#overlies",
@@ -821,6 +873,7 @@
       "symmetric": false,
       "type_tag": null,
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": "https://w3id.org/hdto/ontology#HP23_was_about",
         "subproperty": null,
@@ -833,6 +886,7 @@
       "symmetric": false,
       "type_tag": null,
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": "https://w3id.org/hdto/ontology#HP25_has_created",
         "subproperty": null,
@@ -845,6 +899,7 @@
       "symmetric": false,
       "type_tag": null,
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P132_spatiotemporally_overlaps_with",
         "subproperty": null,
@@ -857,6 +912,7 @@
       "symmetric": false,
       "type_tag": null,
       "deprecated": false,
+      "spelling_of": null,
       "rdf": {
         "predicate": "http://www.w3.org/ns/prov#wasInfluencedBy",
         "subproperty": null,
@@ -1048,6 +1104,7 @@
     "https://w3id.org/em/ontology#fills",
     "https://w3id.org/em/ontology#firstAttestedInEpoch",
     "https://w3id.org/em/ontology#hasAuthor",
+    "https://w3id.org/em/ontology#hasDefinition",
     "https://w3id.org/em/ontology#hasQualia",
     "https://w3id.org/em/ontology#hasQualiaType",
     "https://w3id.org/em/ontology#hasSelector",
@@ -1076,5 +1133,41 @@
     "https://w3id.org/em/ontology#survivesInEpoch",
     "https://w3id.org/em/ontology#validatedBy",
     "https://w3id.org/em/ontology#wasReusedFrom"
-  ]
+  ],
+  "node_elements": {
+    "definition": {
+      "declared_on": "StratigraphicNode",
+      "applies_to": [
+        "ContinuityNode",
+        "DocumentaryStratigraphicUnit",
+        "NegativeStratigraphicUnit",
+        "NeutralStratigraphicUnit",
+        "NonStructuralVirtualStratigraphicUnit",
+        "ReusedSpecialFind",
+        "SeriesOfDocumentaryStratigraphicUnit",
+        "SeriesOfNonStructuralVirtualStratigraphicUnit",
+        "SeriesOfStratigraphicUnit",
+        "SeriesOfStructuralVirtualStratigraphicUnit",
+        "SpecialFindUnit",
+        "StratigraphicEventNode",
+        "StratigraphicNode",
+        "StratigraphicUnit",
+        "StructuralVirtualStratigraphicUnit",
+        "TransformationStratigraphicUnit",
+        "UnknownNode",
+        "VirtualSpecialFindUnit",
+        "VirtualStratigraphicUnit",
+        "WorkingUnit"
+      ],
+      "kind": "node_element",
+      "em_json": "data.definition",
+      "value": "concept",
+      "rdf": {
+        "with_concept": "crm:P2_has_type",
+        "concept_class": "crm:E55_Type",
+        "label_only": null,
+        "specialised_alternative": "em:hasDefinition"
+      }
+    }
+  }
 }

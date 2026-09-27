@@ -18,8 +18,10 @@ template:
   # `standard.version` («2021»). Una correzione alla nostra lettura del modello
   # ICCD 2021 alza questa, e la norma resta quella che è. 1.0.0 = la lettura
   # misurata dall'audit del 2026-10-17 (a4b5365), la prima che un programma
-  # compila e consuma.
-  version: "1.0.0"
+  # compila e consuma. 1.0.1 (2026-10-21) = DEFINIZIONE diventa l'elemento
+  # `definition` del nodo (era `vocabulary` senza qualia: una casella
+  # obbligatoria che non entrava nel grafo da nessuna porta).
+  version: "1.0.1"
   standard:
     authority: ICCD
     code: US
@@ -346,10 +348,17 @@ template:
       required: true
       vocabulary:
         scheme: iccd-us-definizione
+      # Decisione di E.D. (2026-10-21): la definizione è un ELEMENTO DEL NODO US,
+      # come name e description, NON una qualia. s3Dgraphy la dichiara una volta
+      # (StratigraphicNode.properties.definition, node datamodel 1.6.9) e la
+      # ricetta scrive `update_field data.definition` con il termine intero
+      # {concept, label}: niente PropertyNode, niente has_property.
       graph:
-        verdict: vocabulary
+        verdict: property
+        property_name: definition
         note: "In pyarchinit `d_stratigrafica` determinava il node_type; sulla scheda 2021 il tipo si
-               legge da POSITIVA/NEGATIVA e questa casella resta il termine controllato."
+               legge da POSITIVA/NEGATIVA e questa casella resta il termine controllato, elemento
+               del nodo (data.definition)."
 
     - id: criteri_distinzione
       labels: {it: "CRITERI DI DISTINZIONE", en: "CRITERIA OF DISTINCTION"}
