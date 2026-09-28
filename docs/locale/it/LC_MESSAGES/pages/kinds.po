@@ -1,0 +1,68 @@
+# Italian translation of the stratigraph-templates documentation.
+# The English text (README.md, SPEC.md, LICENSING.md) is the source; each msgstr is
+# the original Italian of that paragraph. Refresh with sphinx-build -b gettext +
+# sphinx-intl update -l it.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: stratigraph-templates 0.1\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-09-28 12:44+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Emanuel Demetrescu <emanuel.demetrescu@cnr.it>\n"
+"Language: it\n"
+"Language-Team: Italian\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+msgid "The five kinds of definition"
+msgstr "Le cinque specie di definizione"
+
+msgid "A definition that comes in here comes from somewhere, and where it comes from decides how it is cited and under what licence it is redistributed. There are five kinds, and [LICENSING.md](LICENSING.md) deals with them one by one."
+msgstr "Una definizione che entra qui viene da qualche parte, e da dove viene decide come si cita e con che licenza si ridistribuisce. Le specie sono cinque, e [LICENSING.md](LICENSING.md) le tratta una per una."
+
+msgid "kind"
+msgstr "specie"
+
+msgid "where it comes from"
+msgstr "da dove viene"
+
+msgid "example"
+msgstr "esempio"
+
+msgid "published standard"
+msgstr "norma pubblicata"
+
+msgid "reconstructed from an authority's standard"
+msgstr "ricostruita dalla normativa di un'autorità"
+
+msgid "our own module"
+msgstr "modulo nostro"
+
+msgid "we originate it, for the EM language"
+msgstr "lo originiamo noi, per il linguaggio EM"
+
+msgid "the `em-*` schemes"
+msgstr "gli schemi `em-*`"
+
+msgid "read from the data, because no public document exists"
+msgstr "letta dai dati, perché un documento pubblico non esiste"
+
+msgid "application configuration"
+msgstr "configurazione di un'applicazione"
+
+msgid "read from the open code of an excavation system"
+msgstr "letta dal codice aperto di un sistema di scavo"
+
+msgid "**good practice**"
+msgstr "**buona pratica**"
+
+msgid "born by formalising a case study: no authority publishes it, we do not originate it, it does not live in a system"
+msgstr "nasce formalizzando un caso studio: non la pubblica un'autorità, non la originiamo noi, non sta in un sistema"
+
+msgid "*to be opened*"
+msgstr "*da aprire*"
+

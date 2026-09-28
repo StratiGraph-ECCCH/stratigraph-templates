@@ -1,0 +1,108 @@
+# Italian translation of the stratigraph-templates documentation.
+# The English text (README.md, SPEC.md, LICENSING.md) is the source; each msgstr is
+# the original Italian of that paragraph. Refresh with sphinx-build -b gettext +
+# sphinx-intl update -l it.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: stratigraph-templates 0.1\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-09-28 12:44+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Emanuel Demetrescu <emanuel.demetrescu@cnr.it>\n"
+"Language: it\n"
+"Language-Team: Italian\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+msgid "**The recording sheet is data, not a schema.**"
+msgstr "**La scheda è un dato, non uno schema.**"
+
+msgid "In pyarchinit the sheet *is* the schema: 619 columns across 29 tables are a serialisation of the ICCD standard, and adding the Spanish sheet would mean adding columns. Measured: `us_table` alone has 133, of which 46 belong to another sheet (the USM, which in ICCD is a model of its own) and 13 exist only because a row cannot say “this value, in this language”."
+msgstr "In pyarchinit la scheda *è* lo schema: 619 colonne su 29 tabelle sono una serializzazione dello standard ICCD, e aggiungere la scheda spagnola vorrebbe dire aggiungere colonne. Misurato: `us_table` da sola ne ha 133, di cui 46 appartengono a un'altra scheda (la USM, che nell'ICCD è un modello a sé) e 13 esistono solo perché la riga non sa dire «questo valore, in questa lingua»."
+
+msgid "Here a recording sheet is a **declarative, versioned, citable definition**, which a machine reads to do three different things:"
+msgstr "Qui una scheda è una **definizione dichiarativa, versionata, citabile**, che una macchina legge per fare tre cose diverse:"
+
+msgid "show a **form** to fill in (phone, tablet, desktop),"
+msgstr "mostrare un **modulo** da compilare (telefono, tablet, desktop),"
+
+msgid "print a **double-sided A4 sheet**,"
+msgstr "stampare un **foglio A4 fronte-retro**,"
+
+msgid "tell the **graph** what whatever was written means."
+msgstr "dire al **grafo** che cosa significa quello che è stato scritto."
+
+msgid "Adding a sheet costs **writing a definition**, not writing an application. The proof is in the tests: the renderer diff between before and after adding the second standard is empty."
+msgstr "Aggiungere una scheda costa **scrivere una definizione**, non scrivere un'applicazione. La prova sta nei test: il diff del renderer fra prima e dopo l'aggiunta del secondo standard è vuoto."
+
+msgid "**This repository contains DATA and a reference implementation. It does not contain an application.** No server, no login, no database."
+msgstr "**Questo repository contiene DATI e una implementazione di riferimento. Non contiene un'applicazione.** Nessun server, nessun login, nessun database."
+
+msgid "How it is laid out"
+msgstr "Com'è fatto"
+
+msgid ""
+"templates/<id>/template.yaml   the definitions (the substance, the graph binding, the sheet)\n"
+"vocabularies/schemes/          the vocabulary schemes, REFERENCED not embedded\n"
+"vocabularies/alignments/       the SKOS alignments between national vocabularies\n"
+"vocabularies/fixtures/         fake micro-schemes, for testing\n"
+"examples/                      test data\n"
+"registry/                      snapshot of what s3Dgraphy declares — THE source for validate and build\n"
+"dist/schede/                   the COMPILED definitions (self-contained JSON): what an app vendors\n"
+"src/stratigraph_templates/     the reference implementation (reads, validates, renders)\n"
+"drafts/                        drafts extracted from XSD standards: proposals, not truth\n"
+"tests/                         the suite, and the broken definitions the gates must catch\n"
+"docs/                          the report of the evening and the captures\n"
+msgstr ""
+"templates/<id>/template.yaml   le definizioni (la sostanza, il legame al grafo, il foglio)\n"
+"vocabularies/schemes/          gli schemi di vocabolario, REFERENZIATI non incorporati\n"
+"vocabularies/alignments/       gli allineamenti SKOS fra vocabolari nazionali\n"
+"vocabularies/fixtures/         micro-schemi finti, per le prove\n"
+"examples/                      dati di prova\n"
+"registry/                      istantanea di ciò che s3Dgraphy dichiara — LA fonte di validate e build\n"
+"dist/schede/                   le definizioni COMPILATE (JSON autosufficiente): ciò che un'app vendora\n"
+"src/stratigraph_templates/     l'implementazione di riferimento (legge, valida, rende)\n"
+"drafts/                        bozze estratte da normative XSD: proposte, non verità\n"
+"tests/                         la suite, e le definizioni rotte che i cancelli devono prendere\n"
+"docs/                          il referto della serata e le catture\n"
+
+msgid "Two definitions are already here:"
+msgstr "Due definizioni ci sono già:"
+
+msgid "definition"
+msgstr "definizione"
+
+msgid "what it is"
+msgstr "che cos'è"
+
+msgid "fields"
+msgstr "campi"
+
+msgid "ICCD, Stratigraphic Unit, field recording model 2021 — reconstructed **from the standard** (CC BY-SA 4.0)"
+msgstr "ICCD, Unità Stratigrafica, modello per il rilevamento sul campo 2021 — ricostruita **dalla normativa** (CC BY-SA 4.0)"
+
+msgid "a demonstration *ficha*, **invented**, and declared as such, in Spanish and Italian"
+msgstr "una *ficha* dimostrativa, **inventata** e dichiarata tale, in spagnolo e italiano"
+
+msgid "The format specification is in **[SPEC.md](SPEC.md)**."
+msgstr "La specifica del formato è in **[SPEC.md](SPEC.md)**."
+
+msgid "The binding to s3Dgraphy"
+msgstr "Il legame con s3Dgraphy"
+
+msgid "Every definition declares, field by field, what it means for the graph. Node type, edge type and qualia names are checked against **what s3Dgraphy declares today**: a name that does not exist is an error, not a warning — that is how “do not add types to the datamodel” enforces itself instead of relying on words."
+msgstr "Ogni definizione dichiara, campo per campo, che cosa significa per il grafo. I nomi di tipo di nodo, tipo di arco e qualia sono verificati contro **quello che s3Dgraphy dichiara oggi**: un nome che non esiste è un errore, non un avviso — è così che «non aggiungere tipi al datamodel» si fa rispettare da sé invece che a parole."
+
+msgid "There is **one source only**: `registry/s3dgraphy-snapshot.json`, committed, which states which s3Dgraphy commit and which datamodel versions it was taken from. If the s3Dgraphy checkout is on this machine, `validate` and `build` compare it with the snapshot and, **if they diverge, they say so and stop**: they do not choose on their own. Regenerating the snapshot (`registry-snapshot`) is the decision, and the diff of `registry/` is its record. Without a snapshot **nothing is validated**: there is no third, permissive mode."
+msgstr "La fonte è **una sola**: `registry/s3dgraphy-snapshot.json`, committato, che dice da quale commit di s3Dgraphy e con quali versioni dei datamodel è stato preso. Se il checkout di s3Dgraphy è su questa macchina, `validate` e `build` lo confrontano con lo snapshot e, **se divergono, lo dicono e si fermano**: non scelgono da soli. Rigenerare lo snapshot (`registry-snapshot`) è la decisione, e il diff di `registry/` ne è il documento. Senza snapshot **non si valida niente**: non esiste una terza modalità permissiva."
+
+msgid "The compiled form — how a definition reaches a program"
+msgstr "La forma compilata — come una definizione arriva a un programma"
+
+msgid "For every valid definition, `build` writes a self-contained JSON in `dist/schede/<id>/<versione>.json` (plus an `index.json`): a header with the definition version, the digest and the s3Dgraphy datamodel it was validated against; a **visual half** (fields, labels in every language, sheet); a **recipe** that says, field by field, which of s3Dgraphy's five CRDT operations to produce — without values. The orchestrator is StratiGraph Server: whoever fills in the sheet sends those operations to the room. The same pact as `sync-brand.sh` and `sync-datamodels.sh`: **this is where it is produced; the app vendors and commits the copy**. A published version does not change: different content under the same number is rejected. SPEC §9."
+msgstr "`build` scrive, per ogni definizione valida, un JSON autosufficiente in `dist/schede/<id>/<versione>.json` (più un `index.json`): testata con versione della definizione, digest e datamodel di s3Dgraphy contro cui è stata validata; una **metà visiva** (campi, etichette in tutte le lingue, foglio); una **ricetta** che dice, campo per campo, quali delle cinque operazioni CRDT di s3Dgraphy produrre — senza valori. L'orchestratore è StratiGraph Server: chi compila la scheda manda quelle operazioni alla stanza. Lo stesso patto di `sync-brand.sh` e `sync-datamodels.sh`: **qui si produce, l'app vendora e committa la copia**. Una versione pubblicata non cambia: un contenuto diverso sotto lo stesso numero è rifiutato. SPEC §9."
+

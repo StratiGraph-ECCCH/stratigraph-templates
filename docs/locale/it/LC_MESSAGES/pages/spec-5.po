@@ -1,0 +1,52 @@
+# Italian translation of the stratigraph-templates documentation.
+# The English text (README.md, SPEC.md, LICENSING.md) is the source; each msgstr is
+# the original Italian of that paragraph. Refresh with sphinx-build -b gettext +
+# sphinx-intl update -l it.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: stratigraph-templates 0.1\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-09-28 12:44+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Emanuel Demetrescu <emanuel.demetrescu@cnr.it>\n"
+"Language: it\n"
+"Language-Team: Italian\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+msgid "5 · The data"
+msgstr "5 · I dati"
+
+#, python-brace-format
+msgid ""
+"record:\n"
+"  template: iccd-us-2021\n"
+"  template_version: \"1.0.0\"     # REQUIRED: which version of the definition it followed\n"
+"  uid: \"01J9Z7QK…\"              # opaque\n"
+"  values:\n"
+"    us: \"3014\"\n"
+"    copre: [\"3018\", \"3020\"]\n"
+"    definizione: {concept: \"…\", label: \"strato di crollo\"}\n"
+"    misure: [{qualia: thickness, label: \"spessore max\", value: \"0,42\", unit: \"m\"}]\n"
+"  field_provenance:\n"
+"    interpretazione: {state: human_validated, by: \"ai:… · validato da …\", ts: \"…\"}\n"
+msgstr ""
+"record:\n"
+"  template: iccd-us-2021\n"
+"  template_version: \"1.0.0\"     # OBBLIGATORIO: quale versione della definizione ha seguito\n"
+"  uid: \"01J9Z7QK…\"              # opaco\n"
+"  values:\n"
+"    us: \"3014\"\n"
+"    copre: [\"3018\", \"3020\"]\n"
+"    definizione: {concept: \"…\", label: \"strato di crollo\"}\n"
+"    misure: [{qualia: thickness, label: \"spessore max\", value: \"0,42\", unit: \"m\"}]\n"
+"  field_provenance:\n"
+"    interpretazione: {state: human_validated, by: \"ai:… · validato da …\", ts: \"…\"}\n"
+
+msgid "The data file is not the recording sheet: it only declares which definition it follows, **and in which version** (`template` + `template_version`, the pair that §9 uses to archive the compiled form). Without the version, rereading a record would mean guessing which recipe it was written with. `print` and `form` refuse a record of another definition and flag a different version."
+msgstr "Il file dei dati non è la scheda: dichiara solo quale definizione segue, **e in quale versione** (`template` + `template_version`, la coppia che §9 usa per archiviare la forma compilata). Senza la versione, rileggere un record vorrebbe dire indovinare con quale ricetta è stato scritto. `print` e `form` rifiutano un record di un'altra definizione e segnalano una versione diversa."
+

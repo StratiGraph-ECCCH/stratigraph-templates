@@ -1,0 +1,4 @@
+# Everything here is regenerated on every build by docs/_tools/generate.py.
+# Never committed: a committed copy would be a second source of truth.
+*
+!.gitignore

@@ -1,7 +1,7 @@
-# I moduli Python
+# The Python modules
 
-Il repository contiene dati e un'implementazione di riferimento che li legge.
-Questa pagina è il riferimento dei moduli, preso dalle loro docstring.
+The repository contains data and a reference implementation that reads them.
+This page is the reference of its modules, taken from their docstrings.
 
 ```{eval-rst}
 .. automodule:: stratigraph_templates.loader

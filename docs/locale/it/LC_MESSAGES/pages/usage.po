@@ -1,0 +1,94 @@
+# Italian translation of the stratigraph-templates documentation.
+# The English text (README.md, SPEC.md, LICENSING.md) is the source; each msgstr is
+# the original Italian of that paragraph. Refresh with sphinx-build -b gettext +
+# sphinx-intl update -l it.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: stratigraph-templates 0.1\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-09-28 12:44+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Emanuel Demetrescu <emanuel.demetrescu@cnr.it>\n"
+"Language: it\n"
+"Language-Team: Italian\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+msgid "Usage"
+msgstr "Uso"
+
+msgid ""
+"python3 -m venv .venv && .venv/bin/pip install -e '.[dev]'\n"
+"\n"
+".venv/bin/stratigraph-templates validate\n"
+".venv/bin/stratigraph-templates build                 # → dist/schede/<id>/<versione>.json + index.json\n"
+".venv/bin/stratigraph-templates registry-snapshot     # only when s3Dgraphy has changed: it is a decision\n"
+".venv/bin/stratigraph-templates info iccd-us-2021\n"
+".venv/bin/stratigraph-templates print iccd-us-2021 --record examples/us-3014-demo.yaml --lang it -o out/us.pdf\n"
+".venv/bin/stratigraph-templates form  iccd-us-2021 --record examples/us-3014-demo.yaml --lang it -o out/us.html\n"
+".venv/bin/stratigraph-templates vocab --scheme fx-ue-definicion-es --concept 'https://example.invalid/fixture/ue-definicion-es/estrato' --lang it\n"
+".venv/bin/stratigraph-templates extract-xsd '<…>/ICCD_normativa_SAS_3.00_102019.xsd' --code SAS --version 3.00\n"
+".venv/bin/python -m pytest\n"
+msgstr ""
+"python3 -m venv .venv && .venv/bin/pip install -e '.[dev]'\n"
+"\n"
+".venv/bin/stratigraph-templates validate\n"
+".venv/bin/stratigraph-templates build                 # → dist/schede/<id>/<versione>.json + index.json\n"
+".venv/bin/stratigraph-templates registry-snapshot     # solo quando s3Dgraphy è cambiato: è una decisione\n"
+".venv/bin/stratigraph-templates info iccd-us-2021\n"
+".venv/bin/stratigraph-templates print iccd-us-2021 --record examples/us-3014-demo.yaml --lang it -o out/us.pdf\n"
+".venv/bin/stratigraph-templates form  iccd-us-2021 --record examples/us-3014-demo.yaml --lang it -o out/us.html\n"
+".venv/bin/stratigraph-templates vocab --scheme fx-ue-definicion-es --concept 'https://example.invalid/fixture/ue-definicion-es/estrato' --lang it\n"
+".venv/bin/stratigraph-templates extract-xsd '<…>/ICCD_normativa_SAS_3.00_102019.xsd' --code SAS --version 3.00\n"
+".venv/bin/python -m pytest\n"
+
+msgid "Printing requires WeasyPrint (`pip install '.[print]'`; on macOS you also need `brew install pango`). Resolving vocabularies requires `rdflib`."
+msgstr "La stampa richiede WeasyPrint (`pip install '.[print]'`; su macOS serve anche `brew install pango`). La risoluzione dei vocabolari richiede `rdflib`."
+
+msgid "The two dependencies outside the repository"
+msgstr "Le due dipendenze fuori dal repository"
+
+msgid "Two vocabularies belonging to others **are not copied here**: they are read where they live, from a checkout next to this repository. They are needed to resolve concept **labels** (`vocab`, `form`/`print` with the words, the tests that read them) and for `extract-idai-field`; **`validate` and `build` do not need them** (the compiled output names the schemes, it does not copy their words), but if they are missing they say so in one line."
+msgstr "Due vocabolari altrui **non sono copiati qui**: si leggono dove vivono, da un checkout accanto a questo repository. Servono a risolvere le **etichette** dei concetti (`vocab`, `form`/`print` con le parole, i test che le leggono) e a `extract-idai-field`; **`validate` e `build` non ne hanno bisogno** (il compilato nomina gli schemi, non ne copia le parole), ma se mancano lo dicono in una riga."
+
+msgid "where (default)"
+msgstr "dove (default)"
+
+msgid "variable"
+msgstr "variabile"
+
+msgid "what it is for"
+msgstr "a che cosa serve"
+
+msgid "any (the working tree is read; measured on `c1de8c3`, 2026-03-26)"
+msgstr "qualunque (letto il working tree; misurato su `c1de8c3`, 2026-03-26)"
+
+msgid "the SKOS/RDF of the ICCD terminology tools (`resolve.kind: external_skos_file`) and the XSDs for `extract-xsd`"
+msgstr "gli SKOS/RDF degli strumenti terminologici ICCD (`resolve.kind: external_skos_file`) e le XSD per `extract-xsd`"
+
+msgid "**must contain `4b5c1e2`** (2026-09-24): read with `git show <commit>:…`, never the working tree"
+msgstr "**deve contenere `4b5c1e2`** (2026-09-24): si legge con `git show <commit>:…`, mai il working tree"
+
+msgid "the DAI valuelists of the `idai-field-*` schemes (`resolve.kind: idai_field_valuelist`) and `extract-idai-field`"
+msgstr "i valuelist DAI degli schemi `idai-field-*` (`resolve.kind: idai_field_valuelist`) e `extract-idai-field`"
+
+#, python-brace-format
+msgid ""
+"cd ~/Documents/GitHub\n"
+"git clone https://github.com/ICCD-MiBACT/Standard-catalografici.git\n"
+"# the configuration is enough, not the application (23 MB instead of the whole repository):\n"
+"git clone --filter=blob:none --sparse https://github.com/dainst/idai-field.git\n"
+"git -C idai-field sparse-checkout set core/config core/src/configuration core/src/model/configuration\n"
+"git -C idai-field cat-file -e 4b5c1e2c3c499d4bd125d0eda61cc6f5c94ffcd4^{commit} && echo ok\n"
+msgstr ""
+"cd ~/Documents/GitHub\n"
+"git clone https://github.com/ICCD-MiBACT/Standard-catalografici.git\n"
+"# basta la configurazione, non l'applicazione (23 MB invece dell'intero repository):\n"
+"git clone --filter=blob:none --sparse https://github.com/dainst/idai-field.git\n"
+"git -C idai-field sparse-checkout set core/config core/src/configuration core/src/model/configuration\n"
+"git -C idai-field cat-file -e 4b5c1e2c3c499d4bd125d0eda61cc6f5c94ffcd4^{commit} && echo ok\n"
+

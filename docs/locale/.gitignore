@@ -1,0 +1,2 @@
+# Compiled catalogues: Sphinx builds them from the .po files at every build.
+*.mo

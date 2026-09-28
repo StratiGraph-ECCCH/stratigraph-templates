@@ -1,0 +1,409 @@
+# Italian translation of the stratigraph-templates documentation.
+# The English text (README.md, SPEC.md, LICENSING.md) is the source; each msgstr is
+# the original Italian of that paragraph. Refresh with sphinx-build -b gettext +
+# sphinx-intl update -l it.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: stratigraph-templates 0.1\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-09-28 12:44+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Emanuel Demetrescu <emanuel.demetrescu@cnr.it>\n"
+"Language: it\n"
+"Language-Team: Italian\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+msgid "1 · Structure of a file"
+msgstr "1 · Struttura di un file"
+
+#, python-brace-format
+msgid ""
+"template:\n"
+"  id: <slug>                  # = name of the folder under templates/\n"
+"  version: \"1.0.0\"            # the version of THIS DEFINITION (semver), §1.1\n"
+"  standard: {...}             # who publishes it, which code, which version of the STANDARD\n"
+"  source_language: it         # the language of the STANDARD\n"
+"  languages: [it, en]         # all the languages the sheet can be rendered in\n"
+"  identity: {...}             # the human identifier / UID pair\n"
+"  provenance: {...}           # per-field provenance\n"
+"  vocabularies: [<scheme id>] # the vocabulary schemes the fields refer to\n"
+"  paragraphs: [...]           # the SUBSTANCE: how fields are grouped\n"
+"  fields: [...]               # the SUBSTANCE + THE GRAPH BINDING, field by field\n"
+"  sheet: {...}                # THE SHEET: where every box sits — optional, §4.1\n"
+"  notes: {...}                # free: measurements, provenance of the reconstruction\n"
+msgstr ""
+"template:\n"
+"  id: <slug>                  # = nome della cartella sotto templates/\n"
+"  version: \"1.0.0\"            # la versione di QUESTA DEFINIZIONE (semver), §1.1\n"
+"  standard: {...}             # chi lo pubblica, quale codice, quale versione della NORMA\n"
+"  source_language: it         # la lingua della NORMA\n"
+"  languages: [it, en]         # tutte le lingue in cui la scheda si può rendere\n"
+"  identity: {...}             # la coppia identificativo umano / UID\n"
+"  provenance: {...}           # la provenienza per campo\n"
+"  vocabularies: [<scheme id>] # gli schemi di vocabolario a cui i campi rimandano\n"
+"  paragraphs: [...]           # la SOSTANZA: come i campi si raggruppano\n"
+"  fields: [...]               # la SOSTANZA + IL LEGAME AL GRAFO, campo per campo\n"
+"  sheet: {...}                # IL FOGLIO: dove sta ogni casella — facoltativo, §4.1\n"
+"  notes: {...}                # libero: misure, provenienza della ricostruzione\n"
+
+msgid "key"
+msgstr "chiave"
+
+msgid "required"
+msgstr "obbligo"
+
+msgid "meaning"
+msgstr "significato"
+
+msgid "yes"
+msgstr "sì"
+
+msgid "who publishes the standard (`ICCD`, `DAI`, …)"
+msgstr "chi pubblica la norma (`ICCD`, `DAI`, …)"
+
+msgid "the code of the recording sheet (`US`, `USM`, `SAS`)"
+msgstr "il codice della scheda (`US`, `USM`, `SAS`)"
+
+msgid "the version of the standard, as a string (`\"2021\"`, `\"3.00\"`)"
+msgstr "la versione della norma, come stringa (`\"2021\"`, `\"3.00\"`)"
+
+msgid "`field_model` (field model) or `catalogue_record` (catalogue standard)"
+msgstr "`field_model` (modello da campo) o `catalogue_record` (normativa di catalogo)"
+
+msgid "title per language"
+msgstr "titolo per lingua"
+
+msgid "where the reconstruction comes from"
+msgstr "da dove viene la ricostruzione"
+
+msgid "the licence of the STANDARD (not of the code)"
+msgstr "la licenza della NORMA (non del codice)"
+
+msgid "the attribution to be reproduced"
+msgstr "l'attribuzione da riportare"
+
+msgid "`true` = demo/invented definition. The print carries the `FIXTURE` stamp"
+msgstr "`true` = definizione demo/inventata. La stampa porta il bollo `FIXTURE`"
+
+msgid "`template.version` — the definition has a version of its own"
+msgstr "`template.version` — la definizione ha una versione sua"
+
+msgid "`standard.version` is the version of the **standard** (`\"2021\"`, `\"3.00\"`). It says nothing about the **definition**: a correction to our reading of the ICCD 2021 model — a revised verdict, a better English label, a moved box — is not a new standard, and it is still a different definition. So every definition carries, next to `id`, a version of its own:"
+msgstr "`standard.version` è la versione della **norma** (`\"2021\"`, `\"3.00\"`). Non dice niente della **definizione**: una correzione alla nostra lettura del modello ICCD 2021 — un verdetto rivisto, un'etichetta inglese migliore, una casella spostata — non è una nuova norma, ed è comunque una definizione diversa. Quindi ogni definizione porta, accanto a `id`, una versione propria:"
+
+msgid "**yes**"
+msgstr "**sì**"
+
+msgid "semver `MAJOR.MINOR.PATCH` (with optional pre-release, `1.1.0-rc.1`)"
+msgstr "semver `MAJOR.MINOR.PATCH` (con pre-release opzionale, `1.1.0-rc.1`)"
+
+msgid "**mandatory**: the validator rejects a definition without it, and one that writes the year of the standard in its place (`\"2021\"` is not semver). A definition without a version does not compile (§9) and a record cannot cite it;"
+msgstr "**obbligatoria**: il validatore rifiuta una definizione senza, e una che scriva al suo posto l'anno della norma (`\"2021\"` non è semver). Una definizione senza versione non si compila (§9) e un record non la può citare;"
+
+msgid "**how it is bumped**: MAJOR when a record compiled with the previous version would read differently (a changed verdict, a field removed or renamed, a changed type); MINOR when something is added without changing the meaning of what was there (a language, an optional field, an option); PATCH for what touches neither the data nor the graph (a note, a help text, a typo in a label);"
+msgstr "**come si alza**: MAJOR quando un record compilato con la versione precedente si leggerebbe diversamente (un verdetto cambiato, un campo tolto o rinominato, un tipo cambiato); MINOR quando si aggiunge senza cambiare il significato di ciò che c'era (una lingua, un campo facoltativo, un'opzione); PATCH per ciò che non tocca né i dati né il grafo (una nota, un aiuto, un refuso in un'etichetta);"
+
+msgid "**a published version does not change**: `build` refuses to rewrite `dist/schede/<id>/<versione>.json` with different content (§9.4). If the digest changes, the number changes."
+msgstr "**una versione pubblicata non cambia**: `build` rifiuta di riscrivere `dist/schede/<id>/<versione>.json` con un contenuto diverso (§9.4). Se il digest cambia, cambia il numero."
+
+msgid "Invented demos sit below `1.0.0` (`0.x`): nobody cites them."
+msgstr "Le demo inventate stanno sotto `1.0.0` (`0.x`): nessuno le cita."
+
+msgid "The `kind` distinction is not decorative: the ICCD publishes its **models for field recording** as Word documents and its **catalogue standards** as XSD, and a field tool targets the former. See §7."
+msgstr "La distinzione `kind` non è decorativa: l'ICCD pubblica i **modelli per il rilevamento sul campo** come documenti Word e le **normative di catalogo** come XSD, e un tool da campo bersaglia i primi. Vedi §7."
+
+msgid "1.2 · `identity` — identity is a PAIR"
+msgstr "1.2 · `identity` — l'identità è una COPPIA"
+
+#, python-brace-format
+msgid ""
+"identity:\n"
+"  human_key:\n"
+"    fields: [localita, area, us]        # which fields make up the human ID\n"
+"    pattern: \"US {us} — {area} ({localita})\"\n"
+"    unit_field: us                      # WHICH of the three IS the unit (see below)\n"
+"  uid:\n"
+"    policy: minted_by_creator           # the only allowed value\n"
+"    opaque: true\n"
+"    display: on_request\n"
+"    derive_from_human_key: false        # must be false\n"
+"  deduplication: by_human_key_in_context\n"
+msgstr ""
+"identity:\n"
+"  human_key:\n"
+"    fields: [localita, area, us]        # quali campi compongono l'ID umano\n"
+"    pattern: \"US {us} — {area} ({localita})\"\n"
+"    unit_field: us                      # QUALE dei tre È l'unità (v. sotto)\n"
+"  uid:\n"
+"    policy: minted_by_creator           # unico valore ammesso\n"
+"    opaque: true\n"
+"    display: on_request\n"
+"    derive_from_human_key: false        # deve essere false\n"
+"  deduplication: by_human_key_in_context\n"
+
+msgid "`unit_field` — which field IS the unit, and why it must be DECLARED"
+msgstr "`unit_field` — quale campo È l'unità, e perché va DICHIARATO"
+
+msgid "`fields` says which boxes **make up** the name. It does not say which of them is **the unit** and which are the **context** that disambiguates it, and those are two different pieces of information: anyone who has to answer “which unit is this sheet about” needs the second — the form that draws it, the adapter that hands it to a graph, the validator of a compiled sheet."
+msgstr "`fields` dice quali caselle **compongono** il nome. Non dice quale di esse sia **l'unità** e quali il **contesto** che la disambigua, e sono due informazioni diverse: chiunque debba rispondere a «di che unità è questa scheda» ha bisogno della seconda — il modulo che la disegna, l'adattatore che la consegna a un grafo, il validatore di una scheda compilata."
+
+msgid "**Mandatory when the key has more than one field.** With a single field there is nothing to choose, deducing it is not guessing, and it can be omitted. With two or more, a definition that stays silent cannot be served and the validator rejects it."
+msgstr "**Obbligatorio quando la chiave ha più di un campo.** Con un campo solo non c'è niente da scegliere, dedurlo non è indovinare, e si può omettere. Con due o più, una definizione che tace non è servibile e il validatore la rifiuta."
+
+msgid "**Why it is not deduced.** Until 2026-09-23 a consumer took the LAST field of the key, and on three definitions out of three it was right. Then the fourth arrived:"
+msgstr "**Perché non si deduce.** Fino al 2026-09-23 un consumatore prendeva l'ULTIMO campo della chiave, e su tre definizioni su tre era giusto. Poi è arrivata la quarta:"
+
+msgid ""
+"iccd-us-2021      [localita, area, us]      → us          (the last)\n"
+"es-ue-demo-2026   [yacimiento, contexto]    → contexto    (the last)\n"
+"hu-rl-demo-2026   [retegszam, lelohely]     → retegszam   (the FIRST)\n"
+msgstr ""
+"iccd-us-2021      [localita, area, us]      → us          (l'ultimo)\n"
+"es-ue-demo-2026   [yacimiento, contexto]    → contexto    (l'ultimo)\n"
+"hu-rl-demo-2026   [retegszam, lelohely]     → retegszam   (il PRIMO)\n"
+
+msgid "In Hungarian the determiner comes first: “Réteg 12 · Castel Fontenova”. With deduction, a layer sheet would have been addressed **by the name of the site** — and **nobody would have noticed**, because a human key with the wrong designator raises nothing: it produces a label that looks right and a comparison that misses its target. It is the kind of error you find two years later, looking into why two excavations “have the same unit”."
+msgstr "In ungherese il determinante precede: «Réteg 12 · Castel Fontenova». Con la deduzione, una scheda di strato sarebbe stata indirizzata **col nome del sito** — e **nessuno se ne sarebbe accorto**, perché una chiave umana con il designatore sbagliato non solleva niente: produce un'etichetta che sembra giusta e un confronto che manca bersaglio. È il tipo di errore che si trova due anni dopo, guardando perché due scavi «hanno la stessa unità»."
+
+msgid "**A regularity observed on three cases is not a rule.** The designator is declared."
+msgstr "**Una regolarità osservata su tre casi non è una regola.** Il designatore si dichiara."
+
+msgid "the **human identifier** (`US 3014`, `Contexto 13`) is the one written on the bag and shouted across the trench. Which fields make it up **depends on the standard**, and that is why the definition declares it, not the code;"
+msgstr "l'**identificativo umano** (`US 3014`, `Contexto 13`) è quello che si scrive sulla busta e si urla in trincea. Quali campi lo compongono **dipende dallo standard**, e per questo lo dichiara la definizione, non il codice;"
+
+msgid "the **UID** is opaque and is **minted by whoever creates the unit first**. It is not shown unless requested."
+msgstr "l'**UID** è opaco e lo **conia chi crea l'unità per primo**. Non si mostra se non su richiesta."
+
+msgid "`derive_from_human_key: true` is **rejected by the validator**. Deduplication across tools is done by recognising a human identifier already present in the context, not by forcing two tools to compute the same function. (A single tool may derive its own ids deterministically in order to find its own nodes again on re-delivery: that is its own business, not a rule of the format.)"
+msgstr "`derive_from_human_key: true` è **rifiutato dal validatore**. La deduplicazione fra strumenti si fa riconoscendo un identificativo umano già presente nel contesto, non costringendo due strumenti a calcolare la stessa funzione. (Un singolo strumento può derivare i propri id in modo deterministico per ritrovare i propri nodi alla riconsegna: è un fatto suo, non una regola del formato.)"
+
+msgid "1.3 · `provenance` — per-field provenance"
+msgstr "1.3 · `provenance` — la provenienza per campo"
+
+msgid "A field dictated in the trench and cleaned up by a model is written by an **AI author** and **can be validated by a human**: in the data (`record.field_provenance`) every field can carry `state`, `by`, `ts`, and the print marks it with a stamp (`AI`, `AI✓`). The mechanism this rests on already exists: the per-field `Clock(ts, by)` of the s3Dgraphy CRDT."
+msgstr "Un campo dettato in trincea e ripulito da un modello è scritto da un **autore AI** e **può essere validato da un umano**: nei dati (`record.field_provenance`) ogni campo può portare `state`, `by`, `ts`, e la stampa lo segna con un bollo (`AI`, `AI✓`). Il meccanismo su cui questo si appoggia esiste già: `Clock(ts, by)` per campo del CRDT di s3Dgraphy."
+
+msgid "This is **not** the `aux_volatile` mechanism of the contract: that one answers the question of *residence* (a piece of data that lives elsewhere), not that of *authorship*."
+msgstr "Questo **non** è il meccanismo `aux_volatile` del contratto: quello risponde alla domanda della *residenza* (un dato che vive altrove), non a quella dell'*autorialità*."
+
+msgid "Every field belongs to **exactly one** paragraph (the validator checks it). Paragraphs are the logical structure of the recording sheet — the one the form uses for navigation and that the standard prints in bold."
+msgstr "Ogni campo appartiene a **esattamente un** paragrafo (il validatore lo verifica). I paragrafi sono la struttura logica della scheda — quella che il modulo usa per la navigazione e che la norma stampa in grassetto."
+
+msgid "1.5 · `fields` — the substance"
+msgstr "1.5 · `fields` — la sostanza"
+
+#, python-brace-format
+msgid ""
+"- id: copre\n"
+"  labels: {it: \"COPRE\", en: \"COVERS\"}\n"
+"  type: unit_ref_list\n"
+"  required: false\n"
+"  repeatable: true\n"
+"  max_len: \"0,25\"           # as the ICCD writes it, if it writes it\n"
+"  help: {it: \"…\"}\n"
+"  vocabulary: {scheme: <id>, binding: \"VC_…\", level_expr: \"$1\"}\n"
+"  options: [...]            # only for type: choice\n"
+"  provenance: {enabled: true, authors: [human, ai]}\n"
+"  graph: {...}              # see §2\n"
+"  note: \"…\"                 # divergences and reasons, inside the data\n"
+msgstr ""
+"- id: copre\n"
+"  labels: {it: \"COPRE\", en: \"COVERS\"}\n"
+"  type: unit_ref_list\n"
+"  required: false\n"
+"  repeatable: true\n"
+"  max_len: \"0,25\"           # come lo scrive l'ICCD, se lo scrive\n"
+"  help: {it: \"…\"}\n"
+"  vocabulary: {scheme: <id>, binding: \"VC_…\", level_expr: \"$1\"}\n"
+"  options: [...]            # solo per type: choice\n"
+"  provenance: {enabled: true, authors: [human, ai]}\n"
+"  graph: {...}              # vedi §2\n"
+"  note: \"…\"                 # divergenze e ragioni, dentro il dato\n"
+
+msgid "**Labels are a dictionary per language, inside the definition.** There is no generic translation file and there is no fallback: asking for a language the definition does not declare is an error, not a degraded mode. It is the error measured in the pyarchinit-mini generator (“Notifica” in place of FLOTTAZIONE) and it cannot recur, by construction."
+msgstr "**Le etichette sono un dizionario per lingua, dentro la definizione.** Non esiste un file di traduzione generico e non esiste un fallback: chiedere una lingua che la definizione non dichiara è un errore, non una modalità degradata. È l'errore misurato nel generatore di pyarchinit-mini («Notifica» al posto di FLOTTAZIONE) e non si ripete per costruzione."
+
+msgid "Allowed field types"
+msgstr "Tipi di campo ammessi"
+
+msgid "type"
+msgstr "tipo"
+
+msgid "value in the data"
+msgstr "valore nei dati"
+
+msgid "notes"
+msgstr "note"
+
+msgid "string"
+msgstr "stringa"
+
+msgid "the human ID or a part of it"
+msgstr "l'ID umano o una sua parte"
+
+msgid "one line"
+msgstr "una riga"
+
+msgid "several lines"
+msgstr "più righe"
+
+msgid "number"
+msgstr "numero"
+
+msgid "**a concept**, not a string (§3)"
+msgstr "**un concetto**, non una stringa (§3)"
+
+msgid "list of the above"
+msgstr "lista di quanto sopra"
+
+msgid "string = `options[].value`"
+msgstr "stringa = `options[].value`"
+
+msgid "mutually exclusive tick boxes"
+msgstr "caselle da barrare mutuamente esclusive"
+
+msgid "boolean"
+msgstr "booleano"
+
+msgid "a single box"
+msgstr "una casella sola"
+
+msgid "list of unit ids"
+msgstr "lista di id di unità"
+
+msgid "the relationship boxes (§2, verdict `edge`)"
+msgstr "le caselle dei rapporti (§2, verdetto `edge`)"
+
+msgid "list of sheet ids"
+msgstr "lista di id di schede"
+
+msgid "references to other sheets (RA, TMA…)"
+msgstr "rimandi ad altre schede (RA, TMA…)"
+
+msgid "list of names/references"
+msgstr "lista di nomi/riferimenti"
+
+msgid "plans, sections, photographs"
+msgstr "piante, sezioni, fotografie"
+
+msgid "a person"
+msgstr "una persona"
+
+msgid "an institution (§2, note on `blocked_on`)"
+msgstr "un ente (§2, nota su `blocked_on`)"
+
+#, python-brace-format
+msgid "string or `{ref}`"
+msgstr "stringa o `{ref}`"
+
+msgid "period, phase, activity"
+msgstr "periodo, fase, attività"
+
+#, python-brace-format
+msgid "list of `{qualia, label, value, unit}`"
+msgstr "lista di `{qualia, label, value, unit}`"
+
+msgid "measurements, elevations, counts"
+msgstr "misure, quote, conteggi"
+
+msgid "Checked rules: `term`/`term_list` **must** have a `vocabulary`; `unit_ref_list` **must** have verdict `edge`; `choice` **must** have `options` with labels in all declared languages."
+msgstr "Regole verificate: `term`/`term_list` **devono** avere un `vocabulary`; `unit_ref_list` **deve** avere verdetto `edge`; `choice` **deve** avere `options` con etichette in tutte le lingue dichiarate."
+
+msgid "1.6 · `recorded_in` — where that field is filled in"
+msgstr "1.6 · `recorded_in` — dove si compila quel campo"
+
+#, python-brace-format
+msgid ""
+"- id: descrizione\n"
+"  labels: {it: \"DESCRIZIONE\"}\n"
+"  type: longtext\n"
+"  recorded_in: trench       # trench | lab | unknown — absent = unknown\n"
+msgstr ""
+"- id: descrizione\n"
+"  labels: {it: \"DESCRIZIONE\"}\n"
+"  type: longtext\n"
+"  recorded_in: trench       # trench | lab | unknown — assente = unknown\n"
+
+msgid "Three values and no fourth:"
+msgstr "Tre valori e nessun quarto:"
+
+msgid "value"
+msgstr "valore"
+
+msgid "it means"
+msgstr "vuol dire"
+
+msgid "filled in **during the act of excavation**, by whoever has their hands in the soil"
+msgstr "si compila **durante l'atto di scavo**, da chi ha le mani nella terra"
+
+msgid "filled in **after that act** — laboratory, office, archive"
+msgstr "si compila **dopo quell'atto** — laboratorio, ufficio, archivio"
+
+msgid "**the definition has not said** — and this is the default"
+msgstr "**la definizione non l'ha detto** — e questo è il default"
+
+msgid "**Why these names.** `recorded_in` names a **place and a moment**, not a rank: `priority` or `level` would have said that a lab field counts for less, and that is not true — it is written at another moment, often by another person. And `lab` is the shorthand the discipline uses for “not while digging”: it is not a statement about a room, and a catalogue number filled in at the office is `lab` just like an analysis under the microscope."
+msgstr "**Perché questi nomi.** `recorded_in` nomina un **luogo e un momento**, non un rango: `priority` o `level` avrebbero detto che un campo da laboratorio conta meno, e non è vero — è scritto in un altro momento, spesso da un'altra persona. E `lab` è l'abbreviazione che la disciplina usa per «non mentre si scava»: non è un'affermazione su una stanza, e un numero di catalogo compilato in ufficio è `lab` come un'analisi al microscopio."
+
+msgid "**The default is the one that promises nothing.** A field without `recorded_in` is `unknown`, and a consumer **cannot** conclude from it that it is a trench field. If the format is silent, it is silent: whoever builds a phone sheet on `unknown` is inventing a decision nobody took. For the same reason a value that is not one of the three is an **error** and not a silent fallback to `unknown`: a definition that meant `trench` and wrote `Trench` would vanish from the phone sheet without anything, anywhere, saying why."
+msgstr "**Il default è quello che non promette niente.** Un campo senza `recorded_in` è `unknown`, e un consumatore **non può** concluderne che sia da trincea. Se il formato tace, tace: chi monta una scheda telefono su `unknown` sta inventando una decisione che nessuno ha preso. Per la stessa ragione un valore che non è uno dei tre è un **errore** e non un ripiego silenzioso su `unknown`: una definizione che intendeva `trench` e ha scritto `Trench` sparirebbe dalla scheda telefono senza che niente, in nessun posto, dica perché."
+
+msgid "How it is decided — the criterion, and where it comes from"
+msgstr "Come si decide — il criterio, e da dove viene"
+
+msgid "The criterion **is not an opinion of whoever writes this format**. It has two bases, and each one is citable line by line."
+msgstr "Il criterio **non è un'opinione di chi scrive questo formato**. Ha due basi, e ognuna è citabile riga per riga."
+
+msgid "**Basis A — the words a person says in the field.** In `stratigraph-chatbot/app/tools.py` the seven intents of the field assistant were born from **Elisa Dalla Longa's field sheet**: a forex card with the voice commands in colour, an accessibility artefact that doubles as the specification of the commands. The file puts it like this: *“the commands on it ARE the intents, in the words a person says with their hands in the soil.”* So: **a field that one of the intents names — as a slot or inside a recognised phrase — is a trench field**, and the justification is the line number."
+msgstr "**Base A — le parole che una persona dice sul campo.** In `stratigraph-chatbot/app/tools.py` i sette intenti del field assistant sono nati dalla **scheda da campo di Elisa Dalla Longa**: un cartoncino in forex con i comandi vocali a colori, un artefatto di accessibilità che fa anche da specifica dei comandi. Il file lo dice così: *«i comandi che ci sono sopra SONO gli intenti, nelle parole che una persona dice con le mani nella terra.»* Quindi: **un campo che uno degli intenti nomina — come slot o dentro una frase riconosciuta — è un campo da trincea**, e la giustificazione è il numero di riga."
+
+msgid "**Basis B — the words of the standard itself.** Some recording sheets say it themselves. The ICCD 2021 US has `RESPONSABILE COMPILAZIONE SUL CAMPO` and `DATA RILEVAMENTO SUL CAMPO` and, a few lines below, `DATA RIELABORAZIONE` and `RESPONSABILE RIELABORAZIONE`: **it is the standard that distinguishes the field from the reworking, in its own labels.** Where a recording sheet makes that distinction, its own is the one that holds."
+msgstr "**Base B — le parole dello standard stesso.** Alcune schede lo dicono da sole. La US ICCD 2021 ha `RESPONSABILE COMPILAZIONE SUL CAMPO` e `DATA RILEVAMENTO SUL CAMPO` e, poche righe sotto, `DATA RIELABORAZIONE` e `RESPONSABILE RIELABORAZIONE`: **è lo standard che distingue il campo dalla rielaborazione, nelle proprie etichette.** Dove una scheda fa quella distinzione, è la sua a valere."
+
+msgid "Everything else is `unknown`, and must be left `unknown`. A handful of uncertain fields, declared, is worth more than fifty-nine decided by someone who does not dig."
+msgstr "Tutto il resto è `unknown`, e va lasciato `unknown`. Una manciata di campi incerti dichiarati vale più di cinquantanove decisi da chi non scava."
+
+msgid "**Citing the basis is as mandatory as the marker.** A criterion without its provenance turns into arbitrariness at the first argument, so the definition carries the justification in `note` on the field, or in the sheet's `notes` when it concerns the whole."
+msgstr "**Citare la base è obbligatorio quanto il marcatore.** Un criterio senza la sua provenienza diventa arbitrio alla prima discussione, quindi la definizione porta la giustificazione in `note` sul campo, o nella `notes` della scheda quando riguarda l'insieme."
+
+msgid "It is PER STANDARD, and the two recording sheets in this repository prove it"
+msgstr "È PER STANDARD, e le due schede di questo repository lo dimostrano"
+
+msgid "There is no universal list of “field fields”, and the format must not suggest there is. The Spanish recording sheet will have a different subset, decided by whoever writes it."
+msgstr "Non esiste un elenco universale di «campi da campo», e il formato non deve suggerire che ci sia. La scheda spagnola avrà un altro sottoinsieme, deciso da chi la scrive."
+
+msgid "Measured on the two definitions in here: **the ten relationship boxes of the ICCD 2021 US are `unknown`** — none of the seven intents names them — while the **five of the `ficha ES demo` are `trench`**, because the author of that (demo) sheet decided so. Same concept, different marker, **and the difference is the basis, not the concept**. If the two sheets ended up with the same subset, the marker would be describing our prejudice instead of the standard."
+msgstr "Misurato sulle due definizioni qui dentro: **le dieci caselle dei rapporti della US ICCD 2021 sono `unknown`** — nessuno dei sette intenti le nomina — mentre le **cinque della `ficha ES demo` sono `trench`**, perché l'autore di quella scheda (demo) lo ha deciso. Stesso concetto, marcatore diverso, **e la differenza è la base, non il concetto**. Se le due schede finissero con lo stesso sottoinsieme, il marcatore starebbe descrivendo il nostro pregiudizio invece che lo standard."
+
+msgid "The two questions it needs to answer"
+msgstr "Le due domande a cui serve rispondere"
+
+msgid "**Which fields do I show on the phone?** `template.recorded_in(\"trench\")`. The filter lives in the model and not in the consumer, because a consumer that filters on its own is a second reading of the same declaration."
+msgstr "**Quali campi mostro sul telefono?** `template.recorded_in(\"trench\")`. Il filtro sta nel modello e non nel consumatore, perché un consumatore che filtra da sé è una seconda lettura della stessa dichiarazione."
+
+msgid "**What happens to a mandatory field that is not a trench field?** A sheet compiled in the trench is **incomplete by construction**, and that is not an error: it is the craft. `required` and `recorded_in` are **orthogonal** on purpose, and together they make the distinction computable per field:"
+msgstr "**Cosa succede a un campo obbligatorio che non è da trincea?** Una scheda compilata in trincea è **incompleta per costruzione**, e non è un errore: è il mestiere. `required` e `recorded_in` sono **ortogonali** di proposito, e insieme rendono la distinzione calcolabile per campo:"
+
+msgid "an absent value means"
+msgstr "valore assente vuol dire"
+
+msgid "**something is missing**: it could have been filled in on the excavation"
+msgstr "**manca qualcosa**: era compilabile sullo scavo"
+
+msgid "**incomplete by construction**, if the sheet is still a field one"
+msgstr "**incompleta per costruzione**, se la scheda è ancora di campo"
+
+msgid "**it cannot be decided** — and that is the honest answer"
+msgstr "**non si può decidere** — ed è la risposta onesta"
+
+msgid "The third row is the reason why `unknown` must be the default and not a synonym of `lab`: “I don't know” and “it is filled in later” lead a validator to two different conclusions, and one of the two would absolve an incomplete sheet without having the right to."
+msgstr "La terza riga è il motivo per cui `unknown` deve essere il default e non un sinonimo di `lab`: «non lo so» e «si compila dopo» portano un validatore a due conclusioni diverse, e una delle due assolverebbe una scheda incompleta senza averne il diritto."
+
+msgid "**What this format CANNOT say, and must be said here:** the definition makes the distinction computable **per field**, but applying it requires knowing whether *that compiled sheet* is still a field sheet or already reworked — and that is a state of the **record**, not of the definition. Today a record (§5) does not declare it. A validator of compiled sheets, when it exists, will need that one extra declaration; it already has the rest."
+msgstr "**Quello che questo formato NON può dire, e va detto qui:** la definizione rende la distinzione calcolabile **per campo**, ma per applicarla serve sapere se *quella scheda compilata* è ancora di campo o già rielaborata — e quello è uno stato del **record**, non della definizione. Oggi un record (§5) non lo dichiara. Un validatore di schede compilate, quando esisterà, avrà bisogno di quella sola dichiarazione in più; il resto ce l'ha già."
+

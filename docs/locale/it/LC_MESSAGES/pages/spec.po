@@ -1,0 +1,41 @@
+# Italian translation of the stratigraph-templates documentation.
+# The English text (README.md, SPEC.md, LICENSING.md) is the source; each msgstr is
+# the original Italian of that paragraph. Refresh with sphinx-build -b gettext +
+# sphinx-intl update -l it.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: stratigraph-templates 0.1\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-09-28 12:44+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Emanuel Demetrescu <emanuel.demetrescu@cnr.it>\n"
+"Language: it\n"
+"Language-Team: Italian\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+msgid "SPEC — what a recording-sheet definition is"
+msgstr "SPEC — che cos'è una definizione di scheda"
+
+msgid "A **definition** (in this repository: a *template*) is a declarative, versioned and citable file that describes an archaeological recording sheet so that a machine can do three different things with the same data:"
+msgstr "Una **definizione** (in questo repository: un *template*) è un file dichiarativo, versionato e citabile, che descrive una scheda di rilevamento archeologico in modo che una macchina possa fare tre cose diverse con lo stesso dato:"
+
+msgid "show a **form** to fill in,"
+msgstr "mostrare un **modulo** da compilare,"
+
+msgid "print a **double-sided A4 sheet**,"
+msgstr "stampare un **foglio A4 fronte-retro**,"
+
+msgid "tell the **graph** the meaning of what has been written."
+msgstr "dire al **grafo** che cosa significa ciò che è stato scritto."
+
+msgid "If these three things live in three different places, the cohesion that makes the recording sheet data is lost; here they sit in a single file, and this specification says how."
+msgstr "Se queste tre cose vivono in tre posti diversi, si perde la coesione che rende la scheda un dato; qui stanno in un file solo, e questa specifica dice come."
+
+msgid "Anyone who reads this page and looks at `templates/iccd-us-2021/template.yaml` must be able to write their own country's recording sheet **without asking anyone anything**. If you need to read code, the specification is wrong: open an issue."
+msgstr "Chi legge questa pagina e guarda `templates/iccd-us-2021/template.yaml` deve poter scrivere la scheda del proprio paese **senza chiedere niente a nessuno**. Se serve leggere del codice, la specifica è sbagliata: apri una issue."
+

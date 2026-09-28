@@ -1,0 +1,103 @@
+# Italian translation of the stratigraph-templates documentation.
+# The English text (README.md, SPEC.md, LICENSING.md) is the source; each msgstr is
+# the original Italian of that paragraph. Refresh with sphinx-build -b gettext +
+# sphinx-intl update -l it.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: stratigraph-templates 0.1\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-09-28 12:44+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Emanuel Demetrescu <emanuel.demetrescu@cnr.it>\n"
+"Language: it\n"
+"Language-Team: Italian\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+msgid "4 · The sheet — double-sided A4"
+msgstr "4 · Il foglio — A4 fronte-retro"
+
+msgid "The sheet is a grid of rows and cells, per side:"
+msgstr "Il foglio è una griglia di righe e celle, per facciata:"
+
+#, python-brace-format, python-format
+msgid ""
+"sheet:\n"
+"  page: A4\n"
+"  margins_mm: {top: 10, right: 12, bottom: 10, left: 12}\n"
+"  sides:\n"
+"    - id: recto                 # recto | verso\n"
+"      labels: {it: \"fronte\", en: \"recto\"}\n"
+"      rows:\n"
+"        - h: 15                 # height in MILLIMETRES\n"
+"          cells:\n"
+"            - {field: ufficio_mic, w: 53.4}    # width as % of the row\n"
+"            - {field: identificativo_riferimento, w: 46.6}\n"
+msgstr ""
+"sheet:\n"
+"  page: A4\n"
+"  margins_mm: {top: 10, right: 12, bottom: 10, left: 12}\n"
+"  sides:\n"
+"    - id: recto                 # recto | verso\n"
+"      labels: {it: \"fronte\", en: \"recto\"}\n"
+"      rows:\n"
+"        - h: 15                 # altezza in MILLIMETRI\n"
+"          cells:\n"
+"            - {field: ufficio_mic, w: 53.4}    # larghezza in % della riga\n"
+"            - {field: identificativo_riferimento, w: 46.6}\n"
+
+msgid "A cell is one of three things:"
+msgstr "Una cella è una di tre cose:"
+
+#, python-brace-format
+msgid "**a field**: `{field: <id>, w: <%>, label: auto|none}`;"
+msgstr "**un campo**: `{field: <id>, w: <%>, label: auto|none}`;"
+
+#, python-brace-format
+msgid "**a block**: a nested grid, with or without a label of its own — `{block: <id>, block_labels: {...}, rotated: true, w: <%>, rows: [...]}`. `rotated: true` draws the label vertically on a strip to the left, as the ICCD recording sheet does for SEQUENZA FISICA and SEQUENZA STRATIGRAFICA. Blocks nest, and that gives the power of `rowspan` without having rowspans;"
+msgstr "**un blocco**: una griglia annidata, con o senza etichetta propria — `{block: <id>, block_labels: {...}, rotated: true, w: <%>, rows: [...]}`. `rotated: true` disegna l'etichetta in verticale su una striscia a sinistra, come fa la scheda ICCD per SEQUENZA FISICA e SEQUENZA STRATIGRAFICA. I blocchi si annidano, e questo dà la potenza dei `rowspan` senza avere i rowspan;"
+
+#, python-brace-format
+msgid "**a spacer**: `{w: <%>}` with neither `field` nor `rows`."
+msgstr "**uno spazio**: `{w: <%>}` senza `field` né `rows`."
+
+msgid "Rules checked:"
+msgstr "Regole verificate:"
+
+msgid "the sum of the `w` in a row does not exceed 100;"
+msgstr "la somma delle `w` di una riga non supera 100;"
+
+msgid "every field has **exactly one** box (a field nobody can write in is not a field; two boxes for the same field are an error);"
+msgstr "ogni campo ha **esattamente una** casella (un campo in cui nessuno può scrivere non è un campo; due caselle per lo stesso campo sono un errore);"
+
+msgid "the sides are called `recto` and `verso`, and do not repeat;"
+msgstr "le facciate si chiamano `recto` e `verso`, e non si ripetono;"
+
+msgid "**the declared height of a side must fit on one A4 side** (297 mm minus the margins minus 9 mm of running header);"
+msgstr "**l'altezza dichiarata di una facciata deve stare in una facciata A4** (297 mm meno i margini meno 9 mm di intestazione corrente);"
+
+msgid "a rotated label must fit within the height of its block, or it would print cut off."
+msgstr "un'etichetta ruotata deve stare nell'altezza del suo blocco, altrimenti stamperebbe tagliata."
+
+msgid "The height of a row is a **design minimum**, not a guillotine: if a value is taller than its box, the box grows and the command says how many pages it cost (`2 side(s) → 3 page(s)`). What someone has written is never cut."
+msgstr "L'altezza di una riga è un **minimo di progetto**, non una ghigliottina: se un dato è più alto della casella, la casella cresce e il comando dice quante pagine è costato (`2 side(s) → 3 page(s)`). Non si taglia mai ciò che qualcuno ha scritto."
+
+msgid "4.1 · The sheet that is not there"
+msgstr "4.1 · Il foglio che non c'è"
+
+msgid "A standard that lives in a database with a form — iDAI.field — **has no paper model**, and drawing one would mean inventing it: it would look like the standard. So `sheet` is **optional**, and its absence is stated by leaving the key out:"
+msgstr "Uno standard che vive in una banca dati con un modulo — iDAI.field — **non ha un modello di carta**, e disegnarne uno vorrebbe dire inventarlo: sembrerebbe lo standard. Quindi `sheet` è **facoltativo**, e la sua assenza si dice tacendo la chiave:"
+
+msgid "no `sheet:` key = no sheet (`Template.sheet` is `None`, the compiled output writes `\"sheet\": null`, StratiField shows the Fields and says so with `view.sheet.none`). There is no empty sheet: a `sheet:` key that is present is a sheet, with its rules, and it must place every field;"
+msgstr "nessuna chiave `sheet:` = nessun foglio (`Template.sheet` è `None`, il compilato scrive `\"sheet\": null`, StratiField mostra i Campi e lo dice con `view.sheet.none`). Non esiste il foglio vuoto: una chiave `sheet:` presente è un foglio, con le sue regole, e deve collocare ogni campo;"
+
+msgid "without a sheet the validator does not count boxes — there are none — and the paragraphs remain the structure the form uses;"
+msgstr "senza foglio il validatore non conta le caselle — non ce ne sono — e i paragrafi restano la struttura che il modulo usa;"
+
+msgid "`form` draws a fluid page, one block per paragraph; **`print` refuses** (`declares no sheet: there is no paper model to print`)."
+msgstr "`form` disegna una pagina liquida, un blocco per paragrafo; **`print` rifiuta** (`declares no sheet: there is no paper model to print`)."
+

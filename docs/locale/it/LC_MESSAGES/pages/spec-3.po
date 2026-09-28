@@ -1,0 +1,154 @@
+# Italian translation of the stratigraph-templates documentation.
+# The English text (README.md, SPEC.md, LICENSING.md) is the source; each msgstr is
+# the original Italian of that paragraph. Refresh with sphinx-build -b gettext +
+# sphinx-intl update -l it.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: stratigraph-templates 0.1\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-09-28 12:44+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Emanuel Demetrescu <emanuel.demetrescu@cnr.it>\n"
+"Language: it\n"
+"Language-Team: Italian\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+msgid "3 · The vocabulary, and alignment across countries"
+msgstr "3 · Il vocabolario, e l'allineamento fra paesi"
+
+msgid "A definition **references** a thesaurus, it does not embed it: a vocabulary has its own life cycle and its own licence. The schemes live in `vocabularies/schemes/<id>.yaml`:"
+msgstr "Una definizione **riferisce** un thesaurus, non lo incorpora: un vocabolario ha un ciclo di vita e una licenza propri. Gli schemi stanno in `vocabularies/schemes/<id>.yaml`:"
+
+#, python-brace-format
+msgid ""
+"scheme:\n"
+"  id: iccd-ra-materia\n"
+"  authority: ICCD\n"
+"  labels: {it: \"…\", en: \"…\"}\n"
+"  status: resolvable            # or: declared\n"
+"  origin: external              # or: originated\n"
+"  uri: \"http://dati.beniculturali.it/vocabularies/…\"\n"
+"  license: \"CC BY-SA 3.0 IT\"\n"
+"  attribution: \"ICCD — MiC; …\"\n"
+"  binding_thes_id: \"VC_MTC_RA\"\n"
+"  resolve:\n"
+"    kind: external_skos_file    # or skos_file (inside the repo)\n"
+"    path: \"strumenti-terminologici/…/….rdf\"\n"
+msgstr ""
+"scheme:\n"
+"  id: iccd-ra-materia\n"
+"  authority: ICCD\n"
+"  labels: {it: \"…\", en: \"…\"}\n"
+"  status: resolvable            # oppure: declared\n"
+"  origin: external              # oppure: originated\n"
+"  uri: \"http://dati.beniculturali.it/vocabularies/…\"\n"
+"  license: \"CC BY-SA 3.0 IT\"\n"
+"  attribution: \"ICCD — MiC; …\"\n"
+"  binding_thes_id: \"VC_MTC_RA\"\n"
+"  resolve:\n"
+"    kind: external_skos_file    # oppure skos_file (dentro il repo)\n"
+"    path: \"strumenti-terminologici/…/….rdf\"\n"
+
+msgid "`declared` = the standard prescribes a controlled vocabulary, but no readable SKOS exists (or is within reach). This is the case of the ICCD **field** models: the terminological tools in RDF cover the catalogue sheets."
+msgstr "`declared` = la norma prescrive un vocabolario controllato, ma non esiste (o non è a portata) uno SKOS leggibile. È il caso dei modelli **da campo** dell'ICCD: gli strumenti terminologici in RDF coprono le schede di catalogo."
+
+msgid "`resolvable` = there is a SKOS file. `skos_file` lives in the repository; `external_skos_file` lives on disk, under `$STRATIGRAPH_ICCD_STANDARDS` (default `~/Documents/GitHub/Standard-catalografici`)."
+msgstr "`resolvable` = c'è un file SKOS. `skos_file` sta nel repository; `external_skos_file` sta sul disco, sotto `$STRATIGRAPH_ICCD_STANDARDS` (default `~/Documents/GitHub/Standard-catalografici`)."
+
+msgid "`resolvable` with `resolve.kind: idai_field_valuelist` = **an iDAI.field valuelist**, read from a checkout of `dainst/idai-field` (`$STRATIGRAPH_IDAI_FIELD`, default `~/Documents/GitHub/idai-field`) **at the commit the scheme names** (`resolve.commit`, `git show`, never the working tree), with `resolve.valuelist`. The labels are those of the DAI's `Language.default|projects.<lingua>.json`. iDAI.field does not coin URIs for values: the concepts are **locators we build ourselves** (`…/Valuelists.json#<valuelist>/<valore>`, the value percent-encoded), and the scheme declares it. One scheme per valuelist (`idai-field-<valuelist>`), so a widget offers the values of the box and not the other nine hundred."
+msgstr "`resolvable` con `resolve.kind: idai_field_valuelist` = **un valuelist di iDAI.field**, letto da un checkout di `dainst/idai-field` (`$STRATIGRAPH_IDAI_FIELD`, default `~/Documents/GitHub/idai-field`) **al commit che lo schema nomina** (`resolve.commit`, `git show`, mai il working tree), con `resolve.valuelist`. Le etichette sono quelle dei `Language.default|projects.<lingua>.json` del DAI. iDAI.field non conia URI per i valori: i concetti sono **localizzatori costruiti da noi** (`…/Valuelists.json#<valuelist>/<valore>`, il valore percent-encoded), e lo schema lo dichiara. Uno schema per valuelist (`idai-field-<valuelist>`), così un widget offre i valori della casella e non gli altri novecento."
+
+msgid "`status` and `origin` answer two different questions and must not be confused. `status` says **can I resolve it?**, `origin` says **whose is it?**."
+msgstr "`status` e `origin` rispondono a due domande diverse e non vanno confusi. `status` dice **posso risolverlo?**, `origin` dice **di chi è?**."
+
+msgid "`origin: external` (default) = it belongs to others. We declare it, we resolve it where it lives, licence and attribution are theirs, and an update comes from outside."
+msgstr "`origin: external` (default) = è di altri. Lo dichiariamo, lo risolviamo dove sta, licenza e attribuzione sono loro, e un aggiornamento arriva da fuori."
+
+msgid "`origin: originated` = we maintain it. It carries its own namespace, its own `version` and a duty of citation towards the scientific source it reformulates. The validator **demands** `version`, `license` and `uri`: one of our own modules without one of those three is uncitable, and an uncitable vocabulary is of no use to anyone. The files live in `vocabularies/skos/`, not in `fixtures/` — a module we write is not a test."
+msgstr "`origin: originated` = lo manteniamo noi. Porta un namespace proprio, una `version` propria e un dovere di citazione verso la fonte scientifica che riformula. Il validatore **pretende** `version`, `license` e `uri`: un modulo nostro senza una di quelle tre è incitabile, e un vocabolario incitabile non serve a nessuno. I file stanno in `vocabularies/skos/`, non in `fixtures/` — un modulo che scriviamo non è una prova."
+
+msgid "The first originated module is `em-taph-weathering`: the six bone weathering stages of Behrensmeyer 1978, which have been the *de facto* standard of taphonomy for half a century and **have never had an identifier**. The concepts are a published scientific fact; the author's prose is not, so the definitions are **reformulated, not transcribed**, with the source on every concept."
+msgstr "Il primo modulo originato è `em-taph-weathering`: i sei stadi di alterazione dell'osso di Behrensmeyer 1978, che sono lo standard *de facto* della tafonomia da mezzo secolo e **non hanno mai avuto un identificatore**. I concetti sono un fatto scientifico pubblicato; la prosa dell'autrice no, quindi le definizioni sono **riformulate e non trascritte**, con la fonte su ogni concetto."
+
+msgid "After it, the five modules of the US sheet (`em-us-definizione`, `em-us-consistenza`, `em-us-colore`, `em-us-stato-conservazione`, `em-us-affidabilita`): the ICCD prescribes a controlled term for those boxes and has not published its SKOS, so they answer provisionally for the declared schemes `iccd-us-*` (§3.2). Same rule: a term without a source does not get in, and the source is on every concept (`dct:source`)."
+msgstr "Dopo di lui, i cinque moduli della scheda US (`em-us-definizione`, `em-us-consistenza`, `em-us-colore`, `em-us-stato-conservazione`, `em-us-affidabilita`): l'ICCD prescrive un termine controllato per quelle caselle e non ne ha pubblicato lo SKOS, quindi rispondono provvisoriamente per gli schemi dichiarati `iccd-us-*` (§3.2). Stessa regola: un termine senza fonte non entra, e la fonte è su ogni concetto (`dct:source`)."
+
+msgid "The `em-` prefix and the `w3id.org/extendedmatrix` namespace are not a naming detail. An `external` module we simply declare, and if the project ends nothing happens to anyone. An **originated** module carries URIs that others will cite: if we hang them on StratiGraph, which has an end date, in 2029 they are orphans. So they live on Extended Matrix, the ecosystem that outlives the project; StratiGraph stays in the `attribution`, which is the right place to say where and when the module was born. Publication is at `extendedmatrix.org/vocab/<modulo>/`, with the source here: the published copy carries at its head the commit it comes from, because two copies of a vocabulary diverge, and the resolvable one going stale is the worst failure."
+msgstr "Il prefisso `em-` e il namespace `w3id.org/extendedmatrix` non sono un dettaglio di naming. Un modulo `external` lo dichiariamo e basta, e se il progetto finisce non succede niente a nessuno. Un modulo **originato** porta URI che altri citeranno: se li appendiamo a StratiGraph, che ha una data di fine, nel 2029 sono orfani. Stanno quindi su Extended Matrix, che è l'ecosistema che sopravvive al progetto; StratiGraph resta nell'`attribution`, che è il posto giusto per dire dove e quando il modulo è nato. La pubblicazione è a `extendedmatrix.org/vocab/<modulo>/`, con la sorgente qui: la copia pubblicata porta in testa il commit da cui viene, perché due copie di un vocabolario divergono e quella risolvibile che diventa vecchia è il guasto peggiore."
+
+msgid "**What ends up in the graph is the CONCEPT** (the SKOS URI), not the label: resolving the label in a language happens at read time. If you write the Italian string into the graph, you have lost."
+msgstr "**Nel grafo finisce il CONCETTO** (l'URI SKOS), non l'etichetta: la risoluzione etichetta-in-lingua avviene alla lettura. Se scrivi la stringa italiana nel grafo, hai perso."
+
+msgid "3.1 · The alignment"
+msgstr "3.1 · L'allineamento"
+
+msgid "Resolution order for a label: **own scheme → provisional scheme (§3.2) → alignment (`exactMatch` first) → label carried by the data** (declared as such in the `--explain-vocab` trace). If none of the three routes yields a word in the requested language, the renderer **refuses**."
+msgstr "Ordine di risoluzione di un'etichetta: **schema proprio → schema provvisorio (§3.2) → allineamento (`exactMatch` prima) → etichetta portata dal dato** (dichiarata come tale nel tracciato `--explain-vocab`). Se nessuna delle tre strade dà una parola nella lingua richiesta, il renderer **rifiuta**."
+
+msgid "This field exists from day one, even empty, for one reason only: an alignment field added a year from now is a field nobody will fill."
+msgstr "Questo campo esiste da subito, anche vuoto, per una ragione sola: un campo di allineamento aggiunto fra un anno è un campo che nessuno riempirà."
+
+msgid "3.2 · `provisional` — the declared standard and who answers for it"
+msgstr "3.2 · `provisional` — la norma dichiarata e chi risponde per lei"
+
+msgid "A `declared` scheme says that the standard prescribes a vocabulary that nobody has published. As long as it stays that way, the widget writes a word without a concept, and a word without a concept does not enter the graph (in s3Dgraphy `definition.rdf.label_only` is `null`: no triple) and aligns to nothing. The remedy is not to change the scheme the field cites — **that is the standard** — but to say who answers for it in the meantime:"
+msgstr "Uno schema `declared` dice che la norma prescrive un vocabolario che nessuno ha pubblicato. Finché resta così, il widget scrive una parola senza concetto, e una parola senza concetto non entra nel grafo (in s3Dgraphy `definition.rdf.label_only` è `null`: nessuna tripla) e non si allinea a niente. Il rimedio non è cambiare lo schema che il campo cita — **la norma è quella** — ma dire chi risponde per lei nel frattempo:"
+
+msgid ""
+"scheme:\n"
+"  id: iccd-us-definizione\n"
+"  status: declared\n"
+"  provisional: em-us-definizione     # one of OUR modules, until the ICCD publishes\n"
+msgstr ""
+"scheme:\n"
+"  id: iccd-us-definizione\n"
+"  status: declared\n"
+"  provisional: em-us-definizione     # un modulo NOSTRO, finché l'ICCD non pubblica\n"
+
+msgid "the field keeps citing `iccd-us-definizione`; the reader resolves with `em-us-definizione` (order: own scheme → **provisional** → alignment of the provisional → label carried by the data; the trace says `provisional:<id>`);"
+msgstr "il campo continua a citare `iccd-us-definizione`; chi legge risolve con `em-us-definizione` (ordine: schema proprio → **provvisorio** → allineamento del provvisorio → etichetta portata dal dato; il tracciato dice `provisional:<id>`);"
+
+#, python-brace-format
+msgid "the compiled form (§9) writes it twice, because a consumer should not have to re-read the schemes: `vocabulary: {scheme, provisional}` on the field and on the recipe entry, and in the header the provisional **right after** the scheme it replaces (`provisional_for`), so whoever vendors the header vocabularies vendors the one that answers;"
+msgstr "la forma compilata (§9) lo scrive due volte, perché un consumatore non deve rileggere gli schemi: `vocabulary: {scheme, provisional}` sul campo e sulla voce della ricetta, e nella testata il provvisorio **subito dopo** lo schema che sostituisce (`provisional_for`), così chi vendora i vocabolari della testata vendora quello che risponde;"
+
+msgid "**rules checked** when the schemes are loaded, and therefore by `validate` and by `build`: only a `declared` scheme can have `provisional` (a `resolvable` one already answers for itself, and would have two); the provisional must exist, be `origin: originated` (it is our duty to answer, not a third party's) and `resolvable`; a provisional does not in turn have a provisional;"
+msgstr "**regole verificate** al caricamento degli schemi, e quindi da `validate` e da `build`: solo uno schema `declared` può avere `provisional` (uno `resolvable` risponde già da sé, e ne avrebbe due); il provvisorio deve esistere, essere `origin: originated` (è il nostro dovere di risposta, non quello di un terzo) e `resolvable`; un provvisorio non ha a sua volta un provvisorio;"
+
+msgid "**the day the authority publishes**: `resolve:` on the declared scheme, an `em-us-*` → `iccd-us-*` alignment in `alignments/` (`exactMatch` where it is one), and `provisional` is removed. The concepts already written into graphs stay valid: they are our URIs, and the alignment carries them to the other side."
+msgstr "**il giorno che l'autorità pubblica**: `resolve:` sullo schema dichiarato, un allineamento `em-us-*` → `iccd-us-*` in `alignments/` (`exactMatch` dove lo è), e `provisional` si toglie. I concetti già scritti nei grafi restano validi: sono URI nostri, e l'allineamento li porta dall'altra parte."
+
+msgid "3.3 · `unverified_languages` — operational now, corrected later"
+msgstr "3.3 · `unverified_languages` — operativi subito, corretti dopo"
+
+msgid "An originated module is needed in the trench in all the partners' languages before anyone has been able to verify them. E.D.'s rule for translations is *operational now, corrected afterwards once verified*, and the format states it like this:"
+msgstr "Un modulo originato serve in trincea in tutte le lingue dei partner prima che qualcuno abbia potuto verificarle. La regola di E.D. per le traduzioni è *operativi subito, correzione postuma dopo verifica*, e il formato la dice così:"
+
+msgid ""
+"scheme:\n"
+"  id: em-us-colore\n"
+"  origin: originated\n"
+"  unverified_languages: [en, ro, el, es, pl, he, de]   # draft labels\n"
+msgstr ""
+"scheme:\n"
+"  id: em-us-colore\n"
+"  origin: originated\n"
+"  unverified_languages: [en, ro, el, es, pl, he, de]   # etichette in bozza\n"
+
+msgid "the labels are all there (`skos:prefLabel` per language in the SKOS file) and resolve like the others: a draft is operational;"
+msgstr "le etichette ci sono tutte (`skos:prefLabel` per lingua nel file SKOS) e si risolvono come le altre: una bozza è operativa;"
+
+msgid "the list says which languages **nobody who answers for them** has verified yet; verifying a language removes it from the list, and that is a readable commit;"
+msgstr "la lista dice quali lingue **nessuno che ne risponda** ha ancora verificato; la verifica di una lingua la toglie dalla lista, ed è un commit leggibile;"
+
+msgid "only an `originated` module carries it: an external scheme answers for its own labels."
+msgstr "solo un modulo `originated` la porta: uno schema esterno risponde delle proprie etichette."
+
+msgid "**Why per scheme × language and not per label.** s3Dgraphy marks verification string by string (`validated_<lang>` in `datamodel_translations.json`), and there it works because every string is already a JSON object. In SKOS a label is a literal: marking them one by one would mean reifying them (SKOS-XL), for modules of ten or forty concepts that a person reviews one language at a time anyway. One mechanism for the whole suite: this one."
+msgstr "**Perché per schema × lingua e non per etichetta.** s3Dgraphy marca la verifica stringa per stringa (`validated_<lang>` in `datamodel_translations.json`), e lì funziona perché ogni stringa è già un oggetto JSON. In SKOS un'etichetta è un letterale: marcarla una per una vorrebbe dire reificarla (SKOS-XL), per moduli di dieci o quaranta concetti che una persona rivede comunque una lingua alla volta. Un meccanismo solo per tutta la suite: questo."
+

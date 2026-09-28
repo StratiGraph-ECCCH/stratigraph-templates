@@ -1,0 +1,32 @@
+# Italian translation of the stratigraph-templates documentation.
+# The English text (README.md, SPEC.md, LICENSING.md) is the source; each msgstr is
+# the original Italian of that paragraph. Refresh with sphinx-build -b gettext +
+# sphinx-intl update -l it.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: stratigraph-templates 0.1\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-09-28 12:44+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Emanuel Demetrescu <emanuel.demetrescu@cnr.it>\n"
+"Language: it\n"
+"Language-Team: Italian\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+msgid "Licences — two layers, and why this road is clean"
+msgstr "Licenze — due strati, e la ragione per cui questa strada è pulita"
+
+msgid "**The definitions** derive from the ICCD standards, published under **CC BY-SA 4.0** (declared at the foot of the field models): they are distributed under the same terms and carry the attribution to MiC — ICCD in `standard.attribution`. The ICCD thesauri are **CC BY-SA 3.0 IT** and are **referenced**, not copied."
+msgstr "**Le definizioni** derivano dalle normative ICCD, pubblicate **CC BY-SA 4.0** (dichiarato in calce ai modelli da campo): sono distribuite alla stessa condizione e portano l'attribuzione al MiC — ICCD in `standard.attribution`. I thesauri ICCD sono **CC BY-SA 3.0 IT** e sono **referenziati**, non copiati."
+
+msgid "**The code** of the reference implementation: proposed **EUPL-1.2** (a European project, compatible with share-alike) — **to be confirmed**, see [LICENSING.md](LICENSING.md)."
+msgstr "**Il codice** dell'implementazione di riferimento: proposta **EUPL-1.2** (progetto europeo, compatibile con la condivisione allo stesso modo) — **da confermare**, vedi [LICENSING.md](LICENSING.md)."
+
+msgid "This is not bureaucracy: reconstructing the sheet **from the standard** is explicitly permitted, while copying the templates of GPL software would not be."
+msgstr "Non è burocrazia: ricostruire la scheda **dalla norma** è esplicitamente permesso, mentre ricopiare i template di un software GPL non lo sarebbe."
+

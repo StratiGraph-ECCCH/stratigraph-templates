@@ -1,0 +1,44 @@
+# Italian translation of the stratigraph-templates documentation.
+# The English text (README.md, SPEC.md, LICENSING.md) is the source; each msgstr is
+# the original Italian of that paragraph. Refresh with sphinx-build -b gettext +
+# sphinx-intl update -l it.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: stratigraph-templates 0.1\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-09-28 12:44+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Emanuel Demetrescu <emanuel.demetrescu@cnr.it>\n"
+"Language: it\n"
+"Language-Team: Italian\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+msgid "Version {{ release }}. The text of this site is that of `README.md`, `SPEC.md` and `LICENSING.md`, included as it is; the catalogues are generated from the repository on every build."
+msgstr "Versione {{ release }}. Il testo di questo sito è quello di `README.md`, `SPEC.md` e `LICENSING.md`, incluso così com'è; i cataloghi sono generati dal repository a ogni build."
+
+msgid "What it is"
+msgstr "Che cos'è"
+
+msgid "The specification"
+msgstr "La specifica"
+
+msgid "Usage"
+msgstr "L'uso"
+
+msgid "Generated catalogues"
+msgstr "Cataloghi generati"
+
+msgid "Licences and attribution"
+msgstr "Licenze e attribuzione"
+
+msgid "Reference implementation"
+msgstr "Implementazione di riferimento"
+
+msgid "The dated working notes that accompanied the birth of the repository are in the [archive](archive.md), outside this index."
+msgstr "Le note di lavoro datate che hanno accompagnato la nascita del repository stanno nell'[archivio](archive.md), fuori da questo indice."
+

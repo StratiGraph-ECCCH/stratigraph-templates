@@ -1,0 +1,189 @@
+# Italian translation of the stratigraph-templates documentation.
+# The English text (README.md, SPEC.md, LICENSING.md) is the source; each msgstr is
+# the original Italian of that paragraph. Refresh with sphinx-build -b gettext +
+# sphinx-intl update -l it.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: stratigraph-templates 0.1\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-09-28 12:44+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Emanuel Demetrescu <emanuel.demetrescu@cnr.it>\n"
+"Language: it\n"
+"Language-Team: Italian\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+msgid "9 · The compiled form — `stratigraph-templates build`"
+msgstr "9 · La forma compilata — `stratigraph-templates build`"
+
+msgid "A definition in YAML is made for whoever writes it. A program that uses it — StratiField drawing the form and, once the sheet is compiled, **sending the operations to the room** — needs something else: a file it takes and uses **without reading the definition at run time**, that does not change under its feet, and that says which s3Dgraphy it was checked against. `build` produces it. It is the same pact as the theme (`sync-brand.sh`) and the datamodels (`sync-datamodels.sh`): **it is produced here, the app vendors and commits the copy**."
+msgstr "Una definizione in YAML è fatta per chi la scrive. Un programma che la usa — StratiField che disegna il modulo e, a scheda compilata, **manda le operazioni alla stanza** — ha bisogno di un'altra cosa: un file che prende e usa **senza leggerla in tempo reale**, che non cambia sotto i piedi, e che dice contro quale s3Dgraphy è stato verificato. `build` lo produce. È lo stesso patto del tema (`sync-brand.sh`) e dei datamodel (`sync-datamodels.sh`): **qui si produce, l'app vendora e committa la copia**."
+
+msgid ""
+"dist/schede/index.json                   every definition, every version, digest, datamodel\n"
+"dist/schede/<id>/<versione>.json         the compiled definition\n"
+msgstr ""
+"dist/schede/index.json                   ogni definizione, ogni versione, digest, datamodel\n"
+"dist/schede/<id>/<versione>.json         la definizione compilata\n"
+
+msgid "`dist/` is versioned in the repository, and a test checks that it matches what the definitions compile to today: a definition modified without `build` would leave the apps an old copy that looks official."
+msgstr "`dist/` è versionata nel repository, e un test verifica che corrisponda a ciò che le definizioni compilano oggi: una definizione modificata senza `build` lascerebbe alle app una copia vecchia che sembra ufficiale."
+
+msgid "**What does not compile.** `build` compiles what validates (§1–§4): a definition without `version`, or with an `undecided` verdict (the draft from an XSD, §7), does not compile; the others do, and the command exits with an error if even one was refused."
+msgstr "**Chi non compila.** `build` compila ciò che valida (§1–§4): una definizione senza `version`, o con un verdetto `undecided` (la bozza di un XSD, §7), non compila; le altre sì, e il comando esce con errore se anche una sola è stata rifiutata."
+
+msgid "9.1 · The header"
+msgstr "9.1 · La testata"
+
+msgid "`datamodel` is **read from the snapshot** (§2.1), which in turn read it from the s3Dgraphy configuration files: no version is written by hand."
+msgstr "`datamodel` è **letto dallo snapshot** (§2.1), che a sua volta l'ha letto dai file di configurazione di s3Dgraphy: nessuna versione è scritta a mano."
+
+msgid "**The digest** is SHA-256 over the canonical JSON (sorted keys, no whitespace) of the document **without** `digest`, `datamodel` and `compiled_by`. So:"
+msgstr "**Il digest** è SHA-256 sul JSON canonico (chiavi ordinate, nessuno spazio) del documento **senza** `digest`, `datamodel` e `compiled_by`. Quindi:"
+
+msgid "recompiling the same definition gives the same digest, byte for byte;"
+msgstr "ricompilare la stessa definizione dà lo stesso digest, byte per byte;"
+
+msgid "changing the definition — even just one label — changes the digest;"
+msgstr "cambiare la definizione — anche solo un'etichetta — cambia il digest;"
+
+msgid "recompiling against a newer datamodel **that does not change the recipe** leaves the digest as it is (the `datamodel` line is updated); a datamodel that does change it — a renamed edge, a different em.json spelling — changes the digest, because the recipe is inside."
+msgstr "ricompilare contro un datamodel più recente **che non cambia la ricetta** lascia il digest com'è (la riga `datamodel` si aggiorna); un datamodel che la cambia — un arco rinominato, una grafia em.json diversa — cambia il digest, perché la ricetta è dentro."
+
+msgid "9.2 · The visual half"
+msgstr "9.2 · La metà visiva"
+
+msgid "What a form and a sheet need, exactly as it is in the definition: `identity` (human key, `pattern`, resolved `unit_field`, UID policy), `provenance`, `paragraphs`, `fields` (type, `required`, `repeatable`, `recorded_in`, `max_len`, labels **in every declared language**, `help`, `options`, `vocabulary`, `note`, and the paragraph it belongs to), `sheet` as it is, `notes`. No fallback labels: if a language is declared, it is there."
+msgstr "Ciò che serve a un modulo e a un foglio, così com'è nella definizione: `identity` (chiave umana, `pattern`, `unit_field` risolto, politica dell'UID), `provenance`, `paragraphs`, `fields` (tipo, `required`, `repeatable`, `recorded_in`, `max_len`, etichette **in tutte le lingue dichiarate**, `help`, `options`, `vocabulary`, `note`, e il paragrafo di appartenenza), `sheet` com'è, `notes`. Nessuna etichetta di ripiego: se una lingua è dichiarata, c'è."
+
+msgid "9.3 · The ontological half — the recipe"
+msgstr "9.3 · La metà ontologica — la ricetta"
+
+msgid "For each field, **what to produce in the vocabulary of the five s3Dgraphy CRDT operations** — `add_node`, `update_field`, `remove_node`, `add_edge`, `remove_edge` (`s3dgraphy/crdt.py:66`, `api.make_op`) — and **no values**. The orchestrator is StratiGraph Server: whoever enters a room sends operations, the room applies them with `em.apply_op` and relays them. A recipe that said “build this graph” would need an applier next to the room, outside the orchestration; this one says **which operations to send**."
+msgstr "Per ogni campo, **che cosa produrre nel vocabolario delle cinque operazioni CRDT di s3Dgraphy** — `add_node`, `update_field`, `remove_node`, `add_edge`, `remove_edge` (`s3dgraphy/crdt.py:66`, `api.make_op`) — e **nessun valore**. L'orchestratore è StratiGraph Server: chi entra in una stanza manda operazioni, la stanza le applica con `em.apply_op` e le rilancia. Una ricetta che dicesse «fai questo grafo» avrebbe bisogno di un applicatore accanto alla stanza, fuori dall'orchestrazione; questa dice **quali operazioni mandare**."
+
+msgid "An entry has **steps**; a step `emit`s an operation in the exact wire form (that of `crdt.apply_op_to_section`), with **references** where a value will go:"
+msgstr "Una voce ha dei **passi**; un passo `emit`-te un'operazione nella forma esatta del filo (quella di `crdt.apply_op_to_section`), con **riferimenti** dove andrà un valore:"
+
+msgid "reference"
+msgstr "riferimento"
+
+msgid "what it is"
+msgstr "che cos'è"
+
+msgid "the unit the recording sheet describes"
+msgstr "l'unità che la scheda descrive"
+
+msgid "the value of the field; one of its keys (`$value.concept`, `$value.name`)"
+msgstr "il valore del campo; una sua chiave (`$value.concept`, `$value.name`)"
+
+msgid "an element of a list value (the entry has `each: true`: the steps repeat per element)"
+msgstr "un elemento di un valore lista (la voce ha `each: true`: i passi si ripetono per elemento)"
+
+msgid "the node the step finds or creates (see `resolve`)"
+msgstr "il nodo che il passo trova o crea (vedi `resolve`)"
+
+msgid "the PropertyNode the step mints"
+msgstr "la PropertyNode che il passo conia"
+
+msgid "the PropertyNode minted by the entry of ANOTHER field (the entry has `after: [<id>]`)"
+msgstr "la PropertyNode coniata dalla voce di un ALTRO campo (la voce ha `after: [<id>]`)"
+
+msgid "something the definition names and does not define (see `open`)"
+msgstr "qualcosa che la definizione nomina e non definisce (vedi `open`)"
+
+msgid "`when: created` on a step = send it only if `resolve` **created** the node instead of finding it. **Ids are minted by whoever creates** (`identity.uid.policy`): the recipe never writes one. `name` and `description` of an em.json node are strings: whoever substitutes a numeric value writes it as text."
+msgstr "`when: created` su un passo = mandalo solo se `resolve` ha **creato** il nodo invece di trovarlo. Gli **id li conia chi crea** (`identity.uid.policy`): la ricetta non ne scrive mai uno. `name` e `description` di un nodo em.json sono stringhe: chi sostituisce un valore numerico lo scrive come testo."
+
+msgid "**The unit** (`recipe.unit`) is found by human key in the context (`identity.deduplication`) or created with an `add_node`; its `node_type` is decided by the field with verdict `node_type`, if there is one. It is decided **at creation**: `update_field` addresses only `name`, `description` and `data.*` (`crdt.py:749`), so the type of an existing unit cannot be changed with an operation of this vocabulary — and the recipe says so."
+msgstr "**L'unità** (`recipe.unit`) si trova per chiave umana nel contesto (`identity.deduplication`) o si crea con un `add_node`; il suo `node_type` lo decide il campo con verdetto `node_type`, se c'è. Si decide **alla creazione**: `update_field` indirizza solo `name`, `description` e `data.*` (`crdt.py:749`), quindi il tipo di un'unità esistente non si cambia con un'operazione di questo vocabolario — e la ricetta lo dice."
+
+msgid "**Verdict by verdict:**"
+msgstr "**Verdetto per verdetto:**"
+
+msgid "verdict"
+msgstr "verdetto"
+
+msgid "steps"
+msgstr "passi"
+
+msgid "none: the field composes the unit's name (`names: $unit`, `designator`)"
+msgstr "nessuno: il campo compone il nome dell'unità (`names: $unit`, `designator`)"
+
+msgid "**none**, declared: `reason`, or `blocked_on`"
+msgstr "**nessuno**, dichiarato: `reason`, oppure `blocked_on`"
+
+#, python-brace-format
+msgid "none: `decides: unit.node_type` + the value table → `{class, node_type}`"
+msgstr "nessuno: `decides: unit.node_type` + la tabella valore → `{class, node_type}`"
+
+msgid "`property`, native name"
+msgstr "`property`, nome nativo"
+
+msgid "`property`, **node element**"
+msgstr "`property`, **elemento del nodo**"
+
+#, python-brace-format
+msgid "`update_field {node_id: $unit, field: <em_json dell'elemento>, value: $value}` — today `definition` → `data.definition` (see below)"
+msgstr "`update_field {node_id: $unit, field: <em_json dell'elemento>, value: $value}` — oggi `definition` → `data.definition` (v. sotto)"
+
+msgid "`property`, otherwise"
+msgstr "`property`, altrimenti"
+
+msgid "`add_node` PropertyNode + `add_edge has_property` (see below)"
+msgstr "`add_node` PropertyNode + `add_edge has_property` (v. sotto)"
+
+msgid "like `property`, with `property_type` = the qualia and **value = the concept** (`$value.concept`, §3)"
+msgstr "come `property`, con `property_type` = la qualia e **valore = il concetto** (`$value.concept`, §3)"
+
+msgid "`add_node` (`when: created`) of the node found by name/ref + `add_edge` in the declared direction"
+msgstr "`add_node` (`when: created`) del nodo trovato per nome/ref + `add_edge` nella direzione dichiarata"
+
+msgid "one `add_edge` per element; `outgoing` = `$unit → $item`, `incoming` = `$item → $unit`"
+msgstr "un `add_edge` per elemento; `outgoing` = `$unit → $item`, `incoming` = `$item → $unit`"
+
+msgid "**The property: the form s3Dgraphy and EMStudio actually use**, not a new one:"
+msgstr "**La proprietà: la forma che s3Dgraphy e EMStudio usano davvero**, non una nuova:"
+
+msgid "PropertyNode with `name` = `data.property_type` = the qualia, attached to the subject with `has_property` **from the subject to the property**: EMStudio `frontend/src/model.ts:924-938` and `frontend/src/em-data.ts:605-632` (`addQualiaClaim`), s3Dgraphy `importer/base_importer.py:666-713` (`_create_property`) and `importer/unified_xlsx_importer.py:612-639` (`_handle_qualia`);"
+msgstr "PropertyNode con `name` = `data.property_type` = la qualia, appesa al soggetto con `has_property` **dal soggetto alla proprietà**: EMStudio `frontend/src/model.ts:924-938` e `frontend/src/em-data.ts:605-632` (`addQualiaClaim`), s3Dgraphy `importer/base_importer.py:666-713` (`_create_property`) e `importer/unified_xlsx_importer.py:612-639` (`_handle_qualia`);"
+
+msgid "**the value lives in `description`**: this is the convention EMStudio declares (`model.ts:924`, “A PropertyNode's VALUE lives in `description`”) and that `_create_property` and `addQualiaClaim` follow; `_handle_qualia` puts it in `value` (lifted into `data.value` by `emjson_exporter.py:60`). The two spellings coexist in s3Dgraphy today; the recipe follows the orchestrated one;"
+msgstr "**il valore sta in `description`**: è la convenzione che EMStudio dichiara (`model.ts:924`, «A PropertyNode's VALUE lives in `description`») e che `_create_property` e `addQualiaClaim` seguono; `_handle_qualia` lo mette in `value` (sollevato in `data.value` da `emjson_exporter.py:60`). Le due grafie convivono oggi in s3Dgraphy; la ricetta segue quella dell'orchestrato;"
+
+msgid "**units of measure** in `data.units` (`_handle_qualia`, `:632`);"
+msgstr "**le unità di misura** in `data.units` (`_handle_qualia`, `:632`);"
+
+msgid "a `quantity_list` makes **one PropertyNode per row**, with the row's qualia (`$item.qualia`, and `defaults` if the field declares one);"
+msgstr "un `quantity_list` fa **una PropertyNode per riga**, con la qualia della riga (`$item.qualia`, e `defaults` se il campo ne dichiara una);"
+
+msgid "`property_name: description` is the **node's field** and becomes `update_field` on `description` (audit B9: it used to end up in `data.<id della casella>`);"
+msgstr "`property_name: description` è il **campo del nodo** e diventa `update_field` su `description` (audit B9: finiva in `data.<id della casella>`);"
+
+#, python-brace-format
+msgid "a `property_name` that the node datamodel declares as a **node element** (`properties.<nome>` with `kind: node_element`, today only `StratigraphicNode.properties.definition`, nodes 1.6.9) is **not** a qualia: it becomes an `update_field` on the em.json location the datamodel names (`data.definition`), with the **whole** value (`$value` = `{concept, label}`), and the entry carries `element: {name, declared_on, value, rdf}`. Name, location and RDF come from the snapshot (`node_elements`, format 3), not from this repository. The compiler refuses a field type that does not write that value (a `concept` is written only by a `term`) and a unit type that does not inherit the element (decision by E.D., 2026-10-21: the DEFINITION of the US is a node element);"
+msgstr "un `property_name` che il datamodel dei nodi dichiara come **elemento del nodo** (`properties.<nome>` con `kind: node_element`, oggi solo `StratigraphicNode.properties.definition`, nodi 1.6.9) **non** è una qualia: diventa un `update_field` sul posto em.json che il datamodel nomina (`data.definition`), con il valore **intero** (`$value` = `{concept, label}`), e la voce porta `element: {name, declared_on, value, rdf}`. Nome, posto e RDF vengono dallo snapshot (`node_elements`, formato 3), non da questo repository. Il compilatore rifiuta un tipo di campo che non scrive quel valore (un `concept` lo scrive solo un `term`) e un tipo di unità che non eredita l'elemento (decisione di E.D., 2026-10-21: la DEFINIZIONE della US è un elemento del nodo);"
+
+msgid "a `property_name` that is not a registered qualia still becomes a PropertyNode with that `property_type` — it is what `_create_property` does with column names — and the entry declares it (`registered_qualia: false`)."
+msgstr "un `property_name` che non è una qualia registrata diventa comunque una PropertyNode con quel `property_type` — è ciò che fa `_create_property` con i nomi di colonna — e la voce lo dichiara (`registered_qualia: false`)."
+
+msgid "**A node reached by an edge** is looked up before it is created: by name (`LocationNodeGroup`, `EpochNode`…), by `ref` and then name (`person_ref`, `epoch_ref`), by **path** if it is a file reference (`resource_ref_list` → DocumentNode with `data.url` = the reference, deduplicated by path like `pyarchinit_importer._add_path_document`, `:797-808`). A `longtext` is **content**, not a name: the node is minted and carries it in `description`."
+msgstr "**Un nodo raggiunto da un arco** si trova prima di crearsi: per nome (`LocationNodeGroup`, `EpochNode`…), per `ref` e poi nome (`person_ref`, `epoch_ref`), per **percorso** se è un riferimento a file (`resource_ref_list` → DocumentNode con `data.url` = il riferimento, deduplicato per percorso come `pyarchinit_importer._add_path_document`, `:797-808`). Un `longtext` è un **contenuto**, non un nome: il nodo si conia e lo porta in `description`."
+
+msgid "**The edges.** `edge_type` is the key of the connections datamodel, that is, the canonical form; `edge` reports what s3Dgraphy declares about that edge — `symmetric`, `reverse`, and the RDF **that the s3Dgraphy exporter emits** (`exporter/rdf_exporter.py:199`, `:300`, `:332`: predicate, AP11 subproperty, extension, `subject: target` when the mapping inverts). `same_rdf_as` lists the other edge types that become **the same property**: `bonded_to` ≡ `is_bonded_to` (`em:bondedTo`), `equals` ≡ `is_physically_equal_to` (`em:physicallyEquals`, `em.ttl:528`, `:536`). Both names are valid and the ICCD definition uses the forms the datamodel calls canonical; the compiled output says so, so a consumer does not double the arrows."
+msgstr "**Gli archi.** `edge_type` è la chiave del datamodel delle connessioni, cioè la forma canonica; `edge` riporta ciò che s3Dgraphy dichiara di quell'arco — `symmetric`, `reverse`, e l'RDF **che l'esportatore di s3Dgraphy emette** (`exporter/rdf_exporter.py:199`, `:300`, `:332`: predicato, sottoproprietà AP11, estensione, `subject: target` quando la mappatura inverte). `same_rdf_as` elenca gli altri tipi d'arco che diventano **la stessa proprietà**: `bonded_to` ≡ `is_bonded_to` (`em:bondedTo`), `equals` ≡ `is_physically_equal_to` (`em:physicallyEquals`, `em.ttl:528`, `:536`). Entrambi i nomi sono validi e la definizione ICCD usa le forme che il datamodel chiama canoniche; il compilato lo dice, così un consumatore non raddoppia le frecce."
+
+msgid "**`open` — what the definition does not decide, declared.** The recipe does not invent: where the definition is silent, it writes that down. Today, for the ICCD US: `definizione` (verdict `vocabulary` with neither qualia nor `property_name`: no operation until it says so), and three `attaches_to` that name undefined acts (`excavation_activity`, `recording_act`, `revision_act` → `$anchor.<nome>`, in `recipe.anchors`). For the two demos, the unit type too (no `node_type` field). The compiler instead **refuses** what is inconsistent: an `attaches_to: property:<x>` that no field produces, a name with no em.json spelling, an edge that is deprecated or whose `em:` RDF property is not in `em.ttl`, an operation outside the five."
+msgstr "**`open` — ciò che la definizione non decide, dichiarato.** La ricetta non inventa: dove la definizione tace, lo scrive. Oggi, per la US ICCD: `definizione` (verdetto `vocabulary` senza qualia né `property_name`: nessuna operazione finché non lo dice), e tre `attaches_to` che nominano atti non definiti (`excavation_activity`, `recording_act`, `revision_act` → `$anchor.<nome>`, in `recipe.anchors`). Per le due demo, anche il tipo dell'unità (nessun campo `node_type`). Il compilatore **rifiuta** invece ciò che è incoerente: un `attaches_to: property:<x>` che nessun campo produce, un nome che non ha grafia em.json, un arco deprecato o la cui proprietà RDF `em:` non è in `em.ttl`, un'operazione fuori dalle cinque."
+
+msgid "9.4 · Published versions do not change"
+msgstr "9.4 · Le versioni pubblicate non cambiano"
+
+msgid "`build` refuses to rewrite `dist/schede/<id>/<versione>.json` if the new digest differs from the one already written: **bump `template.version`**. The same digest rewrites the file (the `datamodel` line may have been updated) and says so. The index lists every version present and the latest (`latest`, semver order): old versions stay, because a record compiled with one of them must be reread with that one."
+msgstr "`build` rifiuta di riscrivere `dist/schede/<id>/<versione>.json` se il nuovo digest è diverso da quello già scritto: **alza `template.version`**. Lo stesso digest riscrive il file (la riga `datamodel` può essersi aggiornata) e lo dice. L'indice elenca ogni versione presente e la più recente (`latest`, ordine semver): le versioni vecchie restano, perché un record compilato con una di esse va riletto con quella."
+

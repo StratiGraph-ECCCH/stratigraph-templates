@@ -1,0 +1,26 @@
+# Italian translation of the stratigraph-templates documentation.
+# The English text (README.md, SPEC.md, LICENSING.md) is the source; each msgstr is
+# the original Italian of that paragraph. Refresh with sphinx-build -b gettext +
+# sphinx-intl update -l it.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: stratigraph-templates 0.1\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-09-28 12:44+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Emanuel Demetrescu <emanuel.demetrescu@cnr.it>\n"
+"Language: it\n"
+"Language-Team: Italian\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+msgid "6 · What is NOT there, by choice"
+msgstr "6 · Che cosa NON c'è, per scelta"
+
+msgid "No server, no authentication, no session, no database. No Harris matrix (the graph editor is EMStudio). No GIS (that belongs to pyarchinit). No ministerial catalogue record (that belongs to the Catalog, as a projection, later). No new type in s3Dgraphy. No asset management (it already exists: SHA-256 + IIIF). No identity, offline queue or room entry (they already exist, proven in the field assistant)."
+msgstr "Nessun server, nessuna autenticazione, nessuna sessione, nessun database. Nessuna matrice di Harris (l'editor di grafo è EMStudio). Nessun GIS (è di pyarchinit). Nessun record di catalogo ministeriale (è del Catalog, come proiezione, più tardi). Nessun tipo nuovo in s3Dgraphy. Nessuna gestione di asset (esistono già: SHA-256 + IIIF). Nessuna identità, coda offline o ingresso in stanza (esistono già, provati nel field assistant)."
+

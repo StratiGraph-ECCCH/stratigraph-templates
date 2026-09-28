@@ -1,0 +1,110 @@
+# Italian translation of the stratigraph-templates documentation.
+# The English text (README.md, SPEC.md, LICENSING.md) is the source; each msgstr is
+# the original Italian of that paragraph. Refresh with sphinx-build -b gettext +
+# sphinx-intl update -l it.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: stratigraph-templates 0.1\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-09-28 12:44+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Emanuel Demetrescu <emanuel.demetrescu@cnr.it>\n"
+"Language: it\n"
+"Language-Team: Italian\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+msgid "2 · The graph binding — the verdicts"
+msgstr "2 · Il legame al grafo — i verdetti"
+
+msgid "Every field declares what it **means**. There are seven admissible verdicts:"
+msgstr "Ogni campo dichiara che cosa **significa**. I verdetti ammessi sono sette:"
+
+msgid "verdict"
+msgstr "verdetto"
+
+msgid "meaning"
+msgstr "vuol dire"
+
+msgid "mandatory keys"
+msgstr "chiavi obbligatorie"
+
+msgid "it is (part of) the human identifier"
+msgstr "è (parte di) l'identificativo umano"
+
+msgid "the field must be in `identity.human_key`"
+msgstr "il campo deve stare in `identity.human_key`"
+
+msgid "it is a property of a node that exists"
+msgstr "è una proprietà di un nodo che esiste"
+
+msgid "`qualia` **or** `property_name`"
+msgstr "`qualia` **oppure** `property_name`"
+
+msgid "it **decides** the node type"
+msgstr "**decide** il tipo di nodo"
+
+msgid "it is a node in its own right, reached by an edge"
+msgstr "è un nodo a sé, raggiunto da un arco"
+
+msgid "`node_type` **and** `edge_type`"
+msgstr "`node_type` **e** `edge_type`"
+
+msgid "it is a relation towards another unit"
+msgstr "è una relazione verso un'altra unità"
+
+msgid "`edge_type` **and** `direction`"
+msgstr "`edge_type` **e** `direction`"
+
+msgid "it is a controlled term"
+msgstr "è un termine controllato"
+
+msgid "the field must have `vocabulary`; `qualia` optional"
+msgstr "il campo deve avere `vocabulary`; `qualia` opzionale"
+
+msgid "pure presentation: the sheet says it, the graph does not"
+msgstr "presentazione pura: la scheda lo dice, il grafo no"
+
+msgid "Common keys: `attaches_to` (what it attaches to, default `self` = the unit described by the recording sheet), `target` (what sits at the other end of an edge), `note`, `blocked_on`."
+msgstr "Chiavi comuni: `attaches_to` (a che cosa si attacca, default `self` = l'unità descritta dalla scheda), `target` (che cosa sta all'altro capo di un arco), `note`, `blocked_on`."
+
+msgid "2.1 · The gate: the names must exist"
+msgstr "2.1 · Il cancello: i nomi devono esistere"
+
+msgid "`node_type`, `edge_type` and `qualia` are checked against **what s3Dgraphy declares today** (node datamodel, connections datamodel, qualia types). A name that does not exist is an **error**, not a warning."
+msgstr "`node_type`, `edge_type` e `qualia` sono verificati contro **quello che s3Dgraphy dichiara oggi** (datamodel dei nodi, datamodel delle connessioni, tipi di qualia). Un nome che non esiste è un **errore**, non un avviso."
+
+msgid "This is not pedantry: it is how “do not add types to the datamodel” enforces itself. Growing the datamodel is a decision, not a side effect of a definition written at night."
+msgstr "Non è pedanteria: è il modo in cui «non aggiungere tipi al datamodel» si fa rispettare da sé. La crescita del datamodel è una decisione, non un effetto collaterale di una definizione scritta di notte."
+
+msgid "**There is one source only: `registry/s3dgraphy-snapshot.json`.** It is committed, so it is the same for everyone; it declares where it was taken from (s3Dgraphy commit, `git_dirty`, date) and with which versions (node datamodel, connections datamodel, qualia, `em.ttl`). `validate` and `build` read **that** — before 2026-10-18 `validate` read the s3Dgraphy working tree when there was one and the snapshot when there was not, and the same definition was validated against 1.6.19 on one machine and 1.6.13 on another."
+msgstr "**La fonte è una sola: `registry/s3dgraphy-snapshot.json`.** È committato, quindi è la stessa per chiunque; dichiara da dove è stato preso (commit di s3Dgraphy, `git_dirty`, data) e con quali versioni (datamodel dei nodi, delle connessioni, qualia, `em.ttl`). `validate` e `build` leggono **quello** — prima del 2026-10-18 `validate` leggeva il working tree di s3Dgraphy quando c'era e lo snapshot quando no, e la stessa definizione era validata contro 1.6.19 su una macchina e 1.6.13 su un'altra."
+
+msgid "The s3Dgraphy working tree (`$STRATIGRAPH_S3DGRAPHY_SRC`, or the checkout next to this repository), when present, serves **one question only**: is the snapshot still what s3Dgraphy declares? The comparison is on **content**, not on the commit. If they diverge, the command says so — with the differences — and **stops**: it does not choose on its own. Regenerating (`registry-snapshot`) is the decision, and the diff of `registry/` is its record. `--snapshot` skips the comparison, and the provenance line declares it."
+msgstr "Il working tree di s3Dgraphy (`$STRATIGRAPH_S3DGRAPHY_SRC`, o il checkout accanto a questo repository), quando c'è, serve a **una domanda sola**: lo snapshot è ancora ciò che s3Dgraphy dichiara? Il confronto è sul **contenuto**, non sul commit. Se divergono, il comando lo dice — con le differenze — e **si ferma**: non sceglie da solo. Rigenerare (`registry-snapshot`) è la decisione, e il diff di `registry/` ne è il documento. `--snapshot` salta il confronto, e la riga di provenienza lo dichiara."
+
+msgid "Beyond the names, the snapshot holds what is needed to say what to **produce** (§9): the em.json spelling of every class (`DocumentNode` → `document`), the reverse and the symmetry of every edge, the RDF predicates that the s3Dgraphy exporter emits for each (asked of its code, not re-read), the `em:` terms declared in `em.ttl`, and the closed set of CRDT operations. **If the snapshot is missing, nothing is validated**: there is no third mode in which every type is fine."
+msgstr "Oltre ai nomi, lo snapshot tiene ciò che serve per dire che cosa **produrre** (§9): la grafia em.json di ogni classe (`DocumentNode` → `document`), il reverse e la simmetria di ogni arco, i predicati RDF che l'esportatore di s3Dgraphy emette per ciascuno (chiesti al suo codice, non riletti), i termini `em:` dichiarati in `em.ttl`, e l'insieme chiuso delle operazioni CRDT. **Se lo snapshot non c'è, non si valida niente**: non esiste una terza modalità in cui ogni tipo va bene."
+
+msgid "2.2 · `blocked_on` — when the sheet says more than the graph"
+msgstr "2.2 · `blocked_on` — quando la scheda dice più del grafo"
+
+msgid "A field whose honest binding would require a type that s3Dgraphy lacks **is not silently downgraded to presentation**: it carries in writing what would be needed and to whom it was reported. The verdict must be `none` (until the decision exists, the field lands nowhere) and `validate` counts them and prints them. In the US 2021 there are three: `ente_responsabile`, `ufficio_mic` (the institutional actor) and `campionature` (`CRMsci S13_Sample`)."
+msgstr "Un campo il cui legame onesto richiederebbe un tipo che s3Dgraphy non ha **non viene silenziosamente degradato a presentazione**: porta scritto che cosa servirebbe e a chi è stato riportato. Il verdetto deve essere `none` (finché la decisione non c'è, il campo non atterra da nessuna parte) e `validate` li conta e li stampa. Nella US 2021 sono tre: `ente_responsabile`, `ufficio_mic` (l'attore istituzionale) e `campionature` (`CRMsci S13_Sample`)."
+
+msgid "2.3 · Edges have ONE canonical direction"
+msgstr "2.3 · Gli archi hanno UNA direzione canonica"
+
+msgid "The recording sheet has two boxes for the same relation (`COPRE` and `COPERTO DA`); the graph has one edge. So:"
+msgstr "La scheda ha due caselle per la stessa relazione (`COPRE` e `COPERTO DA`); il grafo ha un arco. Quindi:"
+
+msgid "`direction: incoming` means: the canonical edge runs **from the cited unit to this one**. `edge_type` must be a key of the connections datamodel; the inverse names (`is_overlain_by`) are **not** edge types and are not written here."
+msgstr "`direction: incoming` significa: l'arco canonico va **dall'unità citata a questa**. `edge_type` deve essere una chiave del datamodel delle connessioni; i nomi inversi (`is_overlain_by`) **non** sono tipi di arco e non si scrivono qui."
+
+msgid "Measured on s3Dgraphy 1.6.13: the twelve boxes of the US sheet are **seven edge types** times **two directions** — `equals`, `bonded_to`, `abuts`, `overlies`, `cuts`, `fills` (all `AP11_has_physical_relation` with `type_tag`) and `is_after` (`P120_occurs_before` / `AP28`)."
+msgstr "Misurato su s3Dgraphy 1.6.13: le dodici caselle della scheda US sono **sette tipi di arco** per **due direzioni** — `equals`, `bonded_to`, `abuts`, `overlies`, `cuts`, `fills` (tutti `AP11_has_physical_relation` con `type_tag`) e `is_after` (`P120_occurs_before` / `AP28`)."
+

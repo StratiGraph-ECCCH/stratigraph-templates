@@ -1,50 +1,50 @@
 # stratigraph-templates
 
-Versione {{ release }}. Il testo di questo sito è quello di `README.md`,
-`SPEC.md` e `LICENSING.md`, incluso così com'è; i cataloghi sono generati dal
-repository a ogni build.
+Version {{ release }}. The text of this site is that of `README.md`, `SPEC.md`
+and `LICENSING.md`, included as it is; the catalogues are generated from the
+repository on every build.
 
 ```{toctree}
-:caption: Che cos'è
+:caption: What it is
 :maxdepth: 2
 
-_generated/cose
-_generated/specie
+pages/what-it-is
+pages/kinds
 ```
 
 ```{toctree}
-:caption: La specifica
+:caption: The specification
 :maxdepth: 2
 
-_generated/spec
+pages/spec
 ```
 
 ```{toctree}
-:caption: L'uso
+:caption: Usage
 :maxdepth: 2
 
-_generated/uso
+pages/usage
 ```
 
 ```{toctree}
-:caption: Cataloghi generati
+:caption: Generated catalogues
 :maxdepth: 1
 
-_generated/catalogo-definizioni
-_generated/catalogo-vocabolari
-_generated/stato-snapshot
+pages/catalogue-definitions
+pages/catalogue-vocabularies
+pages/snapshot-status
 ```
 
 ```{toctree}
-:caption: Licenze e attribuzione
+:caption: Licences and attribution
 :maxdepth: 2
 
-_generated/licenze-sintesi
-_generated/licensing
+pages/licences-summary
+pages/licensing
 ```
 
 ```{toctree}
-:caption: Implementazione di riferimento
+:caption: Reference implementation
 :maxdepth: 1
 
 api
@@ -53,8 +53,8 @@ api
 ```{toctree}
 :hidden:
 
-archivio
+archive
 ```
 
-Le note di lavoro datate che hanno accompagnato la nascita del repository
-stanno nell'[archivio](archivio.md), fuori da questo indice.
+The dated working notes that accompanied the birth of the repository are in the
+[archive](archive.md), outside this index.

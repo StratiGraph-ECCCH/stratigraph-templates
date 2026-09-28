@@ -1,0 +1,35 @@
+# Italian translation of the stratigraph-templates documentation.
+# The English text (README.md, SPEC.md, LICENSING.md) is the source; each msgstr is
+# the original Italian of that paragraph. Refresh with sphinx-build -b gettext +
+# sphinx-intl update -l it.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: stratigraph-templates 0.1\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-09-28 12:44+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Emanuel Demetrescu <emanuel.demetrescu@cnr.it>\n"
+"Language: it\n"
+"Language-Team: Italian\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+msgid "0 · Why YAML"
+msgstr "0 · Perché YAML"
+
+msgid "Two lines, as requested:"
+msgstr "Due righe, come chiesto:"
+
+msgid "**Comments are part of the data.** A definition records where the recording sheet and a pre-existing table diverge, and why a box was read the way it was: JSON has no comments, and those annotations would end up in a separate file, that is, they would be lost. YAML keeps comment and field within the same glance."
+msgstr "**I commenti sono parte del dato.** Una definizione registra dove la scheda e una tabella preesistente divergono, e perché una casella è stata letta così: JSON non ha commenti e quelle annotazioni finirebbero in un file a parte, cioè si perderebbero. YAML tiene commento e campo sulla stessa riga di sguardo."
+
+msgid "**It is written by hand.** Long texts (forty-word labels from the standard, notes) sit on several lines without escaping, and indentation shows the paragraph structure the sheet already has on paper."
+msgstr "**Si scrive a mano.** Testi lunghi (etichette normative di quaranta parole, note) stanno su più righe senza escape, e l'indentazione fa vedere la struttura a paragrafi che la scheda ha già sulla carta."
+
+msgid "The data model nonetheless stays **JSON-compatible** (no YAML tags, no anchors, no exotic types): a consumer who prefers JSON converts with `yaml.safe_load` + `json.dump` and loses nothing except the comments."
+msgstr "Il modello dei dati resta però **JSON-compatibile** (nessun tag YAML, nessuna ancora, nessun tipo esotico): un consumatore che preferisce JSON converte con `yaml.safe_load` + `json.dump` e non perde nulla tranne i commenti."
+

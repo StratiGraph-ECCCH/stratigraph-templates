@@ -1,165 +1,165 @@
-# SPEC — che cos'è una definizione di scheda
+# SPEC — what a recording-sheet definition is
 
-Una **definizione** (in questo repository: un *template*) è un file dichiarativo,
-versionato e citabile, che descrive una scheda di rilevamento archeologico in modo
-che una macchina possa fare tre cose diverse con lo stesso dato:
+A **definition** (in this repository: a *template*) is a declarative, versioned and
+citable file that describes an archaeological recording sheet so that a machine can do
+three different things with the same data:
 
-1. mostrare un **modulo** da compilare,
-2. stampare un **foglio A4 fronte-retro**,
-3. dire al **grafo** che cosa significa ciò che è stato scritto.
+1. show a **form** to fill in,
+2. print a **double-sided A4 sheet**,
+3. tell the **graph** the meaning of what has been written.
 
-Se queste tre cose vivono in tre posti diversi, si perde la coesione che rende la
-scheda un dato; qui stanno in un file solo, e questa specifica dice come.
+If these three things live in three different places, the cohesion that makes the
+recording sheet data is lost; here they sit in a single file, and this specification says how.
 
-Chi legge questa pagina e guarda `templates/iccd-us-2021/template.yaml` deve
-poter scrivere la scheda del proprio paese **senza chiedere niente a nessuno**.
-Se serve leggere del codice, la specifica è sbagliata: apri una issue.
-
----
-
-## 0 · Perché YAML
-
-Due righe, come chiesto:
-
-1. **I commenti sono parte del dato.** Una definizione registra dove la scheda e
-   una tabella preesistente divergono, e perché una casella è stata letta così:
-   JSON non ha commenti e quelle annotazioni finirebbero in un file a parte, cioè
-   si perderebbero. YAML tiene commento e campo sulla stessa riga di sguardo.
-2. **Si scrive a mano.** Testi lunghi (etichette normative di quaranta parole,
-   note) stanno su più righe senza escape, e l'indentazione fa vedere la
-   struttura a paragrafi che la scheda ha già sulla carta.
-
-Il modello dei dati resta però **JSON-compatibile** (nessun tag YAML, nessuna
-ancora, nessun tipo esotico): un consumatore che preferisce JSON converte con
-`yaml.safe_load` + `json.dump` e non perde nulla tranne i commenti.
+Anyone who reads this page and looks at `templates/iccd-us-2021/template.yaml` must
+be able to write their own country's recording sheet **without asking anyone anything**.
+If you need to read code, the specification is wrong: open an issue.
 
 ---
 
-## 1 · Struttura di un file
+## 0 · Why YAML
+
+Two lines, as requested:
+
+1. **Comments are part of the data.** A definition records where the recording sheet and
+   a pre-existing table diverge, and why a box was read the way it was:
+   JSON has no comments, and those annotations would end up in a separate file, that is,
+   they would be lost. YAML keeps comment and field within the same glance.
+2. **It is written by hand.** Long texts (forty-word labels from the standard,
+   notes) sit on several lines without escaping, and indentation shows the
+   paragraph structure the sheet already has on paper.
+
+The data model nonetheless stays **JSON-compatible** (no YAML tags, no
+anchors, no exotic types): a consumer who prefers JSON converts with
+`yaml.safe_load` + `json.dump` and loses nothing except the comments.
+
+---
+
+## 1 · Structure of a file
 
 ```yaml
 template:
-  id: <slug>                  # = nome della cartella sotto templates/
-  version: "1.0.0"            # la versione di QUESTA DEFINIZIONE (semver), §1.1
-  standard: {...}             # chi lo pubblica, quale codice, quale versione della NORMA
-  source_language: it         # la lingua della NORMA
-  languages: [it, en]         # tutte le lingue in cui la scheda si può rendere
-  identity: {...}             # la coppia identificativo umano / UID
-  provenance: {...}           # la provenienza per campo
-  vocabularies: [<scheme id>] # gli schemi di vocabolario a cui i campi rimandano
-  paragraphs: [...]           # la SOSTANZA: come i campi si raggruppano
-  fields: [...]               # la SOSTANZA + IL LEGAME AL GRAFO, campo per campo
-  sheet: {...}                # IL FOGLIO: dove sta ogni casella — facoltativo, §4.1
-  notes: {...}                # libero: misure, provenienza della ricostruzione
+  id: <slug>                  # = name of the folder under templates/
+  version: "1.0.0"            # the version of THIS DEFINITION (semver), §1.1
+  standard: {...}             # who publishes it, which code, which version of the STANDARD
+  source_language: it         # the language of the STANDARD
+  languages: [it, en]         # all the languages the sheet can be rendered in
+  identity: {...}             # the human identifier / UID pair
+  provenance: {...}           # per-field provenance
+  vocabularies: [<scheme id>] # the vocabulary schemes the fields refer to
+  paragraphs: [...]           # the SUBSTANCE: how fields are grouped
+  fields: [...]               # the SUBSTANCE + THE GRAPH BINDING, field by field
+  sheet: {...}                # THE SHEET: where every box sits — optional, §4.1
+  notes: {...}                # free: measurements, provenance of the reconstruction
 ```
 
 ### 1.1 · `standard`
 
-| chiave | obbligo | significato |
+| key | required | meaning |
 |---|---|---|
-| `authority` | sì | chi pubblica la norma (`ICCD`, `DAI`, …) |
-| `code` | sì | il codice della scheda (`US`, `USM`, `SAS`) |
-| `version` | sì | la versione della norma, come stringa (`"2021"`, `"3.00"`) |
-| `kind` | sì | `field_model` (modello da campo) o `catalogue_record` (normativa di catalogo) |
-| `title` | sì | titolo per lingua |
-| `source` | no | da dove viene la ricostruzione |
-| `license` | no | la licenza della NORMA (non del codice) |
-| `attribution` | no | l'attribuzione da riportare |
-| `invented` | no | `true` = definizione demo/inventata. La stampa porta il bollo `FIXTURE` |
+| `authority` | yes | who publishes the standard (`ICCD`, `DAI`, …) |
+| `code` | yes | the code of the recording sheet (`US`, `USM`, `SAS`) |
+| `version` | yes | the version of the standard, as a string (`"2021"`, `"3.00"`) |
+| `kind` | yes | `field_model` (field model) or `catalogue_record` (catalogue standard) |
+| `title` | yes | title per language |
+| `source` | no | where the reconstruction comes from |
+| `license` | no | the licence of the STANDARD (not of the code) |
+| `attribution` | no | the attribution to be reproduced |
+| `invented` | no | `true` = demo/invented definition. The print carries the `FIXTURE` stamp |
 
-#### `template.version` — la definizione ha una versione sua
+#### `template.version` — the definition has a version of its own
 
-`standard.version` è la versione della **norma** (`"2021"`, `"3.00"`). Non dice
-niente della **definizione**: una correzione alla nostra lettura del modello ICCD
-2021 — un verdetto rivisto, un'etichetta inglese migliore, una casella spostata —
-non è una nuova norma, ed è comunque una definizione diversa. Quindi ogni
-definizione porta, accanto a `id`, una versione propria:
+`standard.version` is the version of the **standard** (`"2021"`, `"3.00"`). It says
+nothing about the **definition**: a correction to our reading of the ICCD 2021 model —
+a revised verdict, a better English label, a moved box —
+is not a new standard, and it is still a different definition. So every
+definition carries, next to `id`, a version of its own:
 
-| chiave | obbligo | significato |
+| key | required | meaning |
 |---|---|---|
-| `version` | **sì** | semver `MAJOR.MINOR.PATCH` (con pre-release opzionale, `1.1.0-rc.1`) |
+| `version` | **yes** | semver `MAJOR.MINOR.PATCH` (with optional pre-release, `1.1.0-rc.1`) |
 
-* **obbligatoria**: il validatore rifiuta una definizione senza, e una che
-  scriva al suo posto l'anno della norma (`"2021"` non è semver). Una
-  definizione senza versione non si compila (§9) e un record non la può citare;
-* **come si alza**: MAJOR quando un record compilato con la versione precedente
-  si leggerebbe diversamente (un verdetto cambiato, un campo tolto o rinominato,
-  un tipo cambiato); MINOR quando si aggiunge senza cambiare il significato di
-  ciò che c'era (una lingua, un campo facoltativo, un'opzione); PATCH per ciò che
-  non tocca né i dati né il grafo (una nota, un aiuto, un refuso in un'etichetta);
-* **una versione pubblicata non cambia**: `build` rifiuta di riscrivere
-  `dist/schede/<id>/<versione>.json` con un contenuto diverso (§9.4). Se il
-  digest cambia, cambia il numero.
+* **mandatory**: the validator rejects a definition without it, and one that
+  writes the year of the standard in its place (`"2021"` is not semver). A
+  definition without a version does not compile (§9) and a record cannot cite it;
+* **how it is bumped**: MAJOR when a record compiled with the previous version
+  would read differently (a changed verdict, a field removed or renamed,
+  a changed type); MINOR when something is added without changing the meaning of
+  what was there (a language, an optional field, an option); PATCH for what
+  touches neither the data nor the graph (a note, a help text, a typo in a label);
+* **a published version does not change**: `build` refuses to rewrite
+  `dist/schede/<id>/<versione>.json` with different content (§9.4). If the
+  digest changes, the number changes.
 
-Le demo inventate stanno sotto `1.0.0` (`0.x`): nessuno le cita.
+Invented demos sit below `1.0.0` (`0.x`): nobody cites them.
 
-La distinzione `kind` non è decorativa: l'ICCD pubblica i **modelli per il
-rilevamento sul campo** come documenti Word e le **normative di catalogo** come
-XSD, e un tool da campo bersaglia i primi. Vedi §7.
+The `kind` distinction is not decorative: the ICCD publishes its **models for
+field recording** as Word documents and its **catalogue standards** as
+XSD, and a field tool targets the former. See §7.
 
-### 1.2 · `identity` — l'identità è una COPPIA
+### 1.2 · `identity` — identity is a PAIR
 
 ```yaml
 identity:
   human_key:
-    fields: [localita, area, us]        # quali campi compongono l'ID umano
+    fields: [localita, area, us]        # which fields make up the human ID
     pattern: "US {us} — {area} ({localita})"
-    unit_field: us                      # QUALE dei tre È l'unità (v. sotto)
+    unit_field: us                      # WHICH of the three IS the unit (see below)
   uid:
-    policy: minted_by_creator           # unico valore ammesso
+    policy: minted_by_creator           # the only allowed value
     opaque: true
     display: on_request
-    derive_from_human_key: false        # deve essere false
+    derive_from_human_key: false        # must be false
   deduplication: by_human_key_in_context
 ```
 
-#### `unit_field` — quale campo È l'unità, e perché va DICHIARATO
+#### `unit_field` — which field IS the unit, and why it must be DECLARED
 
-`fields` dice quali caselle **compongono** il nome. Non dice quale di esse sia
-**l'unità** e quali il **contesto** che la disambigua, e sono due informazioni
-diverse: chiunque debba rispondere a «di che unità è questa scheda» ha bisogno
-della seconda — il modulo che la disegna, l'adattatore che la consegna a un
-grafo, il validatore di una scheda compilata.
+`fields` says which boxes **make up** the name. It does not say which of them is
+**the unit** and which are the **context** that disambiguates it, and those are two
+different pieces of information: anyone who has to answer “which unit is this sheet about” needs
+the second — the form that draws it, the adapter that hands it to a
+graph, the validator of a compiled sheet.
 
-**Obbligatorio quando la chiave ha più di un campo.** Con un campo solo non c'è
-niente da scegliere, dedurlo non è indovinare, e si può omettere. Con due o più,
-una definizione che tace non è servibile e il validatore la rifiuta.
+**Mandatory when the key has more than one field.** With a single field there is
+nothing to choose, deducing it is not guessing, and it can be omitted. With two or more,
+a definition that stays silent cannot be served and the validator rejects it.
 
-**Perché non si deduce.** Fino al 2026-09-23 un consumatore prendeva l'ULTIMO
-campo della chiave, e su tre definizioni su tre era giusto. Poi è arrivata la
-quarta:
+**Why it is not deduced.** Until 2026-09-23 a consumer took the LAST
+field of the key, and on three definitions out of three it was right. Then the
+fourth arrived:
 
 ```
-iccd-us-2021      [localita, area, us]      → us          (l'ultimo)
-es-ue-demo-2026   [yacimiento, contexto]    → contexto    (l'ultimo)
-hu-rl-demo-2026   [retegszam, lelohely]     → retegszam   (il PRIMO)
+iccd-us-2021      [localita, area, us]      → us          (the last)
+es-ue-demo-2026   [yacimiento, contexto]    → contexto    (the last)
+hu-rl-demo-2026   [retegszam, lelohely]     → retegszam   (the FIRST)
 ```
 
-In ungherese il determinante precede: «Réteg 12 · Castel Fontenova». Con la deduzione,
-una scheda di strato sarebbe stata indirizzata **col nome del sito** — e
-**nessuno se ne sarebbe accorto**, perché una chiave umana con il designatore
-sbagliato non solleva niente: produce un'etichetta che sembra giusta e un
-confronto che manca bersaglio. È il tipo di errore che si trova due anni dopo,
-guardando perché due scavi «hanno la stessa unità».
+In Hungarian the determiner comes first: “Réteg 12 · Castel Fontenova”. With deduction,
+a layer sheet would have been addressed **by the name of the site** — and
+**nobody would have noticed**, because a human key with the wrong designator
+raises nothing: it produces a label that looks right and a
+comparison that misses its target. It is the kind of error you find two years later,
+looking into why two excavations “have the same unit”.
 
-**Una regolarità osservata su tre casi non è una regola.** Il designatore si
-dichiara.
+**A regularity observed on three cases is not a rule.** The designator is
+declared.
 
 
 
-* l'**identificativo umano** (`US 3014`, `Contexto 13`) è quello che si scrive
-  sulla busta e si urla in trincea. Quali campi lo compongono **dipende dallo
-  standard**, e per questo lo dichiara la definizione, non il codice;
-* l'**UID** è opaco e lo **conia chi crea l'unità per primo**. Non si mostra se
-  non su richiesta.
+* the **human identifier** (`US 3014`, `Contexto 13`) is the one written
+  on the bag and shouted across the trench. Which fields make it up **depends on the
+  standard**, and that is why the definition declares it, not the code;
+* the **UID** is opaque and is **minted by whoever creates the unit first**. It is not shown
+  unless requested.
 
-`derive_from_human_key: true` è **rifiutato dal validatore**. La deduplicazione
-fra strumenti si fa riconoscendo un identificativo umano già presente nel
-contesto, non costringendo due strumenti a calcolare la stessa funzione. (Un
-singolo strumento può derivare i propri id in modo deterministico per ritrovare
-i propri nodi alla riconsegna: è un fatto suo, non una regola del formato.)
+`derive_from_human_key: true` is **rejected by the validator**. Deduplication
+across tools is done by recognising a human identifier already present in the
+context, not by forcing two tools to compute the same function. (A
+single tool may derive its own ids deterministically in order to find
+its own nodes again on re-delivery: that is its own business, not a rule of the format.)
 
-### 1.3 · `provenance` — la provenienza per campo
+### 1.3 · `provenance` — per-field provenance
 
 ```yaml
 provenance:
@@ -169,23 +169,23 @@ provenance:
   clock: s3dgraphy_crdt_field_clock
 ```
 
-Un campo dettato in trincea e ripulito da un modello è scritto da un **autore
-AI** e **può essere validato da un umano**: nei dati (`record.field_provenance`)
-ogni campo può portare `state`, `by`, `ts`, e la stampa lo segna con un bollo
-(`AI`, `AI✓`). Il meccanismo su cui questo si appoggia esiste già: `Clock(ts, by)`
-per campo del CRDT di s3Dgraphy.
+A field dictated in the trench and cleaned up by a model is written by an **AI
+author** and **can be validated by a human**: in the data (`record.field_provenance`)
+every field can carry `state`, `by`, `ts`, and the print marks it with a stamp
+(`AI`, `AI✓`). The mechanism this rests on already exists: the per-field `Clock(ts, by)`
+of the s3Dgraphy CRDT.
 
-Questo **non** è il meccanismo `aux_volatile` del contratto: quello risponde alla
-domanda della *residenza* (un dato che vive altrove), non a quella
-dell'*autorialità*.
+This is **not** the `aux_volatile` mechanism of the contract: that one answers the
+question of *residence* (a piece of data that lives elsewhere), not that
+of *authorship*.
 
 ### 1.4 · `paragraphs`
 
-Ogni campo appartiene a **esattamente un** paragrafo (il validatore lo verifica).
-I paragrafi sono la struttura logica della scheda — quella che il modulo usa per
-la navigazione e che la norma stampa in grassetto.
+Every field belongs to **exactly one** paragraph (the validator checks it).
+Paragraphs are the logical structure of the recording sheet — the one the form uses for
+navigation and that the standard prints in bold.
 
-### 1.5 · `fields` — la sostanza
+### 1.5 · `fields` — the substance
 
 ```yaml
 - id: copre
@@ -193,204 +193,204 @@ la navigazione e che la norma stampa in grassetto.
   type: unit_ref_list
   required: false
   repeatable: true
-  max_len: "0,25"           # come lo scrive l'ICCD, se lo scrive
+  max_len: "0,25"           # as the ICCD writes it, if it writes it
   help: {it: "…"}
   vocabulary: {scheme: <id>, binding: "VC_…", level_expr: "$1"}
-  options: [...]            # solo per type: choice
+  options: [...]            # only for type: choice
   provenance: {enabled: true, authors: [human, ai]}
-  graph: {...}              # vedi §2
-  note: "…"                 # divergenze e ragioni, dentro il dato
+  graph: {...}              # see §2
+  note: "…"                 # divergences and reasons, inside the data
 ```
 
-**Le etichette sono un dizionario per lingua, dentro la definizione.** Non
-esiste un file di traduzione generico e non esiste un fallback: chiedere una
-lingua che la definizione non dichiara è un errore, non una modalità degradata.
-È l'errore misurato nel generatore di pyarchinit-mini («Notifica» al posto di
-FLOTTAZIONE) e non si ripete per costruzione.
+**Labels are a dictionary per language, inside the definition.** There is
+no generic translation file and there is no fallback: asking for a
+language the definition does not declare is an error, not a degraded mode.
+It is the error measured in the pyarchinit-mini generator (“Notifica” in place of
+FLOTTAZIONE) and it cannot recur, by construction.
 
-#### Tipi di campo ammessi
+#### Allowed field types
 
-| tipo | valore nei dati | note |
+| type | value in the data | notes |
 |---|---|---|
-| `identifier` | stringa | l'ID umano o una sua parte |
-| `text` | stringa | una riga |
-| `longtext` | stringa | più righe |
-| `integer`, `decimal` | numero | |
+| `identifier` | string | the human ID or a part of it |
+| `text` | string | one line |
+| `longtext` | string | several lines |
+| `integer`, `decimal` | number | |
 | `date` | `YYYY-MM-DD` | |
-| `term` | `{concept: <uri>, label: <str>}` | **un concetto**, non una stringa (§3) |
-| `term_list` | lista di quanto sopra | |
-| `choice` | stringa = `options[].value` | caselle da barrare mutuamente esclusive |
-| `checkbox` | booleano | una casella sola |
-| `unit_ref_list` | lista di id di unità | le caselle dei rapporti (§2, verdetto `edge`) |
-| `record_ref_list` | lista di id di schede | rimandi ad altre schede (RA, TMA…) |
-| `resource_ref_list` | lista di nomi/riferimenti | piante, sezioni, fotografie |
-| `person_ref` | `{name, ref}` | una persona |
-| `actor_ref` | `{name, ref}` | un ente (§2, nota su `blocked_on`) |
-| `epoch_ref`, `activity_ref` | stringa o `{ref}` | periodo, fase, attività |
-| `quantity_list` | lista di `{qualia, label, value, unit}` | misure, quote, conteggi |
+| `term` | `{concept: <uri>, label: <str>}` | **a concept**, not a string (§3) |
+| `term_list` | list of the above | |
+| `choice` | string = `options[].value` | mutually exclusive tick boxes |
+| `checkbox` | boolean | a single box |
+| `unit_ref_list` | list of unit ids | the relationship boxes (§2, verdict `edge`) |
+| `record_ref_list` | list of sheet ids | references to other sheets (RA, TMA…) |
+| `resource_ref_list` | list of names/references | plans, sections, photographs |
+| `person_ref` | `{name, ref}` | a person |
+| `actor_ref` | `{name, ref}` | an institution (§2, note on `blocked_on`) |
+| `epoch_ref`, `activity_ref` | string or `{ref}` | period, phase, activity |
+| `quantity_list` | list of `{qualia, label, value, unit}` | measurements, elevations, counts |
 
-Regole verificate: `term`/`term_list` **devono** avere un `vocabulary`;
-`unit_ref_list` **deve** avere verdetto `edge`; `choice` **deve** avere `options`
-con etichette in tutte le lingue dichiarate.
+Checked rules: `term`/`term_list` **must** have a `vocabulary`;
+`unit_ref_list` **must** have verdict `edge`; `choice` **must** have `options`
+with labels in all declared languages.
 
-### 1.6 · `recorded_in` — dove si compila quel campo
+### 1.6 · `recorded_in` — where that field is filled in
 
 ```yaml
 - id: descrizione
   labels: {it: "DESCRIZIONE"}
   type: longtext
-  recorded_in: trench       # trench | lab | unknown — assente = unknown
+  recorded_in: trench       # trench | lab | unknown — absent = unknown
 ```
 
-Tre valori e nessun quarto:
+Three values and no fourth:
 
-| valore | vuol dire |
+| value | it means |
 |---|---|
-| `trench` | si compila **durante l'atto di scavo**, da chi ha le mani nella terra |
-| `lab` | si compila **dopo quell'atto** — laboratorio, ufficio, archivio |
-| `unknown` | **la definizione non l'ha detto** — e questo è il default |
+| `trench` | filled in **during the act of excavation**, by whoever has their hands in the soil |
+| `lab` | filled in **after that act** — laboratory, office, archive |
+| `unknown` | **the definition has not said** — and this is the default |
 
-**Perché questi nomi.** `recorded_in` nomina un **luogo e un momento**, non un
-rango: `priority` o `level` avrebbero detto che un campo da laboratorio conta
-meno, e non è vero — è scritto in un altro momento, spesso da un'altra persona.
-E `lab` è l'abbreviazione che la disciplina usa per «non mentre si scava»: non è
-un'affermazione su una stanza, e un numero di catalogo compilato in ufficio è
-`lab` come un'analisi al microscopio.
+**Why these names.** `recorded_in` names a **place and a moment**, not a
+rank: `priority` or `level` would have said that a lab field counts
+for less, and that is not true — it is written at another moment, often by another person.
+And `lab` is the shorthand the discipline uses for “not while digging”: it is not
+a statement about a room, and a catalogue number filled in at the office is
+`lab` just like an analysis under the microscope.
 
-**Il default è quello che non promette niente.** Un campo senza `recorded_in` è
-`unknown`, e un consumatore **non può** concluderne che sia da trincea. Se il
-formato tace, tace: chi monta una scheda telefono su `unknown` sta inventando
-una decisione che nessuno ha preso. Per la stessa ragione un valore che non è
-uno dei tre è un **errore** e non un ripiego silenzioso su `unknown`: una
-definizione che intendeva `trench` e ha scritto `Trench` sparirebbe dalla
-scheda telefono senza che niente, in nessun posto, dica perché.
+**The default is the one that promises nothing.** A field without `recorded_in` is
+`unknown`, and a consumer **cannot** conclude from it that it is a trench field. If the
+format is silent, it is silent: whoever builds a phone sheet on `unknown` is inventing
+a decision nobody took. For the same reason a value that is not
+one of the three is an **error** and not a silent fallback to `unknown`: a
+definition that meant `trench` and wrote `Trench` would vanish from the
+phone sheet without anything, anywhere, saying why.
 
-#### Come si decide — il criterio, e da dove viene
+#### How it is decided — the criterion, and where it comes from
 
-Il criterio **non è un'opinione di chi scrive questo formato**. Ha due basi, e
-ognuna è citabile riga per riga.
+The criterion **is not an opinion of whoever writes this format**. It has two bases, and
+each one is citable line by line.
 
-**Base A — le parole che una persona dice sul campo.** In
-`stratigraph-chatbot/app/tools.py` i sette intenti del field assistant sono nati
-dalla **scheda da campo di Elisa Dalla Longa**: un cartoncino in forex con i
-comandi vocali a colori, un artefatto di accessibilità che fa anche da specifica
-dei comandi. Il file lo dice così: *«i comandi che ci sono sopra SONO gli
-intenti, nelle parole che una persona dice con le mani nella terra.»* Quindi:
-**un campo che uno degli intenti nomina — come slot o dentro una frase
-riconosciuta — è un campo da trincea**, e la giustificazione è il numero di riga.
+**Basis A — the words a person says in the field.** In
+`stratigraph-chatbot/app/tools.py` the seven intents of the field assistant were born
+from **Elisa Dalla Longa's field sheet**: a forex card with the
+voice commands in colour, an accessibility artefact that doubles as the specification
+of the commands. The file puts it like this: *“the commands on it ARE the
+intents, in the words a person says with their hands in the soil.”* So:
+**a field that one of the intents names — as a slot or inside a recognised
+phrase — is a trench field**, and the justification is the line number.
 
-**Base B — le parole dello standard stesso.** Alcune schede lo dicono da sole.
-La US ICCD 2021 ha `RESPONSABILE COMPILAZIONE SUL CAMPO` e `DATA RILEVAMENTO
-SUL CAMPO` e, poche righe sotto, `DATA RIELABORAZIONE` e `RESPONSABILE
-RIELABORAZIONE`: **è lo standard che distingue il campo dalla rielaborazione,
-nelle proprie etichette.** Dove una scheda fa quella distinzione, è la sua a
-valere.
+**Basis B — the words of the standard itself.** Some recording sheets say it themselves.
+The ICCD 2021 US has `RESPONSABILE COMPILAZIONE SUL CAMPO` and `DATA RILEVAMENTO
+SUL CAMPO` and, a few lines below, `DATA RIELABORAZIONE` and `RESPONSABILE
+RIELABORAZIONE`: **it is the standard that distinguishes the field from the reworking,
+in its own labels.** Where a recording sheet makes that distinction, its own is the one that
+holds.
 
-Tutto il resto è `unknown`, e va lasciato `unknown`. Una manciata di campi
-incerti dichiarati vale più di cinquantanove decisi da chi non scava.
+Everything else is `unknown`, and must be left `unknown`. A handful of
+uncertain fields, declared, is worth more than fifty-nine decided by someone who does not dig.
 
-**Citare la base è obbligatorio quanto il marcatore.** Un criterio senza la sua
-provenienza diventa arbitrio alla prima discussione, quindi la definizione porta
-la giustificazione in `note` sul campo, o nella `notes` della scheda quando
-riguarda l'insieme.
+**Citing the basis is as mandatory as the marker.** A criterion without its
+provenance turns into arbitrariness at the first argument, so the definition carries
+the justification in `note` on the field, or in the sheet's `notes` when it
+concerns the whole.
 
-#### È PER STANDARD, e le due schede di questo repository lo dimostrano
+#### It is PER STANDARD, and the two recording sheets in this repository prove it
 
-Non esiste un elenco universale di «campi da campo», e il formato non deve
-suggerire che ci sia. La scheda spagnola avrà un altro sottoinsieme, deciso da
-chi la scrive.
+There is no universal list of “field fields”, and the format must not
+suggest there is. The Spanish recording sheet will have a different subset, decided by
+whoever writes it.
 
-Misurato sulle due definizioni qui dentro: **le dieci caselle dei rapporti della
-US ICCD 2021 sono `unknown`** — nessuno dei sette intenti le nomina — mentre le
-**cinque della `ficha ES demo` sono `trench`**, perché l'autore di quella scheda
-(demo) lo ha deciso. Stesso concetto, marcatore diverso, **e la differenza è la
-base, non il concetto**. Se le due schede finissero con lo stesso sottoinsieme,
-il marcatore starebbe descrivendo il nostro pregiudizio invece che lo standard.
+Measured on the two definitions in here: **the ten relationship boxes of the
+ICCD 2021 US are `unknown`** — none of the seven intents names them — while the
+**five of the `ficha ES demo` are `trench`**, because the author of that (demo)
+sheet decided so. Same concept, different marker, **and the difference is the
+basis, not the concept**. If the two sheets ended up with the same subset,
+the marker would be describing our prejudice instead of the standard.
 
-#### Le due domande a cui serve rispondere
+#### The two questions it needs to answer
 
-**Quali campi mostro sul telefono?** `template.recorded_in("trench")`. Il filtro
-sta nel modello e non nel consumatore, perché un consumatore che filtra da sé è
-una seconda lettura della stessa dichiarazione.
+**Which fields do I show on the phone?** `template.recorded_in("trench")`. The filter
+lives in the model and not in the consumer, because a consumer that filters on its own is
+a second reading of the same declaration.
 
-**Cosa succede a un campo obbligatorio che non è da trincea?** Una scheda
-compilata in trincea è **incompleta per costruzione**, e non è un errore: è il
-mestiere. `required` e `recorded_in` sono **ortogonali** di proposito, e insieme
-rendono la distinzione calcolabile per campo:
+**What happens to a mandatory field that is not a trench field?** A sheet
+compiled in the trench is **incomplete by construction**, and that is not an error: it is the
+craft. `required` and `recorded_in` are **orthogonal** on purpose, and together
+they make the distinction computable per field:
 
-| `required` | `recorded_in` | valore assente vuol dire |
+| `required` | `recorded_in` | an absent value means |
 |---|---|---|
-| `true` | `trench` | **manca qualcosa**: era compilabile sullo scavo |
-| `true` | `lab` | **incompleta per costruzione**, se la scheda è ancora di campo |
-| `true` | `unknown` | **non si può decidere** — ed è la risposta onesta |
+| `true` | `trench` | **something is missing**: it could have been filled in on the excavation |
+| `true` | `lab` | **incomplete by construction**, if the sheet is still a field one |
+| `true` | `unknown` | **it cannot be decided** — and that is the honest answer |
 
-La terza riga è il motivo per cui `unknown` deve essere il default e non un
-sinonimo di `lab`: «non lo so» e «si compila dopo» portano un validatore a due
-conclusioni diverse, e una delle due assolverebbe una scheda incompleta senza
-averne il diritto.
+The third row is the reason why `unknown` must be the default and not a
+synonym of `lab`: “I don't know” and “it is filled in later” lead a validator to two
+different conclusions, and one of the two would absolve an incomplete sheet without
+having the right to.
 
-**Quello che questo formato NON può dire, e va detto qui:** la definizione rende
-la distinzione calcolabile **per campo**, ma per applicarla serve sapere se
-*quella scheda compilata* è ancora di campo o già rielaborata — e quello è uno
-stato del **record**, non della definizione. Oggi un record (§5) non lo dichiara.
-Un validatore di schede compilate, quando esisterà, avrà bisogno di quella sola
-dichiarazione in più; il resto ce l'ha già.
+**What this format CANNOT say, and must be said here:** the definition makes
+the distinction computable **per field**, but applying it requires knowing whether
+*that compiled sheet* is still a field sheet or already reworked — and that is a
+state of the **record**, not of the definition. Today a record (§5) does not declare it.
+A validator of compiled sheets, when it exists, will need that one extra
+declaration; it already has the rest.
 
 ---
 
-## 2 · Il legame al grafo — i verdetti
+## 2 · The graph binding — the verdicts
 
-Ogni campo dichiara che cosa **significa**. I verdetti ammessi sono sette:
+Every field declares what it **means**. There are seven admissible verdicts:
 
-| verdetto | vuol dire | chiavi obbligatorie |
+| verdict | meaning | mandatory keys |
 |---|---|---|
-| `identity` | è (parte di) l'identificativo umano | il campo deve stare in `identity.human_key` |
-| `property` | è una proprietà di un nodo che esiste | `qualia` **oppure** `property_name` |
-| `node_type` | **decide** il tipo di nodo | `node_types: {termine: NodeType}` |
-| `node` | è un nodo a sé, raggiunto da un arco | `node_type` **e** `edge_type` |
-| `edge` | è una relazione verso un'altra unità | `edge_type` **e** `direction` |
-| `vocabulary` | è un termine controllato | il campo deve avere `vocabulary`; `qualia` opzionale |
-| `none` | presentazione pura: la scheda lo dice, il grafo no | — |
+| `identity` | it is (part of) the human identifier | the field must be in `identity.human_key` |
+| `property` | it is a property of a node that exists | `qualia` **or** `property_name` |
+| `node_type` | it **decides** the node type | `node_types: {termine: NodeType}` |
+| `node` | it is a node in its own right, reached by an edge | `node_type` **and** `edge_type` |
+| `edge` | it is a relation towards another unit | `edge_type` **and** `direction` |
+| `vocabulary` | it is a controlled term | the field must have `vocabulary`; `qualia` optional |
+| `none` | pure presentation: the sheet says it, the graph does not | — |
 
-Chiavi comuni: `attaches_to` (a che cosa si attacca, default `self` = l'unità
-descritta dalla scheda), `target` (che cosa sta all'altro capo di un arco),
+Common keys: `attaches_to` (what it attaches to, default `self` = the unit
+described by the recording sheet), `target` (what sits at the other end of an edge),
 `note`, `blocked_on`.
 
-### 2.1 · Il cancello: i nomi devono esistere
+### 2.1 · The gate: the names must exist
 
-`node_type`, `edge_type` e `qualia` sono verificati contro **quello che
-s3Dgraphy dichiara oggi** (datamodel dei nodi, datamodel delle connessioni, tipi
-di qualia). Un nome che non esiste è un **errore**, non un avviso.
+`node_type`, `edge_type` and `qualia` are checked against **what s3Dgraphy
+declares today** (node datamodel, connections datamodel, qualia types). A name
+that does not exist is an **error**, not a warning.
 
-Non è pedanteria: è il modo in cui «non aggiungere tipi al datamodel» si fa
-rispettare da sé. La crescita del datamodel è una decisione, non un effetto
-collaterale di una definizione scritta di notte.
+This is not pedantry: it is how “do not add types to the datamodel” enforces
+itself. Growing the datamodel is a decision, not a side effect of a definition
+written at night.
 
-**La fonte è una sola: `registry/s3dgraphy-snapshot.json`.** È committato, quindi
-è la stessa per chiunque; dichiara da dove è stato preso (commit di s3Dgraphy,
-`git_dirty`, data) e con quali versioni (datamodel dei nodi, delle connessioni,
-qualia, `em.ttl`). `validate` e `build` leggono **quello** — prima del
-2026-10-18 `validate` leggeva il working tree di s3Dgraphy quando c'era e lo
-snapshot quando no, e la stessa definizione era validata contro 1.6.19 su una
-macchina e 1.6.13 su un'altra.
+**There is one source only: `registry/s3dgraphy-snapshot.json`.** It is committed, so
+it is the same for everyone; it declares where it was taken from (s3Dgraphy commit,
+`git_dirty`, date) and with which versions (node datamodel, connections datamodel,
+qualia, `em.ttl`). `validate` and `build` read **that** — before
+2026-10-18 `validate` read the s3Dgraphy working tree when there was one and the
+snapshot when there was not, and the same definition was validated against 1.6.19 on one
+machine and 1.6.13 on another.
 
-Il working tree di s3Dgraphy (`$STRATIGRAPH_S3DGRAPHY_SRC`, o il checkout accanto
-a questo repository), quando c'è, serve a **una domanda sola**: lo snapshot è
-ancora ciò che s3Dgraphy dichiara? Il confronto è sul **contenuto**, non sul
-commit. Se divergono, il comando lo dice — con le differenze — e **si ferma**:
-non sceglie da solo. Rigenerare (`registry-snapshot`) è la decisione, e il diff
-di `registry/` ne è il documento. `--snapshot` salta il confronto, e la riga di
-provenienza lo dichiara.
+The s3Dgraphy working tree (`$STRATIGRAPH_S3DGRAPHY_SRC`, or the checkout next
+to this repository), when present, serves **one question only**: is the snapshot
+still what s3Dgraphy declares? The comparison is on **content**, not on the
+commit. If they diverge, the command says so — with the differences — and **stops**:
+it does not choose on its own. Regenerating (`registry-snapshot`) is the decision, and the diff
+of `registry/` is its record. `--snapshot` skips the comparison, and the provenance
+line declares it.
 
-Oltre ai nomi, lo snapshot tiene ciò che serve per dire che cosa **produrre**
-(§9): la grafia em.json di ogni classe (`DocumentNode` → `document`), il reverse
-e la simmetria di ogni arco, i predicati RDF che l'esportatore di s3Dgraphy
-emette per ciascuno (chiesti al suo codice, non riletti), i termini `em:`
-dichiarati in `em.ttl`, e l'insieme chiuso delle operazioni CRDT. **Se lo
-snapshot non c'è, non si valida niente**: non esiste una terza modalità in cui
-ogni tipo va bene.
+Beyond the names, the snapshot holds what is needed to say what to **produce**
+(§9): the em.json spelling of every class (`DocumentNode` → `document`), the reverse
+and the symmetry of every edge, the RDF predicates that the s3Dgraphy exporter
+emits for each (asked of its code, not re-read), the `em:` terms
+declared in `em.ttl`, and the closed set of CRDT operations. **If the
+snapshot is missing, nothing is validated**: there is no third mode in which
+every type is fine.
 
-### 2.2 · `blocked_on` — quando la scheda dice più del grafo
+### 2.2 · `blocked_on` — when the sheet says more than the graph
 
 ```yaml
 graph:
@@ -400,45 +400,45 @@ graph:
     reported: "EM_design_setaccio-US §1 — decisione di E.D."
 ```
 
-Un campo il cui legame onesto richiederebbe un tipo che s3Dgraphy non ha **non
-viene silenziosamente degradato a presentazione**: porta scritto che cosa
-servirebbe e a chi è stato riportato. Il verdetto deve essere `none` (finché la
-decisione non c'è, il campo non atterra da nessuna parte) e `validate` li conta
-e li stampa. Nella US 2021 sono tre: `ente_responsabile`, `ufficio_mic`
-(l'attore istituzionale) e `campionature` (`CRMsci S13_Sample`).
+A field whose honest binding would require a type that s3Dgraphy lacks **is not
+silently downgraded to presentation**: it carries in writing what would be
+needed and to whom it was reported. The verdict must be `none` (until the
+decision exists, the field lands nowhere) and `validate` counts them
+and prints them. In the US 2021 there are three: `ente_responsabile`, `ufficio_mic`
+(the institutional actor) and `campionature` (`CRMsci S13_Sample`).
 
-**La decisione che manca può essere di chi possiede lo standard**, non del
-datamodel: il vocabolario dei tipi di locus che solo l'IAA può dare
-(`dai-idaifield-layer-2026`, quattordici campi). La forma è la stessa — `none`
-più `blocked_on`, con la domanda in `needs` e il destinatario in `reported` —
-ed è la forma **che compila** di un verdetto non ancora deciso: `undecided`
-resta il marcatore della bozza (§7), che nessuna definizione porta.
+**The missing decision may belong to whoever owns the standard**, not to the
+datamodel: the vocabulary of locus types that only the IAA can provide
+(`dai-idaifield-layer-2026`, fourteen fields). The form is the same — `none`
+plus `blocked_on`, with the question in `needs` and the addressee in `reported` —
+and it is the form **that compiles** of a verdict not yet decided: `undecided`
+remains the draft marker (§7), which no definition carries.
 
-### 2.3 · Gli archi hanno UNA direzione canonica
+### 2.3 · Edges have ONE canonical direction
 
-La scheda ha due caselle per la stessa relazione (`COPRE` e `COPERTO DA`); il
-grafo ha un arco. Quindi:
+The recording sheet has two boxes for the same relation (`COPRE` and `COPERTO DA`); the
+graph has one edge. So:
 
 ```yaml
 - id: copre        → {verdict: edge, edge_type: overlies, direction: outgoing}
 - id: coperto_da   → {verdict: edge, edge_type: overlies, direction: incoming}
 ```
 
-`direction: incoming` significa: l'arco canonico va **dall'unità citata a
-questa**. `edge_type` deve essere una chiave del datamodel delle connessioni; i
-nomi inversi (`is_overlain_by`) **non** sono tipi di arco e non si scrivono qui.
+`direction: incoming` means: the canonical edge runs **from the cited unit to
+this one**. `edge_type` must be a key of the connections datamodel; the
+inverse names (`is_overlain_by`) are **not** edge types and are not written here.
 
-Misurato su s3Dgraphy 1.6.13: le dodici caselle della scheda US sono **sette
-tipi di arco** per **due direzioni** — `equals`, `bonded_to`, `abuts`,
-`overlies`, `cuts`, `fills` (tutti `AP11_has_physical_relation` con `type_tag`) e
+Measured on s3Dgraphy 1.6.13: the twelve boxes of the US sheet are **seven
+edge types** times **two directions** — `equals`, `bonded_to`, `abuts`,
+`overlies`, `cuts`, `fills` (all `AP11_has_physical_relation` with `type_tag`) and
 `is_after` (`P120_occurs_before` / `AP28`).
 
 ---
 
-## 3 · Il vocabolario, e l'allineamento fra paesi
+## 3 · The vocabulary, and alignment across countries
 
-Una definizione **riferisce** un thesaurus, non lo incorpora: un vocabolario ha
-un ciclo di vita e una licenza propri. Gli schemi stanno in
+A definition **references** a thesaurus, it does not embed it: a vocabulary has
+its own life cycle and its own licence. The schemes live in
 `vocabularies/schemes/<id>.yaml`:
 
 ```yaml
@@ -446,75 +446,75 @@ scheme:
   id: iccd-ra-materia
   authority: ICCD
   labels: {it: "…", en: "…"}
-  status: resolvable            # oppure: declared
-  origin: external              # oppure: originated
+  status: resolvable            # or: declared
+  origin: external              # or: originated
   uri: "http://dati.beniculturali.it/vocabularies/…"
   license: "CC BY-SA 3.0 IT"
   attribution: "ICCD — MiC; …"
   binding_thes_id: "VC_MTC_RA"
   resolve:
-    kind: external_skos_file    # oppure skos_file (dentro il repo)
+    kind: external_skos_file    # or skos_file (inside the repo)
     path: "strumenti-terminologici/…/….rdf"
 ```
 
-* `declared` = la norma prescrive un vocabolario controllato, ma non esiste (o
-  non è a portata) uno SKOS leggibile. È il caso dei modelli **da campo**
-  dell'ICCD: gli strumenti terminologici in RDF coprono le schede di catalogo.
-* `resolvable` = c'è un file SKOS. `skos_file` sta nel repository;
-  `external_skos_file` sta sul disco, sotto `$STRATIGRAPH_ICCD_STANDARDS`
+* `declared` = the standard prescribes a controlled vocabulary, but no readable SKOS
+  exists (or is within reach). This is the case of the ICCD **field** models:
+  the terminological tools in RDF cover the catalogue sheets.
+* `resolvable` = there is a SKOS file. `skos_file` lives in the repository;
+  `external_skos_file` lives on disk, under `$STRATIGRAPH_ICCD_STANDARDS`
   (default `~/Documents/GitHub/Standard-catalografici`).
-* `resolvable` con `resolve.kind: idai_field_valuelist` = **un valuelist di
-  iDAI.field**, letto da un checkout di `dainst/idai-field`
-  (`$STRATIGRAPH_IDAI_FIELD`, default `~/Documents/GitHub/idai-field`) **al
-  commit che lo schema nomina** (`resolve.commit`, `git show`, mai il working
-  tree), con `resolve.valuelist`. Le etichette sono quelle dei
-  `Language.default|projects.<lingua>.json` del DAI. iDAI.field non conia URI
-  per i valori: i concetti sono **localizzatori costruiti da noi**
-  (`…/Valuelists.json#<valuelist>/<valore>`, il valore percent-encoded), e lo
-  schema lo dichiara. Uno schema per valuelist (`idai-field-<valuelist>`), così
-  un widget offre i valori della casella e non gli altri novecento.
+* `resolvable` with `resolve.kind: idai_field_valuelist` = **an iDAI.field
+  valuelist**, read from a checkout of `dainst/idai-field`
+  (`$STRATIGRAPH_IDAI_FIELD`, default `~/Documents/GitHub/idai-field`) **at the
+  commit the scheme names** (`resolve.commit`, `git show`, never the working
+  tree), with `resolve.valuelist`. The labels are those of the DAI's
+  `Language.default|projects.<lingua>.json`. iDAI.field does not coin URIs
+  for values: the concepts are **locators we build ourselves**
+  (`…/Valuelists.json#<valuelist>/<valore>`, the value percent-encoded), and the
+  scheme declares it. One scheme per valuelist (`idai-field-<valuelist>`), so
+  a widget offers the values of the box and not the other nine hundred.
 
-`status` e `origin` rispondono a due domande diverse e non vanno confusi.
-`status` dice **posso risolverlo?**, `origin` dice **di chi è?**.
+`status` and `origin` answer two different questions and must not be confused.
+`status` says **can I resolve it?**, `origin` says **whose is it?**.
 
-* `origin: external` (default) = è di altri. Lo dichiariamo, lo risolviamo dove
-  sta, licenza e attribuzione sono loro, e un aggiornamento arriva da fuori.
-* `origin: originated` = lo manteniamo noi. Porta un namespace proprio, una
-  `version` propria e un dovere di citazione verso la fonte scientifica che
-  riformula. Il validatore **pretende** `version`, `license` e `uri`: un modulo
-  nostro senza una di quelle tre è incitabile, e un vocabolario incitabile non
-  serve a nessuno. I file stanno in `vocabularies/skos/`, non in `fixtures/` —
-  un modulo che scriviamo non è una prova.
+* `origin: external` (default) = it belongs to others. We declare it, we resolve it where
+  it lives, licence and attribution are theirs, and an update comes from outside.
+* `origin: originated` = we maintain it. It carries its own namespace, its own
+  `version` and a duty of citation towards the scientific source it
+  reformulates. The validator **demands** `version`, `license` and `uri`: one of our own
+  modules without one of those three is uncitable, and an uncitable vocabulary is
+  of no use to anyone. The files live in `vocabularies/skos/`, not in `fixtures/` —
+  a module we write is not a test.
 
-Il primo modulo originato è `em-taph-weathering`: i sei stadi di alterazione
-dell'osso di Behrensmeyer 1978, che sono lo standard *de facto* della tafonomia
-da mezzo secolo e **non hanno mai avuto un identificatore**. I concetti sono un
-fatto scientifico pubblicato; la prosa dell'autrice no, quindi le definizioni
-sono **riformulate e non trascritte**, con la fonte su ogni concetto.
+The first originated module is `em-taph-weathering`: the six bone weathering stages
+of Behrensmeyer 1978, which have been the *de facto* standard of taphonomy
+for half a century and **have never had an identifier**. The concepts are a
+published scientific fact; the author's prose is not, so the definitions
+are **reformulated, not transcribed**, with the source on every concept.
 
-Dopo di lui, i cinque moduli della scheda US (`em-us-definizione`,
+After it, the five modules of the US sheet (`em-us-definizione`,
 `em-us-consistenza`, `em-us-colore`, `em-us-stato-conservazione`,
-`em-us-affidabilita`): l'ICCD prescrive un termine controllato per quelle caselle
-e non ne ha pubblicato lo SKOS, quindi rispondono provvisoriamente per gli schemi
-dichiarati `iccd-us-*` (§3.2). Stessa regola: un termine senza fonte non entra, e
-la fonte è su ogni concetto (`dct:source`).
+`em-us-affidabilita`): the ICCD prescribes a controlled term for those boxes
+and has not published its SKOS, so they answer provisionally for the
+declared schemes `iccd-us-*` (§3.2). Same rule: a term without a source does not get in, and
+the source is on every concept (`dct:source`).
 
-Il prefisso `em-` e il namespace `w3id.org/extendedmatrix` non sono un dettaglio
-di naming. Un modulo `external` lo dichiariamo e basta, e se il progetto finisce
-non succede niente a nessuno. Un modulo **originato** porta URI che altri
-citeranno: se li appendiamo a StratiGraph, che ha una data di fine, nel 2029
-sono orfani. Stanno quindi su Extended Matrix, che è l'ecosistema che sopravvive
-al progetto; StratiGraph resta nell'`attribution`, che è il posto giusto per
-dire dove e quando il modulo è nato. La pubblicazione è a
-`extendedmatrix.org/vocab/<modulo>/`, con la sorgente qui: la copia pubblicata
-porta in testa il commit da cui viene, perché due copie di un vocabolario
-divergono e quella risolvibile che diventa vecchia è il guasto peggiore.
+The `em-` prefix and the `w3id.org/extendedmatrix` namespace are not a naming
+detail. An `external` module we simply declare, and if the project ends
+nothing happens to anyone. An **originated** module carries URIs that others
+will cite: if we hang them on StratiGraph, which has an end date, in 2029
+they are orphans. So they live on Extended Matrix, the ecosystem that outlives
+the project; StratiGraph stays in the `attribution`, which is the right place to
+say where and when the module was born. Publication is at
+`extendedmatrix.org/vocab/<modulo>/`, with the source here: the published copy
+carries at its head the commit it comes from, because two copies of a vocabulary
+diverge, and the resolvable one going stale is the worst failure.
 
-**Nel grafo finisce il CONCETTO** (l'URI SKOS), non l'etichetta: la risoluzione
-etichetta-in-lingua avviene alla lettura. Se scrivi la stringa italiana nel
-grafo, hai perso.
+**What ends up in the graph is the CONCEPT** (the SKOS URI), not the label: resolving
+the label in a language happens at read time. If you write the Italian string into the
+graph, you have lost.
 
-### 3.1 · L'allineamento
+### 3.1 · The alignment
 
 `vocabularies/alignments/*.yaml`:
 
@@ -528,81 +528,81 @@ alignments:
     note: "…"
 ```
 
-Ordine di risoluzione di un'etichetta: **schema proprio → schema provvisorio
-(§3.2) → allineamento (`exactMatch` prima) → etichetta portata dal dato** (dichiarata come tale nel
-tracciato `--explain-vocab`). Se nessuna delle tre strade dà una parola nella
-lingua richiesta, il renderer **rifiuta**.
+Resolution order for a label: **own scheme → provisional scheme
+(§3.2) → alignment (`exactMatch` first) → label carried by the data** (declared as such in the
+`--explain-vocab` trace). If none of the three routes yields a word in the
+requested language, the renderer **refuses**.
 
-Questo campo esiste da subito, anche vuoto, per una ragione sola: un campo di
-allineamento aggiunto fra un anno è un campo che nessuno riempirà.
+This field exists from day one, even empty, for one reason only: an alignment
+field added a year from now is a field nobody will fill.
 
-### 3.2 · `provisional` — la norma dichiarata e chi risponde per lei
+### 3.2 · `provisional` — the declared standard and who answers for it
 
-Uno schema `declared` dice che la norma prescrive un vocabolario che nessuno ha
-pubblicato. Finché resta così, il widget scrive una parola senza concetto, e una
-parola senza concetto non entra nel grafo (in s3Dgraphy `definition.rdf.label_only`
-è `null`: nessuna tripla) e non si allinea a niente. Il rimedio non è cambiare lo
-schema che il campo cita — **la norma è quella** — ma dire chi risponde per lei
-nel frattempo:
+A `declared` scheme says that the standard prescribes a vocabulary that nobody has
+published. As long as it stays that way, the widget writes a word without a concept, and a
+word without a concept does not enter the graph (in s3Dgraphy `definition.rdf.label_only`
+is `null`: no triple) and aligns to nothing. The remedy is not to change the
+scheme the field cites — **that is the standard** — but to say who answers for it
+in the meantime:
 
 ```yaml
 scheme:
   id: iccd-us-definizione
   status: declared
-  provisional: em-us-definizione     # un modulo NOSTRO, finché l'ICCD non pubblica
+  provisional: em-us-definizione     # one of OUR modules, until the ICCD publishes
 ```
 
-* il campo continua a citare `iccd-us-definizione`; chi legge risolve con
-  `em-us-definizione` (ordine: schema proprio → **provvisorio** → allineamento
-  del provvisorio → etichetta portata dal dato; il tracciato dice
+* the field keeps citing `iccd-us-definizione`; the reader resolves with
+  `em-us-definizione` (order: own scheme → **provisional** → alignment
+  of the provisional → label carried by the data; the trace says
   `provisional:<id>`);
-* la forma compilata (§9) lo scrive due volte, perché un consumatore non deve
-  rileggere gli schemi: `vocabulary: {scheme, provisional}` sul campo e sulla voce
-  della ricetta, e nella testata il provvisorio **subito dopo** lo schema che
-  sostituisce (`provisional_for`), così chi vendora i vocabolari della testata
-  vendora quello che risponde;
-* **regole verificate** al caricamento degli schemi, e quindi da `validate` e da
-  `build`: solo uno schema `declared` può avere `provisional` (uno `resolvable`
-  risponde già da sé, e ne avrebbe due); il provvisorio deve esistere, essere
-  `origin: originated` (è il nostro dovere di risposta, non quello di un terzo) e
-  `resolvable`; un provvisorio non ha a sua volta un provvisorio;
-* **il giorno che l'autorità pubblica**: `resolve:` sullo schema dichiarato, un
-  allineamento `em-us-*` → `iccd-us-*` in `alignments/` (`exactMatch` dove lo è),
-  e `provisional` si toglie. I concetti già scritti nei grafi restano validi: sono
-  URI nostri, e l'allineamento li porta dall'altra parte.
+* the compiled form (§9) writes it twice, because a consumer should not have to
+  re-read the schemes: `vocabulary: {scheme, provisional}` on the field and on the
+  recipe entry, and in the header the provisional **right after** the scheme it
+  replaces (`provisional_for`), so whoever vendors the header vocabularies
+  vendors the one that answers;
+* **rules checked** when the schemes are loaded, and therefore by `validate` and by
+  `build`: only a `declared` scheme can have `provisional` (a `resolvable` one
+  already answers for itself, and would have two); the provisional must exist, be
+  `origin: originated` (it is our duty to answer, not a third party's) and
+  `resolvable`; a provisional does not in turn have a provisional;
+* **the day the authority publishes**: `resolve:` on the declared scheme, an
+  `em-us-*` → `iccd-us-*` alignment in `alignments/` (`exactMatch` where it is one),
+  and `provisional` is removed. The concepts already written into graphs stay valid: they are
+  our URIs, and the alignment carries them to the other side.
 
-### 3.3 · `unverified_languages` — operativi subito, corretti dopo
+### 3.3 · `unverified_languages` — operational now, corrected later
 
-Un modulo originato serve in trincea in tutte le lingue dei partner prima che
-qualcuno abbia potuto verificarle. La regola di E.D. per le traduzioni è
-*operativi subito, correzione postuma dopo verifica*, e il formato la dice così:
+An originated module is needed in the trench in all the partners' languages before
+anyone has been able to verify them. E.D.'s rule for translations is
+*operational now, corrected afterwards once verified*, and the format states it like this:
 
 ```yaml
 scheme:
   id: em-us-colore
   origin: originated
-  unverified_languages: [en, ro, el, es, pl, he, de]   # etichette in bozza
+  unverified_languages: [en, ro, el, es, pl, he, de]   # draft labels
 ```
 
-* le etichette ci sono tutte (`skos:prefLabel` per lingua nel file SKOS) e si
-  risolvono come le altre: una bozza è operativa;
-* la lista dice quali lingue **nessuno che ne risponda** ha ancora verificato; la
-  verifica di una lingua la toglie dalla lista, ed è un commit leggibile;
-* solo un modulo `originated` la porta: uno schema esterno risponde delle proprie
-  etichette.
+* the labels are all there (`skos:prefLabel` per language in the SKOS file) and
+  resolve like the others: a draft is operational;
+* the list says which languages **nobody who answers for them** has verified yet; verifying
+  a language removes it from the list, and that is a readable commit;
+* only an `originated` module carries it: an external scheme answers for its own
+  labels.
 
-**Perché per schema × lingua e non per etichetta.** s3Dgraphy marca la verifica
-stringa per stringa (`validated_<lang>` in `datamodel_translations.json`), e lì
-funziona perché ogni stringa è già un oggetto JSON. In SKOS un'etichetta è un
-letterale: marcarla una per una vorrebbe dire reificarla (SKOS-XL), per moduli di
-dieci o quaranta concetti che una persona rivede comunque una lingua alla volta.
-Un meccanismo solo per tutta la suite: questo.
+**Why per scheme × language and not per label.** s3Dgraphy marks verification
+string by string (`validated_<lang>` in `datamodel_translations.json`), and there it
+works because every string is already a JSON object. In SKOS a label is a
+literal: marking them one by one would mean reifying them (SKOS-XL), for modules of
+ten or forty concepts that a person reviews one language at a time anyway.
+One mechanism for the whole suite: this one.
 
 ---
 
-## 4 · Il foglio — A4 fronte-retro
+## 4 · The sheet — double-sided A4
 
-Il foglio è una griglia di righe e celle, per facciata:
+The sheet is a grid of rows and cells, per side:
 
 ```yaml
 sheet:
@@ -612,67 +612,65 @@ sheet:
     - id: recto                 # recto | verso
       labels: {it: "fronte", en: "recto"}
       rows:
-        - h: 15                 # altezza in MILLIMETRI
+        - h: 15                 # height in MILLIMETRES
           cells:
-            - {field: ufficio_mic, w: 53.4}    # larghezza in % della riga
+            - {field: ufficio_mic, w: 53.4}    # width as % of the row
             - {field: identificativo_riferimento, w: 46.6}
 ```
 
-Una cella è una di tre cose:
+A cell is one of three things:
 
-* **un campo**: `{field: <id>, w: <%>, label: auto|none}`;
-* **un blocco**: una griglia annidata, con o senza etichetta propria —
+* **a field**: `{field: <id>, w: <%>, label: auto|none}`;
+* **a block**: a nested grid, with or without a label of its own —
   `{block: <id>, block_labels: {...}, rotated: true, w: <%>, rows: [...]}`.
-  `rotated: true` disegna l'etichetta in verticale su una striscia a sinistra,
-  come fa la scheda ICCD per SEQUENZA FISICA e SEQUENZA STRATIGRAFICA. I blocchi
-  si annidano, e questo dà la potenza dei `rowspan` senza avere i rowspan;
-* **uno spazio**: `{w: <%>}` senza `field` né `rows`.
+  `rotated: true` draws the label vertically on a strip to the left, as the ICCD
+  recording sheet does for SEQUENZA FISICA and SEQUENZA STRATIGRAFICA. Blocks nest,
+  and that gives the power of `rowspan` without having rowspans;
+* **a spacer**: `{w: <%>}` with neither `field` nor `rows`.
 
-Regole verificate:
+Rules checked:
 
-* la somma delle `w` di una riga non supera 100;
-* ogni campo ha **esattamente una** casella (un campo in cui nessuno può
-  scrivere non è un campo; due caselle per lo stesso campo sono un errore);
-* le facciate si chiamano `recto` e `verso`, e non si ripetono;
-* **l'altezza dichiarata di una facciata deve stare in una facciata A4** (297 mm
-  meno i margini meno 9 mm di intestazione corrente);
-* un'etichetta ruotata deve stare nell'altezza del suo blocco, altrimenti
-  stamperebbe tagliata.
+* the sum of the `w` in a row does not exceed 100;
+* every field has **exactly one** box (a field nobody can write in is not a field;
+  two boxes for the same field are an error);
+* the sides are called `recto` and `verso`, and do not repeat;
+* **the declared height of a side must fit on one A4 side** (297 mm minus the
+  margins minus 9 mm of running header);
+* a rotated label must fit within the height of its block, or it would print cut
+  off.
 
-L'altezza di una riga è un **minimo di progetto**, non una ghigliottina: se un
-dato è più alto della casella, la casella cresce e il comando dice quante pagine
-è costato (`2 side(s) → 3 page(s)`). Non si taglia mai ciò che qualcuno ha
-scritto.
+The height of a row is a **design minimum**, not a guillotine: if a value is taller
+than its box, the box grows and the command says how many pages it cost
+(`2 side(s) → 3 page(s)`). What someone has written is never cut.
 
-### 4.1 · Il foglio che non c'è
+### 4.1 · The sheet that is not there
 
-Uno standard che vive in una banca dati con un modulo — iDAI.field — **non ha
-un modello di carta**, e disegnarne uno vorrebbe dire inventarlo: sembrerebbe
-lo standard. Quindi `sheet` è **facoltativo**, e la sua assenza si dice
-tacendo la chiave:
+A standard that lives in a database with a form — iDAI.field — **has no paper
+model**, and drawing one would mean inventing it: it would look like the standard.
+So `sheet` is **optional**, and its absence is stated by leaving the key out:
 
-* nessuna chiave `sheet:` = nessun foglio (`Template.sheet` è `None`, il
-  compilato scrive `"sheet": null`, StratiField mostra i Campi e lo dice con
-  `view.sheet.none`). Non esiste il foglio vuoto: una chiave `sheet:` presente
-  è un foglio, con le sue regole, e deve collocare ogni campo;
-* senza foglio il validatore non conta le caselle — non ce ne sono — e i
-  paragrafi restano la struttura che il modulo usa;
-* `form` disegna una pagina liquida, un blocco per paragrafo; **`print`
-  rifiuta** (`declares no sheet: there is no paper model to print`).
+* no `sheet:` key = no sheet (`Template.sheet` is `None`, the compiled output writes
+  `"sheet": null`, StratiField shows the Fields and says so with `view.sheet.none`).
+  There is no empty sheet: a `sheet:` key that is present is a sheet, with its rules,
+  and it must place every field;
+* without a sheet the validator does not count boxes — there are none — and the
+  paragraphs remain the structure the form uses;
+* `form` draws a fluid page, one block per paragraph; **`print` refuses**
+  (`declares no sheet: there is no paper model to print`).
 
-Chi ha un foglio vero lo dichiara; chi ne costruisce uno per comodità — come la
-definizione IAA-DANA, e lo dice nel commento — lo dichiara anche lui, e se ne
-assume la geometria.
+Whoever has a real sheet declares it; whoever builds one for convenience — like the
+IAA-DANA definition, which says so in its comment — declares it too, and takes
+responsibility for its geometry.
 
 ---
 
-## 5 · I dati
+## 5 · The data
 
 ```yaml
 record:
   template: iccd-us-2021
-  template_version: "1.0.0"     # OBBLIGATORIO: quale versione della definizione ha seguito
-  uid: "01J9Z7QK…"              # opaco
+  template_version: "1.0.0"     # REQUIRED: which version of the definition it followed
+  uid: "01J9Z7QK…"              # opaque
   values:
     us: "3014"
     copre: ["3018", "3020"]
@@ -682,102 +680,101 @@ record:
     interpretazione: {state: human_validated, by: "ai:… · validato da …", ts: "…"}
 ```
 
-Il file dei dati non è la scheda: dichiara solo quale definizione segue, **e in
-quale versione** (`template` + `template_version`, la coppia che §9 usa per
-archiviare la forma compilata). Senza la versione, rileggere un record vorrebbe
-dire indovinare con quale ricetta è stato scritto. `print` e `form` rifiutano un
-record di un'altra definizione e segnalano una versione diversa.
+The data file is not the recording sheet: it only declares which definition it
+follows, **and in which version** (`template` + `template_version`, the pair that §9
+uses to archive the compiled form). Without the version, rereading a record would
+mean guessing which recipe it was written with. `print` and `form` refuse a record
+of another definition and flag a different version.
 
 ---
 
-## 6 · Che cosa NON c'è, per scelta
+## 6 · What is NOT there, by choice
 
-Nessun server, nessuna autenticazione, nessuna sessione, nessun database.
-Nessuna matrice di Harris (l'editor di grafo è EMStudio). Nessun GIS (è di
-pyarchinit). Nessun record di catalogo ministeriale (è del Catalog, come
-proiezione, più tardi). Nessun tipo nuovo in s3Dgraphy. Nessuna gestione di
-asset (esistono già: SHA-256 + IIIF). Nessuna identità, coda offline o ingresso
-in stanza (esistono già, provati nel field assistant).
+No server, no authentication, no session, no database. No Harris matrix (the graph
+editor is EMStudio). No GIS (that belongs to pyarchinit). No ministerial catalogue
+record (that belongs to the Catalog, as a projection, later). No new type in
+s3Dgraphy. No asset management (it already exists: SHA-256 + IIIF). No identity,
+offline queue or room entry (they already exist, proven in the field assistant).
 
 ---
 
-## 7 · La bozza estratta da un XSD
+## 7 · The draft extracted from an XSD
 
-`stratigraph-templates extract-xsd <file.xsd> --code SAS --version 3.00` legge
-una normativa di catalogo ICCD e **propone** una definizione: struttura,
-paragrafi, alias, obbligatorietà, ripetibilità, legami ai vocabolari.
+`stratigraph-templates extract-xsd <file.xsd> --code SAS --version 3.00` reads an
+ICCD catalogue standard and **proposes** a definition: structure, paragraphs,
+aliases, obligation, repeatability, bindings to vocabularies.
 
-Due cose non ci sono e non possono esserci:
+Two things are missing and cannot be there:
 
-* **il legame al grafo**: ogni campo esce con `verdict: undecided`, e il
-  validatore **rifiuta** una definizione che porti ancora quel marcatore. Lo
-  decide una persona;
-* **il foglio**: un XSD non dice dove sta una casella. La bozza mette una riga
-  per campo perché non si perda nulla, e lo dichiara.
+* **the graph binding**: every field comes out with `verdict: undecided`, and the
+  validator **refuses** a definition that still carries that marker. A person
+  decides it;
+* **the sheet**: an XSD does not say where a box goes. The draft puts one row per
+  field so that nothing is lost, and declares it.
 
-`stratigraph-templates validate --draft <bozza>` esegue **tutti** i controlli
-e conta i `undecided` invece di rifiutarli: una bozza è verde quando l'unica
-cosa che le manca è il giudizio di una persona.
+`stratigraph-templates validate --draft <bozza>` runs **all** the checks and counts
+the `undecided` instead of refusing them: a draft is green when the only thing it
+lacks is a person's judgement.
 
-### 7.1 · La bozza estratta da iDAI.field
+### 7.1 · The draft extracted from iDAI.field
 
 `stratigraph-templates extract-idai-field Layer [--project Milet] [--commit
-<sha>] [--schemes-out vocabularies/schemes]` legge la configurazione aperta di
-iDAI.field (DAI, Apache-2.0) **a un commit** di un checkout locale:
-`Library/Categories.json` e `Forms.json` (il form della categoria **fuso con
-quello del padre** come lo fonde iDAI.field, `mergeGroupsConfigurations`), le
-etichette di `Core/` e `Library/Language.<lingua>.json` e, se chiesta, la
-configurazione di progetto sopra (`Config-<P>.json`: campi nascosti, campi
-propri, valuelist ridefiniti). I campi e le relazioni del core si leggono da
-`built-in-configuration.ts` e `relation.ts`, non si ricordano.
+<sha>] [--schemes-out vocabularies/schemes]` reads the open configuration of
+iDAI.field (DAI, Apache-2.0) **at a commit** of a local checkout:
+`Library/Categories.json` and `Forms.json` (the category's form **merged with its
+parent's** the way iDAI.field merges it, `mergeGroupsConfigurations`), the labels
+from `Core/` and `Library/Language.<lingua>.json` and, if requested, the project
+configuration on top (`Config-<P>.json`: hidden fields, custom fields, redefined
+valuelists). The core fields and relations are read from
+`built-in-configuration.ts` and `relation.ts`, not remembered.
 
-Rispetto all'XSD sa **di più**, e propone di più: l'identificatore
-(`identity`), le relazioni che hanno UN arco canonico in s3Dgraphy (una
-tabella, nel codice, citata), le relazioni che iDAI.field deriva da sé e la
-geometria (`none`). Tutto il resto esce `undecided`. **Nessun foglio**: la bozza
-non ha `sheet` (§4.1). I valuelist diventano schemi `external` risolvibili
-(§3), uno per valuelist, scritti con `--schemes-out` se non ci sono.
+Compared with the XSD it knows **more**, and proposes more: the identifier
+(`identity`), the relations that have ONE canonical edge in s3Dgraphy (a table, in
+the code, cited), the relations iDAI.field derives on its own, and the geometry
+(`none`). Everything else comes out `undecided`. **No sheet**: the draft has no
+`sheet` (§4.1). The valuelists become resolvable `external` schemes (§3), one per
+valuelist, written with `--schemes-out` if they are not there.
 
-## 8 · Un export documento-per-record (iDAI.field)
+## 8 · A document-per-record export (iDAI.field)
 
-Il formato descrive una scheda, non un archivio, e i dati di un record sono un
-dizionario piatto di `field_id → valore`. Un export documento-per-record — come
-quello di `iDAI.field` / Field Desktop, che replica **a livello di documento**
-mentre qui si replica a livello di **campo** — entra come una sequenza di
-`record:`, uno per documento, purché il produttore dichiari a quale definizione
-ciascun documento risponde. Ciò che *non* entra automaticamente è la loro
-struttura di categorie configurabile: quella va scritta come una definizione
-(che è precisamente il lavoro che questo formato rende possibile fare una volta e
-non per ogni tool). Dal 2026-10-26 la prima c'è — `dai-idaifield-layer-2026`, la
-categoria `Layer` — e la bozza da cui nasce si estrae (§7.1).
+The format describes a recording sheet, not an archive, and the data of a record are
+a flat dictionary of `field_id → valore`. A document-per-record export — like the one
+from `iDAI.field` / Field Desktop, which replicates **at document level** while here
+replication happens at **field** level — comes in as a sequence of `record:`, one per
+document, provided the producer declares which definition each document answers to.
+What does *not* come in automatically is their configurable category structure: that
+has to be written as a definition (which is precisely the work this format makes it
+possible to do once and not for every tool). Since 2026-10-26 the first one exists —
+`dai-idaifield-layer-2026`, the `Layer` category — and the draft it grows from can be
+extracted (§7.1).
 
 ---
 
-## 9 · La forma compilata — `stratigraph-templates build`
+## 9 · The compiled form — `stratigraph-templates build`
 
-Una definizione in YAML è fatta per chi la scrive. Un programma che la usa —
-StratiField che disegna il modulo e, a scheda compilata, **manda le operazioni
-alla stanza** — ha bisogno di un'altra cosa: un file che prende e usa **senza
-leggerla in tempo reale**, che non cambia sotto i piedi, e che dice contro quale
-s3Dgraphy è stato verificato. `build` lo produce. È lo stesso patto del tema
-(`sync-brand.sh`) e dei datamodel (`sync-datamodels.sh`): **qui si produce,
-l'app vendora e committa la copia**.
+A definition in YAML is made for whoever writes it. A program that uses it —
+StratiField drawing the form and, once the sheet is compiled, **sending the
+operations to the room** — needs something else: a file it takes and uses **without
+reading the definition at run time**, that does not change under its feet, and that
+says which s3Dgraphy it was checked against. `build` produces it. It is the same pact
+as the theme (`sync-brand.sh`) and the datamodels (`sync-datamodels.sh`): **it is
+produced here, the app vendors and commits the copy**.
 
 ```
-dist/schede/index.json                   ogni definizione, ogni versione, digest, datamodel
-dist/schede/<id>/<versione>.json         la definizione compilata
+dist/schede/index.json                   every definition, every version, digest, datamodel
+dist/schede/<id>/<versione>.json         the compiled definition
 ```
 
-`dist/` è versionata nel repository, e un test verifica che corrisponda a ciò
-che le definizioni compilano oggi: una definizione modificata senza `build`
-lascerebbe alle app una copia vecchia che sembra ufficiale.
+`dist/` is versioned in the repository, and a test checks that it matches what the
+definitions compile to today: a definition modified without `build` would leave the
+apps an old copy that looks official.
 
-**Chi non compila.** `build` compila ciò che valida (§1–§4): una definizione
-senza `version`, o con un verdetto `undecided` (la bozza di un XSD, §7), non
-compila; le altre sì, e il comando esce con errore se anche una sola è stata
-rifiutata.
+**What does not compile.** `build` compiles what validates (§1–§4): a definition
+without `version`, or with an `undecided` verdict (the draft from an XSD, §7), does
+not compile; the others do, and the command exits with an error if even one was
+refused.
 
-### 9.1 · La testata
+### 9.1 · The header
 
 ```json
 "header": {
@@ -797,80 +794,78 @@ rifiutata.
 }
 ```
 
-`datamodel` è **letto dallo snapshot** (§2.1), che a sua volta l'ha letto dai file
-di configurazione di s3Dgraphy: nessuna versione è scritta a mano.
+`datamodel` is **read from the snapshot** (§2.1), which in turn read it from the
+s3Dgraphy configuration files: no version is written by hand.
 
-**Il digest** è SHA-256 sul JSON canonico (chiavi ordinate, nessuno spazio) del
-documento **senza** `digest`, `datamodel` e `compiled_by`. Quindi:
+**The digest** is SHA-256 over the canonical JSON (sorted keys, no whitespace) of the
+document **without** `digest`, `datamodel` and `compiled_by`. So:
 
-* ricompilare la stessa definizione dà lo stesso digest, byte per byte;
-* cambiare la definizione — anche solo un'etichetta — cambia il digest;
-* ricompilare contro un datamodel più recente **che non cambia la ricetta**
-  lascia il digest com'è (la riga `datamodel` si aggiorna); un datamodel che la
-  cambia — un arco rinominato, una grafia em.json diversa — cambia il digest,
-  perché la ricetta è dentro.
+* recompiling the same definition gives the same digest, byte for byte;
+* changing the definition — even just one label — changes the digest;
+* recompiling against a newer datamodel **that does not change the recipe** leaves
+  the digest as it is (the `datamodel` line is updated); a datamodel that does change
+  it — a renamed edge, a different em.json spelling — changes the digest, because the
+  recipe is inside.
 
-### 9.2 · La metà visiva
+### 9.2 · The visual half
 
-Ciò che serve a un modulo e a un foglio, così com'è nella definizione:
-`identity` (chiave umana, `pattern`, `unit_field` risolto, politica dell'UID),
-`provenance`, `paragraphs`, `fields` (tipo, `required`, `repeatable`,
-`recorded_in`, `max_len`, etichette **in tutte le lingue dichiarate**, `help`,
-`options`, `vocabulary`, `note`, e il paragrafo di appartenenza), `sheet` com'è,
-`notes`. Nessuna etichetta di ripiego: se una lingua è dichiarata, c'è.
+What a form and a sheet need, exactly as it is in the definition: `identity` (human
+key, `pattern`, resolved `unit_field`, UID policy), `provenance`, `paragraphs`,
+`fields` (type, `required`, `repeatable`, `recorded_in`, `max_len`, labels **in every
+declared language**, `help`, `options`, `vocabulary`, `note`, and the paragraph it
+belongs to), `sheet` as it is, `notes`. No fallback labels: if a language is
+declared, it is there.
 
-### 9.3 · La metà ontologica — la ricetta
+### 9.3 · The ontological half — the recipe
 
-Per ogni campo, **che cosa produrre nel vocabolario delle cinque operazioni CRDT
-di s3Dgraphy** — `add_node`, `update_field`, `remove_node`, `add_edge`,
-`remove_edge` (`s3dgraphy/crdt.py:66`, `api.make_op`) — e **nessun valore**.
-L'orchestratore è StratiGraph Server: chi entra in una stanza manda operazioni,
-la stanza le applica con `em.apply_op` e le rilancia. Una ricetta che dicesse
-«fai questo grafo» avrebbe bisogno di un applicatore accanto alla stanza, fuori
-dall'orchestrazione; questa dice **quali operazioni mandare**.
+For each field, **what to produce in the vocabulary of the five s3Dgraphy CRDT
+operations** — `add_node`, `update_field`, `remove_node`, `add_edge`, `remove_edge`
+(`s3dgraphy/crdt.py:66`, `api.make_op`) — and **no values**. The orchestrator is
+StratiGraph Server: whoever enters a room sends operations, the room applies them
+with `em.apply_op` and relays them. A recipe that said “build this graph” would need
+an applier next to the room, outside the orchestration; this one says **which
+operations to send**.
 
-Una voce ha dei **passi**; un passo `emit`-te un'operazione nella forma esatta
-del filo (quella di `crdt.apply_op_to_section`), con **riferimenti** dove andrà
-un valore:
+An entry has **steps**; a step `emit`s an operation in the exact wire form (that of
+`crdt.apply_op_to_section`), with **references** where a value will go:
 
-| riferimento | che cos'è |
+| reference | what it is |
 |---|---|
-| `$unit` | l'unità che la scheda descrive |
-| `$value`, `$value.<k>` | il valore del campo; una sua chiave (`$value.concept`, `$value.name`) |
-| `$item`, `$item.<k>` | un elemento di un valore lista (la voce ha `each: true`: i passi si ripetono per elemento) |
-| `$node` | il nodo che il passo trova o crea (vedi `resolve`) |
-| `$prop` | la PropertyNode che il passo conia |
-| `$field.<id>.prop` | la PropertyNode coniata dalla voce di un ALTRO campo (la voce ha `after: [<id>]`) |
-| `$anchor.<nome>` | qualcosa che la definizione nomina e non definisce (vedi `open`) |
+| `$unit` | the unit the recording sheet describes |
+| `$value`, `$value.<k>` | the value of the field; one of its keys (`$value.concept`, `$value.name`) |
+| `$item`, `$item.<k>` | an element of a list value (the entry has `each: true`: the steps repeat per element) |
+| `$node` | the node the step finds or creates (see `resolve`) |
+| `$prop` | the PropertyNode the step mints |
+| `$field.<id>.prop` | the PropertyNode minted by the entry of ANOTHER field (the entry has `after: [<id>]`) |
+| `$anchor.<nome>` | something the definition names and does not define (see `open`) |
 
-`when: created` su un passo = mandalo solo se `resolve` ha **creato** il nodo
-invece di trovarlo. Gli **id li conia chi crea** (`identity.uid.policy`): la
-ricetta non ne scrive mai uno. `name` e `description` di un nodo em.json sono
-stringhe: chi sostituisce un valore numerico lo scrive come testo.
+`when: created` on a step = send it only if `resolve` **created** the node instead of
+finding it. **Ids are minted by whoever creates** (`identity.uid.policy`): the recipe
+never writes one. `name` and `description` of an em.json node are strings: whoever
+substitutes a numeric value writes it as text.
 
-**L'unità** (`recipe.unit`) si trova per chiave umana nel contesto
-(`identity.deduplication`) o si crea con un `add_node`; il suo `node_type` lo
-decide il campo con verdetto `node_type`, se c'è. Si decide **alla creazione**:
-`update_field` indirizza solo `name`, `description` e `data.*`
-(`crdt.py:749`), quindi il tipo di un'unità esistente non si cambia con
-un'operazione di questo vocabolario — e la ricetta lo dice.
+**The unit** (`recipe.unit`) is found by human key in the context
+(`identity.deduplication`) or created with an `add_node`; its `node_type` is decided
+by the field with verdict `node_type`, if there is one. It is decided **at creation**:
+`update_field` addresses only `name`, `description` and `data.*` (`crdt.py:749`), so
+the type of an existing unit cannot be changed with an operation of this vocabulary —
+and the recipe says so.
 
-**Verdetto per verdetto:**
+**Verdict by verdict:**
 
-| verdetto | passi |
+| verdict | steps |
 |---|---|
-| `identity` | nessuno: il campo compone il nome dell'unità (`names: $unit`, `designator`) |
-| `none` | **nessuno**, dichiarato: `reason`, oppure `blocked_on` |
-| `node_type` | nessuno: `decides: unit.node_type` + la tabella valore → `{class, node_type}` |
-| `property`, nome nativo | `update_field {node_id: $unit, field: description, value: $value}` |
-| `property`, **elemento del nodo** | `update_field {node_id: $unit, field: <em_json dell'elemento>, value: $value}` — oggi `definition` → `data.definition` (v. sotto) |
-| `property`, altrimenti | `add_node` PropertyNode + `add_edge has_property` (v. sotto) |
-| `vocabulary` | come `property`, con `property_type` = la qualia e **valore = il concetto** (`$value.concept`, §3) |
-| `node` | `add_node` (`when: created`) del nodo trovato per nome/ref + `add_edge` nella direzione dichiarata |
-| `edge` | un `add_edge` per elemento; `outgoing` = `$unit → $item`, `incoming` = `$item → $unit` |
+| `identity` | none: the field composes the unit's name (`names: $unit`, `designator`) |
+| `none` | **none**, declared: `reason`, or `blocked_on` |
+| `node_type` | none: `decides: unit.node_type` + the value table → `{class, node_type}` |
+| `property`, native name | `update_field {node_id: $unit, field: description, value: $value}` |
+| `property`, **node element** | `update_field {node_id: $unit, field: <em_json dell'elemento>, value: $value}` — today `definition` → `data.definition` (see below) |
+| `property`, otherwise | `add_node` PropertyNode + `add_edge has_property` (see below) |
+| `vocabulary` | like `property`, with `property_type` = the qualia and **value = the concept** (`$value.concept`, §3) |
+| `node` | `add_node` (`when: created`) of the node found by name/ref + `add_edge` in the declared direction |
+| `edge` | one `add_edge` per element; `outgoing` = `$unit → $item`, `incoming` = `$item → $unit` |
 
-**La proprietà: la forma che s3Dgraphy e EMStudio usano davvero**, non una
-nuova:
+**The property: the form s3Dgraphy and EMStudio actually use**, not a new one:
 
 ```json
 {"op": "add_node", "node": {"id": "$prop", "node_type": "property", "name": "texture",
@@ -879,71 +874,68 @@ nuova:
 {"op": "add_edge", "edge_type": "has_property", "source": "$unit", "target": "$prop"}
 ```
 
-* PropertyNode con `name` = `data.property_type` = la qualia, appesa al soggetto
-  con `has_property` **dal soggetto alla proprietà**: EMStudio
-  `frontend/src/model.ts:924-938` e `frontend/src/em-data.ts:605-632`
+* PropertyNode with `name` = `data.property_type` = the qualia, attached to the
+  subject with `has_property` **from the subject to the property**: EMStudio
+  `frontend/src/model.ts:924-938` and `frontend/src/em-data.ts:605-632`
   (`addQualiaClaim`), s3Dgraphy `importer/base_importer.py:666-713`
-  (`_create_property`) e `importer/unified_xlsx_importer.py:612-639`
+  (`_create_property`) and `importer/unified_xlsx_importer.py:612-639`
   (`_handle_qualia`);
-* **il valore sta in `description`**: è la convenzione che EMStudio dichiara
-  (`model.ts:924`, «A PropertyNode's VALUE lives in `description`») e che
-  `_create_property` e `addQualiaClaim` seguono; `_handle_qualia` lo mette in
-  `value` (sollevato in `data.value` da `emjson_exporter.py:60`). Le due grafie
-  convivono oggi in s3Dgraphy; la ricetta segue quella dell'orchestrato;
-* **le unità di misura** in `data.units` (`_handle_qualia`, `:632`);
-* un `quantity_list` fa **una PropertyNode per riga**, con la qualia della riga
-  (`$item.qualia`, e `defaults` se il campo ne dichiara una);
-* `property_name: description` è il **campo del nodo** e diventa `update_field`
-  su `description` (audit B9: finiva in `data.<id della casella>`);
-* un `property_name` che il datamodel dei nodi dichiara come **elemento del
-  nodo** (`properties.<nome>` con `kind: node_element`, oggi solo
-  `StratigraphicNode.properties.definition`, nodi 1.6.9) **non** è una qualia:
-  diventa un `update_field` sul posto em.json che il datamodel nomina
-  (`data.definition`), con il valore **intero** (`$value` = `{concept, label}`),
-  e la voce porta `element: {name, declared_on, value, rdf}`. Nome, posto e RDF
-  vengono dallo snapshot (`node_elements`, formato 3), non da questo repository.
-  Il compilatore rifiuta un tipo di campo che non scrive quel valore (un
-  `concept` lo scrive solo un `term`) e un tipo di unità che non eredita
-  l'elemento (decisione di E.D., 2026-10-21: la DEFINIZIONE della US è un
-  elemento del nodo);
-* un `property_name` che non è una qualia registrata diventa comunque una
-  PropertyNode con quel `property_type` — è ciò che fa `_create_property` con i
-  nomi di colonna — e la voce lo dichiara (`registered_qualia: false`).
+* **the value lives in `description`**: this is the convention EMStudio declares
+  (`model.ts:924`, “A PropertyNode's VALUE lives in `description`”) and that
+  `_create_property` and `addQualiaClaim` follow; `_handle_qualia` puts it in `value`
+  (lifted into `data.value` by `emjson_exporter.py:60`). The two spellings coexist in
+  s3Dgraphy today; the recipe follows the orchestrated one;
+* **units of measure** in `data.units` (`_handle_qualia`, `:632`);
+* a `quantity_list` makes **one PropertyNode per row**, with the row's qualia
+  (`$item.qualia`, and `defaults` if the field declares one);
+* `property_name: description` is the **node's field** and becomes `update_field` on
+  `description` (audit B9: it used to end up in `data.<id della casella>`);
+* a `property_name` that the node datamodel declares as a **node element**
+  (`properties.<nome>` with `kind: node_element`, today only
+  `StratigraphicNode.properties.definition`, nodes 1.6.9) is **not** a qualia: it
+  becomes an `update_field` on the em.json location the datamodel names
+  (`data.definition`), with the **whole** value (`$value` = `{concept, label}`), and
+  the entry carries `element: {name, declared_on, value, rdf}`. Name, location and
+  RDF come from the snapshot (`node_elements`, format 3), not from this repository.
+  The compiler refuses a field type that does not write that value (a `concept` is
+  written only by a `term`) and a unit type that does not inherit the element
+  (decision by E.D., 2026-10-21: the DEFINITION of the US is a node element);
+* a `property_name` that is not a registered qualia still becomes a PropertyNode
+  with that `property_type` — it is what `_create_property` does with column
+  names — and the entry declares it (`registered_qualia: false`).
 
-**Un nodo raggiunto da un arco** si trova prima di crearsi: per nome
-(`LocationNodeGroup`, `EpochNode`…), per `ref` e poi nome (`person_ref`,
-`epoch_ref`), per **percorso** se è un riferimento a file (`resource_ref_list` →
-DocumentNode con `data.url` = il riferimento, deduplicato per percorso come
-`pyarchinit_importer._add_path_document`, `:797-808`). Un `longtext` è un
-**contenuto**, non un nome: il nodo si conia e lo porta in `description`.
+**A node reached by an edge** is looked up before it is created: by name
+(`LocationNodeGroup`, `EpochNode`…), by `ref` and then name (`person_ref`,
+`epoch_ref`), by **path** if it is a file reference (`resource_ref_list` →
+DocumentNode with `data.url` = the reference, deduplicated by path like
+`pyarchinit_importer._add_path_document`, `:797-808`). A `longtext` is **content**,
+not a name: the node is minted and carries it in `description`.
 
-**Gli archi.** `edge_type` è la chiave del datamodel delle connessioni, cioè la
-forma canonica; `edge` riporta ciò che s3Dgraphy dichiara di quell'arco —
-`symmetric`, `reverse`, e l'RDF **che l'esportatore di s3Dgraphy emette**
-(`exporter/rdf_exporter.py:199`, `:300`, `:332`: predicato, sottoproprietà AP11,
-estensione, `subject: target` quando la mappatura inverte). `same_rdf_as` elenca
-gli altri tipi d'arco che diventano **la stessa proprietà**: `bonded_to` ≡
-`is_bonded_to` (`em:bondedTo`), `equals` ≡ `is_physically_equal_to`
-(`em:physicallyEquals`, `em.ttl:528`, `:536`). Entrambi i nomi sono validi e la
-definizione ICCD usa le forme che il datamodel chiama canoniche; il compilato lo
-dice, così un consumatore non raddoppia le frecce.
+**The edges.** `edge_type` is the key of the connections datamodel, that is, the
+canonical form; `edge` reports what s3Dgraphy declares about that edge —
+`symmetric`, `reverse`, and the RDF **that the s3Dgraphy exporter emits**
+(`exporter/rdf_exporter.py:199`, `:300`, `:332`: predicate, AP11 subproperty,
+extension, `subject: target` when the mapping inverts). `same_rdf_as` lists the other
+edge types that become **the same property**: `bonded_to` ≡ `is_bonded_to`
+(`em:bondedTo`), `equals` ≡ `is_physically_equal_to` (`em:physicallyEquals`,
+`em.ttl:528`, `:536`). Both names are valid and the ICCD definition uses the forms
+the datamodel calls canonical; the compiled output says so, so a consumer does not
+double the arrows.
 
-**`open` — ciò che la definizione non decide, dichiarato.** La ricetta non
-inventa: dove la definizione tace, lo scrive. Oggi, per la US ICCD:
-`definizione` (verdetto `vocabulary` senza qualia né `property_name`: nessuna
-operazione finché non lo dice), e tre `attaches_to` che nominano atti non
-definiti (`excavation_activity`, `recording_act`, `revision_act` →
-`$anchor.<nome>`, in `recipe.anchors`). Per le due demo, anche il tipo dell'unità
-(nessun campo `node_type`). Il compilatore **rifiuta** invece ciò che è
-incoerente: un `attaches_to: property:<x>` che nessun campo produce, un nome che
-non ha grafia em.json, un arco deprecato o la cui proprietà RDF `em:` non è in
-`em.ttl`, un'operazione fuori dalle cinque.
+**`open` — what the definition does not decide, declared.** The recipe does not
+invent: where the definition is silent, it writes that down. Today, for the ICCD US:
+`definizione` (verdict `vocabulary` with neither qualia nor `property_name`: no
+operation until it says so), and three `attaches_to` that name undefined acts
+(`excavation_activity`, `recording_act`, `revision_act` → `$anchor.<nome>`, in
+`recipe.anchors`). For the two demos, the unit type too (no `node_type` field). The
+compiler instead **refuses** what is inconsistent: an `attaches_to: property:<x>`
+that no field produces, a name with no em.json spelling, an edge that is deprecated or
+whose `em:` RDF property is not in `em.ttl`, an operation outside the five.
 
-### 9.4 · Le versioni pubblicate non cambiano
+### 9.4 · Published versions do not change
 
-`build` rifiuta di riscrivere `dist/schede/<id>/<versione>.json` se il nuovo
-digest è diverso da quello già scritto: **alza `template.version`**. Lo stesso
-digest riscrive il file (la riga `datamodel` può essersi aggiornata) e lo dice.
-L'indice elenca ogni versione presente e la più recente (`latest`, ordine
-semver): le versioni vecchie restano, perché un record compilato con una di
-esse va riletto con quella.
+`build` refuses to rewrite `dist/schede/<id>/<versione>.json` if the new digest
+differs from the one already written: **bump `template.version`**. The same digest
+rewrites the file (the `datamodel` line may have been updated) and says so. The index
+lists every version present and the latest (`latest`, semver order): old versions
+stay, because a record compiled with one of them must be reread with that one.

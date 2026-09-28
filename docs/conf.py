@@ -1,15 +1,21 @@
-# Configurazione Sphinx — stratigraph-templates
+# Sphinx configuration — stratigraph-templates
 #
-# Rispecchia docs/conf.py di s3Dgraphy (tema, MyST, intersphinx, badge di
-# versione composto, LaTeX con XeLaTeX e DejaVu, generatore agganciato a
-# builder-inited) e ne cambia i nomi. Due differenze sono volute:
+# Mirrors s3Dgraphy's docs/conf.py (theme, MyST, intersphinx, composed version
+# badge, LaTeX with XeLaTeX and DejaVu, generator hooked on builder-inited) with
+# the names changed. Three differences are deliberate:
 #
-# * le pagine non contengono testo proprio: README.md, SPEC.md e LICENSING.md
-#   sono la fonte e vengono INCLUSI (docs/_tools/generate.py scrive gli
-#   involucri in docs/_generated/, calcolando le righe dai titoli);
-# * il generatore qui NON è best-effort: se non riesce, il build si ferma.
-#   Senza di lui mancherebbero le pagine, non solo le cifre, e un sito che si
-#   pubblica lo stesso con metà indice è peggio di un build rosso.
+# * the pages carry no text of their own: README.md, SPEC.md and LICENSING.md
+#   are the source and are INCLUDED (docs/_tools/generate.py writes the
+#   wrappers into docs/pages/, computing the lines from the headings);
+# * the generator is NOT best-effort here: if it fails, the build stops.
+#   Without it whole pages would be missing, not just figures, and a site that
+#   publishes anyway with half an index is worse than a red build;
+# * two languages. English is the source; Italian is a gettext translation in
+#   docs/locale/it/LC_MESSAGES/, paragraph by paragraph. On Read the Docs the
+#   Italian project is a translation of the English one and the build language
+#   comes from READTHEDOCS_LANGUAGE. A paragraph changed in English and not yet
+#   in the catalogue shows in English on the Italian site: stale, never wrong.
+#   `sphinx-build -b gettext` + `sphinx-intl update -l it` refresh the catalogue.
 
 import datetime
 import os
@@ -21,14 +27,14 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, os.path.join(ROOT, 'src'))
 sys.path.insert(0, os.path.join(HERE, '_tools'))
 
-# -- Progetto ---------------------------------------------------------------
+# -- Project ----------------------------------------------------------------
 project = 'stratigraph-templates'
 copyright = f'2026-{datetime.datetime.now().year}, Emanuel Demetrescu — CNR-ISPC'
 author = 'Emanuel Demetrescu'
 
 
 def _read_version():
-    """La versione del pacchetto, mai scritta qui: dal pacchetto o da pyproject."""
+    """The package version, never typed here: from the package or pyproject."""
     try:
         from importlib.metadata import version as _v
         return _v('stratigraph-templates')
@@ -37,14 +43,14 @@ def _read_version():
     with open(os.path.join(ROOT, 'pyproject.toml'), encoding='utf-8') as fh:
         m = re.search(r'^version\s*=\s*"([^"]+)"', fh.read(), re.MULTILINE)
     if not m:
-        raise RuntimeError('versione non trovata in pyproject.toml')
+        raise RuntimeError('version not found in pyproject.toml')
     return m.group(1)
 
 
 release = _read_version()
-version = '.'.join(release.split('.')[:2])   # la linea (0.1), come lo slug su RTD
+version = '.'.join(release.split('.')[:2])   # the line (0.1)
 
-# Il badge si compone dalla versione risolta, come in s3Dgraphy.
+# The badge is composed from the resolved version, as in s3Dgraphy.
 _badge_version = release.replace('-', '--')
 rst_prolog = """
 .. |version_badge| image:: https://img.shields.io/badge/version-%s-blue.svg
@@ -52,7 +58,7 @@ rst_prolog = """
 """ % (_badge_version, release)
 myst_substitutions = {'release': release}
 
-# -- Estensioni -------------------------------------------------------------
+# -- Extensions -------------------------------------------------------------
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.napoleon',
@@ -61,18 +67,29 @@ extensions = [
     'myst_parser',
 ]
 
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', '_tools']
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', '_tools', 'locale']
 master_doc = 'index'
 source_suffix = {'.rst': 'restructuredtext', '.md': 'markdown'}
-language = 'it'
+
+# -- Languages --------------------------------------------------------------
+language = os.environ.get('READTHEDOCS_LANGUAGE', os.environ.get('DOCS_LANGUAGE', 'en')).split('-')[0]
+locale_dirs = ['locale/']
+gettext_compact = False                     # one catalogue per page
+gettext_uuid = False
+gettext_location = False                    # line numbers would churn the catalogue
+# Code blocks are translated too (their comments are prose). They are EXTRACTED by
+# the gettext builder (language en), but not translated by Sphinx's own Locale
+# transform, which re-parses the msgstr as markup and, under MyST, turns a code
+# block into a stray "::". LiteralBlocksI18n below puts them back verbatim.
+gettext_additional_targets = ['literal-block'] if language == 'en' else []
 
 # -- MyST -------------------------------------------------------------------
 myst_enable_extensions = ['deflist', 'colon_fence', 'fieldlist', 'linkify', 'substitution']
 myst_heading_anchors = 3
 suppress_warnings = [
-    # le sezioni incluse cominciano spesso da un titolo di livello 2
+    # included sections often start with a level-2 heading
     'myst.header',
-    # un blocco ```json di SPEC.md usa «...» come segnaposto: si evidenzia lo stesso
+    # a ```json block in SPEC.md uses «...» as a placeholder: highlighted anyway
     'misc.highlighting_failure',
 ]
 
@@ -83,7 +100,7 @@ html_theme_options = {
     'collapse_navigation': True,
     'sticky_navigation': True,
     'navigation_depth': 4,
-    'includehidden': False,     # l'archivio resta fuori dal menu
+    'includehidden': False,     # the archive stays out of the menu
     'titles_only': False,
 }
 html_context = {
@@ -95,7 +112,7 @@ html_context = {
 }
 html_last_updated_fmt = '%d %b %Y'
 
-# -- LaTeX / PDF (come s3Dgraphy: il PDF è ciò che si deposita col DOI) -----
+# -- LaTeX / PDF (as in s3Dgraphy: the PDF is what gets deposited with the DOI)
 latex_engine = 'xelatex'
 latex_use_xindy = False
 latex_elements = {
@@ -123,7 +140,7 @@ latex_documents = [
 ]
 latex_show_urls = 'footnote'
 
-# -- autodoc (in fondo al menu: il repository è dati, non un'applicazione) --
+# -- autodoc (last in the menu: the repository is data, not an application) -
 autodoc_default_options = {'members': True, 'member-order': 'bysource', 'undoc-members': False}
 autodoc_mock_imports = ['weasyprint', 'rdflib']
 
@@ -131,44 +148,51 @@ intersphinx_mapping = {
     'python': ('https://docs.python.org/3/', None),
 }
 
-# -- Link fra i file di radice ----------------------------------------------
-# README, SPEC e LICENSING si citano fra loro come file ([SPEC.md](SPEC.md)),
-# con percorsi relativi al file che li contiene, non alla pagina che li include.
-# Prima che MyST risolva i link, questo passo li legge rispetto al file sorgente
-# del nodo: i tre file di radice portano alla pagina che li include, ogni altro
-# file del repository (templates/…, src/…) al file su GitHub.
-_ROOT_DOCS = {'SPEC.md': '_generated/spec', 'LICENSING.md': '_generated/licensing',
-              'README.md': '_generated/cose'}
+# -- Links between the root files -------------------------------------------
+# README, SPEC and LICENSING cite each other as files ([SPEC.md](SPEC.md)), with
+# paths relative to the file that contains them, not to the page that includes
+# it. Before MyST resolves the links, this pass re-reads them from the node's
+# source file: the three root files lead to the page that includes them, any
+# other file of the repository (templates/…, src/…) to the file on GitHub.
+_ROOT_DOCS = {'SPEC.md': 'pages/spec', 'LICENSING.md': 'pages/licensing',
+              'README.md': 'pages/what-it-is'}
 _GITHUB = 'https://github.com/StratiGraph-ECCCH/stratigraph-templates/blob/main/'
 
 from sphinx.transforms.post_transforms import SphinxPostTransform  # noqa: E402
 
 
 class RepoLinks(SphinxPostTransform):
-    default_priority = 8          # prima di MystReferenceResolver (9)
+    default_priority = 8          # before MystReferenceResolver (9)
 
     def run(self, **kwargs):
         from docutils import nodes
         from sphinx import addnodes
         for node in list(self.document.findall(addnodes.pending_xref)):
-            if node.get('reftype') != 'myst' or not node.source:
+            if node.get('reftype') != 'myst':
                 continue
-            # MyST 4 legge il link rispetto alla PAGINA e toglie il suffisso
-            # ('_generated/SPEC'); MyST 5 lascia il percorso com'è scritto nel
-            # file ('SPEC.md'). In entrambi i casi lo si rilegge dal FILE.
+            # MyST 4 reads the link against the PAGE and drops the suffix
+            # ('pages/SPEC'); MyST 5 leaves the path as written in the file
+            # ('SPEC.md'). Either way it is re-read from the FILE.
             raw = node.get('reftarget') or ''
-            here = os.path.dirname(node.source)
+            here = os.path.dirname(node.source or self.env.doc2path(self.env.docname))
             cands = [raw if os.path.isabs(raw) else os.path.join(here, raw)]
             if not os.path.isabs(raw):
                 back = os.path.relpath(raw, os.path.dirname(node.get('refdoc', '')) or '.')
                 cands.append(os.path.join(here, back))
+                # a paragraph translated through gettext no longer knows the file it
+                # came from (its source is the page), so a root-file name goes to the
+                # root file FIRST — on a case-insensitive disk 'pages/LICENSING.md'
+                # would otherwise match the generated page 'pages/licensing.md'
+                for name in (os.path.basename(raw), os.path.basename(raw) + '.md'):
+                    if name in _ROOT_DOCS:
+                        cands.insert(0, os.path.join(ROOT, name))
             path = next((os.path.normpath(c + sfx) for c in cands for sfx in ('', '.md')
                          if os.path.isfile(os.path.normpath(c + sfx))), None)
             if path is None or not path.startswith(ROOT + os.sep):
                 continue
             rel = os.path.relpath(path, ROOT).replace(os.sep, '/')
             if rel.startswith('docs/'):
-                continue          # un documento del sito: lo risolve MyST
+                continue          # a page of the site: MyST resolves it
             if rel in _ROOT_DOCS:
                 uri = self.app.builder.get_relative_uri(self.env.docname, _ROOT_DOCS[rel])
             else:
@@ -178,30 +202,57 @@ class RepoLinks(SphinxPostTransform):
             node.replace_self(ref)
 
 
-def _generate(app):
-    import generate
-    generate.main()
-    print('[stratigraph-templates] pagine generate in docs/_generated/')
-
-
-# «Edit on GitHub» su una pagina generata porterebbe a un file che non è nel
-# repository: lì il link punta al file di radice che la pagina include.
-_SOURCE_OF = {'cose': 'README.md', 'specie': 'README.md', 'uso': 'README.md',
-              'licenze-sintesi': 'README.md', 'licensing': 'LICENSING.md', 'spec': 'SPEC.md'}
+# "Edit on GitHub" on a generated page would lead to a file that is not in the
+# repository: there the link points to the root file the page includes.
+_SOURCE_OF = {'what-it-is': 'README.md', 'kinds': 'README.md', 'usage': 'README.md',
+              'licences-summary': 'README.md', 'licensing': 'LICENSING.md', 'spec': 'SPEC.md'}
 
 
 def _page_context(app, pagename, templatename, context, doctree):
-    if not pagename.startswith('_generated/'):
+    if not pagename.startswith('pages/'):
         return
     stem = pagename.split('/', 1)[1]
     src = _SOURCE_OF.get(stem) or ('SPEC.md' if stem.startswith('spec-') else None)
-    if src is None:               # i cataloghi: non c'è un file da modificare
+    if src is None:               # the catalogues: there is no file to edit
         context['display_github'] = False
         return
     context['meta'] = dict(context.get('meta') or {}, github_url=_GITHUB + src)
+
+
+from sphinx.transforms import SphinxTransform  # noqa: E402
+
+
+class LiteralBlocksI18n(SphinxTransform):
+    """Translate code blocks from the catalogue, verbatim, never re-parsed."""
+    default_priority = 21         # right after sphinx.transforms.i18n.Locale (20)
+
+    def apply(self, **kwargs):
+        if self.config.language == 'en':
+            return
+        from docutils import nodes
+        from sphinx.locale import init as init_locale
+        from sphinx.util.i18n import docname_to_domain
+        dirs = [os.path.join(self.env.srcdir, d) for d in self.config.locale_dirs]
+        domain = docname_to_domain(self.env.docname, self.config.gettext_compact)
+        catalog, found = init_locale(dirs, self.config.language, domain)
+        if not found:
+            return
+        for node in self.document.findall(nodes.literal_block):
+            src = node.rawsource or node.astext()
+            dst = catalog.gettext(src)
+            if dst and dst != src:
+                node[:] = [nodes.Text(dst)]
+                node.rawsource = dst
+
+
+def _generate(app):
+    import generate
+    generate.main(app.config.language)
+    print(f'[stratigraph-templates] pages generated in docs/pages/ ({app.config.language})')
 
 
 def setup(app):
     app.connect('builder-inited', _generate)
     app.connect('html-page-context', _page_context)
     app.add_post_transform(RepoLinks)
+    app.add_transform(LiteralBlocksI18n)

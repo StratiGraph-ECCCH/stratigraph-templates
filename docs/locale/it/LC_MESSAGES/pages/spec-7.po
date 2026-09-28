@@ -1,0 +1,47 @@
+# Italian translation of the stratigraph-templates documentation.
+# The English text (README.md, SPEC.md, LICENSING.md) is the source; each msgstr is
+# the original Italian of that paragraph. Refresh with sphinx-build -b gettext +
+# sphinx-intl update -l it.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: stratigraph-templates 0.1\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-09-28 12:44+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Emanuel Demetrescu <emanuel.demetrescu@cnr.it>\n"
+"Language: it\n"
+"Language-Team: Italian\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+msgid "7 · The draft extracted from an XSD"
+msgstr "7 · La bozza estratta da un XSD"
+
+msgid "`stratigraph-templates extract-xsd <file.xsd> --code SAS --version 3.00` reads an ICCD catalogue standard and **proposes** a definition: structure, paragraphs, aliases, obligation, repeatability, bindings to vocabularies."
+msgstr "`stratigraph-templates extract-xsd <file.xsd> --code SAS --version 3.00` legge una normativa di catalogo ICCD e **propone** una definizione: struttura, paragrafi, alias, obbligatorietà, ripetibilità, legami ai vocabolari."
+
+msgid "Two things are missing and cannot be there:"
+msgstr "Due cose non ci sono e non possono esserci:"
+
+msgid "**the graph binding**: every field comes out with `verdict: undecided`, and the validator **refuses** a definition that still carries that marker. A person decides it;"
+msgstr "**il legame al grafo**: ogni campo esce con `verdict: undecided`, e il validatore **rifiuta** una definizione che porti ancora quel marcatore. Lo decide una persona;"
+
+msgid "**the sheet**: an XSD does not say where a box goes. The draft puts one row per field so that nothing is lost, and declares it."
+msgstr "**il foglio**: un XSD non dice dove sta una casella. La bozza mette una riga per campo perché non si perda nulla, e lo dichiara."
+
+msgid "`stratigraph-templates validate --draft <bozza>` runs **all** the checks and counts the `undecided` instead of refusing them: a draft is green when the only thing it lacks is a person's judgement."
+msgstr "`stratigraph-templates validate --draft <bozza>` esegue **tutti** i controlli e conta i `undecided` invece di rifiutarli: una bozza è verde quando l'unica cosa che le manca è il giudizio di una persona."
+
+msgid "7.1 · The draft extracted from iDAI.field"
+msgstr "7.1 · La bozza estratta da iDAI.field"
+
+msgid "`stratigraph-templates extract-idai-field Layer [--project Milet] [--commit <sha>] [--schemes-out vocabularies/schemes]` reads the open configuration of iDAI.field (DAI, Apache-2.0) **at a commit** of a local checkout: `Library/Categories.json` and `Forms.json` (the category's form **merged with its parent's** the way iDAI.field merges it, `mergeGroupsConfigurations`), the labels from `Core/` and `Library/Language.<lingua>.json` and, if requested, the project configuration on top (`Config-<P>.json`: hidden fields, custom fields, redefined valuelists). The core fields and relations are read from `built-in-configuration.ts` and `relation.ts`, not remembered."
+msgstr "`stratigraph-templates extract-idai-field Layer [--project Milet] [--commit <sha>] [--schemes-out vocabularies/schemes]` legge la configurazione aperta di iDAI.field (DAI, Apache-2.0) **a un commit** di un checkout locale: `Library/Categories.json` e `Forms.json` (il form della categoria **fuso con quello del padre** come lo fonde iDAI.field, `mergeGroupsConfigurations`), le etichette di `Core/` e `Library/Language.<lingua>.json` e, se chiesta, la configurazione di progetto sopra (`Config-<P>.json`: campi nascosti, campi propri, valuelist ridefiniti). I campi e le relazioni del core si leggono da `built-in-configuration.ts` e `relation.ts`, non si ricordano."
+
+msgid "Compared with the XSD it knows **more**, and proposes more: the identifier (`identity`), the relations that have ONE canonical edge in s3Dgraphy (a table, in the code, cited), the relations iDAI.field derives on its own, and the geometry (`none`). Everything else comes out `undecided`. **No sheet**: the draft has no `sheet` (§4.1). The valuelists become resolvable `external` schemes (§3), one per valuelist, written with `--schemes-out` if they are not there."
+msgstr "Rispetto all'XSD sa **di più**, e propone di più: l'identificatore (`identity`), le relazioni che hanno UN arco canonico in s3Dgraphy (una tabella, nel codice, citata), le relazioni che iDAI.field deriva da sé e la geometria (`none`). Tutto il resto esce `undecided`. **Nessun foglio**: la bozza non ha `sheet` (§4.1). I valuelist diventano schemi `external` risolvibili (§3), uno per valuelist, scritti con `--schemes-out` se non ci sono."
+
