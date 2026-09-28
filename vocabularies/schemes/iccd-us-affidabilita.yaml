@@ -1,8 +1,13 @@
 # Il modello ICCD US 2021 prescrive un termine controllato per questa casella,
 # ma l'ICCD non ha (ancora) pubblicato uno schema SKOS per i modelli DA CAMPO:
 # gli strumenti terminologici in RDF coprono le schede di CATALOGO (RA, SI...).
-# Quindi lo schema è DICHIARATO e non risolvibile: chi compila porta il termine,
-# e il giorno in cui esce lo SKOS basta aggiungere 'resolve:' qui.
+# Quindi lo schema è DICHIARATO e non risolvibile.
+#
+# Finché l'ICCD non pubblica, risponde per lui un modulo NOSTRO (`provisional`,
+# SPEC §3.2, decisione di E.D. del 27 settembre 2026): i campi continuano a citare
+# questo schema — la norma è questa — e si risolvono con quello. Il giorno in cui
+# esce lo SKOS: `resolve:` qui, un allineamento em-us-* → iccd-us-* in
+# vocabularies/alignments/, e `provisional` si toglie.
 scheme:
   id: iccd-us-affidabilita
   authority: ICCD
@@ -12,4 +17,5 @@ scheme:
   status: declared
   license: "CC BY-SA 4.0 (modello US 2021) — vocabolario non ancora pubblicato in SKOS"
   attribution: "MiC — ICCD"
+  provisional: em-us-affidabilita
   note: "Nessun binding_thesId: quello lo danno le normative di catalogo in XSD, non i modelli da campo."

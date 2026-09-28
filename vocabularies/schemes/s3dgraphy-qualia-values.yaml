@@ -1,0 +1,20 @@
+# I valori controllati che le QUALIA di s3Dgraphy dichiarano in
+# em_qualia_types.json (`values`), per le qualia a cui la scheda US lega i
+# suoi termini: certainty_level (AFFIDABILITÀ) e conservation_state (STATO DI
+# CONSERVAZIONE).
+#
+# Non hanno URI: sono chiavi. L'identificatore di un valore è quindi
+# `<qualia>:<valore>` (`certainty_level:probable`), cioè esattamente ciò che
+# il datamodel scrive, e il giorno in cui s3Dgraphy conia URI per i suoi
+# valori gli allineamenti si riscrivono. Dichiarato come esterno: il datamodel
+# vive in s3Dgraphy, non qui.
+scheme:
+  id: s3dgraphy-qualia-values
+  authority: Extended Matrix
+  origin: external
+  labels:
+    en: "s3Dgraphy qualia value keys"
+    it: "Valori delle qualia di s3Dgraphy"
+  status: declared
+  license: "GPL-3.0-or-later (s3Dgraphy)"
+  attribution: "s3Dgraphy — JSON_config/em_qualia_types.json (qualia 1.6.1)"

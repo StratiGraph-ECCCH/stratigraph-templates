@@ -504,6 +504,42 @@ def _recipe(ctx: _Ctx) -> Dict[str, Any]:
 
 # ── the whole document ───────────────────────────────────────────────────────
 
+def _header_vocabularies(t: Template, vocab: Vocabularies) -> List[Dict[str, Any]]:
+    """The schemes the definition names, and — right after each declared one
+    that has it — its provisional stand-in (SPEC §3.2), so a consumer that
+    vendors the header's schemes vendors the one that actually answers."""
+    def entry(s, **extra):
+        return _drop_empty({
+            "id": s.id, "authority": s.authority, "status": s.status, "origin": s.origin,
+            "version": s.version, "uri": s.uri, "license": s.license,
+            "binding_thes_id": s.binding_thes_id, "fixture": s.fixture or None,
+            "provisional": s.provisional, "unverified_languages": s.unverified_languages,
+            **extra})
+    out, seen = [], set()
+    for sid in t.vocabularies:
+        s = vocab.schemes.get(sid)
+        if s is None or sid in seen:
+            continue
+        out.append(entry(s)); seen.add(sid)
+        if s.provisional and s.provisional not in seen:
+            out.append(entry(vocab.schemes[s.provisional], provisional_for=sid))
+            seen.add(s.provisional)
+    return out
+
+
+def _mark_provisional(visual: Dict[str, Any], recipe: Dict[str, Any], vocab: Vocabularies) -> None:
+    """A field keeps citing the NORM's scheme; where that scheme is declared and
+    has a stand-in, the field says which scheme to resolve with."""
+    for f in visual.get("fields") or []:
+        v = f.get("vocabulary")
+        if v and v.get("scheme") in vocab.schemes and vocab.schemes[v["scheme"]].provisional:
+            v["provisional"] = vocab.schemes[v["scheme"]].provisional
+    for entry in (recipe.get("fields") or {}).values():
+        sid = entry.get("scheme")
+        if sid in vocab.schemes and vocab.schemes[sid].provisional:
+            entry["provisional"] = vocab.schemes[sid].provisional
+
+
 def compile_template(t: Template, reg: Registry, vocab: Vocabularies) -> Dict[str, Any]:
     """The compiled form of one definition, or CompileError / ValidationError.
 
@@ -527,17 +563,15 @@ def compile_template(t: Template, reg: Registry, vocab: Vocabularies) -> Dict[st
         }),
         "source_language": t.source_language,
         "languages": list(t.languages),
-        "vocabularies": [_drop_empty({
-            "id": s.id, "authority": s.authority, "status": s.status, "origin": s.origin,
-            "version": s.version, "uri": s.uri, "license": s.license,
-            "binding_thes_id": s.binding_thes_id, "fixture": s.fixture or None,
-        }) for s in (vocab.schemes[sid] for sid in t.vocabularies if sid in vocab.schemes)],
+        "vocabularies": _header_vocabularies(t, vocab),
         "digest": "",
         "datamodel": reg.header(),
         "compiled_by": {"name": "stratigraph-templates", "version": __version__},
     }
+    visual = _visual(t)
+    _mark_provisional(visual, recipe, vocab)
     doc = {"format": FORMAT, "format_version": FORMAT_VERSION, "header": header,
-           "visual": _visual(t), "recipe": recipe}
+           "visual": visual, "recipe": recipe}
     header["digest"] = digest_of(doc)
     return doc
 

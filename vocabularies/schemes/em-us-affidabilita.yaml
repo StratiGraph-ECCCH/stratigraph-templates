@@ -1,0 +1,23 @@
+# Modulo ORIGINATO: risponde provvisoriamente per lo schema dichiarato
+# iccd-us-affidabilita (SPEC §3.2), finché l'ICCD non pubblica lo SKOS dei modelli da
+# campo. 4 concetti, ciascuno con la sua fonte; i termini vengono dal
+# thesaurus e dall'interfaccia di PyArchInit (l'ICCD non ne elenca, misurato).
+scheme:
+  id: em-us-affidabilita
+  authority: Extended Matrix
+  origin: originated
+  version: "0.1.0"
+  labels:
+    it: "Affidabilità stratigrafica (scheda US, Extended Matrix)"
+    en: "Stratigraphic reliability (US sheet, Extended Matrix)"
+  status: resolvable
+  uri: "https://w3id.org/extendedmatrix/vocab/us-affidabilita/"
+  license: "CC BY 4.0"
+  attribution: "Extended Matrix — vocabolario originato in StratiGraph WP3 (CNR-ISPC). Termini raccolti dal thesaurus e dall'interfaccia di PyArchInit (progetto pyArchInit, GPL); definizioni riformulate, non trascritte."
+  resolve:
+    kind: skos_file
+    path: "vocabularies/skos/us-affidabilita.ttl"
+  # SPEC §3.3: etichette operative subito, corrette dopo la verifica. Solo `it`
+  # viene dalle fonti; le altre sono state scritte con il modulo (in parte dai
+  # dati d'esempio multilingue di PyArchInit) e nessuno le ha ancora verificate.
+  unverified_languages: [en, ro, el, es, pl, he, de]

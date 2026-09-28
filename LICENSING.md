@@ -52,6 +52,16 @@ ha mai avuto un identificatore: esiste solo come tabella dentro un articolo del
 `trampling`; PACTOLS e TAABA hanno `tafonomia` con zero *narrower*. La disciplina
 è nominata ovunque, i suoi oggetti da nessuna parte.
 
+Poi i cinque moduli della scheda US — **`em-us-definizione`**,
+**`em-us-consistenza`**, **`em-us-colore`**, **`em-us-stato-conservazione`**,
+**`em-us-affidabilita`** — **CC BY 4.0**, come il primo. I termini vengono dal
+thesaurus e dall'interfaccia di PyArchInit (GPL): sono parole singole o sintagmi
+del mestiere («strato di crollo», «friabile»), non un'espressione protetta, e la
+fonte è citata su ogni concetto; le definizioni sono nostre. Non derivano dalla
+norma ICCD — il modello US 2021 non elenca termini (misurato sul `.doc`) — e per
+questo non ereditano la CC BY-SA 4.0 che vale per `templates/`. I valuelist di
+iDAI.field (Apache-2.0) servono solo agli allineamenti e non sono copiati.
+
 ⚠ Il redirect **`w3id.org/extendedmatrix` non è ancora registrato**: gli URI sono
 stabili nell'intenzione ma non risolvibili. Va chiesto prima di pubblicare.
 

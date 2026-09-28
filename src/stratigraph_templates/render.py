@@ -77,10 +77,12 @@ def _term_label(
         if trace is not None:
             trace.add(field.id, concept, label, via)
         return label
-    # a bare string in a controlled box: allowed, but recorded as what it is
+    # a word with no concept (`{label}`: what the widget writes for a term outside
+    # the list) or a bare string in a controlled box: allowed, recorded as what it is
+    word = str(item.get("label") or "") if isinstance(item, dict) else str(item)
     if trace is not None:
-        trace.add(field.id, "", str(item), "uncontrolled_string")
-    return str(item)
+        trace.add(field.id, "", word, "uncontrolled_string")
+    return word
 
 
 def _value_html(

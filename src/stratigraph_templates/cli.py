@@ -209,6 +209,8 @@ def cmd_vocab(args) -> int:
             if s.fixture:
                 marks.append("FIXTURE")
             marks.append(s.status)
+            if s.provisional:
+                marks.append(f"provisional → {s.provisional}")
             print(f"{sid:28s} [{', '.join(marks)}] {s.authority} — {s.license or 'licence not stated'}")
         print(f"{len(vocab.alignments)} alignment(s) declared")
         return 0

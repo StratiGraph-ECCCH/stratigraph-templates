@@ -1,0 +1,76 @@
+# State of preservation of the unit — modulo SKOS originato in Extended Matrix (em-us-stato-conservazione, 0.1.0).
+#
+# PERCHE' ESISTE. Il modello ICCD US 2021 prescrive per la casella «STATO DI CONSERVAZIONE»
+# un termine controllato, ma l'ICCD non ha pubblicato lo SKOS dei modelli da
+# campo (misurato: il .doc del modello porta solo le etichette delle caselle).
+# Questo modulo risponde PROVVISORIAMENTE per lo schema dichiarato
+# iccd-us-stato-conservazione: il giorno che l'ICCD pubblica, si aggiunge un allineamento e basta.
+#
+# DA DOVE VENGONO I TERMINI. Ogni concetto porta la sua fonte (dct:source):
+# nessun termine entra senza. Le definizioni sono RIFORMULATE, non trascritte.
+# Le etichette it vengono dalle fonti; le altre lingue sono BOZZE non
+# verificate (unverified_languages nello scheme yaml): operative subito,
+# corrette dopo la verifica.
+#
+# NAMESPACE. w3id.org/extendedmatrix, come em-taph-weathering (SPEC §3).
+
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix em:   <https://w3id.org/extendedmatrix/vocab/us-stato-conservazione/> .
+
+em: a skos:ConceptScheme ;
+    dct:title "State of preservation of the unit"@en ;
+    dct:title "Stato di conservazione dell'unità"@it ;
+    dct:description "An ordinal scale for the STATE OF PRESERVATION box of a stratigraphic unit sheet (ICCD US 2021), gathered from the PyArchInit thesaurus."@en ;
+    dct:creator "Extended Matrix — StratiGraph WP3, CNR-ISPC" ;
+    dct:license <https://creativecommons.org/licenses/by/4.0/> ;
+    owl:versionInfo "0.1.0" ;
+    dct:issued "2026-09-27"^^<http://www.w3.org/2001/XMLSchema#date> ;
+    skos:editorialNote "Labels in en, ro, el, es, pl, he, de are drafts, not yet verified by a person who answers for them."@en ;
+    skos:hasTopConcept em:ottimo, em:buono, em:discreto, em:insufficiente, em:scarso, em:pessimo .
+
+em:ottimo a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "ottimo"@it ; skos:prefLabel "excellent"@en ; skos:prefLabel "excelent"@ro ; skos:prefLabel "εξαιρετική"@el ; skos:prefLabel "excelente"@es ; skos:prefLabel "bardzo dobry"@pl ; skos:prefLabel "מצוין"@he ; skos:prefLabel "ausgezeichnet"@de ;
+    skos:definition "L'unità è conservata per intero o quasi, senza alterazioni che ne compromettano la lettura."@it ;
+    skos:definition "The unit survives whole or nearly so, with no alteration that impairs its reading."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 2.12 «Stato di conservazione» (pyarchinit_thesaurus_sigle, nome_tabella US): sigle CO, Ott «Ottimo»" ;
+    dct:source "PyArchInit, gui/ui/US_USM.ui (voci predefinite della casella): comboBox_conservazione «Ottimo»" .
+
+em:buono a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "buono"@it ; skos:prefLabel "good"@en ; skos:prefLabel "bun"@ro ; skos:prefLabel "καλή"@el ; skos:prefLabel "bueno"@es ; skos:prefLabel "dobry"@pl ; skos:prefLabel "טוב"@he ; skos:prefLabel "gut"@de ;
+    skos:definition "L'unità è conservata in gran parte; le lacune non ne impediscono la lettura."@it ;
+    skos:definition "The unit survives for the most part; its gaps do not prevent its reading."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 2.12 «Stato di conservazione» (pyarchinit_thesaurus_sigle, nome_tabella US): sigle CB, Buo «Buono»" ;
+    dct:source "PyArchInit, tabs/codici_it.html (tabella dei codici del thesaurus, colonna Esempi): 2.12, esempio «Buono»" ;
+    dct:source "PyArchInit, gui/ui/US_USM.ui (voci predefinite della casella): comboBox_conservazione «Buono»" .
+
+em:discreto a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "discreto"@it ; skos:prefLabel "fair"@en ; skos:prefLabel "acceptabil"@ro ; skos:prefLabel "μέτρια"@el ; skos:prefLabel "regular"@es ; skos:prefLabel "dostateczny"@pl ; skos:prefLabel "סביר"@he ; skos:prefLabel "mäßig"@de ;
+    skos:definition "L'unità è conservata in parte; la lettura è possibile ma lacunosa."@it ;
+    skos:definition "The unit survives in part; it can be read, with gaps."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 2.12 «Stato di conservazione» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla Dis «Discreto»" ;
+    dct:source "PyArchInit, tabs/codici_it.html (tabella dei codici del thesaurus, colonna Esempi): 2.12, esempio «Discreto»" ;
+    dct:source "PyArchInit, gui/ui/US_USM.ui (voci predefinite della casella): comboBox_conservazione «Discreto»" .
+
+em:insufficiente a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "insufficiente"@it ; skos:prefLabel "insufficient"@en ; skos:prefLabel "insuficient"@ro ; skos:prefLabel "ανεπαρκής"@el ; skos:prefLabel "insuficiente"@es ; skos:prefLabel "niedostateczny"@pl ; skos:prefLabel "בלתי מספק"@he ; skos:prefLabel "unzureichend"@de ;
+    skos:definition "L'unità è conservata troppo poco per una lettura completa."@it ;
+    skos:definition "Too little of the unit survives for a complete reading."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 2.12 «Stato di conservazione» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla Ins «Insufficiente»" ;
+    dct:source "PyArchInit, gui/ui/US_USM.ui (voci predefinite della casella): comboBox_conservazione «Insufficiente»" .
+
+em:scarso a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "scarso"@it ; skos:prefLabel "poor"@en ; skos:prefLabel "slab"@ro ; skos:prefLabel "κακή"@el ; skos:prefLabel "escaso"@es ; skos:prefLabel "słaby"@pl ; skos:prefLabel "ירוד"@he ; skos:prefLabel "schlecht"@de ;
+    skos:definition "Dell'unità restano poche parti; la lettura è in larga misura congetturale."@it ;
+    skos:definition "Few parts of the unit remain; its reading is largely conjectural."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 2.12 «Stato di conservazione» (pyarchinit_thesaurus_sigle, nome_tabella US): sigle CS, Sca «Scarso»" ;
+    dct:source "PyArchInit, tabs/codici_it.html (tabella dei codici del thesaurus, colonna Esempi): 2.12, esempio «Scarso»" ;
+    dct:source "PyArchInit, gui/ui/US_USM.ui (voci predefinite della casella): comboBox_conservazione «Scarso»" .
+
+em:pessimo a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "pessimo"@it ; skos:prefLabel "very poor"@en ; skos:prefLabel "foarte slab"@ro ; skos:prefLabel "πολύ κακή"@el ; skos:prefLabel "pésimo"@es ; skos:prefLabel "bardzo zły"@pl ; skos:prefLabel "גרוע מאוד"@he ; skos:prefLabel "sehr schlecht"@de ;
+    skos:definition "Dell'unità restano tracce minime."@it ;
+    skos:definition "Only minimal traces of the unit remain."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 2.12 «Stato di conservazione» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla CP «Pessimo»" ;
+    dct:source "PyArchInit, tabs/codici_it.html (tabella dei codici del thesaurus, colonna Esempi): 2.12, esempio «Pessimo»" .

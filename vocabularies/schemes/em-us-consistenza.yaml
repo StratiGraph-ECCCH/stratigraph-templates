@@ -1,0 +1,23 @@
+# Modulo ORIGINATO: risponde provvisoriamente per lo schema dichiarato
+# iccd-us-consistenza (SPEC §3.2), finché l'ICCD non pubblica lo SKOS dei modelli da
+# campo. 6 concetti, ciascuno con la sua fonte; i termini vengono dal
+# thesaurus e dall'interfaccia di PyArchInit (l'ICCD non ne elenca, misurato).
+scheme:
+  id: em-us-consistenza
+  authority: Extended Matrix
+  origin: originated
+  version: "0.1.0"
+  labels:
+    it: "Consistenza del deposito (scheda US, Extended Matrix)"
+    en: "Consistency of the deposit (US sheet, Extended Matrix)"
+  status: resolvable
+  uri: "https://w3id.org/extendedmatrix/vocab/us-consistenza/"
+  license: "CC BY 4.0"
+  attribution: "Extended Matrix — vocabolario originato in StratiGraph WP3 (CNR-ISPC). Termini raccolti dal thesaurus e dall'interfaccia di PyArchInit (progetto pyArchInit, GPL); definizioni riformulate, non trascritte."
+  resolve:
+    kind: skos_file
+    path: "vocabularies/skos/us-consistenza.ttl"
+  # SPEC §3.3: etichette operative subito, corrette dopo la verifica. Solo `it`
+  # viene dalle fonti; le altre sono state scritte con il modulo (in parte dai
+  # dati d'esempio multilingue di PyArchInit) e nessuno le ha ancora verificate.
+  unverified_languages: [en, ro, el, es, pl, he, de]

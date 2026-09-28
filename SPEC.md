@@ -475,6 +475,13 @@ da mezzo secolo e **non hanno mai avuto un identificatore**. I concetti sono un
 fatto scientifico pubblicato; la prosa dell'autrice no, quindi le definizioni
 sono **riformulate e non trascritte**, con la fonte su ogni concetto.
 
+Dopo di lui, i cinque moduli della scheda US (`em-us-definizione`,
+`em-us-consistenza`, `em-us-colore`, `em-us-stato-conservazione`,
+`em-us-affidabilita`): l'ICCD prescrive un termine controllato per quelle caselle
+e non ne ha pubblicato lo SKOS, quindi rispondono provvisoriamente per gli schemi
+dichiarati `iccd-us-*` (§3.2). Stessa regola: un termine senza fonte non entra, e
+la fonte è su ogni concetto (`dct:source`).
+
 Il prefisso `em-` e il namespace `w3id.org/extendedmatrix` non sono un dettaglio
 di naming. Un modulo `external` lo dichiariamo e basta, e se il progetto finisce
 non succede niente a nessuno. Un modulo **originato** porta URI che altri
@@ -504,13 +511,75 @@ alignments:
     note: "…"
 ```
 
-Ordine di risoluzione di un'etichetta: **schema proprio → allineamento
-(`exactMatch` prima) → etichetta portata dal dato** (dichiarata come tale nel
+Ordine di risoluzione di un'etichetta: **schema proprio → schema provvisorio
+(§3.2) → allineamento (`exactMatch` prima) → etichetta portata dal dato** (dichiarata come tale nel
 tracciato `--explain-vocab`). Se nessuna delle tre strade dà una parola nella
 lingua richiesta, il renderer **rifiuta**.
 
 Questo campo esiste da subito, anche vuoto, per una ragione sola: un campo di
 allineamento aggiunto fra un anno è un campo che nessuno riempirà.
+
+### 3.2 · `provisional` — la norma dichiarata e chi risponde per lei
+
+Uno schema `declared` dice che la norma prescrive un vocabolario che nessuno ha
+pubblicato. Finché resta così, il widget scrive una parola senza concetto, e una
+parola senza concetto non entra nel grafo (in s3Dgraphy `definition.rdf.label_only`
+è `null`: nessuna tripla) e non si allinea a niente. Il rimedio non è cambiare lo
+schema che il campo cita — **la norma è quella** — ma dire chi risponde per lei
+nel frattempo:
+
+```yaml
+scheme:
+  id: iccd-us-definizione
+  status: declared
+  provisional: em-us-definizione     # un modulo NOSTRO, finché l'ICCD non pubblica
+```
+
+* il campo continua a citare `iccd-us-definizione`; chi legge risolve con
+  `em-us-definizione` (ordine: schema proprio → **provvisorio** → allineamento
+  del provvisorio → etichetta portata dal dato; il tracciato dice
+  `provisional:<id>`);
+* la forma compilata (§9) lo scrive due volte, perché un consumatore non deve
+  rileggere gli schemi: `vocabulary: {scheme, provisional}` sul campo e sulla voce
+  della ricetta, e nella testata il provvisorio **subito dopo** lo schema che
+  sostituisce (`provisional_for`), così chi vendora i vocabolari della testata
+  vendora quello che risponde;
+* **regole verificate** al caricamento degli schemi, e quindi da `validate` e da
+  `build`: solo uno schema `declared` può avere `provisional` (uno `resolvable`
+  risponde già da sé, e ne avrebbe due); il provvisorio deve esistere, essere
+  `origin: originated` (è il nostro dovere di risposta, non quello di un terzo) e
+  `resolvable`; un provvisorio non ha a sua volta un provvisorio;
+* **il giorno che l'autorità pubblica**: `resolve:` sullo schema dichiarato, un
+  allineamento `em-us-*` → `iccd-us-*` in `alignments/` (`exactMatch` dove lo è),
+  e `provisional` si toglie. I concetti già scritti nei grafi restano validi: sono
+  URI nostri, e l'allineamento li porta dall'altra parte.
+
+### 3.3 · `unverified_languages` — operativi subito, corretti dopo
+
+Un modulo originato serve in trincea in tutte le lingue dei partner prima che
+qualcuno abbia potuto verificarle. La regola di E.D. per le traduzioni è
+*operativi subito, correzione postuma dopo verifica*, e il formato la dice così:
+
+```yaml
+scheme:
+  id: em-us-colore
+  origin: originated
+  unverified_languages: [en, ro, el, es, pl, he, de]   # etichette in bozza
+```
+
+* le etichette ci sono tutte (`skos:prefLabel` per lingua nel file SKOS) e si
+  risolvono come le altre: una bozza è operativa;
+* la lista dice quali lingue **nessuno che ne risponda** ha ancora verificato; la
+  verifica di una lingua la toglie dalla lista, ed è un commit leggibile;
+* solo un modulo `originated` la porta: uno schema esterno risponde delle proprie
+  etichette.
+
+**Perché per schema × lingua e non per etichetta.** s3Dgraphy marca la verifica
+stringa per stringa (`validated_<lang>` in `datamodel_translations.json`), e lì
+funziona perché ogni stringa è già un oggetto JSON. In SKOS un'etichetta è un
+letterale: marcarla una per una vorrebbe dire reificarla (SKOS-XL), per moduli di
+dieci o quaranta concetti che una persona rivede comunque una lingua alla volta.
+Un meccanismo solo per tutta la suite: questo.
 
 ---
 

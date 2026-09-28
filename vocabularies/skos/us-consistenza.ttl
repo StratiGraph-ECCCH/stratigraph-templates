@@ -1,0 +1,79 @@
+# Consistency of the deposit — modulo SKOS originato in Extended Matrix (em-us-consistenza, 0.1.0).
+#
+# PERCHE' ESISTE. Il modello ICCD US 2021 prescrive per la casella «CONSISTENZA»
+# un termine controllato, ma l'ICCD non ha pubblicato lo SKOS dei modelli da
+# campo (misurato: il .doc del modello porta solo le etichette delle caselle).
+# Questo modulo risponde PROVVISORIAMENTE per lo schema dichiarato
+# iccd-us-consistenza: il giorno che l'ICCD pubblica, si aggiunge un allineamento e basta.
+#
+# DA DOVE VENGONO I TERMINI. Ogni concetto porta la sua fonte (dct:source):
+# nessun termine entra senza. Le definizioni sono RIFORMULATE, non trascritte.
+# Le etichette it vengono dalle fonti; le altre lingue sono BOZZE non
+# verificate (unverified_languages nello scheme yaml): operative subito,
+# corrette dopo la verifica.
+#
+# NAMESPACE. w3id.org/extendedmatrix, come em-taph-weathering (SPEC §3).
+
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix em:   <https://w3id.org/extendedmatrix/vocab/us-consistenza/> .
+
+em: a skos:ConceptScheme ;
+    dct:title "Consistency of the deposit"@en ;
+    dct:title "Consistenza del deposito"@it ;
+    dct:description "Terms for the CONSISTENCY box of a stratigraphic unit sheet (ICCD US 2021), gathered from the PyArchInit thesaurus."@en ;
+    dct:creator "Extended Matrix — StratiGraph WP3, CNR-ISPC" ;
+    dct:license <https://creativecommons.org/licenses/by/4.0/> ;
+    owl:versionInfo "0.1.0" ;
+    dct:issued "2026-09-27"^^<http://www.w3.org/2001/XMLSchema#date> ;
+    skos:editorialNote "Labels in en, ro, el, es, pl, he, de are drafts, not yet verified by a person who answers for them."@en ;
+    skos:hasTopConcept em:compatta, em:friabile, em:plastica, em:sciolta, em:sabbiosa, em:argillosa .
+
+em:compatta a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "compatta"@it ; skos:prefLabel "compact"@en ; skos:prefLabel "compactă"@ro ; skos:prefLabel "συμπαγής"@el ; skos:prefLabel "compacta"@es ; skos:prefLabel "zwarta"@pl ; skos:prefLabel "דחוסה"@he ; skos:prefLabel "kompakt"@de ;
+    skos:definition "Il deposito oppone resistenza allo scavo e non si disgrega alla pressione delle dita."@it ;
+    skos:definition "The deposit resists digging and does not break up under finger pressure."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 2.11 «Consistenza» (pyarchinit_thesaurus_sigle, nome_tabella US): sigle COM, Com «Compatta»" ;
+    dct:source "PyArchInit, tabs/codici_it.html (tabella dei codici del thesaurus, colonna Esempi): 2.11 e 2.7, esempio «Compatta»" ;
+    dct:source "PyArchInit, gui/ui/US_USM.ui (voci predefinite della casella): comboBox_consistenza «Compatta»" ;
+    dct:source "PyArchInit, docs/tutorials/it/03_scheda_us.md: «Compatta»" .
+
+em:friabile a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "friabile"@it ; skos:prefLabel "friable"@en ; skos:prefLabel "friabilă"@ro ; skos:prefLabel "εύθρυπτη"@el ; skos:prefLabel "friable"@es ; skos:prefLabel "krucha"@pl ; skos:prefLabel "פריכה"@he ; skos:prefLabel "bröckelig"@de ;
+    skos:definition "Il deposito si sbriciola facilmente in frammenti alla pressione."@it ;
+    skos:definition "The deposit crumbles easily into fragments under pressure."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 2.11 «Consistenza» (pyarchinit_thesaurus_sigle, nome_tabella US): sigle FRI, Fri «Friabile»" ;
+    dct:source "PyArchInit, tabs/codici_it.html (tabella dei codici del thesaurus, colonna Esempi): 2.11, esempio «Friabile»" ;
+    dct:source "PyArchInit, gui/ui/US_USM.ui (voci predefinite della casella): comboBox_consistenza «Friabile»" ;
+    dct:source "PyArchInit, docs/tutorials/it/03_scheda_us.md: «Friabile»" .
+
+em:plastica a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "plastica"@it ; skos:prefLabel "plastic"@en ; skos:prefLabel "plastică"@ro ; skos:prefLabel "πλαστική"@el ; skos:prefLabel "plástica"@es ; skos:prefLabel "plastyczna"@pl ; skos:prefLabel "פלסטית"@he ; skos:prefLabel "plastisch"@de ;
+    skos:definition "Il deposito si deforma senza rompersi e conserva la forma che gli si dà."@it ;
+    skos:definition "The deposit deforms without breaking and keeps the shape it is given."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 2.11 «Consistenza» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla Pla «Plastica»" ;
+    dct:source "PyArchInit, tabs/codici_it.html (tabella dei codici del thesaurus, colonna Esempi): 2.11, esempio «Plastica»" .
+
+em:sciolta a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "sciolta"@it ; skos:prefLabel "loose"@en ; skos:prefLabel "afânată"@ro ; skos:prefLabel "χαλαρή"@el ; skos:prefLabel "suelta"@es ; skos:prefLabel "luźna"@pl ; skos:prefLabel "תפוחה"@he ; skos:prefLabel "locker"@de ;
+    skos:definition "Il deposito è privo di coesione: le particelle si separano da sole."@it ;
+    skos:definition "The deposit has no cohesion: its particles come apart on their own."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 2.11 «Consistenza» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla Sci «Sciolta»" ;
+    dct:source "PyArchInit, tabs/codici_it.html (tabella dei codici del thesaurus, colonna Esempi): 2.11 e 2.7, esempio «Sciolta»" .
+
+em:sabbiosa a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "sabbiosa"@it ; skos:prefLabel "sandy"@en ; skos:prefLabel "nisipoasă"@ro ; skos:prefLabel "αμμώδης"@el ; skos:prefLabel "arenosa"@es ; skos:prefLabel "piaszczysta"@pl ; skos:prefLabel "חולית"@he ; skos:prefLabel "sandig"@de ;
+    skos:definition "Il deposito ha la consistenza granulosa della sabbia."@it ;
+    skos:definition "The deposit has the grainy consistency of sand."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 2.11 «Consistenza» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla sab «Sabbiosa»" ;
+    dct:source "PyArchInit, tabs/codici_it.html (tabella dei codici del thesaurus, colonna Esempi): 2.7, esempio «Sabbiosa»" ;
+    dct:source "PyArchInit, gui/ui/US_USM.ui (voci predefinite della casella): comboBox_consistenza «Sabbiosa»" ;
+    dct:source "PyArchInit, docs/tutorials/it/03_scheda_us.md: «Sabbiosa»" .
+
+em:argillosa a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "argillosa"@it ; skos:prefLabel "clayey"@en ; skos:prefLabel "argiloasă"@ro ; skos:prefLabel "αργιλώδης"@el ; skos:prefLabel "arcillosa"@es ; skos:prefLabel "gliniasta"@pl ; skos:prefLabel "חרסיתית"@he ; skos:prefLabel "tonig"@de ;
+    skos:definition "Il deposito ha la consistenza coesa e untuosa dell'argilla."@it ;
+    skos:definition "The deposit has the cohesive, greasy consistency of clay."@en ;
+    dct:source "PyArchInit, gui/ui/US_USM.ui (voci predefinite della casella): comboBox_consistenza «Argillosa»" ;
+    dct:source "PyArchInit, docs/tutorials/it/03_scheda_us.md: «Argillosa»" .

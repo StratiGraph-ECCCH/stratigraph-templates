@@ -1,0 +1,53 @@
+# Termini della scheda US ↔ i valori delle qualia a cui la definizione li
+# lega (affidabilita → certainty_level, stato_conservazione →
+# conservation_state, em_qualia_types.json 1.6.1). Quattro gradi PyArchInit
+# contro sei EM per la certezza: `possible` e `speculative` restano senza
+# corrispondente, e `insufficiente` (PyArchInit) non ha un posto evidente
+# fra i cinque valori di conservation_state. closeMatch ovunque: sono scale
+# diverse di autori diversi, e la corrispondenza la decide E.D.
+alignments:
+  - source: {scheme: em-us-affidabilita, concept: "https://w3id.org/extendedmatrix/vocab/us-affidabilita/ottima"}
+    match: closeMatch
+    target: {scheme: s3dgraphy-qualia-values, concept: "certainty_level:certain"}
+    status: proposed
+    by: "StratiGraph WP3 (proposta notturna, 2026-09-27)"
+  - source: {scheme: em-us-affidabilita, concept: "https://w3id.org/extendedmatrix/vocab/us-affidabilita/buona"}
+    match: closeMatch
+    target: {scheme: s3dgraphy-qualia-values, concept: "certainty_level:highly_probable"}
+    status: proposed
+    by: "StratiGraph WP3 (proposta notturna, 2026-09-27)"
+  - source: {scheme: em-us-affidabilita, concept: "https://w3id.org/extendedmatrix/vocab/us-affidabilita/discreta"}
+    match: closeMatch
+    target: {scheme: s3dgraphy-qualia-values, concept: "certainty_level:probable"}
+    status: proposed
+    by: "StratiGraph WP3 (proposta notturna, 2026-09-27)"
+  - source: {scheme: em-us-affidabilita, concept: "https://w3id.org/extendedmatrix/vocab/us-affidabilita/scarsa"}
+    match: closeMatch
+    target: {scheme: s3dgraphy-qualia-values, concept: "certainty_level:doubtful"}
+    status: proposed
+    by: "StratiGraph WP3 (proposta notturna, 2026-09-27)"
+  - source: {scheme: em-us-stato-conservazione, concept: "https://w3id.org/extendedmatrix/vocab/us-stato-conservazione/ottimo"}
+    match: closeMatch
+    target: {scheme: s3dgraphy-qualia-values, concept: "conservation_state:excellent"}
+    status: proposed
+    by: "StratiGraph WP3 (proposta notturna, 2026-09-27)"
+  - source: {scheme: em-us-stato-conservazione, concept: "https://w3id.org/extendedmatrix/vocab/us-stato-conservazione/buono"}
+    match: closeMatch
+    target: {scheme: s3dgraphy-qualia-values, concept: "conservation_state:good"}
+    status: proposed
+    by: "StratiGraph WP3 (proposta notturna, 2026-09-27)"
+  - source: {scheme: em-us-stato-conservazione, concept: "https://w3id.org/extendedmatrix/vocab/us-stato-conservazione/discreto"}
+    match: closeMatch
+    target: {scheme: s3dgraphy-qualia-values, concept: "conservation_state:fair"}
+    status: proposed
+    by: "StratiGraph WP3 (proposta notturna, 2026-09-27)"
+  - source: {scheme: em-us-stato-conservazione, concept: "https://w3id.org/extendedmatrix/vocab/us-stato-conservazione/scarso"}
+    match: closeMatch
+    target: {scheme: s3dgraphy-qualia-values, concept: "conservation_state:poor"}
+    status: proposed
+    by: "StratiGraph WP3 (proposta notturna, 2026-09-27)"
+  - source: {scheme: em-us-stato-conservazione, concept: "https://w3id.org/extendedmatrix/vocab/us-stato-conservazione/pessimo"}
+    match: closeMatch
+    target: {scheme: s3dgraphy-qualia-values, concept: "conservation_state:very_poor"}
+    status: proposed
+    by: "StratiGraph WP3 (proposta notturna, 2026-09-27)"

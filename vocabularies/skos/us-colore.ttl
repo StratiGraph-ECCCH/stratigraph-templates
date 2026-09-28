@@ -1,0 +1,169 @@
+# Colour of the deposit — modulo SKOS originato in Extended Matrix (em-us-colore, 0.1.0).
+#
+# PERCHE' ESISTE. Il modello ICCD US 2021 prescrive per la casella «COLORE»
+# un termine controllato, ma l'ICCD non ha pubblicato lo SKOS dei modelli da
+# campo (misurato: il .doc del modello porta solo le etichette delle caselle).
+# Questo modulo risponde PROVVISORIAMENTE per lo schema dichiarato
+# iccd-us-colore: il giorno che l'ICCD pubblica, si aggiunge un allineamento e basta.
+#
+# DA DOVE VENGONO I TERMINI. Ogni concetto porta la sua fonte (dct:source):
+# nessun termine entra senza. Le definizioni sono RIFORMULATE, non trascritte.
+# Le etichette it vengono dalle fonti; le altre lingue sono BOZZE non
+# verificate (unverified_languages nello scheme yaml): operative subito,
+# corrette dopo la verifica.
+#
+# NAMESPACE. w3id.org/extendedmatrix, come em-taph-weathering (SPEC §3).
+
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix em:   <https://w3id.org/extendedmatrix/vocab/us-colore/> .
+
+em: a skos:ConceptScheme ;
+    dct:title "Colour of the deposit"@en ;
+    dct:title "Colore del deposito"@it ;
+    dct:description "Colour names for the COLOUR box of a stratigraphic unit sheet (ICCD US 2021), gathered from the PyArchInit thesaurus. Names, not Munsell notations: a Munsell reading stays a free annotation."@en ;
+    dct:creator "Extended Matrix — StratiGraph WP3, CNR-ISPC" ;
+    dct:license <https://creativecommons.org/licenses/by/4.0/> ;
+    owl:versionInfo "0.1.0" ;
+    dct:issued "2026-09-27"^^<http://www.w3.org/2001/XMLSchema#date> ;
+    skos:editorialNote "Labels in en, ro, el, es, pl, he, de are drafts, not yet verified by a person who answers for them."@en ;
+    skos:hasTopConcept em:arancione, em:azzurro, em:bianco, em:blu, em:giallo, em:giallorosso, em:grigio, em:marrone, em:nero, em:rosato, em:rosso, em:verde .
+
+em:arancione a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "arancione"@it ; skos:prefLabel "orange"@en ; skos:prefLabel "portocaliu"@ro ; skos:prefLabel "πορτοκαλί"@el ; skos:prefLabel "naranja"@es ; skos:prefLabel "pomarańczowy"@pl ; skos:prefLabel "כתום"@he ; skos:prefLabel "orange"@de ;
+    skos:definition "Colore del deposito percepito come arancione, a occhio nudo e con luce diurna."@it ;
+    skos:definition "Colour of the deposit perceived as orange, by eye and in daylight."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 201.201, descrizione «Colore di una US» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla Ara «Arancione»" .
+
+em:azzurro a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "azzurro"@it ; skos:prefLabel "light blue"@en ; skos:prefLabel "albastru deschis"@ro ; skos:prefLabel "γαλάζιο"@el ; skos:prefLabel "azul claro"@es ; skos:prefLabel "błękitny"@pl ; skos:prefLabel "תכלת"@he ; skos:prefLabel "hellblau"@de ;
+    skos:definition "Colore del deposito percepito come azzurro, a occhio nudo e con luce diurna."@it ;
+    skos:definition "Colour of the deposit perceived as light blue, by eye and in daylight."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 201.201, descrizione «Colore di una US» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla Azz «Azzurro»" .
+
+em:bianco a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "bianco"@it ; skos:prefLabel "white"@en ; skos:prefLabel "alb"@ro ; skos:prefLabel "λευκό"@el ; skos:prefLabel "blanco"@es ; skos:prefLabel "biały"@pl ; skos:prefLabel "לבן"@he ; skos:prefLabel "weiß"@de ;
+    skos:definition "Colore del deposito percepito come bianco, a occhio nudo e con luce diurna."@it ;
+    skos:definition "Colour of the deposit perceived as white, by eye and in daylight."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 201.201, descrizione «Colore di una US» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla Bia «Bianco»" .
+
+em:blu a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "blu"@it ; skos:prefLabel "blue"@en ; skos:prefLabel "albastru"@ro ; skos:prefLabel "μπλε"@el ; skos:prefLabel "azul"@es ; skos:prefLabel "niebieski"@pl ; skos:prefLabel "כחול"@he ; skos:prefLabel "blau"@de ;
+    skos:definition "Colore del deposito percepito come blu, a occhio nudo e con luce diurna."@it ;
+    skos:definition "Colour of the deposit perceived as blue, by eye and in daylight."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 201.201, descrizione «Colore di una US» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla Blu «Blu'» «Blu»" .
+
+em:giallo a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "giallo"@it ; skos:prefLabel "yellow"@en ; skos:prefLabel "galben"@ro ; skos:prefLabel "κίτρινο"@el ; skos:prefLabel "amarillo"@es ; skos:prefLabel "żółty"@pl ; skos:prefLabel "צהוב"@he ; skos:prefLabel "gelb"@de ;
+    skos:definition "Colore del deposito percepito come giallo, a occhio nudo e con luce diurna."@it ;
+    skos:definition "Colour of the deposit perceived as yellow, by eye and in daylight."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 201.201, descrizione «Colore di una US» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla Gia «Giallo»" ;
+    dct:source "PyArchInit, gui/ui/US_USM.ui (voci predefinite della casella): comboBox_colore «Giallo»" ;
+    dct:source "PyArchInit, tabs/codici_it.html (tabella dei codici del thesaurus, colonna Esempi): 201.201, esempio «Giallo»" .
+
+em:giallo-chiaro a skos:Concept ; skos:inScheme em: ;
+    skos:broader em:giallo ;
+    skos:prefLabel "giallo chiaro"@it ; skos:prefLabel "light yellow"@en ; skos:prefLabel "galben deschis"@ro ; skos:prefLabel "ανοιχτό κίτρινο"@el ; skos:prefLabel "amarillo claro"@es ; skos:prefLabel "jasnożółty"@pl ; skos:prefLabel "צהוב בהיר"@he ; skos:prefLabel "hellgelb"@de ;
+    skos:definition "Colore del deposito percepito come giallo chiaro, a occhio nudo e con luce diurna."@it ;
+    skos:definition "Colour of the deposit perceived as light yellow, by eye and in daylight."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 201.201, descrizione «Colore di una US» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla Gic «Giallo chiaro»" ;
+    dct:source "PyArchInit, gui/ui/US_USM.ui (voci predefinite della casella): comboBox_colore «Giallo chiaro»" .
+
+em:giallo-scuro a skos:Concept ; skos:inScheme em: ;
+    skos:broader em:giallo ;
+    skos:prefLabel "giallo scuro"@it ; skos:prefLabel "dark yellow"@en ; skos:prefLabel "galben închis"@ro ; skos:prefLabel "σκούρο κίτρινο"@el ; skos:prefLabel "amarillo oscuro"@es ; skos:prefLabel "ciemnożółty"@pl ; skos:prefLabel "צהוב כהה"@he ; skos:prefLabel "dunkelgelb"@de ;
+    skos:definition "Colore del deposito percepito come giallo scuro, a occhio nudo e con luce diurna."@it ;
+    skos:definition "Colour of the deposit perceived as dark yellow, by eye and in daylight."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 201.201, descrizione «Colore di una US» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla Gis «Giallo scuro»" ;
+    dct:source "PyArchInit, gui/ui/US_USM.ui (voci predefinite della casella): comboBox_colore «Giallo scuro»" .
+
+em:giallorosso a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "giallorosso"@it ; skos:prefLabel "yellowish red"@en ; skos:prefLabel "galben-roșcat"@ro ; skos:prefLabel "κιτρινοκόκκινο"@el ; skos:prefLabel "amarillo rojizo"@es ; skos:prefLabel "żółtoczerwony"@pl ; skos:prefLabel "צהוב-אדמדם"@he ; skos:prefLabel "gelbrot"@de ;
+    skos:definition "Colore del deposito percepito come giallorosso, a occhio nudo e con luce diurna."@it ;
+    skos:definition "Colour of the deposit perceived as yellowish red, by eye and in daylight."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 201.201, descrizione «Colore di una US» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla GRO «Giallorosso»" .
+
+em:grigio a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "grigio"@it ; skos:prefLabel "grey"@en ; skos:prefLabel "gri"@ro ; skos:prefLabel "γκρι"@el ; skos:prefLabel "gris"@es ; skos:prefLabel "szary"@pl ; skos:prefLabel "אפור"@he ; skos:prefLabel "grau"@de ;
+    skos:definition "Colore del deposito percepito come grigio, a occhio nudo e con luce diurna."@it ;
+    skos:definition "Colour of the deposit perceived as grey, by eye and in daylight."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 201.201, descrizione «Colore di una US» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla Gri «Grigio»" ;
+    dct:source "PyArchInit, tabs/codici_it.html (tabella dei codici del thesaurus, colonna Esempi): 201.201, esempio «Grigio»" .
+
+em:grigio-chiaro a skos:Concept ; skos:inScheme em: ;
+    skos:broader em:grigio ;
+    skos:prefLabel "grigio chiaro"@it ; skos:prefLabel "light grey"@en ; skos:prefLabel "gri deschis"@ro ; skos:prefLabel "ανοιχτό γκρι"@el ; skos:prefLabel "gris claro"@es ; skos:prefLabel "jasnoszary"@pl ; skos:prefLabel "אפור בהיר"@he ; skos:prefLabel "hellgrau"@de ;
+    skos:definition "Colore del deposito percepito come grigio chiaro, a occhio nudo e con luce diurna."@it ;
+    skos:definition "Colour of the deposit perceived as light grey, by eye and in daylight."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 201.201, descrizione «Colore di una US» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla Grc «Grigio chiaro»" .
+
+em:grigio-scuro a skos:Concept ; skos:inScheme em: ;
+    skos:broader em:grigio ;
+    skos:prefLabel "grigio scuro"@it ; skos:prefLabel "dark grey"@en ; skos:prefLabel "gri închis"@ro ; skos:prefLabel "σκούρο γκρι"@el ; skos:prefLabel "gris oscuro"@es ; skos:prefLabel "ciemnoszary"@pl ; skos:prefLabel "אפור כהה"@he ; skos:prefLabel "dunkelgrau"@de ;
+    skos:definition "Colore del deposito percepito come grigio scuro, a occhio nudo e con luce diurna."@it ;
+    skos:definition "Colour of the deposit perceived as dark grey, by eye and in daylight."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 201.201, descrizione «Colore di una US» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla Grs «Grigio scuro»" .
+
+em:grigio-azzurro a skos:Concept ; skos:inScheme em: ;
+    skos:broader em:grigio ;
+    skos:prefLabel "grigio-azzurro"@it ; skos:prefLabel "bluish grey"@en ; skos:prefLabel "gri-albăstrui"@ro ; skos:prefLabel "γαλαζωπό γκρι"@el ; skos:prefLabel "gris azulado"@es ; skos:prefLabel "szaroniebieski"@pl ; skos:prefLabel "אפור-תכלכל"@he ; skos:prefLabel "blaugrau"@de ;
+    skos:definition "Colore del deposito percepito come grigio-azzurro, a occhio nudo e con luce diurna."@it ;
+    skos:definition "Colour of the deposit perceived as bluish grey, by eye and in daylight."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 201.201, descrizione «Colore di una US» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla Gaz «Grigio-azzurro»" .
+
+em:grigio-verde a skos:Concept ; skos:inScheme em: ;
+    skos:broader em:grigio ;
+    skos:prefLabel "grigio-verde"@it ; skos:prefLabel "greenish grey"@en ; skos:prefLabel "gri-verzui"@ro ; skos:prefLabel "πρασινωπό γκρι"@el ; skos:prefLabel "gris verdoso"@es ; skos:prefLabel "szarozielony"@pl ; skos:prefLabel "אפור-ירקרק"@he ; skos:prefLabel "grüngrau"@de ;
+    skos:definition "Colore del deposito percepito come grigio-verde, a occhio nudo e con luce diurna."@it ;
+    skos:definition "Colour of the deposit perceived as greenish grey, by eye and in daylight."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 201.201, descrizione «Colore di una US» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla Gav «Grigio-verde»" .
+
+em:marrone a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "marrone"@it ; skos:prefLabel "brown"@en ; skos:prefLabel "maro"@ro ; skos:prefLabel "καφέ"@el ; skos:prefLabel "marrón"@es ; skos:prefLabel "brązowy"@pl ; skos:prefLabel "חום"@he ; skos:prefLabel "braun"@de ;
+    skos:definition "Colore del deposito percepito come marrone, a occhio nudo e con luce diurna."@it ;
+    skos:definition "Colour of the deposit perceived as brown, by eye and in daylight."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 201.201, descrizione «Colore di una US» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla Mar «Marrone»" ;
+    dct:source "PyArchInit, gui/ui/US_USM.ui (voci predefinite della casella): comboBox_colore «Marrone»" ;
+    dct:source "PyArchInit, tabs/codici_it.html (tabella dei codici del thesaurus, colonna Esempi): 201.201, esempio «Marrone»" .
+
+em:marrone-chiaro a skos:Concept ; skos:inScheme em: ;
+    skos:broader em:marrone ;
+    skos:prefLabel "marrone chiaro"@it ; skos:prefLabel "light brown"@en ; skos:prefLabel "maro deschis"@ro ; skos:prefLabel "ανοιχτό καφέ"@el ; skos:prefLabel "marrón claro"@es ; skos:prefLabel "jasnobrązowy"@pl ; skos:prefLabel "חום בהיר"@he ; skos:prefLabel "hellbraun"@de ;
+    skos:definition "Colore del deposito percepito come marrone chiaro, a occhio nudo e con luce diurna."@it ;
+    skos:definition "Colour of the deposit perceived as light brown, by eye and in daylight."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 201.201, descrizione «Colore di una US» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla Mac «Marrone chiaro»" ;
+    dct:source "PyArchInit, gui/ui/US_USM.ui (voci predefinite della casella): comboBox_colore «Marrone chiaro»" .
+
+em:marrone-scuro a skos:Concept ; skos:inScheme em: ;
+    skos:broader em:marrone ;
+    skos:prefLabel "marrone scuro"@it ; skos:prefLabel "dark brown"@en ; skos:prefLabel "maro închis"@ro ; skos:prefLabel "σκούρο καφέ"@el ; skos:prefLabel "marrón oscuro"@es ; skos:prefLabel "ciemnobrązowy"@pl ; skos:prefLabel "חום כהה"@he ; skos:prefLabel "dunkelbraun"@de ;
+    skos:definition "Colore del deposito percepito come marrone scuro, a occhio nudo e con luce diurna."@it ;
+    skos:definition "Colour of the deposit perceived as dark brown, by eye and in daylight."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 201.201, descrizione «Colore di una US» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla Mas «Marrone scuro»" ;
+    dct:source "PyArchInit, gui/ui/US_USM.ui (voci predefinite della casella): comboBox_colore «Marrone scuro»" .
+
+em:nero a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "nero"@it ; skos:prefLabel "black"@en ; skos:prefLabel "negru"@ro ; skos:prefLabel "μαύρο"@el ; skos:prefLabel "negro"@es ; skos:prefLabel "czarny"@pl ; skos:prefLabel "שחור"@he ; skos:prefLabel "schwarz"@de ;
+    skos:definition "Colore del deposito percepito come nero, a occhio nudo e con luce diurna."@it ;
+    skos:definition "Colour of the deposit perceived as black, by eye and in daylight."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 201.201, descrizione «Colore di una US» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla Ner «Nero»" ;
+    dct:source "PyArchInit, tabs/codici_it.html (tabella dei codici del thesaurus, colonna Esempi): 201.201, esempio «Nero»" .
+
+em:rosato a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "rosato"@it ; skos:prefLabel "pinkish"@en ; skos:prefLabel "rozaliu"@ro ; skos:prefLabel "ροδαλό"@el ; skos:prefLabel "rosado"@es ; skos:prefLabel "różowawy"@pl ; skos:prefLabel "ורדרד"@he ; skos:prefLabel "rosa"@de ;
+    skos:definition "Colore del deposito percepito come rosato, a occhio nudo e con luce diurna."@it ;
+    skos:definition "Colour of the deposit perceived as pinkish, by eye and in daylight."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 201.201, descrizione «Colore di una US» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla RoS «Rosato»" .
+
+em:rosso a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "rosso"@it ; skos:prefLabel "red"@en ; skos:prefLabel "roșu"@ro ; skos:prefLabel "κόκκινο"@el ; skos:prefLabel "rojo"@es ; skos:prefLabel "czerwony"@pl ; skos:prefLabel "אדום"@he ; skos:prefLabel "rot"@de ;
+    skos:definition "Colore del deposito percepito come rosso, a occhio nudo e con luce diurna."@it ;
+    skos:definition "Colour of the deposit perceived as red, by eye and in daylight."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 201.201, descrizione «Colore di una US» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla Ros «Rosso»" .
+
+em:verde a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "verde"@it ; skos:prefLabel "green"@en ; skos:prefLabel "verde"@ro ; skos:prefLabel "πράσινο"@el ; skos:prefLabel "verde"@es ; skos:prefLabel "zielony"@pl ; skos:prefLabel "ירוק"@he ; skos:prefLabel "grün"@de ;
+    skos:definition "Colore del deposito percepito come verde, a occhio nudo e con luce diurna."@it ;
+    skos:definition "Colour of the deposit perceived as green, by eye and in daylight."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 201.201, descrizione «Colore di una US» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla Ver «Verde»" .

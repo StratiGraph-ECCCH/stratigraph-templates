@@ -1,0 +1,59 @@
+# Stratigraphic reliability — modulo SKOS originato in Extended Matrix (em-us-affidabilita, 0.1.0).
+#
+# PERCHE' ESISTE. Il modello ICCD US 2021 prescrive per la casella «AFFIDABILITÀ STRATIGRAFICA»
+# un termine controllato, ma l'ICCD non ha pubblicato lo SKOS dei modelli da
+# campo (misurato: il .doc del modello porta solo le etichette delle caselle).
+# Questo modulo risponde PROVVISORIAMENTE per lo schema dichiarato
+# iccd-us-affidabilita: il giorno che l'ICCD pubblica, si aggiunge un allineamento e basta.
+#
+# DA DOVE VENGONO I TERMINI. Ogni concetto porta la sua fonte (dct:source):
+# nessun termine entra senza. Le definizioni sono RIFORMULATE, non trascritte.
+# Le etichette it vengono dalle fonti; le altre lingue sono BOZZE non
+# verificate (unverified_languages nello scheme yaml): operative subito,
+# corrette dopo la verifica.
+#
+# NAMESPACE. w3id.org/extendedmatrix, come em-taph-weathering (SPEC §3).
+
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix em:   <https://w3id.org/extendedmatrix/vocab/us-affidabilita/> .
+
+em: a skos:ConceptScheme ;
+    dct:title "Stratigraphic reliability"@en ;
+    dct:title "Affidabilità stratigrafica"@it ;
+    dct:description "An ordinal scale for the STRATIGRAPHIC RELIABILITY box of a stratigraphic unit sheet (ICCD US 2021), gathered from PyArchInit; aligned to the Extended Matrix certainty_level qualia."@en ;
+    dct:creator "Extended Matrix — StratiGraph WP3, CNR-ISPC" ;
+    dct:license <https://creativecommons.org/licenses/by/4.0/> ;
+    owl:versionInfo "0.1.0" ;
+    dct:issued "2026-09-27"^^<http://www.w3.org/2001/XMLSchema#date> ;
+    skos:editorialNote "Labels in en, ro, el, es, pl, he, de are drafts, not yet verified by a person who answers for them."@en ;
+    skos:hasTopConcept em:ottima, em:buona, em:discreta, em:scarsa .
+
+em:ottima a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "ottima"@it ; skos:prefLabel "excellent"@en ; skos:prefLabel "excelentă"@ro ; skos:prefLabel "εξαιρετική"@el ; skos:prefLabel "excelente"@es ; skos:prefLabel "bardzo dobra"@pl ; skos:prefLabel "מצוינת"@he ; skos:prefLabel "sehr gut"@de ;
+    skos:definition "L'unità e i suoi rapporti sono stati osservati per intero e senza ambiguità."@it ;
+    skos:definition "The unit and its relationships were observed in full and without ambiguity."@en ;
+    dct:source "PyArchInit, gui/ui/US_USM.ui (voci predefinite della casella): comboBox_affidabilita «Ottima»" ;
+    dct:source "PyArchInit, docs/tutorials/it/03_scheda_us.md: «Affidabilita' — Ottima»" .
+
+em:buona a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "buona"@it ; skos:prefLabel "good"@en ; skos:prefLabel "bună"@ro ; skos:prefLabel "καλή"@el ; skos:prefLabel "buena"@es ; skos:prefLabel "dobra"@pl ; skos:prefLabel "טובה"@he ; skos:prefLabel "gut"@de ;
+    skos:definition "L'unità e i suoi rapporti sono stati osservati in gran parte; restano incertezze minori."@it ;
+    skos:definition "The unit and its relationships were mostly observed; minor uncertainties remain."@en ;
+    dct:source "PyArchInit, gui/ui/US_USM.ui (voci predefinite della casella): comboBox_affidabilita «Buona»" ;
+    dct:source "PyArchInit, docs/tutorials/it/03_scheda_us.md: «Affidabilita' — Buona»" .
+
+em:discreta a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "discreta"@it ; skos:prefLabel "fair"@en ; skos:prefLabel "acceptabilă"@ro ; skos:prefLabel "μέτρια"@el ; skos:prefLabel "regular"@es ; skos:prefLabel "dostateczna"@pl ; skos:prefLabel "סבירה"@he ; skos:prefLabel "mäßig"@de ;
+    skos:definition "L'osservazione è stata parziale: alcuni rapporti sono dedotti e non visti."@it ;
+    skos:definition "Observation was partial: some relationships are inferred rather than seen."@en ;
+    dct:source "PyArchInit, gui/ui/US_USM.ui (voci predefinite della casella): comboBox_affidabilita «Discreta»" ;
+    dct:source "PyArchInit, docs/tutorials/it/03_scheda_us.md: «Affidabilita' — Discreta»" .
+
+em:scarsa a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "scarsa"@it ; skos:prefLabel "poor"@en ; skos:prefLabel "slabă"@ro ; skos:prefLabel "χαμηλή"@el ; skos:prefLabel "escasa"@es ; skos:prefLabel "słaba"@pl ; skos:prefLabel "נמוכה"@he ; skos:prefLabel "gering"@de ;
+    skos:definition "L'osservazione è stata insufficiente (scavo parziale, disturbi, documentazione lacunosa): unità e rapporti sono incerti."@it ;
+    skos:definition "Observation was insufficient (partial excavation, disturbance, gaps in the record): the unit and its relationships are uncertain."@en ;
+    dct:source "PyArchInit, gui/ui/US_USM.ui (voci predefinite della casella): comboBox_affidabilita «Scarso» (sic, al maschile)" ;
+    dct:source "PyArchInit, docs/tutorials/it/03_scheda_us.md: «Affidabilita' — Scarso»" .

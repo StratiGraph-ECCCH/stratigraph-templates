@@ -1,0 +1,282 @@
+# Definition of the stratigraphic unit — modulo SKOS originato in Extended Matrix (em-us-definizione, 0.1.0).
+#
+# PERCHE' ESISTE. Il modello ICCD US 2021 prescrive per la casella «DEFINIZIONE»
+# un termine controllato, ma l'ICCD non ha pubblicato lo SKOS dei modelli da
+# campo (misurato: il .doc del modello porta solo le etichette delle caselle).
+# Questo modulo risponde PROVVISORIAMENTE per lo schema dichiarato
+# iccd-us-definizione: il giorno che l'ICCD pubblica, si aggiunge un allineamento e basta.
+#
+# DA DOVE VENGONO I TERMINI. Ogni concetto porta la sua fonte (dct:source):
+# nessun termine entra senza. Le definizioni sono RIFORMULATE, non trascritte.
+# Le etichette it vengono dalle fonti; le altre lingue sono BOZZE non
+# verificate (unverified_languages nello scheme yaml): operative subito,
+# corrette dopo la verifica.
+#
+# NAMESPACE. w3id.org/extendedmatrix, come em-taph-weathering (SPEC §3).
+
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix em:   <https://w3id.org/extendedmatrix/vocab/us-definizione/> .
+
+em: a skos:ConceptScheme ;
+    dct:title "Definition of the stratigraphic unit"@en ;
+    dct:title "Definizione dell'unità stratigrafica"@it ;
+    dct:description "Terms for the DEFINITION box of a stratigraphic unit sheet (ICCD US 2021), gathered from the PyArchInit thesaurus; restated, not transcribed."@en ;
+    dct:creator "Extended Matrix — StratiGraph WP3, CNR-ISPC" ;
+    dct:license <https://creativecommons.org/licenses/by/4.0/> ;
+    owl:versionInfo "0.1.0" ;
+    dct:issued "2026-09-27"^^<http://www.w3.org/2001/XMLSchema#date> ;
+    skos:editorialNote "Labels in en, ro, el, es, pl, he, de are drafts, not yet verified by a person who answers for them."@en ;
+    skos:hasTopConcept em:strato, em:taglio, em:riempimento, em:deposito, em:struttura-in-muratura, em:piano-d-uso, em:battuto, em:rasatura, em:spoliazione .
+
+em:strato a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "strato"@it ; skos:prefLabel "layer"@en ; skos:prefLabel "strat"@ro ; skos:prefLabel "στρώμα"@el ; skos:prefLabel "estrato"@es ; skos:prefLabel "warstwa"@pl ; skos:prefLabel "שכבה"@he ; skos:prefLabel "Schicht"@de ;
+    skos:definition "Unità di deposito a sviluppo prevalentemente orizzontale, formata per accumulo di materiale; il termine generico."@it ;
+    skos:definition "A depositional unit of mainly horizontal extent, formed by accumulation of material; the generic term."@en ;
+    dct:source "PyArchInit, tabs/codici_it.html (tabella dei codici del thesaurus, colonna Esempi): 2.3, esempio «Strato»" ;
+    dct:source "PyArchInit, docs/tutorials/it/03_scheda_us.md: «Strato — Deposito generico»" .
+
+em:taglio a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "taglio"@it ; skos:prefLabel "cut"@en ; skos:prefLabel "tăietură"@ro ; skos:prefLabel "τομή"@el ; skos:prefLabel "corte"@es ; skos:prefLabel "wkop"@pl ; skos:prefLabel "חיתוך"@he ; skos:prefLabel "Schnitt"@de ;
+    skos:definition "Unità negativa: la superficie lasciata dall'asportazione di materiale, senza volume proprio."@it ;
+    skos:definition "A negative unit: the surface left by the removal of material, with no volume of its own."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 2.3 «Definizione stratigrafica» (pyarchinit_thesaurus_sigle, nome_tabella US): sigle TA, Tag «Taglio»" ;
+    dct:source "PyArchInit, tabs/codici_it.html (tabella dei codici del thesaurus, colonna Esempi): 2.3, esempio «Taglio»" ;
+    dct:source "PyArchInit, docs/tutorials/it/03_scheda_us.md: «Taglio — Interfaccia negativa»" .
+
+em:riempimento a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "riempimento"@it ; skos:prefLabel "fill"@en ; skos:prefLabel "umplutură"@ro ; skos:prefLabel "επίχωση"@el ; skos:prefLabel "relleno"@es ; skos:prefLabel "wypełnisko"@pl ; skos:prefLabel "מילוי"@he ; skos:prefLabel "Verfüllung"@de ;
+    skos:definition "Deposito che colma, in tutto o in parte, un taglio."@it ;
+    skos:definition "A deposit that fills a cut, wholly or in part."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 2.3 «Definizione stratigrafica» (pyarchinit_thesaurus_sigle, nome_tabella US): sigle RI, Rie «Riempimento»" ;
+    dct:source "PyArchInit, tabs/codici_it.html (tabella dei codici del thesaurus, colonna Esempi): 2.3, esempio «Riempimento»" ;
+    dct:source "PyArchInit, docs/tutorials/it/03_scheda_us.md: «Riempimento — Materiale di colmatura»" .
+
+em:deposito a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "deposito"@it ; skos:prefLabel "deposit"@en ; skos:prefLabel "depunere"@ro ; skos:prefLabel "απόθεση"@el ; skos:prefLabel "depósito"@es ; skos:prefLabel "depozyt"@pl ; skos:prefLabel "מרבץ"@he ; skos:prefLabel "Ablagerung"@de ;
+    skos:definition "Accumulo di materiale, naturale o antropico, senza ulteriore qualificazione della forma."@it ;
+    skos:definition "An accumulation of material, natural or anthropic, with no further qualification of its shape."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 2.3 «Definizione stratigrafica» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla DE «Deposito»" ;
+    dct:source "PyArchInit, tabs/codici_it.html (tabella dei codici del thesaurus, colonna Esempi): 2.3, esempio «Deposito»" .
+
+em:struttura-in-muratura a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "struttura in muratura"@it ; skos:prefLabel "masonry structure"@en ; skos:prefLabel "structură din zidărie"@ro ; skos:prefLabel "κατασκευή τοιχοποιίας"@el ; skos:prefLabel "estructura de mampostería"@es ; skos:prefLabel "konstrukcja murowana"@pl ; skos:prefLabel "מבנה בנוי"@he ; skos:prefLabel "Mauerwerksstruktur"@de ;
+    skos:definition "Unità costruita con elementi (pietre, laterizi) messi in opera, legati con malta o a secco."@it ;
+    skos:definition "A unit built of set elements (stones, bricks), bonded with mortar or dry-laid."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 2.3 «Definizione stratigrafica» (pyarchinit_thesaurus_sigle, nome_tabella US): sigle SM, Str «Struttura in muratura»" .
+
+em:piano-d-uso a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "piano d'uso"@it ; skos:prefLabel "use surface"@en ; skos:prefLabel "suprafață de călcare"@ro ; skos:prefLabel "επιφάνεια χρήσης"@el ; skos:prefLabel "superficie de uso"@es ; skos:prefLabel "poziom użytkowy"@pl ; skos:prefLabel "משטח שימוש"@he ; skos:prefLabel "Nutzungshorizont"@de ;
+    skos:definition "Superficie sulla quale si è svolta un'attività, riconosciuta come tale al momento dello scavo."@it ;
+    skos:definition "A surface on which an activity took place, recognised as such during excavation."@en ;
+    dct:source "PyArchInit, docs/tutorials/it/03_scheda_us.md: «Piano d'uso — Superficie di calpestio»" .
+
+em:battuto a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "battuto"@it ; skos:prefLabel "beaten earth floor"@en ; skos:prefLabel "podea de pământ bătut"@ro ; skos:prefLabel "δάπεδο πατημένου χώματος"@el ; skos:prefLabel "suelo de tierra apisonada"@es ; skos:prefLabel "klepisko"@pl ; skos:prefLabel "רצפת עפר כבושה"@he ; skos:prefLabel "Stampflehmboden"@de ;
+    skos:definition "Piano pavimentale di terra resa compatta per battitura."@it ;
+    skos:definition "A floor of earth made compact by beating or ramming."@en ;
+    dct:source "PyArchInit, docs/tutorials/it/03_scheda_us.md: «Battuto — Pavimentazione in terra battuta»" .
+
+em:strato-di-crollo a skos:Concept ; skos:inScheme em: ;
+    skos:broader em:strato ;
+    skos:prefLabel "strato di crollo"@it ; skos:prefLabel "collapse layer"@en ; skos:prefLabel "strat de dărâmătură"@ro ; skos:prefLabel "στρώμα κατάρρευσης"@el ; skos:prefLabel "estrato de derrumbe"@es ; skos:prefLabel "warstwa zawaliskowa"@pl ; skos:prefLabel "שכבת מפולת"@he ; skos:prefLabel "Versturzschicht"@de ;
+    skos:altLabel "crollo"@it ;
+    skos:definition "Deposito formato dal crollo di strutture, in posto o quasi."@it ;
+    skos:definition "A deposit formed by the collapse of structures, in place or nearly so."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 2.4 «Definizione interpretata» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla CR «Strato di crollo»" ;
+    dct:source "PyArchInit, docs/tutorials/it/03_scheda_us.md: «Crollo — Materiale di crollo»" .
+
+em:strato-di-calpestio a skos:Concept ; skos:inScheme em: ;
+    skos:broader em:strato ;
+    skos:prefLabel "strato di calpestio"@it ; skos:prefLabel "trampled layer"@en ; skos:prefLabel "strat de călcare"@ro ; skos:prefLabel "στρώμα πατήματος"@el ; skos:prefLabel "estrato de pisoteo"@es ; skos:prefLabel "warstwa użytkowa"@pl ; skos:prefLabel "שכבת דריכה"@he ; skos:prefLabel "Laufschicht"@de ;
+    skos:definition "Strato formato o compattato dal passaggio e dalla frequentazione."@it ;
+    skos:definition "A layer formed or compacted by passage and use."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 2.4 «Definizione interpretata» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla SCA «Strato di calpestio»" .
+
+em:strato-di-livellamento a skos:Concept ; skos:inScheme em: ;
+    skos:broader em:strato ;
+    skos:prefLabel "strato di livellamento"@it ; skos:prefLabel "levelling layer"@en ; skos:prefLabel "strat de nivelare"@ro ; skos:prefLabel "στρώμα ισοπέδωσης"@el ; skos:prefLabel "estrato de nivelación"@es ; skos:prefLabel "warstwa niwelacyjna"@pl ; skos:prefLabel "שכבת יישור"@he ; skos:prefLabel "Planierschicht"@de ;
+    skos:definition "Strato steso intenzionalmente per regolarizzare una superficie."@it ;
+    skos:definition "A layer spread on purpose to even out a surface."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 2.4 «Definizione interpretata» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla SLI «Strato di livellamento»" .
+
+em:rasatura a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "rasatura"@it ; skos:prefLabel "razing"@en ; skos:prefLabel "rasare"@ro ; skos:prefLabel "ισοπέδωση ερειπίων"@el ; skos:prefLabel "arrasamiento"@es ; skos:prefLabel "zrównanie"@pl ; skos:prefLabel "יישור הריסות"@he ; skos:prefLabel "Kappung"@de ;
+    skos:definition "Asportazione della parte superiore di una struttura o di un deposito fino a un livello regolare."@it ;
+    skos:definition "Removal of the upper part of a structure or deposit down to an even level."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 2.4 «Definizione interpretata» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla RAS «Rasatura»" .
+
+em:spoliazione a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "spoliazione"@it ; skos:prefLabel "robbing"@en ; skos:prefLabel "spoliere"@ro ; skos:prefLabel "αποξήλωση"@el ; skos:prefLabel "expolio"@es ; skos:prefLabel "rabunek materiału"@pl ; skos:prefLabel "שוד אבנים"@he ; skos:prefLabel "Materialraub"@de ;
+    skos:definition "Asportazione intenzionale di materiale da costruzione da una struttura, per recuperarlo."@it ;
+    skos:definition "Deliberate removal of building material from a structure, to recover it."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 2.4 «Definizione interpretata» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla SP «Spoliazione»" .
+
+em:fondazione-in-muratura a skos:Concept ; skos:inScheme em: ;
+    skos:broader em:struttura-in-muratura ;
+    skos:prefLabel "fondazione in muratura"@it ; skos:prefLabel "masonry foundation"@en ; skos:prefLabel "fundație din zidărie"@ro ; skos:prefLabel "θεμελίωση από τοιχοποιία"@el ; skos:prefLabel "cimentación de mampostería"@es ; skos:prefLabel "fundament murowany"@pl ; skos:prefLabel "יסוד בנוי"@he ; skos:prefLabel "gemauertes Fundament"@de ;
+    skos:definition "Parte interrata di una struttura in muratura, sulla quale poggia l'alzato."@it ;
+    skos:definition "The buried part of a masonry structure, on which the elevation rests."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 2.4 «Definizione interpretata» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla FON «Fondazione in muratura»" .
+
+em:taglio-di-fondazione a skos:Concept ; skos:inScheme em: ;
+    skos:broader em:taglio ;
+    skos:prefLabel "taglio di fondazione"@it ; skos:prefLabel "foundation cut"@en ; skos:prefLabel "groapă de fundație"@ro ; skos:prefLabel "τομή θεμελίωσης"@el ; skos:prefLabel "zanja de cimentación"@es ; skos:prefLabel "wkop fundamentowy"@pl ; skos:prefLabel "חפירת יסוד"@he ; skos:prefLabel "Fundamentgrube"@de ;
+    skos:definition "Taglio praticato per alloggiare una fondazione."@it ;
+    skos:definition "A cut made to house a foundation."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 2.4 «Definizione interpretata» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla TFO «Taglio di fondazione»" .
+
+em:riempimento-taglio-di-buca a skos:Concept ; skos:inScheme em: ;
+    skos:broader em:riempimento ;
+    skos:prefLabel "riempimento taglio di buca"@it ; skos:prefLabel "pit fill"@en ; skos:prefLabel "umplutura gropii"@ro ; skos:prefLabel "επίχωση λάκκου"@el ; skos:prefLabel "relleno de fosa"@es ; skos:prefLabel "wypełnisko jamy"@pl ; skos:prefLabel "מילוי בור"@he ; skos:prefLabel "Grubenverfüllung"@de ;
+    skos:definition "Riempimento del taglio di una buca."@it ;
+    skos:definition "The fill of the cut of a pit."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 2.4 «Definizione interpretata» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla RB «Riempimento taglio di buca»" .
+
+em:strato-geologico-naturale a skos:Concept ; skos:inScheme em: ;
+    skos:broader em:strato ;
+    skos:prefLabel "strato geologico naturale"@it ; skos:prefLabel "natural geological layer"@en ; skos:prefLabel "strat geologic natural"@ro ; skos:prefLabel "φυσικό γεωλογικό στρώμα"@el ; skos:prefLabel "estrato geológico natural"@es ; skos:prefLabel "calec"@pl ; skos:prefLabel "שכבה גאולוגית טבעית"@he ; skos:prefLabel "anstehender Boden"@de ;
+    skos:definition "Deposito di formazione naturale, anteriore alla frequentazione umana del luogo."@it ;
+    skos:definition "A deposit of natural formation, earlier than human use of the place."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 2.4 «Definizione interpretata» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla Nat «Strato geologico naturale»" .
+
+em:strato-di-terra a skos:Concept ; skos:inScheme em: ;
+    skos:broader em:strato ;
+    skos:prefLabel "strato di terra"@it ; skos:prefLabel "earth layer"@en ; skos:prefLabel "strat de pământ"@ro ; skos:prefLabel "στρώμα χώματος"@el ; skos:prefLabel "estrato de tierra"@es ; skos:prefLabel "warstwa ziemi"@pl ; skos:prefLabel "שכבת עפר"@he ; skos:prefLabel "Erdschicht"@de ;
+    skos:definition "Strato composto in prevalenza di terra."@it ;
+    skos:definition "A layer made up mainly of earth."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 2.3 «Definizione stratigrafica» (pyarchinit_thesaurus_sigle, nome_tabella US): sigle ST, Stt «Strato di terra»" .
+
+em:strato-di-sabbia a skos:Concept ; skos:inScheme em: ;
+    skos:broader em:strato ;
+    skos:prefLabel "strato di sabbia"@it ; skos:prefLabel "sand layer"@en ; skos:prefLabel "strat de nisip"@ro ; skos:prefLabel "στρώμα άμμου"@el ; skos:prefLabel "estrato de arena"@es ; skos:prefLabel "warstwa piasku"@pl ; skos:prefLabel "שכבת חול"@he ; skos:prefLabel "Sandschicht"@de ;
+    skos:definition "Strato composto in prevalenza di sabbia."@it ;
+    skos:definition "A layer made up mainly of sand."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 2.3 «Definizione stratigrafica» (pyarchinit_thesaurus_sigle, nome_tabella US): sigle SS, Sts «Strato di sabbia»" .
+
+em:strato-di-argilla a skos:Concept ; skos:inScheme em: ;
+    skos:broader em:strato ;
+    skos:prefLabel "strato di argilla"@it ; skos:prefLabel "clay layer"@en ; skos:prefLabel "strat de argilă"@ro ; skos:prefLabel "στρώμα αργίλου"@el ; skos:prefLabel "estrato de arcilla"@es ; skos:prefLabel "warstwa gliny"@pl ; skos:prefLabel "שכבת חרסית"@he ; skos:prefLabel "Tonschicht"@de ;
+    skos:definition "Strato composto in prevalenza di argilla."@it ;
+    skos:definition "A layer made up mainly of clay."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 2.3 «Definizione stratigrafica» (pyarchinit_thesaurus_sigle, nome_tabella US): sigle SA, Sta «Strato di argilla»" .
+
+em:strato-di-ghiaia a skos:Concept ; skos:inScheme em: ;
+    skos:broader em:strato ;
+    skos:prefLabel "strato di ghiaia"@it ; skos:prefLabel "gravel layer"@en ; skos:prefLabel "strat de pietriș"@ro ; skos:prefLabel "στρώμα χαλικιών"@el ; skos:prefLabel "estrato de grava"@es ; skos:prefLabel "warstwa żwiru"@pl ; skos:prefLabel "שכבת חצץ"@he ; skos:prefLabel "Kiesschicht"@de ;
+    skos:definition "Strato composto in prevalenza di ghiaia."@it ;
+    skos:definition "A layer made up mainly of gravel."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 2.3 «Definizione stratigrafica» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla Stg «Strato di ghiaia»" .
+
+em:strato-di-ciottoli a skos:Concept ; skos:inScheme em: ;
+    skos:broader em:strato ;
+    skos:prefLabel "strato di ciottoli"@it ; skos:prefLabel "pebble layer"@en ; skos:prefLabel "strat de galeți"@ro ; skos:prefLabel "στρώμα βοτσάλων"@el ; skos:prefLabel "estrato de cantos rodados"@es ; skos:prefLabel "warstwa otoczaków"@pl ; skos:prefLabel "שכבת חלוקי נחל"@he ; skos:prefLabel "Geröllschicht"@de ;
+    skos:definition "Strato composto in prevalenza di ciottoli."@it ;
+    skos:definition "A layer made up mainly of pebbles."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 2.3 «Definizione stratigrafica» (pyarchinit_thesaurus_sigle, nome_tabella US): sigle SC, Stc «Strato di ciottoli»" .
+
+em:strato-di-pietrisco a skos:Concept ; skos:inScheme em: ;
+    skos:broader em:strato ;
+    skos:prefLabel "strato di pietrisco"@it ; skos:prefLabel "crushed stone layer"@en ; skos:prefLabel "strat de piatră spartă"@ro ; skos:prefLabel "στρώμα θραυστών λίθων"@el ; skos:prefLabel "estrato de piedra triturada"@es ; skos:prefLabel "warstwa tłucznia"@pl ; skos:prefLabel "שכבת אבן גרוסה"@he ; skos:prefLabel "Schotterschicht"@de ;
+    skos:definition "Strato composto in prevalenza di pietrisco."@it ;
+    skos:definition "A layer made up mainly of crushed stone."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 2.3 «Definizione stratigrafica» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla Stp «Strato di pietrisco»" .
+
+em:strato-di-pietra a skos:Concept ; skos:inScheme em: ;
+    skos:broader em:strato ;
+    skos:prefLabel "strato di pietra"@it ; skos:prefLabel "stone layer"@en ; skos:prefLabel "strat de piatră"@ro ; skos:prefLabel "στρώμα λίθων"@el ; skos:prefLabel "estrato de piedra"@es ; skos:prefLabel "warstwa kamieni"@pl ; skos:prefLabel "שכבת אבנים"@he ; skos:prefLabel "Steinschicht"@de ;
+    skos:definition "Strato composto in prevalenza di pietre."@it ;
+    skos:definition "A layer made up mainly of stones."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 2.3 «Definizione stratigrafica» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla Stp «Strato di pietra»" .
+
+em:strato-di-cenere a skos:Concept ; skos:inScheme em: ;
+    skos:broader em:strato ;
+    skos:prefLabel "strato di cenere"@it ; skos:prefLabel "ash layer"@en ; skos:prefLabel "strat de cenușă"@ro ; skos:prefLabel "στρώμα τέφρας"@el ; skos:prefLabel "estrato de ceniza"@es ; skos:prefLabel "warstwa popiołu"@pl ; skos:prefLabel "שכבת אפר"@he ; skos:prefLabel "Ascheschicht"@de ;
+    skos:definition "Strato composto in prevalenza di cenere."@it ;
+    skos:definition "A layer made up mainly of ash."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 2.3 «Definizione stratigrafica» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla Stc «Strato di cenere»" .
+
+em:strato-di-carbone a skos:Concept ; skos:inScheme em: ;
+    skos:broader em:strato ;
+    skos:prefLabel "strato di carbone"@it ; skos:prefLabel "charcoal layer"@en ; skos:prefLabel "strat de cărbune"@ro ; skos:prefLabel "στρώμα άνθρακα"@el ; skos:prefLabel "estrato de carbón"@es ; skos:prefLabel "warstwa węgla drzewnego"@pl ; skos:prefLabel "שכבת פחם"@he ; skos:prefLabel "Holzkohleschicht"@de ;
+    skos:definition "Strato composto in prevalenza di carbone."@it ;
+    skos:definition "A layer made up mainly of charcoal."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 2.3 «Definizione stratigrafica» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla STc «Strato di carbone»" .
+
+em:strato-di-carbone-e-cenere a skos:Concept ; skos:inScheme em: ;
+    skos:broader em:strato ;
+    skos:prefLabel "strato di carbone e cenere"@it ; skos:prefLabel "charcoal and ash layer"@en ; skos:prefLabel "strat de cărbune și cenușă"@ro ; skos:prefLabel "στρώμα άνθρακα και τέφρας"@el ; skos:prefLabel "estrato de carbón y ceniza"@es ; skos:prefLabel "warstwa węgla drzewnego i popiołu"@pl ; skos:prefLabel "שכבת פחם ואפר"@he ; skos:prefLabel "Holzkohle- und Ascheschicht"@de ;
+    skos:definition "Strato composto in prevalenza di carbone e cenere."@it ;
+    skos:definition "A layer made up mainly of charcoal and ash."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 2.3 «Definizione stratigrafica» (pyarchinit_thesaurus_sigle, nome_tabella US): sigle SCC, Scc «Strato di carbone e cenere»" .
+
+em:strato-di-cenere-vulcanica a skos:Concept ; skos:inScheme em: ;
+    skos:broader em:strato ;
+    skos:prefLabel "strato di cenere vulcanica"@it ; skos:prefLabel "volcanic ash layer"@en ; skos:prefLabel "strat de cenușă vulcanică"@ro ; skos:prefLabel "στρώμα ηφαιστειακής τέφρας"@el ; skos:prefLabel "estrato de ceniza volcánica"@es ; skos:prefLabel "warstwa popiołu wulkanicznego"@pl ; skos:prefLabel "שכבת אפר געשי"@he ; skos:prefLabel "vulkanische Ascheschicht"@de ;
+    skos:definition "Strato composto in prevalenza di cenere vulcanica."@it ;
+    skos:definition "A layer made up mainly of volcanic ash."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 2.3 «Definizione stratigrafica» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla CE «Cenere vulcanica», descrizione «Strato di cenere vulcanica»" .
+
+em:strato-di-malta a skos:Concept ; skos:inScheme em: ;
+    skos:broader em:strato ;
+    skos:prefLabel "strato di malta"@it ; skos:prefLabel "mortar layer"@en ; skos:prefLabel "strat de mortar"@ro ; skos:prefLabel "στρώμα κονιάματος"@el ; skos:prefLabel "estrato de mortero"@es ; skos:prefLabel "warstwa zaprawy"@pl ; skos:prefLabel "שכבת טיט"@he ; skos:prefLabel "Mörtelschicht"@de ;
+    skos:definition "Strato composto in prevalenza di malta."@it ;
+    skos:definition "A layer made up mainly of mortar."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 2.3 «Definizione stratigrafica» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla Stm «Strato di malta»" .
+
+em:strato-di-macerie a skos:Concept ; skos:inScheme em: ;
+    skos:broader em:strato ;
+    skos:prefLabel "strato di macerie"@it ; skos:prefLabel "rubble layer"@en ; skos:prefLabel "strat de moloz"@ro ; skos:prefLabel "στρώμα ερειπίων"@el ; skos:prefLabel "estrato de escombros"@es ; skos:prefLabel "warstwa gruzu"@pl ; skos:prefLabel "שכבת הריסות"@he ; skos:prefLabel "Trümmerschicht"@de ;
+    skos:definition "Strato composto in prevalenza di macerie."@it ;
+    skos:definition "A layer made up mainly of rubble."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 2.3 «Definizione stratigrafica» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla Stm «Strato di macerie»" .
+
+em:strato-di-intonaco a skos:Concept ; skos:inScheme em: ;
+    skos:broader em:strato ;
+    skos:prefLabel "strato di intonaco"@it ; skos:prefLabel "plaster layer"@en ; skos:prefLabel "strat de tencuială"@ro ; skos:prefLabel "στρώμα επιχρίσματος"@el ; skos:prefLabel "estrato de enlucido"@es ; skos:prefLabel "warstwa tynku"@pl ; skos:prefLabel "שכבת טיח"@he ; skos:prefLabel "Putzschicht"@de ;
+    skos:definition "Strato composto in prevalenza di intonaco."@it ;
+    skos:definition "A layer made up mainly of plaster."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 2.3 «Definizione stratigrafica» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla Sti «Strato di intonaco»" .
+
+em:strato-di-laterizi a skos:Concept ; skos:inScheme em: ;
+    skos:broader em:strato ;
+    skos:prefLabel "strato di laterizi"@it ; skos:prefLabel "brick and tile layer"@en ; skos:prefLabel "strat de cărămizi"@ro ; skos:prefLabel "στρώμα οπτοπλίνθων"@el ; skos:prefLabel "estrato de material latericio"@es ; skos:prefLabel "warstwa ceramiki budowlanej"@pl ; skos:prefLabel "שכבת לבנים ורעפים"@he ; skos:prefLabel "Ziegelschicht"@de ;
+    skos:definition "Strato composto in prevalenza di laterizi."@it ;
+    skos:definition "A layer made up mainly of brick and tile."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 2.3 «Definizione stratigrafica» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla Stl «Strato di laterizi»" .
+
+em:strato-di-argilla-concotta a skos:Concept ; skos:inScheme em: ;
+    skos:broader em:strato ;
+    skos:prefLabel "strato di argilla concotta"@it ; skos:prefLabel "burnt clay layer"@en ; skos:prefLabel "strat de argilă arsă"@ro ; skos:prefLabel "στρώμα ψημένου αργίλου"@el ; skos:prefLabel "estrato de arcilla cocida"@es ; skos:prefLabel "warstwa przepalonej gliny"@pl ; skos:prefLabel "שכבת חרסית שרופה"@he ; skos:prefLabel "Schicht aus verziegeltem Lehm"@de ;
+    skos:definition "Strato composto in prevalenza di argilla concotta."@it ;
+    skos:definition "A layer made up mainly of burnt clay."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 2.3 «Definizione stratigrafica» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla Sac «Strato di argilla concotta»" .
+
+em:strato-di-sabbia-concotta a skos:Concept ; skos:inScheme em: ;
+    skos:broader em:strato ;
+    skos:prefLabel "strato di sabbia concotta"@it ; skos:prefLabel "burnt sand layer"@en ; skos:prefLabel "strat de nisip ars"@ro ; skos:prefLabel "στρώμα ψημένης άμμου"@el ; skos:prefLabel "estrato de arena cocida"@es ; skos:prefLabel "warstwa przepalonego piasku"@pl ; skos:prefLabel "שכבת חול שרוף"@he ; skos:prefLabel "Schicht aus verbranntem Sand"@de ;
+    skos:definition "Strato composto in prevalenza di sabbia concotta."@it ;
+    skos:definition "A layer made up mainly of burnt sand."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 2.3 «Definizione stratigrafica» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla SSC «Strato di sabbia concotta»" .
+
+em:strato-di-terreno-concottato a skos:Concept ; skos:inScheme em: ;
+    skos:broader em:strato ;
+    skos:prefLabel "strato di terreno concottato"@it ; skos:prefLabel "burnt soil layer"@en ; skos:prefLabel "strat de sol ars"@ro ; skos:prefLabel "στρώμα ψημένου εδάφους"@el ; skos:prefLabel "estrato de tierra cocida"@es ; skos:prefLabel "warstwa przepalonej ziemi"@pl ; skos:prefLabel "שכבת קרקע שרופה"@he ; skos:prefLabel "Schicht aus verbranntem Boden"@de ;
+    skos:definition "Strato composto in prevalenza di terreno concottato."@it ;
+    skos:definition "A layer made up mainly of burnt soil."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 2.3 «Definizione stratigrafica» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla Stc «Strato di terreno concottato»" .
+
+em:strato-di-legno-carbonizzato a skos:Concept ; skos:inScheme em: ;
+    skos:broader em:strato ;
+    skos:prefLabel "strato di legno carbonizzato"@it ; skos:prefLabel "charred wood layer"@en ; skos:prefLabel "strat de lemn carbonizat"@ro ; skos:prefLabel "στρώμα απανθρακωμένου ξύλου"@el ; skos:prefLabel "estrato de madera carbonizada"@es ; skos:prefLabel "warstwa zwęglonego drewna"@pl ; skos:prefLabel "שכבת עץ מפוחם"@he ; skos:prefLabel "Schicht aus verkohltem Holz"@de ;
+    skos:definition "Strato composto in prevalenza di legno carbonizzato."@it ;
+    skos:definition "A layer made up mainly of charred wood."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 2.3 «Definizione stratigrafica» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla Slc «Strato di legno carbonizzato»" .
+
+em:strato-di-resti-scheletrici a skos:Concept ; skos:inScheme em: ;
+    skos:broader em:strato ;
+    skos:prefLabel "strato di resti scheletrici"@it ; skos:prefLabel "skeletal remains layer"@en ; skos:prefLabel "strat cu resturi scheletice"@ro ; skos:prefLabel "στρώμα σκελετικών καταλοίπων"@el ; skos:prefLabel "estrato de restos esqueléticos"@es ; skos:prefLabel "warstwa szczątków kostnych"@pl ; skos:prefLabel "שכבת שרידי שלד"@he ; skos:prefLabel "Schicht mit Skelettresten"@de ;
+    skos:definition "Strato composto in prevalenza di resti scheletrici."@it ;
+    skos:definition "A layer made up mainly of skeletal remains."@en ;
+    dct:source "PyArchInit thesaurus, tipologia 2.3 «Definizione stratigrafica» (pyarchinit_thesaurus_sigle, nome_tabella US): sigla SO «Strato di resti scheletrici»" .

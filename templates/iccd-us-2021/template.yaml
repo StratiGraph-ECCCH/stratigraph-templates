@@ -20,8 +20,13 @@ template:
   # misurata dall'audit del 2026-10-17 (a4b5365), la prima che un programma
   # compila e consuma. 1.0.1 (2026-10-21) = DEFINIZIONE diventa l'elemento
   # `definition` del nodo (era `vocabulary` senza qualia: una casella
-  # obbligatoria che non entrava nel grafo da nessuna porta).
-  version: "1.0.1"
+  # obbligatoria che non entrava nel grafo da nessuna porta). 1.0.2 (2026-09-27)
+  # = i cinque campi a vocabolario PORTANO CONCETTI: gli schemi iccd-us-* restano
+  # la norma e sono ancora solo dichiarati, e fino allo SKOS dell'ICCD rispondono
+  # per loro i moduli originati em-us-* (`provisional`, SPEC §3.2). PATCH e non
+  # MINOR: nessun campo, tipo o verdetto cambia, e un record 1.0.1 si rilegge
+  # uguale — cambia che cosa un widget può offrire.
+  version: "1.0.2"
   standard:
     authority: ICCD
     code: US

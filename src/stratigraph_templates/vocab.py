@@ -16,6 +16,11 @@ Two decisions live here.
    source it restates.  Originated schemes are the reason ``skos_file`` is no
    longer reserved to fixtures: a module we author lives in the repository and
    is not a fixture.
+   A ``declared`` scheme may name a ``provisional`` one: the norm prescribes a
+   vocabulary nobody has published, and until it is published an ORIGINATED
+   module of ours answers for it.  The field keeps citing the norm's scheme; a
+   reader resolves with the provisional one, and the day the authority
+   publishes, an alignment is added and the bridge is removed.
 2. What lands in the graph is the CONCEPT, and the label is resolved at reading
    time in the requested language.  When the concept has no label in that
    language, an ALIGNMENT (``skos:exactMatch`` / ``closeMatch``) to another
@@ -63,6 +68,12 @@ class Scheme:
     resolve: Dict[str, str] = dc_field(default_factory=dict)
     note: Optional[str] = None
     path: Optional[str] = None
+    #: declared schemes only: the originated module that answers for it until
+    #: the authority publishes (SPEC §3.2)
+    provisional: Optional[str] = None
+    #: originated schemes only: languages whose labels nobody has verified yet
+    #: (operational now, corrected after review — SPEC §3.3)
+    unverified_languages: List[str] = dc_field(default_factory=list)
 
     def skos_file(self) -> Optional[Path]:
         kind = self.resolve.get("kind")
@@ -112,6 +123,40 @@ def _read_skos(path: Path) -> Dict[str, Dict[str, str]]:
     return out
 
 
+def _check_provisional(schemes: Dict[str, Scheme]) -> None:
+    """SPEC §3.2: only a DECLARED scheme has a provisional one, and it must be a
+    module we maintain that can actually be resolved.  A resolvable scheme with
+    a stand-in would have two answers; a stand-in that is somebody else's, or
+    that cannot be read, is not a stand-in."""
+    for s in schemes.values():
+        if not s.provisional:
+            continue
+        where = f"{Path(s.path).name if s.path else s.id}: scheme '{s.id}'"
+        if s.status != "declared":
+            raise VocabularyError(
+                f"{where} is {s.status} and names provisional '{s.provisional}': only a DECLARED "
+                f"scheme has a stand-in — a resolvable one already answers for itself"
+            )
+        target = schemes.get(s.provisional)
+        if target is None:
+            raise VocabularyError(
+                f"{where} names provisional '{s.provisional}', which has no declaration in "
+                f"vocabularies/schemes/"
+            )
+        if target.origin != "originated":
+            raise VocabularyError(
+                f"{where} names provisional '{s.provisional}', which is {target.origin}: the stand-in "
+                f"for a norm nobody published must be a module we maintain (origin: originated)"
+            )
+        if target.status != "resolvable":
+            raise VocabularyError(
+                f"{where} names provisional '{s.provisional}', which is {target.status}: a stand-in "
+                f"that cannot be resolved answers nothing"
+            )
+        if target.provisional:
+            raise VocabularyError(f"{where}: provisional '{s.provisional}' has a provisional of its own")
+
+
 class Vocabularies:
     def __init__(self, schemes: Dict[str, Scheme], alignments: List[Alignment]):
         self.schemes = schemes
@@ -148,6 +193,16 @@ class Vocabularies:
                             f"{p.name}: scheme '{s['id']}' is originated, so it must declare "
                             f"'{required}' — a module we maintain without one is unciteable"
                         )
+            unverified = s.get("unverified_languages") or []
+            if not isinstance(unverified, list) or not all(isinstance(x, str) and x for x in unverified):
+                raise VocabularyError(
+                    f"{p.name}: scheme '{s['id']}' unverified_languages must be a list of language codes"
+                )
+            if unverified and origin != "originated":
+                raise VocabularyError(
+                    f"{p.name}: scheme '{s['id']}' is {origin}: only a module we maintain says which of "
+                    f"its languages nobody has verified — an external scheme answers for its own labels"
+                )
             schemes[s["id"]] = Scheme(
                 id=s["id"],
                 authority=s.get("authority", "?"),
@@ -163,7 +218,10 @@ class Vocabularies:
                 resolve=s.get("resolve") or {},
                 note=s.get("note"),
                 path=str(p),
+                provisional=s.get("provisional"),
+                unverified_languages=list(unverified),
             )
+        _check_provisional(schemes)
         alignments: List[Alignment] = []
         for p in sorted(alignments_dir.glob("*.yaml")):
             doc = yaml.safe_load(p.read_text(encoding="utf-8")) or {}
@@ -213,6 +271,14 @@ class Vocabularies:
         self._concepts[scheme_id] = _read_skos(path)
         return self._concepts[scheme_id]
 
+    def effective(self, scheme_id: str) -> str:
+        """The scheme whose concepts answer for ``scheme_id``: itself, or its
+        provisional stand-in while the norm's scheme is only declared."""
+        scheme = self.schemes.get(scheme_id)
+        if scheme is None:
+            raise VocabularyError(f"unknown vocabulary scheme '{scheme_id}'")
+        return scheme.provisional or scheme_id
+
     def _aligned(self, scheme_id: str, concept: str) -> List[Tuple[str, str, str]]:
         """(match, other_scheme, other_concept) for both directions."""
         out = []
@@ -231,11 +297,18 @@ class Vocabularies:
         lang: str,
         record_label: Optional[str] = None,
     ) -> Resolution:
-        """Label for a concept in ``lang``: own scheme, then alignments, then the
-        label the record carried (declared as such)."""
+        """Label for a concept in ``lang``: own scheme, then its provisional
+        stand-in, then alignments, then the label the record carried (declared
+        as such)."""
         own = self.concepts(scheme_id).get(concept, {})
         if own.get(lang):
             return Resolution(own[lang], lang, "scheme")
+        stand_in = self.effective(scheme_id)
+        if stand_in != scheme_id:
+            said = self.concepts(stand_in).get(concept, {})
+            if said.get(lang):
+                return Resolution(said[lang], lang, f"provisional:{stand_in}")
+            scheme_id = stand_in          # its alignments are the ones that apply
         for match, other_scheme, other_concept in self._aligned(scheme_id, concept):
             other = self.concepts(other_scheme).get(other_concept, {})
             if other.get(lang):

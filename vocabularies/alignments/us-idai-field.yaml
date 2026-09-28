@@ -1,0 +1,141 @@
+# Termini della scheda US ↔ valuelist di base di iDAI.field (commit 4b5c1e2).
+# Confronto a lato, non fonte: i nostri termini vengono da PyArchInit.
+# Gli identificatori iDAI sono localizzatori costruiti (v. lo schema).
+# Sono proposte: la parola tedesca e la sua etichetta italiana di iDAI
+# sono state lette insieme, e dove divergono lo dice la nota.
+alignments:
+  - source: {scheme: em-us-colore, concept: "https://w3id.org/extendedmatrix/vocab/us-colore/arancione"}
+    match: exactMatch
+    target: {scheme: idai-field-valuelists, concept: "https://github.com/dainst/idai-field/blob/4b5c1e2c3c499d4bd125d0eda61cc6f5c94ffcd4/core/config/Library/Valuelists/Valuelists.json#colors-default-1/orange"}
+    status: proposed
+    by: "StratiGraph WP3 (proposta notturna, 2026-09-27)"
+  - source: {scheme: em-us-colore, concept: "https://w3id.org/extendedmatrix/vocab/us-colore/bianco"}
+    match: exactMatch
+    target: {scheme: idai-field-valuelists, concept: "https://github.com/dainst/idai-field/blob/4b5c1e2c3c499d4bd125d0eda61cc6f5c94ffcd4/core/config/Library/Valuelists/Valuelists.json#colors-default-1/wei%C3%9F"}
+    status: proposed
+    by: "StratiGraph WP3 (proposta notturna, 2026-09-27)"
+  - source: {scheme: em-us-colore, concept: "https://w3id.org/extendedmatrix/vocab/us-colore/blu"}
+    match: exactMatch
+    target: {scheme: idai-field-valuelists, concept: "https://github.com/dainst/idai-field/blob/4b5c1e2c3c499d4bd125d0eda61cc6f5c94ffcd4/core/config/Library/Valuelists/Valuelists.json#colors-default-1/blau"}
+    status: proposed
+    by: "StratiGraph WP3 (proposta notturna, 2026-09-27)"
+  - source: {scheme: em-us-colore, concept: "https://w3id.org/extendedmatrix/vocab/us-colore/giallo"}
+    match: exactMatch
+    target: {scheme: idai-field-valuelists, concept: "https://github.com/dainst/idai-field/blob/4b5c1e2c3c499d4bd125d0eda61cc6f5c94ffcd4/core/config/Library/Valuelists/Valuelists.json#colors-default-1/gelb"}
+    status: proposed
+    by: "StratiGraph WP3 (proposta notturna, 2026-09-27)"
+  - source: {scheme: em-us-colore, concept: "https://w3id.org/extendedmatrix/vocab/us-colore/grigio"}
+    match: exactMatch
+    target: {scheme: idai-field-valuelists, concept: "https://github.com/dainst/idai-field/blob/4b5c1e2c3c499d4bd125d0eda61cc6f5c94ffcd4/core/config/Library/Valuelists/Valuelists.json#colors-default-1/grau"}
+    status: proposed
+    by: "StratiGraph WP3 (proposta notturna, 2026-09-27)"
+  - source: {scheme: em-us-colore, concept: "https://w3id.org/extendedmatrix/vocab/us-colore/marrone"}
+    match: exactMatch
+    target: {scheme: idai-field-valuelists, concept: "https://github.com/dainst/idai-field/blob/4b5c1e2c3c499d4bd125d0eda61cc6f5c94ffcd4/core/config/Library/Valuelists/Valuelists.json#colors-default-1/braun"}
+    status: proposed
+    by: "StratiGraph WP3 (proposta notturna, 2026-09-27)"
+  - source: {scheme: em-us-colore, concept: "https://w3id.org/extendedmatrix/vocab/us-colore/nero"}
+    match: exactMatch
+    target: {scheme: idai-field-valuelists, concept: "https://github.com/dainst/idai-field/blob/4b5c1e2c3c499d4bd125d0eda61cc6f5c94ffcd4/core/config/Library/Valuelists/Valuelists.json#colors-default-1/schwarz"}
+    status: proposed
+    by: "StratiGraph WP3 (proposta notturna, 2026-09-27)"
+  - source: {scheme: em-us-colore, concept: "https://w3id.org/extendedmatrix/vocab/us-colore/rosso"}
+    match: exactMatch
+    target: {scheme: idai-field-valuelists, concept: "https://github.com/dainst/idai-field/blob/4b5c1e2c3c499d4bd125d0eda61cc6f5c94ffcd4/core/config/Library/Valuelists/Valuelists.json#colors-default-1/rot"}
+    status: proposed
+    by: "StratiGraph WP3 (proposta notturna, 2026-09-27)"
+  - source: {scheme: em-us-colore, concept: "https://w3id.org/extendedmatrix/vocab/us-colore/verde"}
+    match: exactMatch
+    target: {scheme: idai-field-valuelists, concept: "https://github.com/dainst/idai-field/blob/4b5c1e2c3c499d4bd125d0eda61cc6f5c94ffcd4/core/config/Library/Valuelists/Valuelists.json#colors-default-1/gr%C3%BCn"}
+    status: proposed
+    by: "StratiGraph WP3 (proposta notturna, 2026-09-27)"
+  - source: {scheme: em-us-colore, concept: "https://w3id.org/extendedmatrix/vocab/us-colore/rosato"}
+    match: closeMatch
+    target: {scheme: idai-field-valuelists, concept: "https://github.com/dainst/idai-field/blob/4b5c1e2c3c499d4bd125d0eda61cc6f5c94ffcd4/core/config/Library/Valuelists/Valuelists.json#colors-default-1/rosa"}
+    status: proposed
+    by: "StratiGraph WP3 (proposta notturna, 2026-09-27)"
+    note: "iDAI «rosa» (it: rosa, en: rose/pink); il nostro «rosato» è una tinta, non il colore pieno"
+  - source: {scheme: em-us-colore, concept: "https://w3id.org/extendedmatrix/vocab/us-colore/azzurro"}
+    match: broadMatch
+    target: {scheme: idai-field-valuelists, concept: "https://github.com/dainst/idai-field/blob/4b5c1e2c3c499d4bd125d0eda61cc6f5c94ffcd4/core/config/Library/Valuelists/Valuelists.json#colors-default-1/blau"}
+    status: proposed
+    by: "StratiGraph WP3 (proposta notturna, 2026-09-27)"
+    note: "iDAI compone le sfumature con prefissi (hell-, dunkel-): azzurro ≈ hell- + blau"
+  - source: {scheme: em-us-consistenza, concept: "https://w3id.org/extendedmatrix/vocab/us-consistenza/sciolta"}
+    match: exactMatch
+    target: {scheme: idai-field-valuelists, concept: "https://github.com/dainst/idai-field/blob/4b5c1e2c3c499d4bd125d0eda61cc6f5c94ffcd4/core/config/Library/Valuelists/Valuelists.json#Layer-consistency-default/locker"}
+    status: proposed
+    by: "StratiGraph WP3 (proposta notturna, 2026-09-27)"
+    note: "iDAI it «sciolto», en «loose»"
+  - source: {scheme: em-us-consistenza, concept: "https://w3id.org/extendedmatrix/vocab/us-consistenza/sabbiosa"}
+    match: exactMatch
+    target: {scheme: idai-field-valuelists, concept: "https://github.com/dainst/idai-field/blob/4b5c1e2c3c499d4bd125d0eda61cc6f5c94ffcd4/core/config/Library/Valuelists/Valuelists.json#Layer-consistency-default/sandig"}
+    status: proposed
+    by: "StratiGraph WP3 (proposta notturna, 2026-09-27)"
+    note: "iDAI it «sabbioso», en «sandy»"
+  - source: {scheme: em-us-consistenza, concept: "https://w3id.org/extendedmatrix/vocab/us-consistenza/argillosa"}
+    match: closeMatch
+    target: {scheme: idai-field-valuelists, concept: "https://github.com/dainst/idai-field/blob/4b5c1e2c3c499d4bd125d0eda61cc6f5c94ffcd4/core/config/Library/Valuelists/Valuelists.json#Layer-consistency-default/lehmig"}
+    status: proposed
+    by: "StratiGraph WP3 (proposta notturna, 2026-09-27)"
+    note: "iDAI it «argilloso», en «loamy»: Lehm è limo-argilla, non argilla pura"
+  - source: {scheme: em-us-consistenza, concept: "https://w3id.org/extendedmatrix/vocab/us-consistenza/compatta"}
+    match: closeMatch
+    target: {scheme: idai-field-valuelists, concept: "https://github.com/dainst/idai-field/blob/4b5c1e2c3c499d4bd125d0eda61cc6f5c94ffcd4/core/config/Library/Valuelists/Valuelists.json#Layer-consistency-default/fest"}
+    status: proposed
+    by: "StratiGraph WP3 (proposta notturna, 2026-09-27)"
+    note: "iDAI it «solido», en «firm»; iDAI gradua anche la coesione (schwach/mittel/stark bindend)"
+  - source: {scheme: em-us-consistenza, concept: "https://w3id.org/extendedmatrix/vocab/us-consistenza/plastica"}
+    match: closeMatch
+    target: {scheme: idai-field-valuelists, concept: "https://github.com/dainst/idai-field/blob/4b5c1e2c3c499d4bd125d0eda61cc6f5c94ffcd4/core/config/Library/Valuelists/Valuelists.json#Layer-consistency-default/gut%20formbar"}
+    status: proposed
+    by: "StratiGraph WP3 (proposta notturna, 2026-09-27)"
+    note: "iDAI it «facilmente malleabile», en «easily mouldable»"
+  - source: {scheme: em-us-definizione, concept: "https://w3id.org/extendedmatrix/vocab/us-definizione/strato-di-livellamento"}
+    match: exactMatch
+    target: {scheme: idai-field-valuelists, concept: "https://github.com/dainst/idai-field/blob/4b5c1e2c3c499d4bd125d0eda61cc6f5c94ffcd4/core/config/Library/Valuelists/Valuelists.json#Layer-layerClassification-default/Planierschicht"}
+    status: proposed
+    by: "StratiGraph WP3 (proposta notturna, 2026-09-27)"
+    note: "iDAI it «Strato di livellamento», en «levelling layer»"
+  - source: {scheme: em-us-definizione, concept: "https://w3id.org/extendedmatrix/vocab/us-definizione/strato-di-calpestio"}
+    match: closeMatch
+    target: {scheme: idai-field-valuelists, concept: "https://github.com/dainst/idai-field/blob/4b5c1e2c3c499d4bd125d0eda61cc6f5c94ffcd4/core/config/Library/Valuelists/Valuelists.json#Layer-layerClassification-default/Laufhorizont"}
+    status: proposed
+    by: "StratiGraph WP3 (proposta notturna, 2026-09-27)"
+    note: "iDAI it «Piano di calpestio», en «floor / occupation layer»"
+  - source: {scheme: em-us-definizione, concept: "https://w3id.org/extendedmatrix/vocab/us-definizione/piano-d-uso"}
+    match: closeMatch
+    target: {scheme: idai-field-valuelists, concept: "https://github.com/dainst/idai-field/blob/4b5c1e2c3c499d4bd125d0eda61cc6f5c94ffcd4/core/config/Library/Valuelists/Valuelists.json#Layer-layerClassification-default/Laufhorizont"}
+    status: proposed
+    by: "StratiGraph WP3 (proposta notturna, 2026-09-27)"
+    note: "iDAI it «Piano di calpestio»: vale anche per strato-di-calpestio, v. il referto"
+  - source: {scheme: em-us-stato-conservazione, concept: "https://w3id.org/extendedmatrix/vocab/us-stato-conservazione/ottimo"}
+    match: closeMatch
+    target: {scheme: idai-field-valuelists, concept: "https://github.com/dainst/idai-field/blob/4b5c1e2c3c499d4bd125d0eda61cc6f5c94ffcd4/core/config/Library/Valuelists/Valuelists.json#Building-condition-default/sehr%20gut"}
+    status: proposed
+    by: "StratiGraph WP3 (proposta notturna, 2026-09-27)"
+    note: "Building-condition-default (Layer non ha uno stato di conservazione): it «molto buono»"
+  - source: {scheme: em-us-stato-conservazione, concept: "https://w3id.org/extendedmatrix/vocab/us-stato-conservazione/buono"}
+    match: closeMatch
+    target: {scheme: idai-field-valuelists, concept: "https://github.com/dainst/idai-field/blob/4b5c1e2c3c499d4bd125d0eda61cc6f5c94ffcd4/core/config/Library/Valuelists/Valuelists.json#Building-condition-default/gut"}
+    status: proposed
+    by: "StratiGraph WP3 (proposta notturna, 2026-09-27)"
+    note: "Building-condition-default: it «buono»"
+  - source: {scheme: em-us-stato-conservazione, concept: "https://w3id.org/extendedmatrix/vocab/us-stato-conservazione/discreto"}
+    match: closeMatch
+    target: {scheme: idai-field-valuelists, concept: "https://github.com/dainst/idai-field/blob/4b5c1e2c3c499d4bd125d0eda61cc6f5c94ffcd4/core/config/Library/Valuelists/Valuelists.json#Building-condition-default/mittel"}
+    status: proposed
+    by: "StratiGraph WP3 (proposta notturna, 2026-09-27)"
+    note: "Building-condition-default: it «medio»"
+  - source: {scheme: em-us-stato-conservazione, concept: "https://w3id.org/extendedmatrix/vocab/us-stato-conservazione/scarso"}
+    match: closeMatch
+    target: {scheme: idai-field-valuelists, concept: "https://github.com/dainst/idai-field/blob/4b5c1e2c3c499d4bd125d0eda61cc6f5c94ffcd4/core/config/Library/Valuelists/Valuelists.json#Building-condition-default/schlecht"}
+    status: proposed
+    by: "StratiGraph WP3 (proposta notturna, 2026-09-27)"
+    note: "Building-condition-default: it «cattivo»"
+  - source: {scheme: em-us-stato-conservazione, concept: "https://w3id.org/extendedmatrix/vocab/us-stato-conservazione/pessimo"}
+    match: closeMatch
+    target: {scheme: idai-field-valuelists, concept: "https://github.com/dainst/idai-field/blob/4b5c1e2c3c499d4bd125d0eda61cc6f5c94ffcd4/core/config/Library/Valuelists/Valuelists.json#Building-condition-default/sehr%20schlecht"}
+    status: proposed
+    by: "StratiGraph WP3 (proposta notturna, 2026-09-27)"
+    note: "Building-condition-default: it «pessimo»"

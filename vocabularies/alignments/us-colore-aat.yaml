@@ -1,0 +1,75 @@
+# Colori della scheda US ↔ Getty AAT. Gli id sono stati letti dallo SPARQL
+# di vocab.getty.edu il 2026-09-27 (prefLabelGVP esatta), non a memoria.
+# Solo i colori: per DEFINIZIONE, CONSISTENZA, STATO DI CONSERVAZIONE e
+# AFFIDABILITÀ la ricerca non ha trovato un'equivalenza evidente (AAT ha
+# `friability` 300209172 come PROPRIETÀ, non come valore; nessun `fill`,
+# `cut`, `destruction layer` archeologico) e un allineamento forzato è peggio
+# di nessuno. Le sfumature (chiaro/scuro) non si allineano: stanno sotto il
+# colore base con skos:broader nel modulo, e AAT non ha quei concetti.
+alignments:
+  - source: {scheme: em-us-colore, concept: "https://w3id.org/extendedmatrix/vocab/us-colore/arancione"}
+    match: exactMatch
+    target: {scheme: getty-aat, concept: "http://vocab.getty.edu/aat/300126734"}
+    status: proposed
+    by: "StratiGraph WP3 (proposta notturna, 2026-09-27)"
+    note: "aat:300126734 = orange (color)"
+  - source: {scheme: em-us-colore, concept: "https://w3id.org/extendedmatrix/vocab/us-colore/bianco"}
+    match: exactMatch
+    target: {scheme: getty-aat, concept: "http://vocab.getty.edu/aat/300129784"}
+    status: proposed
+    by: "StratiGraph WP3 (proposta notturna, 2026-09-27)"
+    note: "aat:300129784 = white (color)"
+  - source: {scheme: em-us-colore, concept: "https://w3id.org/extendedmatrix/vocab/us-colore/blu"}
+    match: exactMatch
+    target: {scheme: getty-aat, concept: "http://vocab.getty.edu/aat/300129361"}
+    status: proposed
+    by: "StratiGraph WP3 (proposta notturna, 2026-09-27)"
+    note: "aat:300129361 = blue (color)"
+  - source: {scheme: em-us-colore, concept: "https://w3id.org/extendedmatrix/vocab/us-colore/giallo"}
+    match: exactMatch
+    target: {scheme: getty-aat, concept: "http://vocab.getty.edu/aat/300127794"}
+    status: proposed
+    by: "StratiGraph WP3 (proposta notturna, 2026-09-27)"
+    note: "aat:300127794 = yellow (color)"
+  - source: {scheme: em-us-colore, concept: "https://w3id.org/extendedmatrix/vocab/us-colore/grigio"}
+    match: exactMatch
+    target: {scheme: getty-aat, concept: "http://vocab.getty.edu/aat/300130811"}
+    status: proposed
+    by: "StratiGraph WP3 (proposta notturna, 2026-09-27)"
+    note: "aat:300130811 = gray (color)"
+  - source: {scheme: em-us-colore, concept: "https://w3id.org/extendedmatrix/vocab/us-colore/marrone"}
+    match: exactMatch
+    target: {scheme: getty-aat, concept: "http://vocab.getty.edu/aat/300127490"}
+    status: proposed
+    by: "StratiGraph WP3 (proposta notturna, 2026-09-27)"
+    note: "aat:300127490 = brown (color)"
+  - source: {scheme: em-us-colore, concept: "https://w3id.org/extendedmatrix/vocab/us-colore/nero"}
+    match: exactMatch
+    target: {scheme: getty-aat, concept: "http://vocab.getty.edu/aat/300130920"}
+    status: proposed
+    by: "StratiGraph WP3 (proposta notturna, 2026-09-27)"
+    note: "aat:300130920 = black (color)"
+  - source: {scheme: em-us-colore, concept: "https://w3id.org/extendedmatrix/vocab/us-colore/rosso"}
+    match: exactMatch
+    target: {scheme: getty-aat, concept: "http://vocab.getty.edu/aat/300126225"}
+    status: proposed
+    by: "StratiGraph WP3 (proposta notturna, 2026-09-27)"
+    note: "aat:300126225 = red (color)"
+  - source: {scheme: em-us-colore, concept: "https://w3id.org/extendedmatrix/vocab/us-colore/verde"}
+    match: exactMatch
+    target: {scheme: getty-aat, concept: "http://vocab.getty.edu/aat/300128438"}
+    status: proposed
+    by: "StratiGraph WP3 (proposta notturna, 2026-09-27)"
+    note: "aat:300128438 = green (color)"
+  - source: {scheme: em-us-colore, concept: "https://w3id.org/extendedmatrix/vocab/us-colore/rosato"}
+    match: closeMatch
+    target: {scheme: getty-aat, concept: "http://vocab.getty.edu/aat/300124707"}
+    status: proposed
+    by: "StratiGraph WP3 (proposta notturna, 2026-09-27)"
+    note: "aat:300124707 = pink (color)"
+  - source: {scheme: em-us-colore, concept: "https://w3id.org/extendedmatrix/vocab/us-colore/azzurro"}
+    match: broadMatch
+    target: {scheme: getty-aat, concept: "http://vocab.getty.edu/aat/300129361"}
+    status: proposed
+    by: "StratiGraph WP3 (proposta notturna, 2026-09-27)"
+    note: "aat:300129361 = blue (color)"
