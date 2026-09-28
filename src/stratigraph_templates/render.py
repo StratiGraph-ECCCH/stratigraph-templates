@@ -262,14 +262,27 @@ def _row_html(
     return f'<div class="row" style="--h: {row.h}mm">{cells}</div>'
 
 
-def _head_html(t: Template, record: Optional[Record], lang: str, side_id: str) -> str:
+def _layout(t: Template) -> List[Tuple[str, Dict[str, str], List[Row]]]:
+    """(side id, side labels, rows) to draw.
+
+    The sheet as declared; or — for a definition that declares NO sheet
+    (SPEC §4) — one liquid page of its fields, a block per paragraph, which is
+    what a form of a database looks like. It is never offered for printing: an
+    A4 drawn from nothing would look like the standard's paper model."""
+    if t.sheet is not None:
+        return [(s.id, s.labels or {}, s.rows) for s in t.sheet.sides]
+    rows = [Row(h=8.0, cells=[Cell(block=p.id, block_labels=p.labels, w=100.0,
+                                   rows=[Row(h=8.0, cells=[Cell(field=fid, w=100.0)])
+                                         for fid in p.fields])])
+            for p in t.paragraphs]
+    return [("fields", dict(t.standard.title), rows)]
+
+
+def _head_html(t: Template, record: Optional[Record], lang: str, side_id: str,
+               side_labels: Dict[str, str]) -> str:
     std = t.standard
     title = label_of(std.title, lang, f"template '{t.id}' title")
-    side_label = label_of(
-        next(s.labels for s in t.sheet.sides if s.id == side_id) or {},
-        lang,
-        f"side '{side_id}'",
-    )
+    side_label = label_of(side_labels or {}, lang, f"side '{side_id}'")
     key = human_key(t, record, lang) if record else ""
     demo = ' <span class="demo">FIXTURE</span>' if std.invented else ""
     return (
@@ -414,7 +427,7 @@ input.v:focus, textarea.v:focus { outline: 2px solid #2b6cb0; outline-offset: 1p
 
 
 def _margin_css(t: Template) -> str:
-    m = t.sheet.margins_mm or {}
+    m = (t.sheet.margins_mm if t.sheet is not None else None) or {}
     return (
         f"{m.get('top', 12)}mm {m.get('right', 12)}mm "
         f"{m.get('bottom', 12)}mm {m.get('left', 12)}mm"
@@ -444,12 +457,18 @@ def sheet_html(
             f"record says template '{record.template}' but the template given is '{t.id}'"
         )
 
+    if t.sheet is None and mode == "print":
+        raise RenderError(
+            f"template '{t.id}' declares no sheet: there is no paper model to print. Its fields "
+            f"are shown by the form (`form`); drawing an A4 for it would invent one"
+        )
+    layout = _layout(t)
     sides = []
-    for side in t.sheet.sides:
-        rows = "".join(_row_html(r, t, record, lang, mode, vocab, trace) for r in side.rows)
+    for side_id, side_labels, side_rows in layout:
+        rows = "".join(_row_html(r, t, record, lang, mode, vocab, trace) for r in side_rows)
         sides.append(
-            f'<section class="sheet" id="side-{_e(side.id)}" data-side="{_e(side.id)}">'
-            f"{_head_html(t, record, lang, side.id)}{rows}</section>"
+            f'<section class="sheet" id="side-{_e(side_id)}" data-side="{_e(side_id)}">'
+            f"{_head_html(t, record, lang, side_id, side_labels)}{rows}</section>"
         )
 
     css = _BASE_CSS + (
@@ -465,10 +484,10 @@ def sheet_html(
         )
 
     tabs = "".join(
-        f'<button type="button" data-target="side-{_e(s.id)}" '
+        f'<button type="button" data-target="side-{_e(sid)}" '
         f'aria-pressed="{"true" if i == 0 else "false"}">'
-        f'{_e(label_of(s.labels, lang, f"side {s.id}"))}</button>'
-        for i, s in enumerate(t.sheet.sides)
+        f'{_e(label_of(labels, lang, f"side {sid}"))}</button>'
+        for i, (sid, labels, _) in enumerate(layout)
     )
     nav = "".join(
         f'<a href="#p-{_e(p.id)}">{_e(p.label(lang))}</a>' for p in t.paragraphs

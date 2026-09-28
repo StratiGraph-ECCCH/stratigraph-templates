@@ -1,0 +1,693 @@
+# DAI — iDAI.field (Field Desktop), categoria `Layer` («Erdbefund»).
+#
+# Fonte: la configurazione APERTA di iDAI.field, il sistema di documentazione di
+# scavo del Deutsches Archäologisches Institut — github.com/dainst/idai-field,
+# licenza Apache-2.0, letta al commit 4b5c1e2c3c499d4bd125d0eda61cc6f5c94ffcd4
+# (2026-09-24; Field Desktop 3.8.0, core 1.7.0) con
+# `stratigraph-templates extract-idai-field Layer --commit 4b5c1e2`: la bozza sta
+# in drafts/draft-idai-field-layer.yaml, e questa definizione la decide.
+#
+# PERCHÉ `Layer` E NON `Feature` O `FeatureSegment` — misurato, non scelto a occhio:
+#
+#   * `Feature` e' la SUPERCATEGORIA e iDAI.field la chiama proprio «Stratigraphische
+#     Einheit / Stratigraphical unit» (Library/Language.de|en.json): e' l'unita'
+#     stratigrafica in generale. Le sue sottocategorie (Categories.json, `parent:
+#     Feature`) sono cinque: Layer, Architecture, Floor, Grave, Burial;
+#   * `Layer` («Erdbefund», il deposito di terra) e' la sottocategoria che porta i campi
+#     del DEPOSITO — consistenza, classificazione dello strato, natura, tipo di suolo,
+#     spessore — e il suo form EREDITA quello di Feature (Forms.json: Feature:default +
+#     Layer:default, fusi da mergeGroupsConfigurations): tutti i campi di Feature sono
+#     qui, piu' i sei suoi. La US 3014 «strato di crollo» e' un Layer;
+#   * `FeatureSegment` («Befundanschnitt») e' un TRATTO di un'unita' (mustLieWithin:
+#     giace dentro una Feature), non l'unita': e' la US tagliata da una sezione.
+#   * Nelle 27 configurazioni di progetto del repository, `Layer:default` c'e' in 21
+#     (piu' Config-Default), `FeatureSegment:default` solo in Config-Default.
+#
+#   Il limite, detto subito: l'unita' NEGATIVA (il taglio) in iDAI.field non ha una
+#   sottocategoria propria, e' una Feature semplice. Questa definizione copre il
+#   deposito; la «scheda del taglio» DAI sarebbe `Feature`, cioe' la stessa meno i sei
+#   campi di Layer (domanda per il DAI, nel referto).
+#
+# NESSUN FOGLIO. iDAI.field e' una banca dati con un modulo, non un modello di carta:
+# questa definizione non ha `sheet`, e StratiField mostra la vista «Campi»
+# (`view.sheet.none`). Disegnarne uno sarebbe inventare lo standard.
+#
+# I VERDETTI NON DECISI. Il formato rifiuta `verdict: undecided` in una definizione, e
+# giustamente: una scheda che promette un atterraggio che non c'e' e' peggio di una che
+# dice di non averlo. Quindi i campi il cui senso il datamodel di s3Dgraphy NON rende
+# evidente portano `verdict: none` + `blocked_on` con la DOMANDA per il DAI — la forma
+# che la definizione IAA-DANA usa gia' per il tipo di locus. Si compilano, si scrivono,
+# non atterrano nel grafo, e sono contati da `validate`. Nel referto: l'elenco delle
+# domande per Benjamin (DAI).
+
+template:
+  id: dai-idaifield-layer-2026
+  # 0.x = non ancora citabile: la lettura aspetta la verifica del DAI.
+  version: "0.1.0"
+  standard:
+    authority: DAI
+    code: "iDAI.field Layer"
+    version: "config 4b5c1e2 (2026-09-24)"
+    kind: field_model
+    title:
+      de: "iDAI.field — Erdbefund (Layer)"
+      en: "iDAI.field — Layer"
+    source: "https://github.com/dainst/idai-field/tree/4b5c1e2c3c499d4bd125d0eda61cc6f5c94ffcd4/core/config — Library/Categories.json, Library/Forms.json (Feature:default + Layer:default), Library/Language.de|en.json, Core/Language.de|en.json, Library/Valuelists/; relazioni e campi del core in core/src/configuration/built-in-configuration.ts e core/src/model/configuration/relation.ts"
+    license: "Apache-2.0"
+    attribution: "Deutsches Archäologisches Institut (DAI) — iDAI.field / Field Desktop (github.com/dainst/idai-field @ 4b5c1e2)"
+
+  # iDAI.field e' tedesco nell'origine: i valori dei valuelist SONO parole tedesche,
+  # e l'inglese e' la traduzione che il DAI stesso pubblica (Language.en.json). Le
+  # etichette qui sotto sono quelle, 44/44 in entrambe le lingue, nessuna nostra.
+  source_language: de
+  languages: [de, en]
+
+  identity:
+    human_key:
+      fields: [identifier]
+      pattern: "{identifier}"
+    uid:
+      policy: minted_by_creator
+      opaque: true
+      display: on_request
+      derive_from_human_key: false
+    deduplication: by_human_key_in_context
+
+  provenance:
+    per_field: true
+    authors: [human, ai]
+    states: [asserted, ai_drafted, human_validated]
+    clock: s3dgraphy_crdt_field_clock
+
+  vocabularies:
+    - idai-field-colors-default-1
+    - idai-field-feature-featureform-default
+    - idai-field-feature-featureborders-default
+    - idai-field-layer-distinguishingcriteria-default
+    - idai-field-layer-layerclassification-default
+    - idai-field-layer-soiltype-default
+    - idai-field-layer-consistency-default
+    - idai-field-periods-default-1
+
+  # I paragrafi sono i GRUPPI del form di iDAI.field, nell'ordine e con i nomi che il
+  # form fuso Feature:default + Layer:default da' (etichette: Library/Language.*.json,
+  # `groups`). Non c'e' una geometria di carta da cui leggere altro.
+  paragraphs:
+    - id: stem
+      labels: {de: "Stammdaten", en: "Core"}
+      fields: [identifier, category, shortDescription, processor, campaign, diary, date, isSameAs]
+    - id: hierarchy
+      labels: {de: "Hierarchie", en: "Hierarchy"}
+      fields: [hasChildren]
+    - id: workflow
+      labels: {de: "Workflow", en: "Workflow"}
+      fields: [isSubjectOf, isResultOf]
+    - id: properties
+      labels: {de: "Eigenschaften", en: "Properties"}
+      fields: [description, color, hasDisturbance, featureForm, featureBorders, comparison,
+               distinguishingCriteria, layerClassification, isNatural, soilType, consistency]
+    - id: stratigraphy
+      labels: {de: "Stratigraphie", en: "Stratigraphy"}
+      fields: [isAbove, isBelow, cuts, isCutBy, fills, isFilledBy, abuts, isAbuttedBy,
+               bondsWith, borders]
+    - id: dimension
+      labels: {de: "Maße", en: "Dimensions"}
+      fields: [area, dimensionLength, dimensionWidth, dimensionThickness]
+    - id: position
+      labels: {de: "Lage / Kontext", en: "Position / Context"}
+      fields: [geometry, dimensionVerticalExtent, isPresentIn]
+    - id: time
+      labels: {de: "Zeit", en: "Time"}
+      fields: [period, dating, isBefore, isAfter, isContemporaryWith]
+
+  fields:
+    # ================================================================ Stammdaten
+    - id: identifier
+      labels: {de: "Bezeichner", en: "Identifier"}
+      type: identifier
+      required: true
+      # SPEC §1.6, Base A: il numero dell'unita' e' lo slot che gli intenti del field
+      # assistant nominano in ogni frase («US 3014 …»): si assegna in trincea, nel
+      # momento in cui l'unita' si riconosce. Stessa ragione della US ICCD e del locus DANA.
+      recorded_in: trench
+      help: {de: "Eindeutiger Bezeichner dieser Ressource", en: "Unique identifier of this resource"}
+      graph:
+        verdict: identity
+        note: "builtInFields.identifier: required, unico nel progetto. E' l'intera chiave umana:
+               il contesto (la trincea) iDAI.field lo tiene in una relazione nascosta
+               (isRecordedIn → Trench/ExcavationArea), non in un campo del form."
+
+    - id: category
+      labels: {de: "Kategorie", en: "Category"}
+      type: choice
+      options:
+        - {value: Layer, labels: {de: "Erdbefund", en: "Layer"}}
+      graph:
+        verdict: node_type
+        node_types: {Layer: US}
+        note: "builtInFields.category (inputType category, non modificabile): in questa
+               definizione vale sempre Layer. Erdbefund = deposito positivo = US nel datamodel
+               di s3Dgraphy (StratigraphicUnit). E' il campo che decide il tipo dell'unita', come
+               formazione_segno nella US ICCD — e l'unico valore possibile lo rende evidente."
+
+    - id: shortDescription
+      labels: {de: "Kurzbeschreibung", en: "Short description"}
+      type: text
+      graph:
+        verdict: none
+        blocked_on:
+          needs: "sapere che cosa scrive chi scava in «Kurzbeschreibung»: il form archaeoDox la
+                  chiama «Kurzbeschreibung (Klassifikation)», cioe' la DEFINIZIONE dell'unita'
+                  (in s3Dgraphy l'elemento del nodo `definition`, come la DEFINIZIONE ICCD), ma
+                  nel form di base e' una descrizione breve libera"
+          reported: "Benjamin (DAI) — domanda D1, referto 2026-10-26-NIGHT-la-scheda-del-dai"
+        note: "builtInFields.shortDescription, inputType input, fulltextIndexed."
+
+    - id: processor
+      labels: {de: "Bearbeiterin/Bearbeiter", en: "Processor"}
+      type: text
+      repeatable: true
+      help:
+        de: "Die Person(en), die für die Ressource oder das Objekt während der Kampagne hauptverantwortlich ist/sind."
+        en: "The name of the person(s) who is/are responsible for the resource or the object during the campaign."
+      graph:
+        verdict: none
+        blocked_on:
+          needs: "una LISTA di persone (checkboxes sui valori del campo di progetto `staff`):
+                  questo formato ha `person_ref`, una persona sola. In ICCD le persone sono
+                  AuthorNode via has_author; qui serve dire se «Bearbeiter» e' l'autore della
+                  scheda (has_author) o il responsabile dell'unita' in campagna"
+          reported: "Benjamin (DAI) — domanda D2, referto 2026-10-26-NIGHT-la-scheda-del-dai"
+        note: "commonFields.processor: checkboxes, valuelistFromProjectField 'staff'. L'aiuto di
+               iDAI.field avverte che chi inserisce il record e' salvato a parte, automaticamente."
+
+    - id: campaign
+      labels: {de: "Kampagne", en: "Campaign"}
+      type: text
+      repeatable: true
+      graph:
+        verdict: none
+        blocked_on:
+          needs: "che cos'e' una campagna nel grafo: un'attivita' (ActivityNodeGroup via
+                  is_in_activity) o l'anno di scavo (in ICCD `anno` → campaign_year sull'atto di
+                  scavo). I valori vengono dal campo di progetto `campaigns`"
+          reported: "Benjamin (DAI) — domanda D3, referto 2026-10-26-NIGHT-la-scheda-del-dai"
+        note: "commonFields.campaign: checkboxes, valuelistFromProjectField 'campaigns'."
+
+    - id: diary
+      labels: {de: "Tagebuch", en: "Diary"}
+      type: text
+      help: {de: "Verweis auf Grabungstagebuch", en: "Reference to excavation diary"}
+      graph:
+        verdict: none
+        blocked_on:
+          needs: "che forma ha il rimando al diario di scavo: una pagina, un file (DocumentNode
+                  via has_documentation, come piante e sezioni ICCD) o una segnatura d'archivio"
+          reported: "Benjamin (DAI) — domanda D4, referto 2026-10-26-NIGHT-la-scheda-del-dai"
+        note: "commonFields.diary: input, constraintIndexed."
+
+    - id: date
+      labels: {de: "Datum", en: "Date"}
+      type: date
+      help: {de: "Datum der Aufnahme/Durchführung", en: "Date of recording/conducting"}
+      graph:
+        verdict: none
+        blocked_on:
+          needs: "l'aiuto dice «Aufnahme/Durchführung», registrazione O esecuzione: nel primo
+                  caso e' la data di rilevamento (ICCD data_rilevamento, sull'atto di
+                  registrazione), nel secondo la data dello scavo dell'unita'. Sono due atti"
+          reported: "Benjamin (DAI) — domanda D5, referto 2026-10-26-NIGHT-la-scheda-del-dai"
+        note: "commonFields.date: date, dataType OPTIONAL (anche intervalli)."
+
+    - id: isSameAs
+      labels: {de: "Identisch mit", en: "Same as"}
+      type: unit_ref_list
+      repeatable: true
+      graph:
+        verdict: edge
+        edge_type: equals
+        direction: outgoing
+        note: "Relation.SAME_AS, inversa di se' stessa, dominio Feature: la stessa unita'
+               registrata due volte. `equals` e' simmetrico nel datamodel delle connessioni
+               (AP11 + em:physicallyEquals), come UGUALE A nella US ICCD."
+
+    # ================================================================ Hierarchie / Workflow
+    - id: hasChildren
+      labels: {de: "Untergeordnete Ressourcen", en: "Child resources"}
+      type: record_ref_list
+      repeatable: true
+      graph:
+        verdict: none
+        note: "derivedRelation (constraintName isChildOf:contain): iDAI.field la calcola dagli
+               altri record, non la inserisce nessuno. Niente da scrivere."
+
+    - id: isSubjectOf
+      labels: {de: "Gegenstand von", en: "Subject of"}
+      type: record_ref_list
+      repeatable: true
+      graph:
+        verdict: none
+        note: "derivedRelation (isCarriedOutOn:contain): calcolata, non inserita."
+
+    - id: isResultOf
+      labels: {de: "Ergebnis von", en: "Result of"}
+      type: record_ref_list
+      repeatable: true
+      graph:
+        verdict: none
+        note: "derivedRelation (resultsIn:contain): calcolata, non inserita."
+
+    # ================================================================ Eigenschaften
+    - id: description
+      labels: {de: "Beschreibung", en: "Description"}
+      type: longtext
+      help: {de: "Freies Beschreibungsfeld", en: "Unrestricted description field"}
+      graph:
+        verdict: property
+        property_name: description
+        note: "commonFields.description (inputType text): il campo del nodo, come DESCRIZIONE
+               nella US ICCD e d_description nel locus DANA."
+
+    - id: color
+      labels: {de: "Farbe und Intensität", en: "Color and intensity"}
+      type: term_list
+      repeatable: true
+      help: {de: "Farbe, soweit erkennbar"}
+      vocabulary:
+        scheme: idai-field-colors-default-1
+        binding: "colors-default-1"
+      graph:
+        verdict: vocabulary
+        qualia: color
+        note: "Categories.json Feature.color: checkboxes su colors-default-1 (19 valori). Qualia
+               `color`, la stessa della US ICCD. ⚠ iDAI.field compone la tinta spuntando piu'
+               valori (hell- + braun): una LISTA di concetti, dove l'ICCD ne ha uno solo. I
+               prefissi (hell-, dunkel-, blass-, leuchtend-) sono valori della stessa lista."
+
+    - id: hasDisturbance
+      labels: {de: "Störung", en: "Disturbance"}
+      type: checkbox
+      help: {de: "Liegt eine Störung des Befundes vor?"}
+      graph:
+        verdict: none
+        blocked_on:
+          needs: "se «Störung» e' un giudizio sullo stato dell'unita' (qualia integrity) o
+                  l'annuncio di un'altra unita' che la disturba (un taglio: allora e' un arco,
+                  e manca a chi)"
+          reported: "Benjamin (DAI) — domanda D6, referto 2026-10-26-NIGHT-la-scheda-del-dai"
+        note: "Categories.json Feature.hasDisturbance: boolean."
+
+    - id: featureForm
+      labels: {de: "Form der stratigraphischen Einheit", en: "Form of the stratigraphical unit"}
+      type: term_list
+      repeatable: true
+      help: {de: "Form der stratigraphischen Einheit im Planum bzw. Profil: Welche erkennbare Form kann identifiziert werden?"}
+      vocabulary:
+        scheme: idai-field-feature-featureform-default
+        binding: "Feature-featureForm-default"
+      graph:
+        verdict: none
+        blocked_on:
+          needs: "una qualia per la FORMA in pianta/sezione: s3Dgraphy (qualia 1.6.1) non ne ha
+                  una (ci sono geometry, footprint_area, bounding_box, non la forma nominata:
+                  U-förmig, oval, rechteckig…). O la si aggiunge, o si decide che va nella
+                  descrizione"
+          reported: "E.D. (datamodel) e Benjamin (DAI) — domanda D7, referto 2026-10-26-NIGHT-la-scheda-del-dai"
+        note: "Categories.json Feature.featureForm: checkboxes su Feature-featureForm-default (17)."
+
+    - id: featureBorders
+      labels: {de: "Grenzen der stratigraphischen Einheit", en: "Borders of the stratigraphical unit"}
+      type: term_list
+      repeatable: true
+      help: {de: "Bestimmung der Grenzen des Befundes"}
+      vocabulary:
+        scheme: idai-field-feature-featureborders-default
+        binding: "Feature-featureBorders-default"
+      graph:
+        verdict: none
+        blocked_on:
+          needs: "una qualia per la NETTEZZA dei limiti (deutlich, diffus, scharf, verwaschen…):
+                  s3Dgraphy non ne ha una. La US ICCD non ha la casella: ha i CRITERI DI
+                  DISTINZIONE, che e' un'altra domanda (v. distinguishingCriteria)"
+          reported: "E.D. (datamodel) e Benjamin (DAI) — domanda D8, referto 2026-10-26-NIGHT-la-scheda-del-dai"
+        note: "Categories.json Feature.featureBorders: checkboxes su Feature-featureBorders-default (18)."
+
+    - id: comparison
+      labels: {de: "Vergleich(e)", en: "Comparison"}
+      type: longtext
+      help: {de: "Vergleich mit ähnlichen Befunden, Objekten, Inschriften etc. mit Angabe einer Referenz"}
+      graph:
+        verdict: none
+        blocked_on:
+          needs: "se i confronti (con riferimento bibliografico) sono una proprieta' dell'unita'
+                  o paradata — un'interpretazione che cita una fonte, cioe' un ParadataNode con
+                  il suo documento"
+          reported: "Benjamin (DAI) — domanda D9, referto 2026-10-26-NIGHT-la-scheda-del-dai"
+        note: "Categories.json Feature.comparison: text."
+
+    - id: distinguishingCriteria
+      labels: {de: "Unterscheidungskriterium", en: "Distinguishing criteria"}
+      type: term
+      help: {de: "Welches Kriterium wurde zur Abgrenzung der stratigraphischen Einheit gewählt?"}
+      vocabulary:
+        scheme: idai-field-layer-distinguishingcriteria-default
+        binding: "Layer-distinguishingCriteria-default"
+      graph:
+        verdict: none
+        blocked_on:
+          needs: "e' la stessa domanda dei CRITERI DI DISTINZIONE della US ICCD (property
+                  criteria_of_distinction, testo libero), ma qui e' UN termine di cinque (Farbe,
+                  Form, Grenzen, Konsistenz, Komposition, radio): serve decidere se i due campi
+                  scrivono la stessa proprieta' con valori di forma diversa"
+          reported: "E.D. e Benjamin (DAI) — domanda D10, referto 2026-10-26-NIGHT-la-scheda-del-dai"
+        note: "Categories.json Layer.distinguishingCriteria: radio su Layer-distinguishingCriteria-default (5)."
+
+    - id: layerClassification
+      labels: {de: "Bezeichnung bzw. Klassifikation Schicht", en: "Designation or classification of the layer"}
+      type: term
+      vocabulary:
+        scheme: idai-field-layer-layerclassification-default
+        binding: "Layer-layerClassification-default"
+      graph:
+        verdict: property
+        property_name: definition
+        note: "Categories.json Layer.layerClassification: dropdown su
+               Layer-layerClassification-default (Brandschicht, Kulturschicht, Laufhorizont,
+               Planierschicht). «Bezeichnung bzw. Klassifikation» = la DEFINIZIONE dell'unita':
+               nel datamodel di s3Dgraphy (nodi 1.6.9) e' l'elemento del nodo `definition`,
+               dichiarato su StratigraphicNode, lo stesso che scrive la DEFINIZIONE ICCD
+               (data.definition). Due valori sono gia' allineati a em-us-definizione
+               (Planierschicht = strato di livellamento; Laufhorizont ~ strato di calpestio /
+               piano d'uso). ⚠ la lista DAI ha 4 termini, quella della US 36: v. domanda D11."
+
+    - id: isNatural
+      labels: {de: "Natürlich", en: "Natural"}
+      # iDAI.field ha un booleano, e il suo form lo mostra come Ja/Nein: tre stati (sì,
+      # no, non detto). Una `choice` con due opzioni li tiene tutti e tre — una
+      # `checkbox` confonderebbe «no» con «non detto» — e le opzioni hanno per valore le
+      # chiavi della qualia, cosi' nel grafo finisce `natural`/`artificial`, non `true`.
+      type: choice
+      options:
+        - {value: natural, labels: {de: "Ja (natürlich)", en: "Yes (natural)"}}
+        - {value: artificial, labels: {de: "Nein", en: "No"}}
+      help: {de: "Ist die Schicht natürlich? ('Ja' z. B. bei Erosion)"}
+      graph:
+        verdict: property
+        qualia: origin_type
+        note: "Categories.json Layer.isNatural: boolean. Il datamodel lo rende evidente: la qualia
+               `origin_type` (em_qualia_types.json, qualia 1.6.1) e' «Natural or artificial
+               origin», valori [natural, artificial]. ⚠ La US ICCD scrive la stessa cosa
+               (formazione_natura) come property_name `formation_mode`, NON registrata e con i
+               valori italiani: le due schede, oggi, non si leggono a vicenda su questo campo
+               (segnalato nel referto)."
+
+    - id: soilType
+      labels: {de: "Bodenart", en: "Soil type"}
+      type: term
+      help: {de: "Bezeichnung des Bodens nach bodenkundlicher Kartieranleitung"}
+      vocabulary:
+        scheme: idai-field-layer-soiltype-default
+        binding: "Layer-soilType-default"
+      graph:
+        verdict: none
+        blocked_on:
+          needs: "la qualia della CLASSE TESSITURALE del suolo (Sand, Schluff, Ton, Lehm e le
+                  loro miscele, secondo la Bodenkundliche Kartieranleitung): `granulometry` in
+                  s3Dgraphy ha valori fine/medium/coarse, un'altra scala. Stessa qualia con un
+                  vocabolario diverso, o una qualia nuova?"
+          reported: "E.D. (datamodel) e Benjamin (DAI) — domanda D12, referto 2026-10-26-NIGHT-la-scheda-del-dai"
+        note: "Categories.json Layer.soilType: dropdown su Layer-soilType-default (21)."
+
+    - id: consistency
+      labels: {de: "Konsistenz", en: "Consistency"}
+      type: term_list
+      repeatable: true
+      vocabulary:
+        scheme: idai-field-layer-consistency-default
+        binding: "Layer-consistency-default"
+      graph:
+        verdict: vocabulary
+        qualia: texture
+        note: "Categories.json Layer.consistency: checkboxes su Layer-consistency-default (24).
+               Qualia `texture`, la stessa a cui la US ICCD lega CONSISTENZA — cosi' le due
+               schede si leggono a vicenda (5 valori gia' allineati a em-us-consistenza). ⚠ Resta
+               aperta la domanda del referto del 27 settembre (§6.3/15): `texture` in s3Dgraphy
+               descrive la superficie; la consistenza forse e' `hardness`. Se cambia, cambia per
+               entrambe."
+
+    # ================================================================ Stratigraphie
+    # Relation.Position (relation.ts:40-60): relazioni FISICHE, «read off by a user by
+    # sight». Ognuna ha un arco canonico nel datamodel delle connessioni 1.6.20, e le
+    # coppie (isAbove/isBelow…) sono le due direzioni dello stesso arco (SPEC §2.3).
+    - id: isAbove
+      labels: {de: "Liegt über", en: "Above"}
+      type: unit_ref_list
+      repeatable: true
+      graph:
+        verdict: edge
+        edge_type: overlies
+        direction: outgoing
+        note: "Relation.Position.ABOVE, inversa isBelow. Relazione di POSIZIONE letta a vista, nel
+               gruppo Stratigraphie accanto a cuts/fills: e' il contatto fisico, `overlies` (COPRE
+               nella US ICCD). Non `is_after`: quello e' il gruppo Zeit, e relation.ts dice che le
+               relazioni temporali sono interpretazioni fondate su queste. (Il locus DANA, dove
+               «sopra» non misura il contatto, e' letto diversamente, e a ragione.)"
+
+    - id: isBelow
+      labels: {de: "Liegt unter", en: "Below"}
+      type: unit_ref_list
+      repeatable: true
+      graph:
+        verdict: edge
+        edge_type: overlies
+        direction: incoming
+        note: "Relation.Position.BELOW, inversa isAbove: lo stesso arco, entrante (COPERTO DA)."
+
+    - id: cuts
+      labels: {de: "Schneidet", en: "Cuts"}
+      type: unit_ref_list
+      repeatable: true
+      graph: {verdict: edge, edge_type: cuts, direction: outgoing,
+              note: "Relation.Position.CUTS, inversa isCutBy (TAGLIA)."}
+
+    - id: isCutBy
+      labels: {de: "Wird geschnitten von", en: "Cut by"}
+      type: unit_ref_list
+      repeatable: true
+      graph: {verdict: edge, edge_type: cuts, direction: incoming,
+              note: "Relation.Position.CUTBY, inversa cuts (TAGLIATO DA)."}
+
+    - id: fills
+      labels: {de: "Verfüllt", en: "Fills"}
+      type: unit_ref_list
+      repeatable: true
+      graph: {verdict: edge, edge_type: fills, direction: outgoing,
+              note: "Relation.Position.FILLS, inversa isFilledBy (RIEMPIE)."}
+
+    - id: isFilledBy
+      labels: {de: "Verfüllt von", en: "Filled by"}
+      type: unit_ref_list
+      repeatable: true
+      graph: {verdict: edge, edge_type: fills, direction: incoming,
+              note: "Relation.Position.FILLEDBY, inversa fills (RIEMPITO DA)."}
+
+    - id: abuts
+      labels: {de: "Stößt an", en: "Abuts"}
+      type: unit_ref_list
+      repeatable: true
+      graph: {verdict: edge, edge_type: abuts, direction: outgoing,
+              note: "Relation.Position.ABUTS, inversa isAbuttedBy (SI APPOGGIA A)."}
+
+    - id: isAbuttedBy
+      labels: {de: "Wird angestoßen von", en: "Abutted by"}
+      type: unit_ref_list
+      repeatable: true
+      graph: {verdict: edge, edge_type: abuts, direction: incoming,
+              note: "Relation.Position.ABUTTEDBY, inversa abuts (GLI SI APPOGGIA)."}
+
+    - id: bondsWith
+      labels: {de: "Bindet ein", en: "Bonds with"}
+      type: unit_ref_list
+      repeatable: true
+      graph: {verdict: edge, edge_type: bonded_to, direction: outgoing,
+              note: "Relation.Position.BONDSWITH, inversa di se' stessa: `bonded_to`, simmetrico
+                     (SI LEGA A). La forma canonica, non `is_bonded_to`: stessa proprieta' RDF."}
+
+    - id: borders
+      labels: {de: "Grenzt an", en: "Borders"}
+      type: unit_ref_list
+      repeatable: true
+      graph:
+        verdict: edge
+        edge_type: generic_connection
+        direction: outgoing
+        note: "Relation.Position.BORDERS, inversa di se' stessa: le due unita' confinano, e
+               iDAI.field non dice di piu'. NON abuts (direbbe che una e' posteriore) ne'
+               bonded_to (direbbe che sono contemporanee): `generic_connection` proietta su
+               crmarchaeo:AP11_has_physical_relation_to, la relazione fisica non specificata —
+               la stessa decisione del locus DANA per «adjoining». Domanda D13 per il DAI: se
+               nell'uso «Grenzt an» implica qualcosa di piu', l'arco cambia."
+
+    # ================================================================ Maße
+    - id: area
+      labels: {de: "Fläche in m2", en: "Area in m2"}
+      type: decimal
+      help: {de: "Flächenangabe in Quadratmetern", en: "Area in square meters"}
+      graph:
+        verdict: property
+        qualia: area
+        note: "commonFields.area: unsignedFloat, in m² per l'etichetta stessa. Qualia `area`."
+
+    - id: dimensionLength
+      labels: {de: "Länge", en: "Length"}
+      type: quantity_list
+      repeatable: true
+      help: {de: "Angabe der Länge", en: "Measurement of the length"}
+      graph:
+        verdict: property
+        qualia: length
+        note: "commonFields.dimensionLength: inputType dimension (valore o intervallo, unita',
+               posizione di misura da position-values-expansion-default — Maximale/Minimale
+               Ausdehnung —, commento, «imprecise»). Una riga per misura, qualia di default
+               `length`; la posizione di misura va nell'etichetta della riga."
+
+    - id: dimensionWidth
+      labels: {de: "Breite", en: "Width"}
+      type: quantity_list
+      repeatable: true
+      help: {de: "Angabe der Breite an der maximalen/minimalen Ausdehnung", en: "Indication of the width at the maximum/minimum extension"}
+      graph:
+        verdict: property
+        qualia: width
+        note: "commonFields.dimensionWidth: dimension, come sopra. Qualia di default `width`."
+
+    - id: dimensionThickness
+      labels: {de: "Stärke", en: "Thickness"}
+      type: quantity_list
+      repeatable: true
+      help: {de: "Dicke bzw. Stärke des Objekts", en: "Thickness of the object"}
+      graph:
+        verdict: property
+        qualia: thickness
+        note: "commonFields.dimensionThickness (form Layer:default, gruppo dimension): dimension.
+               Qualia di default `thickness` (AAT 300055650 in em_qualia_types.json)."
+
+    # ================================================================ Lage / Kontext
+    - id: geometry
+      labels: {de: "Geometrie", en: "Geometry"}
+      type: text
+      graph:
+        verdict: none
+        note: "commonFields.geometry: GeoJSON disegnato su una mappa (visible: false nel form). Il
+               GIS e' fuori da questo formato (SPEC §6: e' di pyarchinit)."
+
+    - id: dimensionVerticalExtent
+      labels: {de: "Niveau", en: "Vertical extent"}
+      type: quantity_list
+      repeatable: true
+      help: {de: "Niveau Oberkante/Unterkante bzw. Laufniveau", en: "Niveau of the upper/lower boundary or the walking level"}
+      graph:
+        verdict: property
+        qualia: elevation
+        note: "commonFields.dimensionVerticalExtent: dimension con posizione da
+               position-values-edge-default (Oberkante / Unterkante). Sono le QUOTE: qualia di
+               default `elevation`, e ogni riga puo' dire la propria (elevation_max_absolute per
+               l'Oberkante, elevation_min_absolute per l'Unterkante), come QUOTE nella US ICCD."
+
+    - id: isPresentIn
+      labels: {de: "Ist enthalten in Profil/Planum", en: "Is present in profile/planum"}
+      type: record_ref_list
+      repeatable: true
+      graph:
+        verdict: none
+        blocked_on:
+          needs: "che cosa sono Profil e Planum nel grafo: in iDAI.field sono RECORD (categorie
+                  con documenti propri), non file; la US ICCD rimanda a piante e sezioni come
+                  DocumentNode (has_documentation). Stesso nodo, o un'unita' di documentazione?"
+          reported: "Benjamin (DAI) — domanda D14, referto 2026-10-26-NIGHT-la-scheda-del-dai"
+        note: "Relation.IS_PRESENT_IN, unidirezionale, range [Profile, Planum]."
+
+    # ================================================================ Zeit
+    - id: period
+      labels: {de: "Grobdatierung", en: "Period"}
+      type: term
+      vocabulary:
+        scheme: idai-field-periods-default-1
+        binding: "periods-default-1"
+      graph:
+        verdict: none
+        blocked_on:
+          needs: "il periodo di iDAI.field e' un INTERVALLO (dropdownRange: da … a …, su
+                  periods-default-1, 29 periodi): nel datamodel e' has_first_epoch verso
+                  l'epoca d'inizio piu' survive_in_epoch verso le successive? E le epoche sono i
+                  periodi del valuelist (EpochNode per nome) o quelle del progetto?"
+          reported: "E.D. e Benjamin (DAI) — domanda D15, referto 2026-10-26-NIGHT-la-scheda-del-dai"
+        note: "commonFields.period: dropdownRange, valuelist periods-default-1 (IT-Referat, DAI,
+               2019). Tipo `term` perche' il valore e' un periodo del valuelist; l'intervallo e'
+               la parte che questo formato non sa dire."
+
+    - id: dating
+      labels: {de: "Datierung", en: "Dating"}
+      type: text
+      graph:
+        verdict: none
+        blocked_on:
+          needs: "la datazione di iDAI.field e' STRUTTURATA (range, before, after, exact,
+                  scientific con margine, fonte): la US ICCD la scrive come testo (property
+                  dating). Qui serve decidere se diventa absolute_time_start/end, TPQ/TAQ, o
+                  paradata con la sua fonte"
+          reported: "E.D. e Benjamin (DAI) — domanda D16, referto 2026-10-26-NIGHT-la-scheda-del-dai"
+        note: "commonFields.dating: inputType dating."
+
+    # Relation.Time (relation.ts:25-36): «interpretations of users, based on position
+    # relations» — l'ordinamento, non il contatto.
+    - id: isBefore
+      labels: {de: "Zeitlich vor", en: "Before"}
+      type: unit_ref_list
+      repeatable: true
+      graph: {verdict: edge, edge_type: is_after, direction: incoming,
+              note: "Relation.Time.BEFORE, inversa isAfter: l'altra unita' e' posteriore, quindi
+                     l'arco canonico `is_after` ENTRA (ANTERIORE A nella US ICCD)."}
+
+    - id: isAfter
+      labels: {de: "Zeitlich nach", en: "After"}
+      type: unit_ref_list
+      repeatable: true
+      graph: {verdict: edge, edge_type: is_after, direction: outgoing,
+              note: "Relation.Time.AFTER, inversa isBefore (POSTERIORE A)."}
+
+    - id: isContemporaryWith
+      labels: {de: "Zeitgleich mit", en: "Contemporary with"}
+      type: unit_ref_list
+      repeatable: true
+      graph: {verdict: edge, edge_type: has_same_time, direction: outgoing,
+              note: "Relation.Time.CONTEMPORARY, inversa di se' stessa: `has_same_time`,
+                     simmetrico, crmarchaeo:AP22_is_equal_in_time_to. La US ICCD non ha la
+                     casella."}
+
+  notes:
+    source: |
+      Letta dalla configurazione aperta di iDAI.field al commit
+      4b5c1e2c3c499d4bd125d0eda61cc6f5c94ffcd4 (2026-09-24), con
+      `stratigraph-templates extract-idai-field Layer --commit 4b5c1e2`. La bozza
+      (drafts/draft-idai-field-layer.yaml) e' la lettura meccanica; questa
+      definizione ne decide i verdetti. Le etichette de/en sono quelle del DAI.
+    no_sheet: |
+      Nessun `sheet`: iDAI.field non ha un modello di carta. StratiField mostra i
+      Campi; `print` rifiuta, e lo dice.
+    hidden_relations: |
+      Il contesto spaziale non e' nel form: iDAI.field lo tiene in relazioni
+      nascoste (isRecordedIn → Trench/ExcavationArea, liesWithin → Feature/
+      FeatureGroup) che l'applicazione imposta da se'. Non sono campi, e qui non
+      compaiono; un import dei dati le leggera' come archi di contesto.
+    undecided: |
+      14 campi sono `none` + `blocked_on` con una domanda (D1-D16 nel referto, due
+      domande — D11, D13 — riguardano campi decisi):
+      e' la forma che compila di un verdetto non ancora deciso. Una risposta del DAI
+      li porta a un verdetto e alza la versione (MAJOR, se un record gia' scritto
+      si leggerebbe diversamente).
+    licence: |
+      La configurazione di iDAI.field e' Apache-2.0 (DAI). Questa definizione ne
+      riporta i nomi dei campi, le etichette e i riferimenti ai valuelist, con
+      attribuzione; i valori dei valuelist NON sono copiati (si risolvono dal
+      checkout al commit). V. LICENSING.md §1-quater.

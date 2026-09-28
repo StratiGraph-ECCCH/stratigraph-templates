@@ -11,6 +11,10 @@ letta da un EXPORT invece che da una norma pubblicata. Il nome del file dice
 ancora «three» e va rinominato quando si potrà: il numero nel nome era
 l'errore, non il quarto standard.
 
+Dal 2026-10-26 sono cinque: la quinta è la categoria `Layer` di iDAI.field
+(DAI), letta dalla configurazione APERTA di un'applicazione — né norma, né
+export — e prima scheda senza foglio di carta.
+
 **Perché un test e non un referto.** La scheda ungherese è nata la notte del
 2026-09-23 proprio per provare questo, è comparsa nel browser con il diff
 dell'implementazione vuoto, e poi è stata cancellata: della prova sono rimasti
@@ -44,6 +48,9 @@ SHIPPED = {
     "es-ue-demo-2026":    "un'altra lingua sorgente e un paragrafo che l'ICCD non ha",
     "hu-rl-demo-2026":    "una terza lingua, e il designatore che NON è l'ultimo",
                            "nessun documento pubblico da citare, e le relazioni in una tabella a parte",
+    "dai-idaifield-layer-2026": "la CONFIGURAZIONE APERTA di un'applicazione (iDAI.field, DAI), letta "
+                                "a un commit: nessun foglio di carta, chiave umana di un campo solo, "
+                                "etichette in tedesco nell'origine",
 }
 
 
@@ -71,17 +78,20 @@ def test_every_shipped_standard_validates():
 # ── 2 · e sono DIVERSE, che è l'unica ragione per averne tre ───────────────
 
 def test_the_three_speak_three_source_languages():
-    assert {s.source_language for s in sheets().values()} == {"it", "es", "hu", "en"}
+    assert {s.source_language for s in sheets().values()} == {"it", "es", "hu", "en", "de"}
 
 
 def test_the_three_have_three_shapes_of_human_key():
-    """Stessa domanda, tre risposte diverse: due campi, tre campi, e il
-    designatore in due posizioni."""
+    """Stessa domanda, quattro risposte diverse: un campo, due, tre, e il
+    designatore in due posizioni. (ICCD e IAA hanno la stessa forma, tre campi e
+    il designatore in fondo: la IAA non aggiungeva una forma, aggiungeva un
+    export. Il DAI aggiunge la chiave di UN campo: il contesto — la trincea —
+    iDAI.field lo tiene in una relazione nascosta, non nel nome.)"""
     shapes = {}
     for name, sheet in sheets().items():
         key = sheet.identity.human_key
         shapes[name] = (len(key), key.index(sheet.identity.unit_field_of()))
-    assert len(set(shapes.values())) == 3, shapes
+    assert len(set(shapes.values())) == 4, shapes
 
 
 def test_the_three_give_three_different_trench_subsets():
@@ -108,11 +118,25 @@ def test_the_implementation_names_none_of_the_three():
         names.add(sheet.id)
         names.update(f.id for f in sheet.fields)
         names.update(p.id for p in sheet.paragraphs)
+    # iDAI.field chiama campi e gruppi con parole inglesi COMUNI, e queste undici
+    # erano nel codice prima che il DAI arrivasse: CSS (`color`, `position`),
+    # Python (`date`, `time`), i tipi del formato (`identifier`, `date`), il campo
+    # em.json `description`, la chiave `properties` del datamodel, la prosa. Una
+    # parola comune in un codice non è un codice che ha imparato uno standard.
+    # Sono dichiarate UNA PER UNA, e il test pretende che siano davvero id della
+    # scheda DAI: un'esenzione che non esenta più niente è una che si toglie.
+    common_english = {"category", "color", "comparison", "date", "description", "geometry",
+                      "identifier", "position", "properties", "stratigraphy", "time"}
+    dai = sheets()["dai-idaifield-layer-2026"]
+    dai_names = {f.id for f in dai.fields} | {p.id for p in dai.paragraphs}
+    assert common_english <= dai_names, common_english - dai_names
+    names -= common_english
 
     guilty = {}
     for py in sorted(SRC.glob("*.py")):
-        if py.name == "xsd_extract.py":
-            continue      # è ABOUT il dialetto XSD dell'ICCD, per definizione
+        if py.name in ("xsd_extract.py", "idai_extract.py"):
+            continue      # sono ABOUT un dialetto (l'XSD dell'ICCD, la configurazione
+                          # di iDAI.field), per definizione
         code = py.read_text(encoding="utf-8")
         hits = sorted(n for n in names
                       if len(n) > 3 and re.search(rf"\b{re.escape(n)}\b", code))

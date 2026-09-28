@@ -146,7 +146,8 @@ def _visual(t: Template) -> Dict[str, Any]:
         "paragraphs": [{"id": p.id, "labels": p.labels, "fields": list(p.fields)}
                        for p in t.paragraphs],
         "fields": fields,
-        "sheet": dataclasses.asdict(t.sheet),
+        # null when the definition declares no sheet (SPEC §4): never an empty one
+        "sheet": dataclasses.asdict(t.sheet) if t.sheet is not None else None,
         "notes": t.notes,
     }
 

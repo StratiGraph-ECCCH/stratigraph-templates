@@ -60,10 +60,78 @@ del mestiere («strato di crollo», «friabile»), non un'espressione protetta, 
 fonte è citata su ogni concetto; le definizioni sono nostre. Non derivano dalla
 norma ICCD — il modello US 2021 non elenca termini (misurato sul `.doc`) — e per
 questo non ereditano la CC BY-SA 4.0 che vale per `templates/`. I valuelist di
-iDAI.field (Apache-2.0) servono solo agli allineamenti e non sono copiati.
+iDAI.field (Apache-2.0) servono agli allineamenti e alla scheda DAI, e non sono
+copiati (v. §1-quater).
 
 ⚠ Il redirect **`w3id.org/extendedmatrix` non è ancora registrato**: gli URI sono
 stabili nell'intenzione ma non risolvibili. Va chiesto prima di pubblicare.
+
+## 1-quater · Una definizione letta dalla configurazione di un'applicazione
+
+`templates/dai-idaifield-layer-2026/`, `drafts/draft-idai-field-layer.yaml`,
+`vocabularies/schemes/idai-field-*.yaml`.
+
+La quarta specie: né norma pubblicata, né modulo nostro, né export. **La
+configurazione aperta di iDAI.field** (Field Desktop), il sistema di
+documentazione di scavo del Deutsches Archäologisches Institut, che il DAI
+pubblica su GitHub (`dainst/idai-field`) con licenza **Apache-2.0**. Letta al
+commit `4b5c1e2c3c499d4bd125d0eda61cc6f5c94ffcd4` (2026-09-24).
+
+**Che cosa entra qui.** I nomi dei campi e dei gruppi, le loro **etichette
+de/en** (brevi, quelle che il DAI pubblica in `Language.*.json`), i tipi e i
+riferimenti ai valuelist, con l'attribuzione nel dato (`standard.attribution`,
+`standard.license: Apache-2.0`) e il commit citato. La lettura, i verdetti, le
+note e le domande sono lavoro nostro.
+
+**Che cosa NON entra.** I **valori dei valuelist**: gli schemi `idai-field-*`
+li dichiarano e li **risolvono dal checkout** al commit (`resolve.kind:
+idai_field_valuelist`), come gli SKOS dell'ICCD si risolvono da
+Standard-catalografici. Un'app che li vendora (StratiField, `sync-schede.sh`)
+porta con sé l'attribuzione e la licenza dello schema, che Apache-2.0 chiede.
+
+**Perché è lecito.** Apache-2.0 permette di ridistribuire e derivare,
+chiedendo attribuzione e che la licenza della parte ripresa resti detta:
+entrambe stanno nel dato, campo per campo della testata. La descrizione
+(verdetti e note) segue il resto di `templates/`.
+
+**Come la IAA, e non come l'ICCD:** la versione resta **0.x** finché il DAI
+(Benjamin) non ha visto la lettura e risposto alle domande del referto.
+
+## 1-quinquies · Le liste di buona pratica, che finora non avevano casa
+
+`vocabularies/schemes/` — sezione da aprire quando la prima lista entra.
+
+La quinta specie, e la più comune di tutte: le liste di termini controllati che
+nascono **formalizzando un caso studio**, non da una norma e non da un sistema.
+«RTK geodesy, UAV, scanner 3D» per lo strumento, «sedimento, carbone» per il
+campione, «pulitura meccanica, pulitura chimica» per l'attività, «taglio,
+riempimento, muro, piano» per il tipo di unità. Chi lavora le scrive in una
+tabella, dentro una relazione o una slide, e lì restano: non sono citabili, non
+sono allineabili, e la volta dopo qualcuno le riscrive leggermente diverse.
+
+**Non sono nessuna delle altre quattro.** Non le pubblica un'autorità come
+l'ICCD, quindi non si ricostruiscono da una norma. Non le originiamo noi come i
+moduli `em-*`, quindi la paternità non è nostra. Non stanno in un export né
+nella configurazione di un'applicazione: stanno nel lavoro metodologico di un
+gruppo. Hanno però tutto quello che serve a una definizione di questo
+repository — **un proprietario, una licenza e una versione** — e quindi qui ci
+stanno bene.
+
+**Che cosa entra.** Lo schema di vocabolario con i suoi concetti, le etichette
+nelle lingue in cui il gruppo lavora, e l'allineamento a un thesaurus esterno
+dove un aggancio esiste (AAT in testa). Nella testata il gruppo che la ha
+prodotta come `standard.attribution`, la licenza che sceglie, e la versione.
+
+**L'attribuzione è doppia, come per la IAA e per il DAI.** La lista resta del
+gruppo che la ha costruita, la lettura e l'allineamento sono di chi li ha fatti;
+chi cita la lista cita entrambi. Finché il gruppo non conferma, la versione
+resta **0.x**, che qui significa «non ancora citabile».
+
+**Perché conviene a chi la scrive.** Una lista che sta qui viene validata contro
+quello che s3Dgraphy dichiara, esce compilata in `dist/`, si aggancia a un
+thesaurus e prende un identificativo che regge nel tempo. Una lista che resta in
+una tabella di un documento non fa niente di tutto questo, e invecchia con il
+documento che la contiene.
 
 ## 2 · I vocabolari (referenziati, non incorporati)
 

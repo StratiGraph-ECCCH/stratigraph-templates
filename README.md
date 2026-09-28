@@ -66,6 +66,27 @@ python3 -m venv .venv && .venv/bin/pip install -e '.[dev]'
 La stampa richiede WeasyPrint (`pip install '.[print]'`; su macOS serve anche
 `brew install pango`). La risoluzione dei vocabolari richiede `rdflib`.
 
+## Le cinque specie di definizione
+
+Una definizione che entra qui viene da qualche parte, e da dove viene decide
+come si cita e con che licenza si ridistribuisce. Le specie sono cinque, e
+[LICENSING.md](LICENSING.md) le tratta una per una.
+
+| specie | da dove viene | esempio |
+|---|---|---|
+| norma pubblicata | ricostruita dalla normativa di un'autorità | `iccd-us-2021` |
+| modulo nostro | lo originiamo noi, per il linguaggio EM | gli schemi `em-*` |
+| configurazione di un'applicazione | letta dal codice aperto di un sistema di scavo | `dai-idaifield-layer-2026` |
+| **buona pratica** | nasce formalizzando un caso studio: non la pubblica un'autorità, non la originiamo noi, non sta in un sistema | *da aprire* |
+
+L'ultima è la più comune e finora non aveva una casa: le liste di termini che un
+gruppo scrive mentre formalizza il proprio lavoro — tipi di strumento, di
+campione, di attività, di unità — e che restano dentro una tabella di una
+relazione, non citabili e non allineabili. Hanno un proprietario, una licenza e
+una versione, che è tutto ciò che questo repository chiede. L'attribuzione è
+doppia come per la IAA e per il DAI: la lista resta del gruppo che l'ha
+costruita, la lettura e l'allineamento sono di chi li ha fatti.
+
 ## Il legame con s3Dgraphy
 
 Ogni definizione dichiara, campo per campo, che cosa significa per il grafo. I

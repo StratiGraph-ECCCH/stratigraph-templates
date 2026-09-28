@@ -1,5 +1,15 @@
 # RÉTEGLEÍRÁS — scheda di strato, DEMO, inventata.
 #
+# ── SEGNAPOSTO (E.D., 27 settembre 2026) ───────────────────────────────────
+#
+# Questa scheda è un SEGNAPOSTO, non la scheda ungherese. Nessun partner
+# ungherese l'ha scritta né la attende; le schede nazionali vere di questo
+# il DAI (`dai-idaifield-layer-2026`, da iDAI.field). Resta perché regge due
+# test di tesi (v. sotto) e il designatore in PRIMA posizione — non perché
+# rappresenti una norma. Il contenuto è invariato di proposito: marcarla qui,
+# nel commento, non cambia il digest della 0.1.0 già pubblicata; il formato
+# non ha un campo `status`, e `invented: true` dice già al dato che è finta.
+#
 # ATTENZIONE, ed è dichiarato anche nel dato (`invented: true`, e la stampa
 # porta il bollo FIXTURE): questa NON è una normativa ungherese reale. Non
 # avevamo la norma vera sottomano, e inventare una scheda plausibile è meglio

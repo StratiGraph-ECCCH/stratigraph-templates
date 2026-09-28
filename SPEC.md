@@ -49,7 +49,7 @@ template:
   vocabularies: [<scheme id>] # gli schemi di vocabolario a cui i campi rimandano
   paragraphs: [...]           # la SOSTANZA: come i campi si raggruppano
   fields: [...]               # la SOSTANZA + IL LEGAME AL GRAFO, campo per campo
-  sheet: {...}                # IL FOGLIO: dove sta ogni casella
+  sheet: {...}                # IL FOGLIO: dove sta ogni casella — facoltativo, §4.1
   notes: {...}                # libero: misure, provenienza della ricostruzione
 ```
 
@@ -407,6 +407,13 @@ decisione non c'è, il campo non atterra da nessuna parte) e `validate` li conta
 e li stampa. Nella US 2021 sono tre: `ente_responsabile`, `ufficio_mic`
 (l'attore istituzionale) e `campionature` (`CRMsci S13_Sample`).
 
+**La decisione che manca può essere di chi possiede lo standard**, non del
+datamodel: il vocabolario dei tipi di locus che solo l'IAA può dare
+(`dai-idaifield-layer-2026`, quattordici campi). La forma è la stessa — `none`
+più `blocked_on`, con la domanda in `needs` e il destinatario in `reported` —
+ed è la forma **che compila** di un verdetto non ancora deciso: `undecided`
+resta il marcatore della bozza (§7), che nessuna definizione porta.
+
 ### 2.3 · Gli archi hanno UNA direzione canonica
 
 La scheda ha due caselle per la stessa relazione (`COPRE` e `COPERTO DA`); il
@@ -456,6 +463,16 @@ scheme:
 * `resolvable` = c'è un file SKOS. `skos_file` sta nel repository;
   `external_skos_file` sta sul disco, sotto `$STRATIGRAPH_ICCD_STANDARDS`
   (default `~/Documents/GitHub/Standard-catalografici`).
+* `resolvable` con `resolve.kind: idai_field_valuelist` = **un valuelist di
+  iDAI.field**, letto da un checkout di `dainst/idai-field`
+  (`$STRATIGRAPH_IDAI_FIELD`, default `~/Documents/GitHub/idai-field`) **al
+  commit che lo schema nomina** (`resolve.commit`, `git show`, mai il working
+  tree), con `resolve.valuelist`. Le etichette sono quelle dei
+  `Language.default|projects.<lingua>.json` del DAI. iDAI.field non conia URI
+  per i valori: i concetti sono **localizzatori costruiti da noi**
+  (`…/Valuelists.json#<valuelist>/<valore>`, il valore percent-encoded), e lo
+  schema lo dichiara. Uno schema per valuelist (`idai-field-<valuelist>`), così
+  un widget offre i valori della casella e non gli altri novecento.
 
 `status` e `origin` rispondono a due domande diverse e non vanno confusi.
 `status` dice **posso risolverlo?**, `origin` dice **di chi è?**.
@@ -627,6 +644,26 @@ dato è più alto della casella, la casella cresce e il comando dice quante pagi
 è costato (`2 side(s) → 3 page(s)`). Non si taglia mai ciò che qualcuno ha
 scritto.
 
+### 4.1 · Il foglio che non c'è
+
+Uno standard che vive in una banca dati con un modulo — iDAI.field — **non ha
+un modello di carta**, e disegnarne uno vorrebbe dire inventarlo: sembrerebbe
+lo standard. Quindi `sheet` è **facoltativo**, e la sua assenza si dice
+tacendo la chiave:
+
+* nessuna chiave `sheet:` = nessun foglio (`Template.sheet` è `None`, il
+  compilato scrive `"sheet": null`, StratiField mostra i Campi e lo dice con
+  `view.sheet.none`). Non esiste il foglio vuoto: una chiave `sheet:` presente
+  è un foglio, con le sue regole, e deve collocare ogni campo;
+* senza foglio il validatore non conta le caselle — non ce ne sono — e i
+  paragrafi restano la struttura che il modulo usa;
+* `form` disegna una pagina liquida, un blocco per paragrafo; **`print`
+  rifiuta** (`declares no sheet: there is no paper model to print`).
+
+Chi ha un foglio vero lo dichiara; chi ne costruisce uno per comodità — come la
+definizione IAA-DANA, e lo dice nel commento — lo dichiara anche lui, e se ne
+assume la geometria.
+
 ---
 
 ## 5 · I dati
@@ -678,6 +715,29 @@ Due cose non ci sono e non possono esserci:
 * **il foglio**: un XSD non dice dove sta una casella. La bozza mette una riga
   per campo perché non si perda nulla, e lo dichiara.
 
+`stratigraph-templates validate --draft <bozza>` esegue **tutti** i controlli
+e conta i `undecided` invece di rifiutarli: una bozza è verde quando l'unica
+cosa che le manca è il giudizio di una persona.
+
+### 7.1 · La bozza estratta da iDAI.field
+
+`stratigraph-templates extract-idai-field Layer [--project Milet] [--commit
+<sha>] [--schemes-out vocabularies/schemes]` legge la configurazione aperta di
+iDAI.field (DAI, Apache-2.0) **a un commit** di un checkout locale:
+`Library/Categories.json` e `Forms.json` (il form della categoria **fuso con
+quello del padre** come lo fonde iDAI.field, `mergeGroupsConfigurations`), le
+etichette di `Core/` e `Library/Language.<lingua>.json` e, se chiesta, la
+configurazione di progetto sopra (`Config-<P>.json`: campi nascosti, campi
+propri, valuelist ridefiniti). I campi e le relazioni del core si leggono da
+`built-in-configuration.ts` e `relation.ts`, non si ricordano.
+
+Rispetto all'XSD sa **di più**, e propone di più: l'identificatore
+(`identity`), le relazioni che hanno UN arco canonico in s3Dgraphy (una
+tabella, nel codice, citata), le relazioni che iDAI.field deriva da sé e la
+geometria (`none`). Tutto il resto esce `undecided`. **Nessun foglio**: la bozza
+non ha `sheet` (§4.1). I valuelist diventano schemi `external` risolvibili
+(§3), uno per valuelist, scritti con `--schemes-out` se non ci sono.
+
 ## 8 · Un export documento-per-record (iDAI.field)
 
 Il formato descrive una scheda, non un archivio, e i dati di un record sono un
@@ -688,7 +748,8 @@ mentre qui si replica a livello di **campo** — entra come una sequenza di
 ciascun documento risponde. Ciò che *non* entra automaticamente è la loro
 struttura di categorie configurabile: quella va scritta come una definizione
 (che è precisamente il lavoro che questo formato rende possibile fare una volta e
-non per ogni tool).
+non per ogni tool). Dal 2026-10-26 la prima c'è — `dai-idaifield-layer-2026`, la
+categoria `Layer` — e la bozza da cui nasce si estrae (§7.1).
 
 ---
 

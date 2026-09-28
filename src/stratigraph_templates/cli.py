@@ -13,9 +13,10 @@ from .model import MissingLabel
 from .compile import CompileError, build, summary
 from .registry import RegistryDivergence, RegistryUnavailable, registry, write_snapshot
 from .render import RenderError, VocabTrace, sheet_html, write_pdf
-from .validate import ValidationError, blocked_fields, validate_template
+from .validate import ValidationError, blocked_fields, draft_undecided, validate_template
 from .vocab import Vocabularies, VocabularyError
 from .xsd_extract import extract_xsd
+from . import idai_extract
 
 
 def _all_template_ids() -> List[str]:
@@ -26,24 +27,33 @@ def _vocab() -> Vocabularies:
     return Vocabularies.load()
 
 
-def _validate_one(name: str, reg, vocab: Vocabularies, quiet: bool = False) -> int:
+def _validate_one(name: str, reg, vocab: Vocabularies, quiet: bool = False,
+                  draft: bool = False) -> int:
     t = find_template(name)
     try:
-        validate_template(t, reg, known_schemes=vocab.scheme_ids())
+        validate_template(t, reg, known_schemes=vocab.scheme_ids(), draft=draft)
     except ValidationError as exc:
         print(f"✗ {t.id}", file=sys.stderr)
         for p in exc.problems:
             print(f"    {p}", file=sys.stderr)
         return 1
     blocked = blocked_fields(t)
+    if draft and not quiet:
+        undecided = draft_undecided(t)
+        decided = len(t.fields) - len(undecided)
+        print(f"✓ {t.id} (DRAFT): every check passes except the bindings a person has to "
+              f"decide — {decided}/{len(t.fields)} decided, {len(undecided)} undecided")
+        for fid in undecided:
+            print(f"      undecided: {fid}")
     if not quiet:
         print(
             f"✓ {t.id}: {len(t.fields)} fields, {len(t.paragraphs)} paragraphs, "
-            f"{len(t.edges())} relation slots, {len(t.sheet.sides)} sides, "
+            f"{len(t.edges())} relation slots, "
+            f"{str(len(t.sides)) + ' sides' if t.sheet is not None else 'no sheet'}, "
             f"languages {t.languages}"
         )
         if blocked:
-            print(f"  · {len(blocked)} field(s) declared BLOCKED on a datamodel decision: {blocked}")
+            print(f"  · {len(blocked)} field(s) declared BLOCKED on a decision (of the datamodel, or of the standard's owner): {blocked}")
             for fid in blocked:
                 print(f"      {fid} needs: {t.field(fid).graph.blocked_on.needs}")
     return 0
@@ -59,7 +69,7 @@ def cmd_validate(args) -> int:
     print(reg.provenance())
     vocab = _vocab()
     names = args.templates or _all_template_ids()
-    return max(_validate_one(n, reg, vocab) for n in names)
+    return max(_validate_one(n, reg, vocab, draft=args.draft) for n in names)
 
 
 def cmd_info(args) -> int:
@@ -83,7 +93,7 @@ def cmd_info(args) -> int:
         "relation_slots": len(t.edges()),
         "verdicts": dict(sorted(verdicts.items())),
         "blocked_on_decision": blocked_fields(t),
-        "sides": {s.id: len(s.rows) for s in t.sheet.sides},
+        "sides": {s.id: len(s.rows) for s in t.sides} if t.sheet is not None else None,
         "human_key": t.identity.human_key,
         "human_key_pattern": t.identity.pattern,
     }
@@ -128,7 +138,7 @@ def cmd_print(args) -> int:
     out = args.out or f"out/{t.id}.pdf"
     Path(out).parent.mkdir(parents=True, exist_ok=True)
     pages = write_pdf(t, _record(args, t), out, lang=args.lang, vocab=vocab, trace=trace)
-    sides = len(t.sheet.sides)
+    sides = len(t.sides)
     print(f"{out} — {t.standard.authority} {t.standard.code} {t.standard.version}, "
           f"{sides} side(s) → {pages} page(s), language '{args.lang or t.source_language}'")
     if pages > sides:
@@ -195,6 +205,30 @@ def cmd_extract_xsd(args) -> int:
     return 0
 
 
+def cmd_extract_idai_field(args) -> int:
+    src = idai_extract.Source.open(Path(args.repo) if args.repo else None, args.commit)
+    draft, stats, form = idai_extract.extract_idai_field(src, args.category_name, args.project)
+    slug = f"{args.category_name}{'-' + args.project if args.project else ''}".lower()
+    out = Path(args.out) if args.out else Path(f"out/draft-idai-field-{slug}.yaml")
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(draft, encoding="utf-8")
+    print(f"{out} — proposal, not truth (iDAI.field @ {src.commit[:7]}, {src.date})")
+    for k, v in stats.items():
+        print(f"    {k}: {v}")
+    if args.schemes_out:
+        schemes = Path(args.schemes_out)
+        wanted = sorted({f.valuelist for f in form.fields if f.valuelist
+                         and f.input_type in ("dropdown", "radio", "dropdownRange", "checkboxes")})
+        for vl in wanted:
+            path = schemes / f"{idai_extract.scheme_id_for(vl)}.yaml"
+            if path.exists():
+                print(f"    scheme {path.name}: already declared, left as it is")
+                continue
+            path.write_text(idai_extract.scheme_yaml(src, vl), encoding="utf-8")
+            print(f"    scheme {path.name}: written")
+    return 0
+
+
 def cmd_registry_snapshot(args) -> int:
     reg = write_snapshot()
     print(reg.provenance())
@@ -229,6 +263,9 @@ def main(argv: Optional[List[str]] = None) -> int:
 
     p = sub.add_parser("validate", help="check definitions (shape + graph bindings)")
     p.add_argument("templates", nargs="*")
+    p.add_argument("--draft", action="store_true",
+                   help="an extracted DRAFT: count `verdict: undecided` instead of refusing it "
+                        "(every other check still runs)")
     p.set_defaults(func=cmd_validate)
 
     p = sub.add_parser("info", help="the numbers of one definition")
@@ -264,6 +301,18 @@ def main(argv: Optional[List[str]] = None) -> int:
     p.add_argument("-o", "--out")
     p.set_defaults(func=cmd_extract_xsd)
 
+    p = sub.add_parser("extract-idai-field",
+                       help="propose a draft definition from the iDAI.field configuration")
+    p.add_argument("category_name", metavar="CATEGORY", help="an iDAI.field category, e.g. Layer")
+    p.add_argument("--project", help="a project configuration on top (Config-<project>.json)")
+    p.add_argument("--repo", help=f"the iDAI.field checkout (default ${idai_extract.IDAI_FIELD_ENV} "
+                                  f"or {idai_extract.IDAI_FIELD_DEFAULT})")
+    p.add_argument("--commit", default="HEAD", help="the commit to read (git show), default HEAD")
+    p.add_argument("--schemes-out", help="write the valuelist scheme declarations that are "
+                                         "missing into this folder (e.g. vocabularies/schemes)")
+    p.add_argument("-o", "--out")
+    p.set_defaults(func=cmd_extract_idai_field)
+
     p = sub.add_parser("registry-snapshot", help="record what s3Dgraphy declares today")
     p.set_defaults(func=cmd_registry_snapshot)
 
@@ -277,7 +326,8 @@ def main(argv: Optional[List[str]] = None) -> int:
     try:
         return args.func(args)
     except (ValidationError, RenderError, VocabularyError, MissingLabel, RegistryUnavailable,
-            RegistryDivergence, CompileError, FileNotFoundError) as exc:
+            RegistryDivergence, CompileError, FileNotFoundError,
+            idai_extract.IdaiFieldError) as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 2
 

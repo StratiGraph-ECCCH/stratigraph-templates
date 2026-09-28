@@ -2,6 +2,27 @@
   "format": "stratigraph-templates/compiled-definition/index",
   "format_version": "1",
   "schede": {
+    "dai-idaifield-layer-2026": {
+      "versions": {
+        "0.1.0": {
+          "path": "dai-idaifield-layer-2026/0.1.0.json",
+          "digest": "sha256:e761101e437c0d88fa78694737c1436b3f25040c7a78a07ab4feda472ca4a917",
+          "standard": {
+            "authority": "DAI",
+            "code": "iDAI.field Layer",
+            "version": "config 4b5c1e2 (2026-09-24)",
+            "invented": false
+          },
+          "datamodel": {
+            "nodes": "1.6.9",
+            "connections": "1.6.20",
+            "qualia": "1.6.1",
+            "em_ttl": "1.6.5"
+          }
+        }
+      },
+      "latest": "0.1.0"
+    },
     "es-ue-demo-2026": {
       "versions": {
         "0.1.0": {

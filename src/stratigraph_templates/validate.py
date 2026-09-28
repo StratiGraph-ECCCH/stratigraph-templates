@@ -62,7 +62,7 @@ def _placed_fields(t: Template) -> Dict[str, List[str]]:
                 if cell.rows:
                     walk(cell.rows, pos)
 
-    for side in t.sheet.sides:
+    for side in t.sides:
         walk(side.rows, f"sheet[{side.id}]")
     return seen
 
@@ -85,7 +85,7 @@ def _check_widths(t: Template, problems: List[Problem]) -> None:
                 if cell.rows:
                     walk(cell.rows, f"{where}.row[{ri}].cell[{ci}]")
 
-    for side in t.sheet.sides:
+    for side in t.sides:
         walk(side.rows, f"sheet[{side.id}]")
 
 
@@ -95,6 +95,8 @@ def _check_page_fit(t: Template, problems: List[Problem]) -> None:
     This is the one place that knows what A4 is, and it is why "fronte-retro" is
     an invariant of the format rather than a hope about the data.
     """
+    if t.sheet is None:
+        return
     page = PAGE_MM.get(t.sheet.page)
     if page is None:
         problems.append(
@@ -103,7 +105,7 @@ def _check_page_fit(t: Template, problems: List[Problem]) -> None:
         return
     m = t.sheet.margins_mm or {}
     usable = page[1] - float(m.get("top", 12)) - float(m.get("bottom", 12)) - HEAD_ALLOWANCE_MM
-    for side in t.sheet.sides:
+    for side in t.sides:
         total = sum(r.h for r in side.rows)
         if total > usable:
             problems.append(
@@ -145,7 +147,7 @@ def _check_rotated_labels(t: Template, problems: List[Problem]) -> None:
                 if cell.rows:
                     walk(cell.rows, f"{where}.row[{ri}].cell[{ci}]")
 
-    for side in t.sheet.sides:
+    for side in t.sides:
         walk(side.rows, f"sheet[{side.id}]")
 
 
@@ -199,11 +201,11 @@ def _check_labels(t: Template, problems: List[Problem]) -> None:
                 if cell.rows:
                     walk(cell.rows, f"{where}.row[{ri}].cell[{ci}]")
 
-    for side in t.sheet.sides:
+    for side in t.sides:
         walk(side.rows, f"sheet[{side.id}]")
 
 
-def _check_graph(t: Template, reg: Registry, problems: List[Problem]) -> None:
+def _check_graph(t: Template, reg: Registry, problems: List[Problem], draft: bool = False) -> None:
     for f in t.fields:
         g = f.graph
         where = f"field '{f.id}'"
@@ -217,6 +219,8 @@ def _check_graph(t: Template, reg: Registry, problems: List[Problem]) -> None:
             )
             continue
         if g.verdict == DRAFT_VERDICT:
+            if draft:
+                continue            # counted by draft_undecided(), not a problem of a draft
             problems.append(
                 Problem(
                     where,
@@ -375,7 +379,7 @@ def _check_structure(t: Template, problems: List[Problem], known_schemes: Option
             problems.append(
                 Problem(f"field '{f.id}'", f"'options' only makes sense on type 'choice', not '{f.type}'")
             )
-        if f.type == "unit_ref_list" and (not f.graph or f.graph.verdict != "edge"):
+        if f.type == "unit_ref_list" and (not f.graph or f.graph.verdict not in ("edge", DRAFT_VERDICT)):
             problems.append(
                 Problem(
                     f"field '{f.id}'",
@@ -414,7 +418,9 @@ def _check_structure(t: Template, problems: List[Problem], known_schemes: Option
         if f.id not in in_par:
             problems.append(Problem(f"field '{f.id}'", "belongs to no paragraph"))
 
-    # the sheet places every field exactly once
+    # the sheet places every field exactly once — when there is a sheet. A
+    # definition that declares none (SPEC §4) has no boxes to count, and the
+    # form shows every field by paragraph.
     placed = _placed_fields(t)
     for fid, positions in placed.items():
         if not t.has_field(fid):
@@ -424,7 +430,7 @@ def _check_structure(t: Template, problems: List[Problem], known_schemes: Option
                 Problem(f"field '{fid}'", f"placed {len(positions)} times on the sheet: {positions}")
             )
     for f in t.fields:
-        if f.id not in placed:
+        if t.sheet is not None and f.id not in placed:
             problems.append(
                 Problem(
                     f"field '{f.id}'",
@@ -432,7 +438,7 @@ def _check_structure(t: Template, problems: List[Problem], known_schemes: Option
                 )
             )
 
-    side_ids = [s.id for s in t.sheet.sides]
+    side_ids = [s.id for s in t.sides]
     for sid in side_ids:
         if sid not in SIDE_IDS:
             problems.append(
@@ -440,7 +446,7 @@ def _check_structure(t: Template, problems: List[Problem], known_schemes: Option
             )
     if len(set(side_ids)) != len(side_ids):
         problems.append(Problem("sheet.sides", f"duplicate side id(s) in {side_ids}"))
-    if not side_ids:
+    if t.sheet is not None and not side_ids:
         problems.append(Problem("sheet.sides", "a sheet needs at least a recto"))
 
     # identity
@@ -522,8 +528,14 @@ def validate_template(
     reg: Optional[Registry] = None,
     known_schemes: Optional[Set[str]] = None,
     strict: bool = True,
+    draft: bool = False,
 ) -> List[Problem]:
-    """Return the problems; raise ValidationError when strict and there are any."""
+    """Return the problems; raise ValidationError when strict and there are any.
+
+    ``draft=True`` is for an extracted DRAFT (SPEC §7): every check runs, and
+    `verdict: undecided` — the marker a draft carries by construction — is
+    counted (`draft_undecided`) instead of refused.  Nothing else is excused.
+    """
     reg = reg or registry()
     problems: List[Problem] = []
     _check_version(t, problems)
@@ -532,7 +544,7 @@ def validate_template(
     _check_widths(t, problems)
     _check_page_fit(t, problems)
     _check_rotated_labels(t, problems)
-    _check_graph(t, reg, problems)
+    _check_graph(t, reg, problems, draft=draft)
     if problems and strict:
         raise ValidationError(problems, t.id)
     return problems
@@ -541,3 +553,8 @@ def validate_template(
 def blocked_fields(t: Template) -> List[str]:
     """Fields the sheet carries but the graph cannot take yet — declared, not hidden."""
     return [f.id for f in t.fields if f.graph and f.graph.blocked_on]
+
+
+def draft_undecided(t: Template) -> List[str]:
+    """Fields whose binding a person has still to decide (`verdict: undecided`)."""
+    return [f.id for f in t.fields if f.graph and f.graph.verdict == DRAFT_VERDICT]

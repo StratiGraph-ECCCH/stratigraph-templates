@@ -260,7 +260,8 @@ def parse_template(doc: Dict[str, Any], path: Optional[str] = None) -> Template:
             for i, p in enumerate(_need(t, "paragraphs", "template"))
         ],
         fields=[_field(f, i) for i, f in enumerate(_need(t, "fields", "template"))],
-        sheet=_sheet(_need(t, "sheet", "template")),
+        # no `sheet:` = no paper model (SPEC §4): None, never an empty sheet
+        sheet=_sheet(t["sheet"]) if "sheet" in t else None,
         vocabularies=list(t.get("vocabularies") or []),
         graph_defaults=t.get("graph") or {},
         notes=t.get("notes") or {},

@@ -1,0 +1,26 @@
+# Il valuelist `Layer-soilType-default` di iDAI.field (DAI), letto al commit 4b5c1e2
+# (2026-09-24): 21 valori; etichette de 21/21, en 20/21, it 21/21.
+# Scritto da `stratigraph-templates extract-idai-field`.
+#
+# NON e' copiato qui: si risolve dal checkout di iDAI.field (resolve.kind
+# idai_field_valuelist, `git show <commit>:<file>`), come gli SKOS dell'ICCD si
+# risolvono da Standard-catalografici. iDAI.field non conia URI per i valori: i
+# concetti sono LOCALIZZATORI costruiti da noi (`<uri><valuelistId>/<valore>`),
+# non URI del DAI.
+scheme:
+  id: idai-field-layer-soiltype-default
+  authority: "Deutsches Archäologisches Institut (DAI)"
+  origin: external
+  labels:
+    de: "iDAI.field Werteliste Layer-soilType-default"
+    en: "iDAI.field valuelist Layer-soilType-default"
+    it: "Valuelist di iDAI.field Layer-soilType-default"
+  status: resolvable
+  uri: "https://github.com/dainst/idai-field/blob/4b5c1e2c3c499d4bd125d0eda61cc6f5c94ffcd4/core/config/Library/Valuelists/Valuelists.json#Layer-soilType-default"
+  license: "Apache-2.0"
+  attribution: "Deutsches Archäologisches Institut — iDAI.field (github.com/dainst/idai-field), core/config/Library/Valuelists, commit 4b5c1e2 (2026-09-24)"
+  binding_thes_id: "Layer-soilType-default"
+  resolve:
+    kind: idai_field_valuelist
+    commit: 4b5c1e2c3c499d4bd125d0eda61cc6f5c94ffcd4
+    valuelist: "Layer-soilType-default"

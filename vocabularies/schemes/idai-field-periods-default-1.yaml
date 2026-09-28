@@ -1,0 +1,26 @@
+# Il valuelist `periods-default-1` di iDAI.field (DAI), letto al commit 4b5c1e2
+# (2026-09-24): 29 valori; etichette de 29/29, en 29/29, it 29/29.
+# Scritto da `stratigraph-templates extract-idai-field`.
+#
+# NON e' copiato qui: si risolve dal checkout di iDAI.field (resolve.kind
+# idai_field_valuelist, `git show <commit>:<file>`), come gli SKOS dell'ICCD si
+# risolvono da Standard-catalografici. iDAI.field non conia URI per i valori: i
+# concetti sono LOCALIZZATORI costruiti da noi (`<uri><valuelistId>/<valore>`),
+# non URI del DAI.
+scheme:
+  id: idai-field-periods-default-1
+  authority: "Deutsches Archäologisches Institut (DAI)"
+  origin: external
+  labels:
+    de: "iDAI.field Werteliste periods-default-1"
+    en: "iDAI.field valuelist periods-default-1"
+    it: "Valuelist di iDAI.field periods-default-1"
+  status: resolvable
+  uri: "https://github.com/dainst/idai-field/blob/4b5c1e2c3c499d4bd125d0eda61cc6f5c94ffcd4/core/config/Library/Valuelists/Valuelists.json#periods-default-1"
+  license: "Apache-2.0"
+  attribution: "Deutsches Archäologisches Institut — iDAI.field (github.com/dainst/idai-field), core/config/Library/Valuelists, commit 4b5c1e2 (2026-09-24); IT-Referat, DAI, 2019"
+  binding_thes_id: "periods-default-1"
+  resolve:
+    kind: idai_field_valuelist
+    commit: 4b5c1e2c3c499d4bd125d0eda61cc6f5c94ffcd4
+    valuelist: "periods-default-1"

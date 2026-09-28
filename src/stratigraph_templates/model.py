@@ -300,7 +300,10 @@ class Template:
     provenance: Provenance
     paragraphs: List[Paragraph]
     fields: List[Field]
-    sheet: Sheet
+    #: the THIRD FACE — or None: a definition read from a database that has a
+    #: form and no paper model (iDAI.field) declares no sheet, and a sheet
+    #: invented for it would look like a standard (SPEC §4)
+    sheet: Optional[Sheet]
     vocabularies: List[str] = dc_field(default_factory=list)
     graph_defaults: Dict[str, Any] = dc_field(default_factory=dict)
     notes: Dict[str, Any] = dc_field(default_factory=dict)
@@ -320,6 +323,11 @@ class Template:
 
     def has_field(self, fid: str) -> bool:
         return fid in self._by_id
+
+    @property
+    def sides(self) -> List[Side]:
+        """The sides of the sheet, or none when the definition declares no sheet."""
+        return self.sheet.sides if self.sheet is not None else []
 
     def title(self, lang: str) -> str:
         return label_of(self.standard.title, lang, f"template '{self.id}' title")

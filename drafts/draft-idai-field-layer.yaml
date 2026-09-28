@@ -1,0 +1,475 @@
+# DRAFT — proposta estratta dalla configurazione di iDAI.field
+#   https://github.com/dainst/idai-field @ 4b5c1e2c3c499d4bd125d0eda61cc6f5c94ffcd4 (2026-09-24)
+#   categoria Layer (padre Feature), form Feature:default + Layer:default
+#
+# Campi, gruppi, etichette, tipo (inputType) e valuelist vengono dalla configurazione
+# e sono AFFIDABILI. Il legame al grafo e' proposto solo dove i nomi lo decidono da
+# soli (l'identificatore, le relazioni con UN arco canonico, le relazioni derivate, la
+# geometria); tutto il resto e' `verdict: undecided`, e il validatore rifiuta una
+# definizione che porti ancora quel marcatore (`validate --draft` li conta).
+#
+# NESSUN FOGLIO: iDAI.field e' una banca dati con un modulo, non un modello di carta.
+
+template:
+  id: draft-idai-field-layer
+  version: "0.0.0"
+  standard:
+    authority: DAI
+    code: "iDAI.field Layer"
+    version: "config 4b5c1e2 (2026-09-24)"
+    kind: field_model
+    title: {de: "iDAI.field — Erdbefund (Layer)", en: "iDAI.field — Layer (Layer)"}
+    source: "https://github.com/dainst/idai-field/blob/4b5c1e2c3c499d4bd125d0eda61cc6f5c94ffcd4/core/config"
+    license: "Apache-2.0"
+    attribution: "Deutsches Archäologisches Institut (DAI) — iDAI.field / Field Desktop, https://github.com/dainst/idai-field @ 4b5c1e2"
+  source_language: de
+  languages: [de, en]
+  identity:
+    human_key:
+      fields: [identifier]
+      pattern: "{identifier}"
+    uid:
+      policy: minted_by_creator
+      derive_from_human_key: false
+  provenance:
+    per_field: true
+  vocabularies:
+    - idai-field-feature-featureborders-default
+    - idai-field-feature-featureform-default
+    - idai-field-layer-consistency-default
+    - idai-field-layer-distinguishingcriteria-default
+    - idai-field-layer-layerclassification-default
+    - idai-field-layer-soiltype-default
+    - idai-field-colors-default-1
+    - idai-field-periods-default-1
+  paragraphs:
+    - id: stem
+      labels: {de: "Stammdaten", en: "Core"}
+      fields: [identifier, category, shortDescription, processor, campaign, diary, date, isSameAs]
+    - id: hierarchy
+      labels: {de: "Hierarchie", en: "Hierarchy"}
+      fields: [hasChildren]
+    - id: workflow
+      labels: {de: "Workflow", en: "Workflow"}
+      fields: [isSubjectOf, isResultOf]
+    - id: properties
+      labels: {de: "Eigenschaften", en: "Properties"}
+      fields: [description, color, hasDisturbance, featureForm, featureBorders, comparison, distinguishingCriteria, layerClassification, isNatural, soilType, consistency]
+    - id: stratigraphy
+      labels: {de: "Stratigraphie", en: "Stratigraphy"}
+      fields: [isAbove, isBelow, cuts, isCutBy, fills, isFilledBy, abuts, isAbuttedBy, bondsWith, borders]
+    - id: dimension
+      labels: {de: "Maße", en: "Dimensions"}
+      fields: [area, dimensionLength, dimensionWidth, dimensionThickness]
+    - id: position
+      labels: {de: "Lage / Kontext", en: "Position / Context"}
+      fields: [geometry, dimensionVerticalExtent, isPresentIn]
+    - id: time
+      labels: {de: "Zeit", en: "Time"}
+      fields: [period, dating, isBefore, isAfter, isContemporaryWith]
+  fields:
+    - id: identifier
+      labels: {de: "Bezeichner", en: "Identifier"}
+      type: identifier
+      required: true
+      help: {de: "Eindeutiger Bezeichner dieser Ressource", en: "Unique identifier of this resource"}
+      note: "iDAI.field: inputType identifier, source builtIn, group stem"
+      graph:
+        verdict: identity
+        note: "iDAI.field identifier: unique in the project"
+    - id: category
+      labels: {de: "Kategorie", en: "Category"}
+      type: choice
+      options:
+        - {value: Layer, labels: {de: "Erdbefund", en: "Layer"}}
+      note: "iDAI.field: inputType category, source builtIn, group stem"
+      graph:
+        verdict: undecided
+        note: "iDAI.field inputType 'category'"
+    - id: shortDescription
+      labels: {de: "Kurzbeschreibung", en: "Short description"}
+      type: text
+      note: "iDAI.field: inputType input, source builtIn, group stem"
+      graph:
+        verdict: undecided
+        note: "iDAI.field inputType 'input'"
+    - id: processor
+      labels: {de: "Bearbeiterin/Bearbeiter", en: "Processor"}
+      type: text
+      help: {de: "Die Person(en), die für die Ressource oder das Objekt während der Kampagne hauptverantwortlich ist/sind. Wichtig: Die Namen der Personen, die den Eintrag in der Datenbank eintragen bzw. bearbeiten, werden automatisch gespeichert und müssen daher hier nicht angegeben werden.", en: "The name of the person(s) who is/are responsible for the resource or the object during the campaign. Please note: The names of the persons editing the database entry are saved automatically and are therefore not required here."}
+      note: "iDAI.field: inputType checkboxes, source common, group stem, values from the project field 'staff'"
+      graph:
+        verdict: undecided
+        note: "iDAI.field inputType 'checkboxes'"
+    - id: campaign
+      labels: {de: "Kampagne", en: "Campaign"}
+      type: text
+      note: "iDAI.field: inputType checkboxes, source common, group stem, values from the project field 'campaigns'"
+      graph:
+        verdict: undecided
+        note: "iDAI.field inputType 'checkboxes'"
+    - id: diary
+      labels: {de: "Tagebuch", en: "Diary"}
+      type: text
+      help: {de: "Verweis auf Grabungstagebuch", en: "Reference to excavation diary"}
+      note: "iDAI.field: inputType input, source common, group stem"
+      graph:
+        verdict: undecided
+        note: "iDAI.field inputType 'input'"
+    - id: date
+      labels: {de: "Datum", en: "Date"}
+      type: date
+      help: {de: "Datum der Aufnahme/Durchführung", en: "Date of recording/conducting"}
+      note: "iDAI.field: inputType date, source common, group stem"
+      graph:
+        verdict: undecided
+        note: "iDAI.field inputType 'date'"
+    - id: isSameAs
+      labels: {de: "Identisch mit", en: "Same as"}
+      type: unit_ref_list
+      repeatable: true
+      note: "iDAI.field: inputType relation, source relation, group stem"
+      graph:
+        verdict: edge
+        edge_type: equals
+        direction: outgoing
+        note: "iDAI.field relation 'isSameAs' (inverse 'isSameAs'): one canonical edge, read from the relation table of idai_extract.py"
+    - id: hasChildren
+      labels: {de: "Untergeordnete Ressourcen", en: "Child resources"}
+      type: record_ref_list
+      repeatable: true
+      note: "iDAI.field: inputType derivedRelation, source builtIn, group hierarchy — DERIVED by iDAI.field from other records' relations: shown, never entered"
+      graph:
+        verdict: none
+        note: "derived by iDAI.field from other records' relations; not entered, so nothing to write"
+    - id: isSubjectOf
+      labels: {de: "Gegenstand von", en: "Subject of"}
+      type: record_ref_list
+      repeatable: true
+      note: "iDAI.field: inputType derivedRelation, source builtIn, group workflow — DERIVED by iDAI.field from other records' relations: shown, never entered"
+      graph:
+        verdict: none
+        note: "derived by iDAI.field from other records' relations; not entered, so nothing to write"
+    - id: isResultOf
+      labels: {de: "Ergebnis von", en: "Result of"}
+      type: record_ref_list
+      repeatable: true
+      note: "iDAI.field: inputType derivedRelation, source builtIn, group workflow — DERIVED by iDAI.field from other records' relations: shown, never entered"
+      graph:
+        verdict: none
+        note: "derived by iDAI.field from other records' relations; not entered, so nothing to write"
+    - id: description
+      labels: {de: "Beschreibung", en: "Description"}
+      type: longtext
+      help: {de: "Freies Beschreibungsfeld", en: "Unrestricted description field"}
+      note: "iDAI.field: inputType text, source common, group properties"
+      graph:
+        verdict: undecided
+        note: "iDAI.field inputType 'text'"
+    - id: color
+      labels: {de: "Farbe und Intensität", en: "Color and intensity"}
+      type: term_list
+      repeatable: true
+      help: {de: "Farbe, soweit erkennbar"}
+      vocabulary:
+        scheme: idai-field-colors-default-1
+        binding: "colors-default-1"
+      note: "iDAI.field: inputType checkboxes, source library, group properties"
+      graph:
+        verdict: undecided
+        note: "iDAI.field inputType 'checkboxes', valuelist colors-default-1"
+    - id: hasDisturbance
+      labels: {de: "Störung", en: "Disturbance"}
+      type: checkbox
+      help: {de: "Liegt eine Störung des Befundes vor?"}
+      note: "iDAI.field: inputType boolean, source library, group properties — iDAI.field shows Ja/Nein: true, false or not set"
+      graph:
+        verdict: undecided
+        note: "iDAI.field inputType 'boolean'"
+    - id: featureForm
+      labels: {de: "Form der stratigraphischen Einheit", en: "Form of the stratigraphical unit"}
+      type: term_list
+      repeatable: true
+      help: {de: "Form der stratigraphischen Einheit im Planum bzw. Profil: Welche erkennbare Form kann identifiziert werden?"}
+      vocabulary:
+        scheme: idai-field-feature-featureform-default
+        binding: "Feature-featureForm-default"
+      note: "iDAI.field: inputType checkboxes, source library, group properties"
+      graph:
+        verdict: undecided
+        note: "iDAI.field inputType 'checkboxes', valuelist Feature-featureForm-default"
+    - id: featureBorders
+      labels: {de: "Grenzen der stratigraphischen Einheit", en: "Borders of the stratigraphical unit"}
+      type: term_list
+      repeatable: true
+      help: {de: "Bestimmung der Grenzen des Befundes"}
+      vocabulary:
+        scheme: idai-field-feature-featureborders-default
+        binding: "Feature-featureBorders-default"
+      note: "iDAI.field: inputType checkboxes, source library, group properties"
+      graph:
+        verdict: undecided
+        note: "iDAI.field inputType 'checkboxes', valuelist Feature-featureBorders-default"
+    - id: comparison
+      labels: {de: "Vergleich(e)", en: "Comparison"}
+      type: longtext
+      help: {de: "Vergleich mit ähnlichen Befunden, Objekten, Inschriften etc. mit Angabe einer Referenz"}
+      note: "iDAI.field: inputType text, source library, group properties"
+      graph:
+        verdict: undecided
+        note: "iDAI.field inputType 'text'"
+    - id: distinguishingCriteria
+      labels: {de: "Unterscheidungskriterium", en: "Distinguishing criteria"}
+      type: term
+      help: {de: "Welches Kriterium wurde zur Abgrenzung der stratigraphischen Einheit gewählt?"}
+      vocabulary:
+        scheme: idai-field-layer-distinguishingcriteria-default
+        binding: "Layer-distinguishingCriteria-default"
+      note: "iDAI.field: inputType radio, source library, group properties"
+      graph:
+        verdict: undecided
+        note: "iDAI.field inputType 'radio', valuelist Layer-distinguishingCriteria-default"
+    - id: layerClassification
+      labels: {de: "Bezeichnung bzw. Klassifikation Schicht", en: "Designation or classification of the layer"}
+      type: term
+      vocabulary:
+        scheme: idai-field-layer-layerclassification-default
+        binding: "Layer-layerClassification-default"
+      note: "iDAI.field: inputType dropdown, source library, group properties"
+      graph:
+        verdict: undecided
+        note: "iDAI.field inputType 'dropdown', valuelist Layer-layerClassification-default"
+    - id: isNatural
+      labels: {de: "Natürlich", en: "Natural"}
+      type: checkbox
+      help: {de: "Ist die Schicht natürlich? ('Ja' z. B. bei Erosion)"}
+      note: "iDAI.field: inputType boolean, source library, group properties — iDAI.field shows Ja/Nein: true, false or not set"
+      graph:
+        verdict: undecided
+        note: "iDAI.field inputType 'boolean'"
+    - id: soilType
+      labels: {de: "Bodenart", en: "Soil type"}
+      type: term
+      help: {de: "Bezeichnung des Bodens nach bodenkundlicher Kartieranleitung"}
+      vocabulary:
+        scheme: idai-field-layer-soiltype-default
+        binding: "Layer-soilType-default"
+      note: "iDAI.field: inputType dropdown, source library, group properties"
+      graph:
+        verdict: undecided
+        note: "iDAI.field inputType 'dropdown', valuelist Layer-soilType-default"
+    - id: consistency
+      labels: {de: "Konsistenz", en: "Consistency"}
+      type: term_list
+      repeatable: true
+      vocabulary:
+        scheme: idai-field-layer-consistency-default
+        binding: "Layer-consistency-default"
+      note: "iDAI.field: inputType checkboxes, source library, group properties"
+      graph:
+        verdict: undecided
+        note: "iDAI.field inputType 'checkboxes', valuelist Layer-consistency-default"
+    - id: isAbove
+      labels: {de: "Liegt über", en: "Above"}
+      type: unit_ref_list
+      repeatable: true
+      note: "iDAI.field: inputType relation, source relation, group stratigraphy"
+      graph:
+        verdict: edge
+        edge_type: overlies
+        direction: outgoing
+        note: "iDAI.field relation 'isAbove' (inverse 'isBelow'): one canonical edge, read from the relation table of idai_extract.py"
+    - id: isBelow
+      labels: {de: "Liegt unter", en: "Below"}
+      type: unit_ref_list
+      repeatable: true
+      note: "iDAI.field: inputType relation, source relation, group stratigraphy"
+      graph:
+        verdict: edge
+        edge_type: overlies
+        direction: incoming
+        note: "iDAI.field relation 'isBelow' (inverse 'isAbove'): one canonical edge, read from the relation table of idai_extract.py"
+    - id: cuts
+      labels: {de: "Schneidet", en: "Cuts"}
+      type: unit_ref_list
+      repeatable: true
+      note: "iDAI.field: inputType relation, source relation, group stratigraphy"
+      graph:
+        verdict: edge
+        edge_type: cuts
+        direction: outgoing
+        note: "iDAI.field relation 'cuts' (inverse 'isCutBy'): one canonical edge, read from the relation table of idai_extract.py"
+    - id: isCutBy
+      labels: {de: "Wird geschnitten von", en: "Cut by"}
+      type: unit_ref_list
+      repeatable: true
+      note: "iDAI.field: inputType relation, source relation, group stratigraphy"
+      graph:
+        verdict: edge
+        edge_type: cuts
+        direction: incoming
+        note: "iDAI.field relation 'isCutBy' (inverse 'cuts'): one canonical edge, read from the relation table of idai_extract.py"
+    - id: fills
+      labels: {de: "Verfüllt", en: "Fills"}
+      type: unit_ref_list
+      repeatable: true
+      note: "iDAI.field: inputType relation, source relation, group stratigraphy"
+      graph:
+        verdict: edge
+        edge_type: fills
+        direction: outgoing
+        note: "iDAI.field relation 'fills' (inverse 'isFilledBy'): one canonical edge, read from the relation table of idai_extract.py"
+    - id: isFilledBy
+      labels: {de: "Verfüllt von", en: "Filled by"}
+      type: unit_ref_list
+      repeatable: true
+      note: "iDAI.field: inputType relation, source relation, group stratigraphy"
+      graph:
+        verdict: edge
+        edge_type: fills
+        direction: incoming
+        note: "iDAI.field relation 'isFilledBy' (inverse 'fills'): one canonical edge, read from the relation table of idai_extract.py"
+    - id: abuts
+      labels: {de: "Stößt an", en: "Abuts"}
+      type: unit_ref_list
+      repeatable: true
+      note: "iDAI.field: inputType relation, source relation, group stratigraphy"
+      graph:
+        verdict: edge
+        edge_type: abuts
+        direction: outgoing
+        note: "iDAI.field relation 'abuts' (inverse 'isAbuttedBy'): one canonical edge, read from the relation table of idai_extract.py"
+    - id: isAbuttedBy
+      labels: {de: "Wird angestoßen von", en: "Abutted by"}
+      type: unit_ref_list
+      repeatable: true
+      note: "iDAI.field: inputType relation, source relation, group stratigraphy"
+      graph:
+        verdict: edge
+        edge_type: abuts
+        direction: incoming
+        note: "iDAI.field relation 'isAbuttedBy' (inverse 'abuts'): one canonical edge, read from the relation table of idai_extract.py"
+    - id: bondsWith
+      labels: {de: "Bindet ein", en: "Bonds with"}
+      type: unit_ref_list
+      repeatable: true
+      note: "iDAI.field: inputType relation, source relation, group stratigraphy"
+      graph:
+        verdict: edge
+        edge_type: bonded_to
+        direction: outgoing
+        note: "iDAI.field relation 'bondsWith' (inverse 'bondsWith'): one canonical edge, read from the relation table of idai_extract.py"
+    - id: borders
+      labels: {de: "Grenzt an", en: "Borders"}
+      type: unit_ref_list
+      repeatable: true
+      note: "iDAI.field: inputType relation, source relation, group stratigraphy"
+      graph:
+        verdict: undecided
+        note: "iDAI.field relation 'borders' (range ['Feature']): no evident canonical edge"
+    - id: area
+      labels: {de: "Fläche in m2", en: "Area in m2"}
+      type: decimal
+      help: {de: "Flächenangabe in Quadratmetern", en: "Area in square meters"}
+      note: "iDAI.field: inputType unsignedFloat, source common, group dimension — unsigned"
+      graph:
+        verdict: undecided
+        note: "iDAI.field inputType 'unsignedFloat'"
+    - id: dimensionLength
+      labels: {de: "Länge", en: "Length"}
+      type: quantity_list
+      repeatable: true
+      help: {de: "Angabe der Länge", en: "Measurement of the length"}
+      note: "iDAI.field: inputType dimension, source common, group dimension — iDAI.field dimension: value or range, unit, measurement position (valuelist), comment, imprecise flag"
+      graph:
+        verdict: undecided
+        note: "iDAI.field inputType 'dimension', valuelist position-values-expansion-default"
+    - id: dimensionWidth
+      labels: {de: "Breite", en: "Width"}
+      type: quantity_list
+      repeatable: true
+      help: {de: "Angabe der Breite an der maximalen/minimalen Ausdehnung", en: "Indication of the width at the maximum/minimum extension"}
+      note: "iDAI.field: inputType dimension, source common, group dimension — iDAI.field dimension: value or range, unit, measurement position (valuelist), comment, imprecise flag"
+      graph:
+        verdict: undecided
+        note: "iDAI.field inputType 'dimension', valuelist position-values-expansion-default"
+    - id: dimensionThickness
+      labels: {de: "Stärke", en: "Thickness"}
+      type: quantity_list
+      repeatable: true
+      help: {de: "Dicke bzw. Stärke des Objekts", en: "Thickness of the object"}
+      note: "iDAI.field: inputType dimension, source common, group dimension — iDAI.field dimension: value or range, unit, measurement position (valuelist), comment, imprecise flag"
+      graph:
+        verdict: undecided
+        note: "iDAI.field inputType 'dimension', valuelist position-values-expansion-default"
+    - id: geometry
+      labels: {de: "Geometrie", en: "Geometry"}
+      type: text
+      note: "iDAI.field: inputType geometry, source common, group position — iDAI.field geometry (GeoJSON), drawn on a map"
+      graph:
+        verdict: none
+        note: "GIS geometry: out of scope for this format (SPEC §6, GIS is pyarchinit's)"
+    - id: dimensionVerticalExtent
+      labels: {de: "Niveau", en: "Vertical extent"}
+      type: quantity_list
+      repeatable: true
+      help: {de: "Niveau Oberkante/Unterkante bzw. Laufniveau", en: "Niveau of the upper/lower boundary or the walking level"}
+      note: "iDAI.field: inputType dimension, source common, group position — iDAI.field dimension: value or range, unit, measurement position (valuelist), comment, imprecise flag"
+      graph:
+        verdict: undecided
+        note: "iDAI.field inputType 'dimension', valuelist position-values-edge-default"
+    - id: isPresentIn
+      labels: {de: "Ist enthalten in Profil/Planum", en: "Is present in profile/planum"}
+      type: record_ref_list
+      repeatable: true
+      note: "iDAI.field: inputType relation, source relation, group position"
+      graph:
+        verdict: undecided
+        note: "iDAI.field relation 'isPresentIn' (range ['Profile', 'Planum']): no evident canonical edge"
+    - id: period
+      labels: {de: "Grobdatierung", en: "Period"}
+      type: term
+      vocabulary:
+        scheme: idai-field-periods-default-1
+        binding: "periods-default-1"
+      note: "iDAI.field: inputType dropdownRange, source common, group time"
+      graph:
+        verdict: undecided
+        note: "iDAI.field inputType 'dropdownRange', valuelist periods-default-1"
+    - id: dating
+      labels: {de: "Datierung", en: "Dating"}
+      type: text
+      note: "iDAI.field: inputType dating, source common, group time — iDAI.field dating is STRUCTURED (range, before, after, exact, scientific with margin, source): a text box keeps it readable and loses the structure"
+      graph:
+        verdict: undecided
+        note: "iDAI.field inputType 'dating'"
+    - id: isBefore
+      labels: {de: "Zeitlich vor", en: "Before"}
+      type: unit_ref_list
+      repeatable: true
+      note: "iDAI.field: inputType relation, source relation, group time"
+      graph:
+        verdict: edge
+        edge_type: is_after
+        direction: incoming
+        note: "iDAI.field relation 'isBefore' (inverse 'isAfter'): one canonical edge, read from the relation table of idai_extract.py"
+    - id: isAfter
+      labels: {de: "Zeitlich nach", en: "After"}
+      type: unit_ref_list
+      repeatable: true
+      note: "iDAI.field: inputType relation, source relation, group time"
+      graph:
+        verdict: edge
+        edge_type: is_after
+        direction: outgoing
+        note: "iDAI.field relation 'isAfter' (inverse 'isBefore'): one canonical edge, read from the relation table of idai_extract.py"
+    - id: isContemporaryWith
+      labels: {de: "Zeitgleich mit", en: "Contemporary with"}
+      type: unit_ref_list
+      repeatable: true
+      note: "iDAI.field: inputType relation, source relation, group time"
+      graph:
+        verdict: edge
+        edge_type: has_same_time
+        direction: outgoing
+        note: "iDAI.field relation 'isContemporaryWith' (inverse 'isContemporaryWith'): one canonical edge, read from the relation table of idai_extract.py"

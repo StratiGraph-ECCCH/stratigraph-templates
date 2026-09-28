@@ -31,6 +31,7 @@ Two decisions live here.
 from __future__ import annotations
 
 import os
+import re
 from dataclasses import dataclass, field as dc_field
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
@@ -120,6 +121,40 @@ def _read_skos(path: Path) -> Dict[str, Dict[str, str]]:
     out: Dict[str, Dict[str, str]] = {}
     for s, _, o in g.triples((None, SKOS.prefLabel, None)):
         out.setdefault(str(s), {})[str(o.language or "")] = str(o)
+    return out
+
+
+def _read_idai_valuelist(scheme: "Scheme") -> Dict[str, Dict[str, str]]:
+    """concept locator -> {lang: label} for ONE valuelist of iDAI.field, read at
+    the commit the scheme names from a local checkout (`git show`, never the
+    working tree): the labels are the DAI's, resolved where they live and not
+    copied into this repository — as an ICCD SKOS file is read from
+    Standard-catalografici."""
+    from . import idai_extract as idai
+
+    commit = scheme.resolve.get("commit")
+    valuelist = scheme.resolve.get("valuelist")
+    if not commit or not valuelist:
+        raise VocabularyError(f"scheme '{scheme.id}': resolve.kind idai_field_valuelist needs "
+                              f"'commit' and 'valuelist'")
+    try:
+        src = idai.Source.open(commit=commit)
+        values = (src.json(idai.VALUELISTS).get(valuelist) or {}).get("values")
+        if values is None:
+            raise VocabularyError(f"scheme '{scheme.id}': no valuelist '{valuelist}' at {commit[:7]}")
+        out: Dict[str, Dict[str, str]] = {
+            idai.value_locator(src.commit, valuelist, v): {} for v in values}
+        listing = idai._git(src.repo, "ls-tree", "--name-only", src.commit,
+                            f"{idai.CONFIG}/Library/Valuelists/").splitlines()
+        langs = sorted(m.group(1) for m in
+                       (re.search(r"/Language\.default\.(\w+)\.json$", p) for p in listing) if m)
+        for lang in langs:
+            for value, label in idai.valuelist_labels(src, valuelist, lang).items():
+                out[idai.value_locator(src.commit, valuelist, value)][lang] = label
+    except idai.IdaiFieldError as exc:
+        raise VocabularyError(
+            f"scheme '{scheme.id}' is resolved from an iDAI.field checkout, which is not usable: "
+            f"{exc}. Set ${idai.IDAI_FIELD_ENV} if the checkout lives elsewhere") from None
     return out
 
 
@@ -259,6 +294,9 @@ class Vocabularies:
         scheme = self.schemes.get(scheme_id)
         if scheme is None:
             raise VocabularyError(f"unknown vocabulary scheme '{scheme_id}'")
+        if scheme.status == "resolvable" and scheme.resolve.get("kind") == "idai_field_valuelist":
+            self._concepts[scheme_id] = _read_idai_valuelist(scheme)
+            return self._concepts[scheme_id]
         path = scheme.skos_file()
         if scheme.status != "resolvable" or path is None:
             self._concepts[scheme_id] = {}

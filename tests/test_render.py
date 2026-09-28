@@ -130,8 +130,8 @@ def test_no_standard_is_named_in_the_implementation():
     src = pathlib.Path(__file__).resolve().parents[1] / "src" / "stratigraph_templates"
     forbidden = ("iccd-us-2021", "es-ue-demo-2026", "definizione", "uguale_a", "yacimiento")
     for py in src.glob("*.py"):
-        if py.name == "xsd_extract.py":
-            continue  # the extractor is ABOUT the ICCD XSD dialect, by definition
+        if py.name in ("xsd_extract.py", "idai_extract.py"):
+            continue  # an extractor is ABOUT one dialect (ICCD XSD, iDAI.field), by definition
         text = py.read_text(encoding="utf-8")
         for token in forbidden:
             assert token not in text, f"{py.name} mentions {token!r}"
