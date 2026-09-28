@@ -223,17 +223,20 @@ def test_the_sheets_do_not_all_agree_on_the_same_concepts():
     root = pathlib.Path(__file__).resolve().parents[1] / "templates"
     sheets = {p.name: load_template(p / "template.yaml")
               for p in sorted(root.iterdir()) if p.is_dir()}
-    assert len(sheets) == 3, sorted(sheets)
+    # Quattro dal 2026-09-28: si è aggiunto lo schema DANA dell'IAA, letto da un
+    # export invece che da una norma. Il numero sta qui perché una scheda che
+    # sparisce o che arriva è un fatto, non un dettaglio di configurazione.
+    assert len(sheets) == 4, sorted(sheets)
 
     # I TRE SOTTOINSIEMI SONO TRE NUMERI DIVERSI. Se collassassero a uno, il
     # marcatore avrebbe smesso di descrivere lo standard.
     trench = {n: s.recorded_in_counts()["trench"] for n, s in sheets.items()}
-    assert len(set(trench.values())) == 3, trench
+    assert len(set(trench.values())) == len(sheets), trench
 
     # …e la proporzione è diversa, non solo il numero assoluto
     share = {n: round(s.recorded_in_counts()["trench"] / len(s.fields), 2)
              for n, s in sheets.items()}
-    assert len(set(share.values())) == 3, share
+    assert len(set(share.values())) == len(sheets), share
 
     # LA COSA CHE SOLO L'ICCD HA: campi che nessuno ha ancora deciso. Le due
     # schede demo sono state decise dal loro autore in un colpo; la scheda vera

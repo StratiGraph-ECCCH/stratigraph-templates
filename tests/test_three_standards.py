@@ -1,9 +1,15 @@
-"""LA TESI DEL REPOSITORY, come regressione: tre schede, zero righe di codice.
+"""LA TESI DEL REPOSITORY, come regressione: quattro schede, zero righe di codice.
 
 *Aggiungere uno standard costa scrivere una definizione.* Con due schede era una
 tesi con un esempio; con tre è una tesi con un controesempio possibile, e questo
 file è ciò che la tiene vera quando qualcuno aggiunge un campo condizionale al
 renderer.
+
+Dal 2026-09-28 sono quattro: la quarta è lo schema DANA dell'Israel Antiquities
+Authority, e prova una cosa che le altre tre non provavano — una definizione
+letta da un EXPORT invece che da una norma pubblicata. Il nome del file dice
+ancora «three» e va rinominato quando si potrà: il numero nel nome era
+l'errore, non il quarto standard.
 
 **Perché un test e non un referto.** La scheda ungherese è nata la notte del
 2026-09-23 proprio per provare questo, è comparsa nel browser con il diff
@@ -29,13 +35,15 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 TEMPLATES = ROOT / "templates"
 SRC = ROOT / "src" / "stratigraph_templates"
 
-#: Le tre schede, e la RAGIONE per cui ciascuna è diversa dalle altre. Se una
+#: Le schede, e la RAGIONE per cui ciascuna è diversa dalle altre. Se una
 #: sparisce, questo elenco fa fallire il test invece di lasciare che la copertura
-#: si assottigli in silenzio — che è esattamente com'è sparita la terza.
+#: si assottigli in silenzio — che è esattamente com'è sparita la terza. E se una
+#: ARRIVA, lo stesso elenco pretende che qualcuno dica che cosa aggiunge.
 SHIPPED = {
-    "iccd-us-2021":    "la norma vera, ricostruita dal .doc ICCD",
-    "es-ue-demo-2026": "un'altra lingua sorgente e un paragrafo che l'ICCD non ha",
-    "hu-rl-demo-2026": "una terza lingua, e il designatore che NON è l'ultimo",
+    "iccd-us-2021":       "la norma vera, ricostruita dal .doc ICCD",
+    "es-ue-demo-2026":    "un'altra lingua sorgente e un paragrafo che l'ICCD non ha",
+    "hu-rl-demo-2026":    "una terza lingua, e il designatore che NON è l'ultimo",
+                           "nessun documento pubblico da citare, e le relazioni in una tabella a parte",
 }
 
 
@@ -63,7 +71,7 @@ def test_every_shipped_standard_validates():
 # ── 2 · e sono DIVERSE, che è l'unica ragione per averne tre ───────────────
 
 def test_the_three_speak_three_source_languages():
-    assert {s.source_language for s in sheets().values()} == {"it", "es", "hu"}
+    assert {s.source_language for s in sheets().values()} == {"it", "es", "hu", "en"}
 
 
 def test_the_three_have_three_shapes_of_human_key():
@@ -81,7 +89,7 @@ def test_the_three_give_three_different_trench_subsets():
     nostro pregiudizio invece dello standard."""
     counts = {n: s.recorded_in_counts() for n, s in sheets().items()}
     trench = {n: c["trench"] for n, c in counts.items()}
-    assert len(set(trench.values())) == 3, counts
+    assert len(set(trench.values())) == len(SHIPPED), counts
 
 
 # ── 3 · E L'IMPLEMENTAZIONE NON LE NOMINA ──────────────────────────────────
