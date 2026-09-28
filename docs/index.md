@@ -1,5 +1,9 @@
 # stratigraph-templates
 
+Recording-sheet definitions for the StratiGraph project, kept as data: what each
+field of each national sheet means for the knowledge graph. Start from
+[what it is](pages/what-it-is.md).
+
 Version {{ release }}. The text of this site is that of `README.md`, `SPEC.md`
 and `LICENSING.md`, included as it is; the catalogues are generated from the
 repository on every build.

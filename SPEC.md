@@ -205,8 +205,8 @@ navigation and that the standard prints in bold.
 **Labels are a dictionary per language, inside the definition.** There is
 no generic translation file and there is no fallback: asking for a
 language the definition does not declare is an error, not a degraded mode.
-It is the error measured in the pyarchinit-mini generator (“Notifica” in place of
-FLOTTAZIONE) and it cannot recur, by construction.
+It is the error measured in an existing open-source sheet generator (“Notifica” in place
+of FLOTTAZIONE) and it cannot recur, by construction.
 
 #### Allowed field types
 
@@ -691,7 +691,7 @@ of another definition and flag a different version.
 ## 6 · What is NOT there, by choice
 
 No server, no authentication, no session, no database. No Harris matrix (the graph
-editor is EMStudio). No GIS (that belongs to pyarchinit). No ministerial catalogue
+editor is EMStudio). No GIS (geometry stays with the systems that already manage it). No ministerial catalogue
 record (that belongs to the Catalog, as a projection, later). No new type in
 s3Dgraphy. No asset management (it already exists: SHA-256 + IIIF). No identity,
 offline queue or room entry (they already exist, proven in the field assistant).

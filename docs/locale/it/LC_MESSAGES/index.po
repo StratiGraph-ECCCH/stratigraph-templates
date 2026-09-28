@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stratigraph-templates 0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-28 12:44+0200\n"
+"POT-Creation-Date: 2026-09-28 14:31+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Emanuel Demetrescu <emanuel.demetrescu@cnr.it>\n"
 "Language: it\n"
@@ -17,9 +17,6 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
-
-msgid "Version {{ release }}. The text of this site is that of `README.md`, `SPEC.md` and `LICENSING.md`, included as it is; the catalogues are generated from the repository on every build."
-msgstr "Versione {{ release }}. Il testo di questo sito è quello di `README.md`, `SPEC.md` e `LICENSING.md`, incluso così com'è; i cataloghi sono generati dal repository a ogni build."
 
 msgid "What it is"
 msgstr "Che cos'è"
@@ -38,6 +35,12 @@ msgstr "Licenze e attribuzione"
 
 msgid "Reference implementation"
 msgstr "Implementazione di riferimento"
+
+msgid "Recording-sheet definitions for the StratiGraph project, kept as data: what each field of each national sheet means for the knowledge graph. Start from [what it is](pages/what-it-is.md)."
+msgstr "Le definizioni delle schede di rilevamento del progetto StratiGraph, tenute come dati: che cosa significa, per il grafo di conoscenza, ogni campo di ogni scheda nazionale. Si comincia da [che cos'è](pages/what-it-is.md)."
+
+msgid "Version {{ release }}. The text of this site is that of `README.md`, `SPEC.md` and `LICENSING.md`, included as it is; the catalogues are generated from the repository on every build."
+msgstr "Versione {{ release }}. Il testo di questo sito è quello di `README.md`, `SPEC.md` e `LICENSING.md`, incluso così com'è; i cataloghi sono generati dal repository a ogni build."
 
 msgid "The dated working notes that accompanied the birth of the repository are in the [archive](archive.md), outside this index."
 msgstr "Le note di lavoro datate che hanno accompagnato la nascita del repository stanno nell'[archivio](archive.md), fuori da questo indice."

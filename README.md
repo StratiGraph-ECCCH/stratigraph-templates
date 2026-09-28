@@ -1,15 +1,33 @@
 # stratigraph-templates
 
-**The recording sheet is data, not a schema.**
+**Archaeological recording sheets, written down as data: one definition per national
+sheet, which the StratiGraph applications read to show the form, print the sheet and
+write the knowledge graph.**
 
-In pyarchinit the sheet *is* the schema: 619 columns across 29 tables are a serialisation
-of the ICCD standard, and adding the Spanish sheet would mean adding columns. Measured:
-`us_table` alone has 133, of which 46 belong to another sheet (the USM, which in ICCD is a
-model of its own) and 13 exist only because a row cannot say “this value, in this
-language”.
+Part of **StratiGraph — Knowledge Graphs for Stratigraphy**, a Horizon Europe project
+(grant agreement [101232855](https://cordis.europa.eu/project/id/101232855), 2025–2029)
+coordinated by CNR-ISPC. Documentation:
+[docs.extendedmatrix.org/projects/stratigraph-templates](https://docs.extendedmatrix.org/projects/stratigraph-templates/)
+(English, with an Italian translation).
 
-Here a recording sheet is a **declarative, versioned, citable definition**, which a
-machine reads to do three different things:
+## Why it exists
+
+Every excavation records its stratigraphic units on a sheet, and every country — often
+every institution — has its own. Italy fills in the ICCD model for the Stratigraphic Unit,
+Spain a *ficha de unidad estratigráfica*, the Israel Antiquities Authority records loci in
+its DANA system, the German Archaeological Institute works in iDAI.field. The boxes look
+alike and are not the same: they are named and grouped differently, they are filled with
+different controlled terms, and some exist on one sheet only.
+
+StratiGraph brings excavations from these countries into one knowledge graph. For that,
+someone has to say, box by box, what each field of each sheet means for the graph: which
+unit, which relation, which property, which vocabulary. This repository is where that is
+written down, once per sheet, in a form that people and programs can both read.
+
+The usual way goes the other direction: the sheet becomes the database schema, one column
+per box, and a second national sheet means new columns, new code and a migration. Here
+**the recording sheet is data, not a schema**: a **declarative, versioned, citable
+definition**, which a machine reads to do three different things:
 
 * show a **form** to fill in (phone, tablet, desktop),
 * print a **double-sided A4 sheet**,
@@ -20,6 +38,22 @@ the tests: the renderer diff between before and after adding the second standard
 
 > **This repository contains DATA and a reference implementation.
 > It does not contain an application.** No server, no login, no database.
+
+## Where it sits in StratiGraph
+
+The definitions are written here and used elsewhere in the project's software:
+
+* **s3Dgraphy**, the graph library of the Extended Matrix, declares the node types, edge
+  types and qualia; every binding in a definition is checked against what it declares
+  (see *The binding to s3Dgraphy* below);
+* **StratiField**, the field recording application, takes the compiled definitions to draw
+  the form and the sheet, and sends what is recorded to **StratiGraph Server**, which
+  applies it to the shared graph;
+* the other applications of the suite read the same graph, whichever national sheet a unit
+  was recorded on.
+
+The work belongs to StratiGraph's work package on the data model and the knowledge graph
+(WP3), and is reported in its deliverables D3.1 and D3.2.
 
 ## How it is laid out
 
@@ -34,15 +68,13 @@ dist/schede/                   the COMPILED definitions (self-contained JSON): w
 src/stratigraph_templates/     the reference implementation (reads, validates, renders)
 drafts/                        drafts extracted from XSD standards: proposals, not truth
 tests/                         the suite, and the broken definitions the gates must catch
-docs/                          the report of the evening and the captures
+docs/                          the documentation site, plus dated working notes and screenshots
 ```
 
-Two definitions are already here:
-
-| definition | what it is | fields |
-|---|---|---|
-| `iccd-us-2021` | ICCD, Stratigraphic Unit, field recording model 2021 — reconstructed **from the standard** (CC BY-SA 4.0) | 59 |
-| `es-ue-demo-2026` | a demonstration *ficha*, **invented**, and declared as such, in Spanish and Italian | 15 |
+The definitions in `templates/` today — with their fields, languages and licences — are
+listed in the
+[catalogue of definitions](https://docs.extendedmatrix.org/projects/stratigraph-templates/en/latest/pages/catalogue-definitions.html),
+which is generated from the repository at every build of the documentation.
 
 The format specification is in **[SPEC.md](SPEC.md)**.
 
@@ -137,13 +169,14 @@ under the same number is rejected. SPEC §9.
 
 ## Licences — two layers, and why this road is clean
 
-* **The definitions** derive from the ICCD standards, published under **CC BY-SA 4.0**
-  (declared at the foot of the field models): they are distributed under the same terms
-  and carry the attribution to MiC — ICCD in `standard.attribution`. The ICCD thesauri are
-  **CC BY-SA 3.0 IT** and are **referenced**, not copied.
-* **The code** of the reference implementation: proposed **EUPL-1.2** (a European
-  project, compatible with share-alike) — **to be confirmed**, see
-  [LICENSING.md](LICENSING.md).
+* **The definitions** carry the licence of where they come from. Those reconstructed from
+  the ICCD standards, published under **CC BY-SA 4.0** (declared at the foot of the field
+  models), are distributed under the same terms and carry the attribution to MiC — ICCD in
+  `standard.attribution`; the other kinds are treated one by one in
+  [LICENSING.md](LICENSING.md). The ICCD thesauri are **CC BY-SA 3.0 IT** and are
+  **referenced**, not copied.
+* **The code** of the reference implementation: **EUPL-1.2** (a European project,
+  compatible with share-alike), confirmed on 2026-09-24.
 
 This is not bureaucracy: reconstructing the sheet **from the standard** is explicitly
 permitted, while copying the templates of GPL software would not be.

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stratigraph-templates 0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-28 12:44+0200\n"
+"POT-Creation-Date: 2026-09-28 14:31+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Emanuel Demetrescu <emanuel.demetrescu@cnr.it>\n"
 "Language: it\n"
@@ -18,14 +18,20 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
 
-msgid "**The recording sheet is data, not a schema.**"
-msgstr "**La scheda è un dato, non uno schema.**"
+msgid "**Archaeological recording sheets, written down as data: one definition per national sheet, which the StratiGraph applications read to show the form, print the sheet and write the knowledge graph.**"
+msgstr "**Le schede di rilevamento archeologico, scritte come dati: una definizione per ogni scheda nazionale, che le applicazioni di StratiGraph leggono per mostrare il modulo, stampare il foglio e scrivere il grafo di conoscenza.**"
 
-msgid "In pyarchinit the sheet *is* the schema: 619 columns across 29 tables are a serialisation of the ICCD standard, and adding the Spanish sheet would mean adding columns. Measured: `us_table` alone has 133, of which 46 belong to another sheet (the USM, which in ICCD is a model of its own) and 13 exist only because a row cannot say “this value, in this language”."
-msgstr "In pyarchinit la scheda *è* lo schema: 619 colonne su 29 tabelle sono una serializzazione dello standard ICCD, e aggiungere la scheda spagnola vorrebbe dire aggiungere colonne. Misurato: `us_table` da sola ne ha 133, di cui 46 appartengono a un'altra scheda (la USM, che nell'ICCD è un modello a sé) e 13 esistono solo perché la riga non sa dire «questo valore, in questa lingua»."
+msgid "Part of **StratiGraph — Knowledge Graphs for Stratigraphy**, a Horizon Europe project (grant agreement [101232855](https://cordis.europa.eu/project/id/101232855), 2025–2029) coordinated by CNR-ISPC. Documentation: [docs.extendedmatrix.org/projects/stratigraph-templates](https://docs.extendedmatrix.org/projects/stratigraph-templates/) (English, with an Italian translation)."
+msgstr "Fa parte di **StratiGraph — Knowledge Graphs for Stratigraphy**, progetto Horizon Europe (grant agreement [101232855](https://cordis.europa.eu/project/id/101232855), 2025–2029) coordinato dal CNR-ISPC. Documentazione: [docs.extendedmatrix.org/projects/stratigraph-templates](https://docs.extendedmatrix.org/projects/stratigraph-templates/) (in inglese, con la traduzione italiana)."
 
-msgid "Here a recording sheet is a **declarative, versioned, citable definition**, which a machine reads to do three different things:"
-msgstr "Qui una scheda è una **definizione dichiarativa, versionata, citabile**, che una macchina legge per fare tre cose diverse:"
+msgid "Why it exists"
+msgstr "Perché esiste"
+
+msgid "StratiGraph brings excavations from these countries into one knowledge graph. For that, someone has to say, box by box, what each field of each sheet means for the graph: which unit, which relation, which property, which vocabulary. This repository is where that is written down, once per sheet, in a form that people and programs can both read."
+msgstr "StratiGraph porta gli scavi di questi paesi in un solo grafo di conoscenza. Per farlo qualcuno deve dire, casella per casella, che cosa significa per il grafo ogni campo di ogni scheda: quale unità, quale relazione, quale proprietà, quale vocabolario. Questo repository è il posto dove lo si scrive, una volta per scheda, in una forma che leggono sia le persone sia i programmi."
+
+msgid "The usual way goes the other direction: the sheet becomes the database schema, one column per box, and a second national sheet means new columns, new code and a migration. Here **the recording sheet is data, not a schema**: a **declarative, versioned, citable definition**, which a machine reads to do three different things:"
+msgstr "La strada consueta va nel verso opposto: la scheda diventa lo schema del database, una colonna per casella, e una seconda scheda nazionale vuol dire colonne nuove, codice nuovo e una migrazione. Qui **la scheda è un dato, non uno schema**: una **definizione dichiarativa, versionata, citabile**, che una macchina legge per fare tre cose diverse:"
 
 msgid "show a **form** to fill in (phone, tablet, desktop),"
 msgstr "mostrare un **modulo** da compilare (telefono, tablet, desktop),"
@@ -42,6 +48,24 @@ msgstr "Aggiungere una scheda costa **scrivere una definizione**, non scrivere u
 msgid "**This repository contains DATA and a reference implementation. It does not contain an application.** No server, no login, no database."
 msgstr "**Questo repository contiene DATI e una implementazione di riferimento. Non contiene un'applicazione.** Nessun server, nessun login, nessun database."
 
+msgid "Where it sits in StratiGraph"
+msgstr "Dove sta dentro StratiGraph"
+
+msgid "The definitions are written here and used elsewhere in the project's software:"
+msgstr "Le definizioni si scrivono qui e si usano altrove, nel software del progetto:"
+
+msgid "**s3Dgraphy**, the graph library of the Extended Matrix, declares the node types, edge types and qualia; every binding in a definition is checked against what it declares (see *The binding to s3Dgraphy* below);"
+msgstr "**s3Dgraphy**, la libreria del grafo dell'Extended Matrix, dichiara i tipi di nodo, i tipi di arco e le qualia; ogni legame di una definizione è verificato contro ciò che dichiara (vedi *Il legame con s3Dgraphy* più sotto);"
+
+msgid "**StratiField**, the field recording application, takes the compiled definitions to draw the form and the sheet, and sends what is recorded to **StratiGraph Server**, which applies it to the shared graph;"
+msgstr "**StratiField**, l'applicazione per il rilevamento sul campo, prende le definizioni compilate per disegnare il modulo e il foglio, e manda ciò che viene registrato a **StratiGraph Server**, che lo applica al grafo condiviso;"
+
+msgid "the other applications of the suite read the same graph, whichever national sheet a unit was recorded on."
+msgstr "le altre applicazioni della suite leggono lo stesso grafo, qualunque sia la scheda nazionale su cui un'unità è stata registrata."
+
+msgid "The work belongs to StratiGraph's work package on the data model and the knowledge graph (WP3), and is reported in its deliverables D3.1 and D3.2."
+msgstr "Il lavoro appartiene al work package di StratiGraph sul modello dei dati e sul grafo di conoscenza (WP3), ed è descritto nei suoi deliverable D3.1 e D3.2."
+
 msgid "How it is laid out"
 msgstr "Com'è fatto"
 
@@ -56,7 +80,7 @@ msgid ""
 "src/stratigraph_templates/     the reference implementation (reads, validates, renders)\n"
 "drafts/                        drafts extracted from XSD standards: proposals, not truth\n"
 "tests/                         the suite, and the broken definitions the gates must catch\n"
-"docs/                          the report of the evening and the captures\n"
+"docs/                          the documentation site, plus dated working notes and screenshots\n"
 msgstr ""
 "templates/<id>/template.yaml   le definizioni (la sostanza, il legame al grafo, il foglio)\n"
 "vocabularies/schemes/          gli schemi di vocabolario, REFERENZIATI non incorporati\n"
@@ -68,25 +92,10 @@ msgstr ""
 "src/stratigraph_templates/     l'implementazione di riferimento (legge, valida, rende)\n"
 "drafts/                        bozze estratte da normative XSD: proposte, non verità\n"
 "tests/                         la suite, e le definizioni rotte che i cancelli devono prendere\n"
-"docs/                          il referto della serata e le catture\n"
+"docs/                          il sito della documentazione, più note di lavoro datate e catture\n"
 
-msgid "Two definitions are already here:"
-msgstr "Due definizioni ci sono già:"
-
-msgid "definition"
-msgstr "definizione"
-
-msgid "what it is"
-msgstr "che cos'è"
-
-msgid "fields"
-msgstr "campi"
-
-msgid "ICCD, Stratigraphic Unit, field recording model 2021 — reconstructed **from the standard** (CC BY-SA 4.0)"
-msgstr "ICCD, Unità Stratigrafica, modello per il rilevamento sul campo 2021 — ricostruita **dalla normativa** (CC BY-SA 4.0)"
-
-msgid "a demonstration *ficha*, **invented**, and declared as such, in Spanish and Italian"
-msgstr "una *ficha* dimostrativa, **inventata** e dichiarata tale, in spagnolo e italiano"
+msgid "The definitions in `templates/` today — with their fields, languages and licences — are listed in the [catalogue of definitions](https://docs.extendedmatrix.org/projects/stratigraph-templates/en/latest/pages/catalogue-definitions.html), which is generated from the repository at every build of the documentation."
+msgstr "Le definizioni oggi in `templates/` — con i loro campi, le lingue e le licenze — sono elencate nel [catalogo delle definizioni](https://docs.extendedmatrix.org/projects/stratigraph-templates/it/latest/pages/catalogue-definitions.html), generato dal repository a ogni build della documentazione."
 
 msgid "The format specification is in **[SPEC.md](SPEC.md)**."
 msgstr "La specifica del formato è in **[SPEC.md](SPEC.md)**."
