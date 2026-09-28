@@ -141,8 +141,8 @@ msgstr "**EUPL-1.2 — CONFERMATA da E. Demetrescu il 2026-09-24.** È la licenz
 msgid "The **official text** is in `./LICENSE`, 287 lines, taken from `joinup.ec.europa.eu` (the Commission's site) and not rewritten from memory: an approximate licence is worse than no licence, because it looks like a licence."
 msgstr "Il **testo ufficiale** sta in `./LICENSE`, 287 righe, preso da `joinup.ec.europa.eu` (il sito della Commissione) e non riscritto a memoria: una licenza approssimata è peggio di una licenza assente, perché sembra una licenza."
 
-msgid "`pyproject.toml` declares `EUPL-1.2` and carries alongside it, in a comment, the breakdown by part — because a Python package's metadata can express ONE licence and this repository has three."
-msgstr "`pyproject.toml` dichiara `EUPL-1.2` e porta accanto, in un commento, la ripartizione per parti — perché i metadati di un pacchetto Python sanno esprimere UNA licenza e questo repository ne ha tre."
+msgid "`pyproject.toml` declares `EUPL-1.2` and carries alongside it, in a comment, the breakdown by part — because a Python package's metadata can express ONE licence, while this repository has two layers, and references the ICCD thesauri without copying them."
+msgstr "`pyproject.toml` dichiara `EUPL-1.2` e porta accanto, in un commento, la ripartizione per parti — perché i metadati di un pacchetto Python sanno esprimere UNA licenza, mentre questo repository ha due strati, e referenzia i thesauri ICCD senza copiarli."
 
 msgid "4 · Attribution of the measurements"
 msgstr "4 · Attribuzione delle misure"

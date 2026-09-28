@@ -167,8 +167,8 @@ Commission's site) and not rewritten from memory: an approximate licence is wors
 licence, because it looks like a licence.
 
 `pyproject.toml` declares `EUPL-1.2` and carries alongside it, in a comment, the breakdown
-by part — because a Python package's metadata can express ONE licence and this repository
-has three.
+by part — because a Python package's metadata can express ONE licence, while this
+repository has two layers, and references the ICCD thesauri without copying them.
 
 ## 4 · Attribution of the measurements
 
