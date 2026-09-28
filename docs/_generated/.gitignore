@@ -1,0 +1,4 @@
+# Tutto ciò che sta qui è rigenerato a ogni build da docs/_tools/generate.py.
+# Non si committa: una copia committata sarebbe una seconda verità.
+*
+!.gitignore

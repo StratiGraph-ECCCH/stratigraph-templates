@@ -1,0 +1,30 @@
+# .readthedocs.yaml — stratigraph-templates
+# Stessa forma di s3Dgraphy (v2, ubuntu-22.04, python 3.11, pdf ed epub).
+# https://docs.readthedocs.io/en/stable/config-file/v2.html
+#
+# Differenza voluta rispetto a s3Dgraphy: il progetto si installa SENZA un
+# extra `docs`, perché pyproject.toml oggi non lo dichiara. Le dipendenze della
+# documentazione stanno tutte in docs/requirements.txt. Se un giorno si aggiunge
+# l'extra, qui si rimette `extra_requirements: [docs]` come in s3Dgraphy.
+
+version: 2
+
+build:
+  os: ubuntu-22.04
+  tools:
+    python: "3.11"
+
+python:
+  install:
+    # il pacchetto serve: i cataloghi e l'aiuto della CLI sono generati da lui
+    - method: pip
+      path: .
+    - requirements: docs/requirements.txt
+
+sphinx:
+  configuration: docs/conf.py
+  fail_on_warning: false
+
+formats:
+  - pdf
+  - epub
