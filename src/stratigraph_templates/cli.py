@@ -23,8 +23,12 @@ def _all_template_ids() -> List[str]:
     return sorted(d.name for d in templates_dir().iterdir() if (d / "template.yaml").is_file())
 
 
-def _vocab() -> Vocabularies:
-    return Vocabularies.load()
+def _vocab(notice: bool = False) -> Vocabularies:
+    vocab = Vocabularies.load()
+    if notice:
+        for line in vocab.missing_checkouts():
+            print(f"  · {line}")
+    return vocab
 
 
 def _validate_one(name: str, reg, vocab: Vocabularies, quiet: bool = False,
@@ -67,7 +71,7 @@ def _registry(args):
 def cmd_validate(args) -> int:
     reg = _registry(args)
     print(reg.provenance())
-    vocab = _vocab()
+    vocab = _vocab(notice=True)
     names = args.templates or _all_template_ids()
     return max(_validate_one(n, reg, vocab, draft=args.draft) for n in names)
 
@@ -172,7 +176,7 @@ def cmd_form(args) -> int:
 def cmd_build(args) -> int:
     reg = _registry(args)
     print(reg.provenance())
-    vocab = _vocab()
+    vocab = _vocab(notice=True)
     names = args.templates or _all_template_ids()
     out = Path(args.out)
     written, refused = build([find_template(n) for n in names], reg, vocab, out)

@@ -66,6 +66,28 @@ python3 -m venv .venv && .venv/bin/pip install -e '.[dev]'
 La stampa richiede WeasyPrint (`pip install '.[print]'`; su macOS serve anche
 `brew install pango`). La risoluzione dei vocabolari richiede `rdflib`.
 
+### Le due dipendenze fuori dal repository
+
+Due vocabolari altrui **non sono copiati qui**: si leggono dove vivono, da un
+checkout accanto a questo repository. Servono a risolvere le **etichette** dei
+concetti (`vocab`, `form`/`print` con le parole, i test che le leggono) e a
+`extract-idai-field`; **`validate` e `build` non ne hanno bisogno** (il compilato
+nomina gli schemi, non ne copia le parole), ma se mancano lo dicono in una riga.
+
+| checkout | dove (default) | variabile | commit | a che cosa serve |
+|---|---|---|---|---|
+| [ICCD-MiBACT/Standard-catalografici](https://github.com/ICCD-MiBACT/Standard-catalografici) | `~/Documents/GitHub/Standard-catalografici` | `$STRATIGRAPH_ICCD_STANDARDS` | qualunque (letto il working tree; misurato su `c1de8c3`, 2026-03-26) | gli SKOS/RDF degli strumenti terminologici ICCD (`resolve.kind: external_skos_file`) e le XSD per `extract-xsd` |
+| [dainst/idai-field](https://github.com/dainst/idai-field) | `~/Documents/GitHub/idai-field` | `$STRATIGRAPH_IDAI_FIELD` | **deve contenere `4b5c1e2`** (2026-09-24): si legge con `git show <commit>:…`, mai il working tree | i valuelist DAI degli schemi `idai-field-*` (`resolve.kind: idai_field_valuelist`) e `extract-idai-field` |
+
+```bash
+cd ~/Documents/GitHub
+git clone https://github.com/ICCD-MiBACT/Standard-catalografici.git
+# basta la configurazione, non l'applicazione (23 MB invece dell'intero repository):
+git clone --filter=blob:none --sparse https://github.com/dainst/idai-field.git
+git -C idai-field sparse-checkout set core/config core/src/configuration core/src/model/configuration
+git -C idai-field cat-file -e 4b5c1e2c3c499d4bd125d0eda61cc6f5c94ffcd4^{commit} && echo ok
+```
+
 ## Le cinque specie di definizione
 
 Una definizione che entra qui viene da qualche parte, e da dove viene decide

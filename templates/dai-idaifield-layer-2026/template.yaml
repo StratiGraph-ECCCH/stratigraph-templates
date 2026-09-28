@@ -43,7 +43,9 @@
 template:
   id: dai-idaifield-layer-2026
   # 0.x = non ancora citabile: la lettura aspetta la verifica del DAI.
-  version: "0.1.0"
+  # 0.2.0 (2026-09-28) = featureForm e featureBorders passano da `none` + blocked_on
+  # (D7, D8) a `vocabulary` sulle due qualia nuove di s3Dgraphy (qualia 1.6.2).
+  version: "0.2.0"
   standard:
     authority: DAI
     code: "iDAI.field Layer"
@@ -306,14 +308,13 @@ template:
         scheme: idai-field-feature-featureform-default
         binding: "Feature-featureForm-default"
       graph:
-        verdict: none
-        blocked_on:
-          needs: "una qualia per la FORMA in pianta/sezione: s3Dgraphy (qualia 1.6.1) non ne ha
-                  una (ci sono geometry, footprint_area, bounding_box, non la forma nominata:
-                  U-förmig, oval, rechteckig…). O la si aggiunge, o si decide che va nella
-                  descrizione"
-          reported: "E.D. (datamodel) e Benjamin (DAI) — domanda D7, referto 2026-10-26-NIGHT-la-scheda-del-dai"
-        note: "Categories.json Feature.featureForm: checkboxes su Feature-featureForm-default (17)."
+        verdict: vocabulary
+        qualia: feature_shape
+        note: "Categories.json Feature.featureForm: checkboxes su Feature-featureForm-default (17).
+               Qualia `feature_shape` (qualia 1.6.2, aggiunta per questa casella: D7, proposta
+               da Cowork per E.D. il 28 set 2026): la forma in pianta o sezione detta con un
+               termine. Il vocabolario e' il valuelist DAI, non i valori-seme del datamodel. La
+               US ICCD non ha la casella: nessuna lettura reciproca, per ora."
 
     - id: featureBorders
       labels: {de: "Grenzen der stratigraphischen Einheit", en: "Borders of the stratigraphical unit"}
@@ -324,13 +325,15 @@ template:
         scheme: idai-field-feature-featureborders-default
         binding: "Feature-featureBorders-default"
       graph:
-        verdict: none
-        blocked_on:
-          needs: "una qualia per la NETTEZZA dei limiti (deutlich, diffus, scharf, verwaschen…):
-                  s3Dgraphy non ne ha una. La US ICCD non ha la casella: ha i CRITERI DI
-                  DISTINZIONE, che e' un'altra domanda (v. distinguishingCriteria)"
-          reported: "E.D. (datamodel) e Benjamin (DAI) — domanda D8, referto 2026-10-26-NIGHT-la-scheda-del-dai"
-        note: "Categories.json Feature.featureBorders: checkboxes su Feature-featureBorders-default (18)."
+        verdict: vocabulary
+        qualia: boundary_distinctness
+        note: "Categories.json Feature.featureBorders: checkboxes su Feature-featureBorders-default
+               (18). Qualia `boundary_distinctness` (qualia 1.6.2, D8, proposta da Cowork per E.D.
+               il 28 set 2026). ⚠ Il valuelist DAI mescola la NETTEZZA (deutlich, diffus,
+               verwaschen…) con la FORMA del limite (eben, wellig, gezackt, geneigt): tutti
+               finiscono nella stessa qualia, come nel DAI; se servisse separarli, e' una
+               domanda per Benjamin. La US ICCD ha i CRITERI DI DISTINZIONE, che e' un'altra
+               domanda (v. distinguishingCriteria)."
 
     - id: comparison
       labels: {de: "Vergleich(e)", en: "Comparison"}
@@ -395,11 +398,10 @@ template:
         verdict: property
         qualia: origin_type
         note: "Categories.json Layer.isNatural: boolean. Il datamodel lo rende evidente: la qualia
-               `origin_type` (em_qualia_types.json, qualia 1.6.1) e' «Natural or artificial
-               origin», valori [natural, artificial]. ⚠ La US ICCD scrive la stessa cosa
-               (formazione_natura) come property_name `formation_mode`, NON registrata e con i
-               valori italiani: le due schede, oggi, non si leggono a vicenda su questo campo
-               (segnalato nel referto)."
+               `origin_type` (em_qualia_types.json) e' «Natural or artificial origin», valori
+               [natural, artificial]. Dalla US ICCD 2.0.0 anche formazione_natura scrive
+               `origin_type` (prima: `formation_mode`, non registrata): le due schede si leggono
+               a vicenda su questo campo."
 
     - id: soilType
       labels: {de: "Bodenart", en: "Soil type"}

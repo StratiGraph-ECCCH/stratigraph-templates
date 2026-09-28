@@ -30,7 +30,7 @@ from stratigraph_templates.validate import ValidationError, draft_undecided, val
 
 ROOT = Path(__file__).resolve().parents[1]
 DRAFT = ROOT / "drafts" / "draft-idai-field-layer.yaml"
-DIST = ROOT / "dist" / "schede" / "dai-idaifield-layer-2026" / "0.1.0.json"
+DIST = ROOT / "dist" / "schede" / "dai-idaifield-layer-2026" / "0.2.0.json"
 COMMIT = "4b5c1e2c3c499d4bd125d0eda61cc6f5c94ffcd4"
 DAI = "dai-idaifield-layer-2026"
 
@@ -166,14 +166,14 @@ def test_a_missing_checkout_is_a_vocabulary_error_that_names_the_variable(tmp_pa
 def test_the_definition_has_no_sheet_and_validates(reg, vocab, dai):
     assert dai.sheet is None and dai.sides == []
     validate_template(dai, reg, known_schemes=vocab.scheme_ids())
-    assert (dai.version, dai.source_language, dai.languages) == ("0.1.0", "de", ["de", "en"])
+    assert (dai.version, dai.source_language, dai.languages) == ("0.2.0", "de", ["de", "en"])
     assert len(dai.fields) == 44
 
 
 def test_decided_and_blocked_are_counted(dai):
     blocked = [f.id for f in dai.fields if f.graph.blocked_on]
-    assert len(blocked) == 14
-    assert len(dai.fields) - len(blocked) == 30
+    assert len(blocked) == 12            # 0.2.0: D7, D8 decisi (qualia 1.6.2)
+    assert len(dai.fields) - len(blocked) == 32
     for f in dai.fields:
         if f.graph.blocked_on:
             assert "Benjamin (DAI)" in f.graph.blocked_on.reported, f.id

@@ -3,15 +3,15 @@
   "source": "s3dgraphy working tree at ../s3Dgraphy/src/s3dgraphy/JSON_config",
   "taken_from": {
     "config_dir": "../s3Dgraphy/src/s3dgraphy/JSON_config",
-    "git_commit": "bd3340dec0c8c55121533f8a05433db1e447bac2",
-    "git_dirty": false
+    "git_commit": "57c3dc7dc3a3b2e9bf490ecb1e65bf64619d93c2",
+    "git_dirty": true
   },
-  "taken_on": "2026-09-27",
+  "taken_on": "2026-09-28",
   "node_datamodel_version": "1.6.9",
   "connections_version": "1.6.20",
-  "qualia_version": "1.6.1",
+  "qualia_version": "1.6.2",
   "em_ttl_version": "1.6.5",
-  "s3dgraphy_version": "1.6.0.dev21",
+  "s3dgraphy_version": "1.6.0.dev22",
   "operations": [
     "add_node",
     "update_field",
@@ -931,6 +931,7 @@
     "arrangement",
     "artistic_style",
     "attribution",
+    "boundary_distinctness",
     "bounding_box",
     "ceremonial_function",
     "certainty_level",
@@ -958,6 +959,7 @@
     "elevation_min_usm",
     "elevation_relative",
     "exhibition_history",
+    "feature_shape",
     "finish",
     "footprint_area",
     "fragility",

@@ -89,6 +89,18 @@ idai_field_valuelist`), come gli SKOS dell'ICCD si risolvono da
 Standard-catalografici. Un'app che li vendora (StratiField, `sync-schede.sh`)
 porta con sé l'attribuzione e la licenza dello schema, che Apache-2.0 chiede.
 
+**Nell'immagine pubblicata di un'app** (deciso il 28 set 2026, Cowork per E.D.):
+le etichette DAI — quelle dei campi nella scheda compilata e quelle dei valuelist
+nei vocabolari vendorati — **possono** stare nell'immagine di StratiField su
+GHCR, **con** ciò che Apache-2.0 §4 chiede a chi ridistribuisce: accanto a ogni
+directory che le contiene (`schede/dai-idaifield-layer-2026/`, `vocabolari/`)
+`sync-schede.sh` scrive **`LICENSE-Apache-2.0.txt`** (il testo che il DAI stesso
+distribuisce, letto dal checkout allo stesso commit `4b5c1e2`) e un **`NOTICE`**
+che dice che cosa è del DAI, da quale commit, e che le etichette sono riprodotte
+senza cambiarne il senso. Il DAI non ha un proprio `NOTICE` a quel commit
+(misurato): non c'è niente da propagare oltre all'attribuzione. Generati, mai
+scritti a mano; il campo `attribution` di ogni json resta.
+
 **Perché è lecito.** Apache-2.0 permette di ridistribuire e derivare,
 chiedendo attribuzione e che la licenza della parte ripresa resti detta:
 entrambe stanno nel dato, campo per campo della testata. La descrizione

@@ -360,3 +360,45 @@ class Vocabularies:
 
     def scheme_ids(self) -> set:
         return set(self.schemes)
+
+    def missing_checkouts(self) -> List[str]:
+        """One plain sentence per external checkout that the resolvable schemes
+        read and this machine does not have (README, «Le due dipendenze fuori dal
+        repository»). `validate` and `build` do not need them — the compiled
+        form names schemes, it does not copy their labels — so this is a notice,
+        not a failure; `vocab`, `form`/`print` with labels and some tests do."""
+        from . import idai_extract as idai
+
+        out: List[str] = []
+        iccd = [s for s in self.schemes.values()
+                if s.status == "resolvable" and s.resolve.get("kind") == "external_skos_file"]
+        if iccd:
+            root = Path(os.environ.get(ICCD_STANDARDS_ENV, str(ICCD_STANDARDS_DEFAULT)))
+            if not root.is_dir():
+                out.append(
+                    f"no ICCD standards checkout at {root}: {len(iccd)} scheme(s) "
+                    f"({', '.join(sorted(s.id for s in iccd)[:3])}…) will not resolve their labels. "
+                    f"Clone it there (README) or set ${ICCD_STANDARDS_ENV}.")
+        commits = sorted({s.resolve.get("commit") for s in self.schemes.values()
+                          if s.status == "resolvable"
+                          and s.resolve.get("kind") == "idai_field_valuelist"} - {None})
+        if commits:
+            repo = idai.default_repo()
+            n = sum(1 for s in self.schemes.values()
+                    if s.resolve.get("kind") == "idai_field_valuelist")
+            if not (repo / ".git").exists():
+                out.append(
+                    f"no iDAI.field checkout at {repo}: {n} idai-field-* scheme(s) will not "
+                    f"resolve their labels. Clone {idai.IDAI_FIELD_GITHUB} there (it must hold "
+                    f"commit {', '.join(c[:7] for c in commits)}; README) or set "
+                    f"${idai.IDAI_FIELD_ENV}.")
+            else:
+                for c in commits:
+                    try:
+                        idai._git(repo, "cat-file", "-e", f"{c}^{{commit}}")
+                    except idai.IdaiFieldError:
+                        out.append(
+                            f"the iDAI.field checkout at {repo} does not hold commit {c[:7]}, "
+                            f"which the idai-field-* schemes are read at: `git -C {repo} fetch "
+                            f"origin {c}`.")
+        return out

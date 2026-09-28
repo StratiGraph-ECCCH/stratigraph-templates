@@ -25,8 +25,13 @@ template:
   # la norma e sono ancora solo dichiarati, e fino allo SKOS dell'ICCD rispondono
   # per loro i moduli originati em-us-* (`provisional`, SPEC §3.2). PATCH e non
   # MINOR: nessun campo, tipo o verdetto cambia, e un record 1.0.1 si rilegge
-  # uguale — cambia che cosa un widget può offrire.
-  version: "1.0.2"
+  # uguale — cambia che cosa un widget può offrire. 2.0.0 (2026-09-28) = la natura
+  # della formazione (formazione_natura) passa dalla property_name `formation_mode`,
+  # mai registrata, alla qualia `origin_type` del datamodel [natural, artificial], la
+  # stessa che legge il DAI (`isNatural`): il datamodel fa fede. MAJOR perché un
+  # record 1.0.2 si rileggerebbe diversamente (un verdetto cambiato: altra proprietà,
+  # altri valori — `naturale` → `natural`). Deciso da Cowork per E.D., 28 set 2026.
+  version: "2.0.0"
   standard:
     authority: ICCD
     code: US
@@ -259,13 +264,18 @@ template:
       labels: {it: "MODO DI FORMAZIONE (natura)", en: "MODE OF FORMATION (nature)"}
       type: choice
       options:
-        - {value: naturale, labels: {it: "NATURALE", en: "NATURAL"}}
-        - {value: artificiale, labels: {it: "ARTIFICIALE", en: "ARTIFICIAL"}}
+        - {value: natural, labels: {it: "NATURALE", en: "NATURAL"}}
+        - {value: artificial, labels: {it: "ARTIFICIALE", en: "ARTIFICIAL"}}
       graph:
         verdict: property
-        property_name: formation_mode
+        qualia: origin_type
         note: "Sulla scheda sono due caselle da barrare, mutuamente esclusive: la definizione le
-               tiene in un campo unico con due opzioni, il foglio le disegna come due caselle."
+               tiene in un campo unico con due opzioni, il foglio le disegna come due caselle.
+               Il valore scritto è la chiave della qualia `origin_type` (natural/artificial),
+               l'etichetta sul foglio resta NATURALE/ARTIFICIALE. Fino alla 1.0.2 scriveva
+               `formation_mode` = naturale/artificiale, property_name non registrata: le US
+               scritte così restano nel grafo e la 2.0.0 non le legge (la lente le elenca
+               tra le proprietà non lette)."
 
     - id: formazione_segno
       labels: {it: "MODO DI FORMAZIONE (segno)", en: "MODE OF FORMATION (sign)"}
