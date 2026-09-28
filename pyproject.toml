@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=68"]
+requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -20,12 +20,12 @@ requires-python = ">=3.11"
 # La terza riga è la più importante e la più facile da sbagliare: i vocabolari
 # qui dentro dichiarano un `scheme` e un binding, e i termini restano dove
 # stanno. Copiarli qui li porterebbe sotto una licenza che non è la loro.
-license = { text = "EUPL-1.2" }
+# Stringa SPDX (PEP 639), non tabella: con `license-files` un setuptools
+# recente rifiuta `{ text = ... }` e `pip install .` si ferma — anche su Read
+# the Docs. Per la stessa norma il classifier di licenza non si ripete.
+license = "EUPL-1.2"
 license-files = ["LICENSE", "LICENSING.md"]
 authors = [{ name = "Emanuele Demetrescu", email = "emanuel.demetrescu@cnr.it" }]
-classifiers = [
-  "License :: OSI Approved :: European Union Public Licence 1.2 (EUPL 1.2)",
-]
 dependencies = ["PyYAML>=6.0"]
 
 [project.optional-dependencies]

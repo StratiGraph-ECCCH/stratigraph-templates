@@ -153,14 +153,17 @@ class RepoLinks(SphinxPostTransform):
         for node in list(self.document.findall(addnodes.pending_xref)):
             if node.get('reftype') != 'myst' or not node.source:
                 continue
-            # MyST ha già letto il link rispetto alla PAGINA e tolto il suffisso:
-            # si torna al percorso scritto nel file e lo si rilegge dal file.
-            target = node.get('reftarget') or ''
-            if not os.path.isabs(target):
-                target = os.path.relpath(target, os.path.dirname(node.get('refdoc', '')) or '.')
-                target = os.path.join(os.path.dirname(node.source), target)
-            path = next((os.path.normpath(target + sfx) for sfx in ('.md', '')
-                         if os.path.isfile(os.path.normpath(target + sfx))), None)
+            # MyST 4 legge il link rispetto alla PAGINA e toglie il suffisso
+            # ('_generated/SPEC'); MyST 5 lascia il percorso com'è scritto nel
+            # file ('SPEC.md'). In entrambi i casi lo si rilegge dal FILE.
+            raw = node.get('reftarget') or ''
+            here = os.path.dirname(node.source)
+            cands = [raw if os.path.isabs(raw) else os.path.join(here, raw)]
+            if not os.path.isabs(raw):
+                back = os.path.relpath(raw, os.path.dirname(node.get('refdoc', '')) or '.')
+                cands.append(os.path.join(here, back))
+            path = next((os.path.normpath(c + sfx) for c in cands for sfx in ('', '.md')
+                         if os.path.isfile(os.path.normpath(c + sfx))), None)
             if path is None or not path.startswith(ROOT + os.sep):
                 continue
             rel = os.path.relpath(path, ROOT).replace(os.sep, '/')
