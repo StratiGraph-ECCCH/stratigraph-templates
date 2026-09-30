@@ -5,15 +5,16 @@ tesi con un esempio; con tre è una tesi con un controesempio possibile, e quest
 file è ciò che la tiene vera quando qualcuno aggiunge un campo condizionale al
 renderer.
 
-Dal 2026-09-28 sono quattro: la quarta è lo schema DANA dell'Israel Antiquities
-Authority, e prova una cosa che le altre tre non provavano — una definizione
-letta da un EXPORT invece che da una norma pubblicata. Il nome del file dice
-ancora «three» e va rinominato quando si potrà: il numero nel nome era
-l'errore, non il quarto standard.
-
-Dal 2026-10-26 sono cinque: la quinta è la categoria `Layer` di iDAI.field
+Dal 2026-10-26 sono quattro: la quarta è la categoria `Layer` di iDAI.field
 (DAI), letta dalla configurazione APERTA di un'applicazione — né norma, né
-export — e prima scheda senza foglio di carta.
+export — e prima scheda senza foglio di carta. Il nome del file dice ancora
+«three» e va rinominato quando si potrà: il numero nel nome era l'errore, non
+il quarto standard.
+
+La quinta specie — una definizione letta da un EXPORT di banca dati — ha la sua
+regola scritta in LICENSING §1-ter e nessun caso spedito: entra quando
+l'autorità che possiede il sistema ha dato per iscritto il consenso alla
+pubblicazione E il suo ufficio legale ha sciolto licenza e attribuzione.
 
 **Perché un test e non un referto.** La scheda ungherese è nata la notte del
 2026-09-23 proprio per provare questo, è comparsa nel browser con il diff
@@ -47,7 +48,6 @@ SHIPPED = {
     "iccd-us-2021":       "la norma vera, ricostruita dal .doc ICCD",
     "es-ue-demo-2026":    "un'altra lingua sorgente e un paragrafo che l'ICCD non ha",
     "hu-rl-demo-2026":    "una terza lingua, e il designatore che NON è l'ultimo",
-                           "nessun documento pubblico da citare, e le relazioni in una tabella a parte",
     "dai-idaifield-layer-2026": "la CONFIGURAZIONE APERTA di un'applicazione (iDAI.field, DAI), letta "
                                 "a un commit: nessun foglio di carta, chiave umana di un campo solo, "
                                 "etichette in tedesco nell'origine",
@@ -78,15 +78,14 @@ def test_every_shipped_standard_validates():
 # ── 2 · e sono DIVERSE, che è l'unica ragione per averne tre ───────────────
 
 def test_the_three_speak_three_source_languages():
-    assert {s.source_language for s in sheets().values()} == {"it", "es", "hu", "en", "de"}
+    assert {s.source_language for s in sheets().values()} == {"it", "es", "hu", "de"}
 
 
 def test_the_three_have_three_shapes_of_human_key():
     """Stessa domanda, quattro risposte diverse: un campo, due, tre, e il
-    designatore in due posizioni. (ICCD e IAA hanno la stessa forma, tre campi e
-    il designatore in fondo: la IAA non aggiungeva una forma, aggiungeva un
-    export. Il DAI aggiunge la chiave di UN campo: il contesto — la trincea —
-    iDAI.field lo tiene in una relazione nascosta, non nel nome.)"""
+    designatore in due posizioni. (Il DAI aggiunge la chiave di UN campo: il
+    contesto — la trincea — iDAI.field lo tiene in una relazione nascosta, non
+    nel nome.)"""
     shapes = {}
     for name, sheet in sheets().items():
         key = sheet.identity.human_key

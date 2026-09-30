@@ -65,6 +65,44 @@ inherit the CC BY-SA 4.0 that applies to `templates/`. The iDAI.field valuelists
 ⚠ The **`w3id.org/extendedmatrix` redirect is not yet registered**: the URIs are stable in
 intent but not resolvable. It must be requested before publishing.
 
+## 1-ter · A schema read from an export, not from a standard
+
+**The third kind, whose rule is written here before the first case ships.**
+
+An excavation database has no published document behind it. Where a partner's recording
+system is known only through an export, a definition cannot reconstruct a norm: it can only
+describe a database schema as it appears in the data, and it holds until that authority
+publishes a model of its own.
+
+**What such a definition would publish.** The FIELDS: names, types, how full they are, what
+they mean for the graph. **No records**: no excavation descriptions, no elevations, no
+relations, no finds. A measurement accompanying a field (“173/173 full, 20 distinct
+values”) describes the export, it does not reproduce it.
+
+**Why that is lawful, and it is the same reason as in the other sections.** The structure
+of a database — the list of its fields and their meaning — is a fact, and describing it is
+not copying it; the European *sui generis* database right protects the investment in the
+CONTENT, and the content does not come in. The reading, the verdicts, the notes and the
+layout are our work.
+
+**Two conditions, and they are conditions and not preferences.** A definition of this kind
+enters the repository only once the authority that owns the system has agreed in writing to
+the description being published, **and** its legal office has settled the licence and the
+attribution — because here, unlike the ICCD case, there is no published licence to inherit.
+Until both are in hand the reading stays in the project's working space and out of this
+repository, at any version number.
+
+**The attribution such a definition carries is twofold**, in the shape §1-quinquies states:
+the SCHEMA belongs to the authority and lives in `standard.attribution`; the DESCRIPTION
+belongs to StratiGraph WP3 — CNR-ISPC. Whoever cites the sheet cites both, as one does with
+the edition of someone else's text.
+
+**When the first case comes.** Onboarding a partner's recording system is work of WP11 and
+of the cascading grants, and it does not stop with the project: a repository of sheets is
+the kind of thing that keeps taking them in. What WP3 builds here is the MECHANISM by which
+a sheet becomes data. The sheets and the vocabularies arrive continuously, each at the pace
+of whoever owns it.
+
 ## 1-quater · A definition read from an application's configuration
 
 `templates/dai-idaifield-layer-2026/`, `drafts/draft-idai-field-layer.yaml`,

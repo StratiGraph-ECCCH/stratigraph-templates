@@ -223,13 +223,12 @@ def test_the_sheets_do_not_all_agree_on_the_same_concepts():
     root = pathlib.Path(__file__).resolve().parents[1] / "templates"
     sheets = {p.name: load_template(p / "template.yaml")
               for p in sorted(root.iterdir()) if p.is_dir()}
-    # Quattro dal 2026-09-28: si è aggiunto lo schema DANA dell'IAA, letto da un
-    # export invece che da una norma. Cinque dal 2026-10-26: la categoria Layer
-    # di iDAI.field (DAI), che marca da trincea UN campo solo — l'identificatore —
-    # perché per il resto lo standard non lo dice e la Base A non basta a
-    # dirlo per lui. Il numero sta qui perché una scheda che sparisce o che
-    # arriva è un fatto, non un dettaglio di configurazione.
-    assert len(sheets) == 5, sorted(sheets)
+    # Quattro dal 2026-10-26: si è aggiunta la categoria Layer di iDAI.field
+    # (DAI), che marca da trincea UN campo solo — l'identificatore — perché per
+    # il resto lo standard non lo dice e la Base A non basta a dirlo per lui.
+    # Il numero sta qui perché una scheda che sparisce o che arriva è un fatto,
+    # non un dettaglio di configurazione.
+    assert len(sheets) == 4, sorted(sheets)
 
     # I TRE SOTTOINSIEMI SONO TRE NUMERI DIVERSI. Se collassassero a uno, il
     # marcatore avrebbe smesso di descrivere lo standard.

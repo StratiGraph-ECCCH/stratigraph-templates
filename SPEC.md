@@ -408,8 +408,9 @@ and prints them. In the US 2021 there are three: `ente_responsabile`, `ufficio_m
 (the institutional actor) and `campionature` (`CRMsci S13_Sample`).
 
 **The missing decision may belong to whoever owns the standard**, not to the
-datamodel: the vocabulary of locus types that only the IAA can provide
-(`dai-idaifield-layer-2026`, fourteen fields). The form is the same — `none`
+datamodel: the meaning of a box that only the authority that owns the
+system can state (`dai-idaifield-layer-2026`, fourteen fields), or a
+controlled vocabulary only its custodian can release. The form is the same — `none`
 plus `blocked_on`, with the question in `needs` and the addressee in `reported` —
 and it is the form **that compiles** of a verdict not yet decided: `undecided`
 remains the draft marker (§7), which no definition carries.
@@ -658,9 +659,9 @@ So `sheet` is **optional**, and its absence is stated by leaving the key out:
 * `form` draws a fluid page, one block per paragraph; **`print` refuses**
   (`declares no sheet: there is no paper model to print`).
 
-Whoever has a real sheet declares it; whoever builds one for convenience — like the
-IAA-DANA definition, which says so in its comment — declares it too, and takes
-responsibility for its geometry.
+Whoever has a real sheet declares it; whoever builds one for convenience — a
+definition read from a database, which has no paper model and says so in its
+comment — declares it too, and takes responsibility for its geometry.
 
 ---
 

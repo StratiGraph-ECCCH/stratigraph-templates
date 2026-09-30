@@ -36,7 +36,7 @@
 # giustamente: una scheda che promette un atterraggio che non c'e' e' peggio di una che
 # dice di non averlo. Quindi i campi il cui senso il datamodel di s3Dgraphy NON rende
 # evidente portano `verdict: none` + `blocked_on` con la DOMANDA per il DAI — la forma
-# che la definizione IAA-DANA usa gia' per il tipo di locus. Si compilano, si scrivono,
+# che questo repository usa per un verdetto non ancora deciso. Si compilano, si scrivono,
 # non atterrano nel grafo, e sono contati da `validate`. Nel referto: l'elenco delle
 # domande per Benjamin (DAI).
 

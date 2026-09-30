@@ -3,14 +3,14 @@
   "source": "s3dgraphy working tree at ../s3Dgraphy/src/s3dgraphy/JSON_config",
   "taken_from": {
     "config_dir": "../s3Dgraphy/src/s3dgraphy/JSON_config",
-    "git_commit": "57c3dc7dc3a3b2e9bf490ecb1e65bf64619d93c2",
-    "git_dirty": true
+    "git_commit": "9badba048ab1d678d7d32eef02ef8e2d58983866",
+    "git_dirty": false
   },
-  "taken_on": "2026-09-28",
-  "node_datamodel_version": "1.6.9",
-  "connections_version": "1.6.20",
+  "taken_on": "2026-09-30",
+  "node_datamodel_version": "1.6.12",
+  "connections_version": "1.6.27",
   "qualia_version": "1.6.2",
-  "em_ttl_version": "1.6.5",
+  "em_ttl_version": "1.6.6",
   "s3dgraphy_version": "1.6.0.dev22",
   "operations": [
     "add_node",
@@ -1094,6 +1094,10 @@
     "https://w3id.org/em/ontology#VirtualSpecialFind",
     "https://w3id.org/em/ontology#WorkingUnit",
     "https://w3id.org/em/ontology#abuts",
+    "https://w3id.org/em/ontology#aiAssistedBy",
+    "https://w3id.org/em/ontology#aiAssistedField",
+    "https://w3id.org/em/ontology#aiModel",
+    "https://w3id.org/em/ontology#aiPromptRef",
     "https://w3id.org/em/ontology#belongsToAlternative",
     "https://w3id.org/em/ontology#bondedTo",
     "https://w3id.org/em/ontology#checksum",
@@ -1101,6 +1105,7 @@
     "https://w3id.org/em/ontology#contrastsWith",
     "https://w3id.org/em/ontology#convexShape",
     "https://w3id.org/em/ontology#createdBy",
+    "https://w3id.org/em/ontology#crs",
     "https://w3id.org/em/ontology#cuts",
     "https://w3id.org/em/ontology#derivedFromDocument",
     "https://w3id.org/em/ontology#fills",
@@ -1114,6 +1119,7 @@
     "https://w3id.org/em/ontology#hasSubEpoch",
     "https://w3id.org/em/ontology#hasVisualReference",
     "https://w3id.org/em/ontology#hypothesizedBy",
+    "https://w3id.org/em/ontology#inheritsQualia",
     "https://w3id.org/em/ontology#isInActivity",
     "https://w3id.org/em/ontology#isOnResource",
     "https://w3id.org/em/ontology#lastEditedBy",
@@ -1133,7 +1139,9 @@
     "https://w3id.org/em/ontology#resourceScope",
     "https://w3id.org/em/ontology#sphere",
     "https://w3id.org/em/ontology#survivesInEpoch",
+    "https://w3id.org/em/ontology#validatedAt",
     "https://w3id.org/em/ontology#validatedBy",
+    "https://w3id.org/em/ontology#vertexCount",
     "https://w3id.org/em/ontology#wasReusedFrom"
   ],
   "node_elements": {
@@ -1170,6 +1178,16 @@
         "label_only": null,
         "specialised_alternative": "em:hasDefinition"
       }
+    },
+    "stratigraphic_kind": {
+      "declared_on": "StratigraphicUnit",
+      "applies_to": [
+        "StratigraphicUnit"
+      ],
+      "kind": "node_element",
+      "em_json": "data.stratigraphic_kind",
+      "value": "enum",
+      "rdf": null
     }
   }
 }
