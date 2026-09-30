@@ -143,8 +143,29 @@ attribution and that the licence of the reused part stay stated: both live in th
 field by field of the header. The description (verdicts and notes) follows the rest of
 `templates/`.
 
-**Unlike the ICCD case:** the version stays **0.x** until the DAI (Benjamin)
-has seen the reading and answered the questions in the report.
+**What this definition is, and is not.** It is **not a national standard**, and no
+national standard for excavation documentation exists in Germany: cultural authority
+rests with the *Länder*, with differing standards and sometimes further requirements from
+municipalities or local heritage authorities. The template shipped with iDAI.field is a
+**default configuration researchers use as an option** (L. Steinmann, DAI, 30 September
+2026), designed by the DAI to encourage the adoption of one common, workable template
+precisely because no central authority can impose one (B. Ducke, same date). It is
+therefore cited here as a **relevant initiative and an operationalised schema**, and the
+reason it is worth citing stands undiminished: behind it is the DAI, and behind the schema
+is an open-source tool that people use in the field. A template adopted by conviction, with
+no obligation behind it, says something about practice that an imposed norm does not.
+
+**⚠ A caution from the DAI, to be read before consuming this definition.** There is no
+congruent data model across DAI projects: almost everything is configurable and many
+project configurations are not available outside their project. Much of this default is
+genuinely reused, so the effort is not futile — but whoever consumes this definition must
+**provision for these fields and these values being absent** (L. Steinmann, 30 September
+2026).
+
+**Unlike the ICCD case:** the version stays **0.x** until the DAI has seen the reading and
+answered the questions in the report. As of 30 September 2026 four of the eighteen are
+answered in writing and fourteen remain open; the answers are recorded in the definition's
+header and land in its verdicts at 0.3.0.
 
 ## 1-quinquies · The good-practice lists, which until now had no home
 

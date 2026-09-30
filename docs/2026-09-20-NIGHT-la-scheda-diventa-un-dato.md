@@ -107,7 +107,7 @@ out/us-3014-it.pdf — ICCD US 2021, 2 side(s) → 2 page(s), language 'it'
 ```
 
 Due facciate dichiarate, due pagine prodotte. I dati sono la stessa US ricca del
-referto di pyarchinit-mini (Castel Fontenova, strato di crollo), coi rapporti
+referto di pyarchinit-mini (strato di crollo), coi rapporti
 **strutturati** invece che in un blob:
 
 | casella | stampato |

@@ -40,6 +40,56 @@
 # non atterrano nel grafo, e sono contati da `validate`. Nel referto: l'elenco delle
 # domande per Benjamin (DAI).
 
+# ── CHE COSA E' QUESTA SCHEDA, detto da chi la fa (DAI, 2026-09-30) ─────────
+#
+# NON E' UNA NORMA NAZIONALE, e in Germania una norma nazionale della
+# documentazione di scavo NON ESISTE: l'autorita' culturale sta in capo ai
+# Laender, con standard diversi fra loro e talvolta requisiti ulteriori dei
+# comuni o delle soprintendenze locali; i manuali possono essere molto estesi e
+# le banche dati associate spesso non sono pubbliche. Il template distribuito in
+# iDAI.field e' una CONFIGURAZIONE DI DEFAULT che i ricercatori usano come
+# opzione (L. Steinmann, DAI, 2026-09-30), disegnata dal DAI per incoraggiare
+# l'adozione di un template comune e praticabile proprio in assenza di
+# un'autorita' centrale che possa imporne uno (B. Ducke, stessa data).
+#
+# Si cita quindi come INIZIATIVA RILEVANTE e SCHEMA OPERAZIONALIZZATO, non come
+# standard nazionale. Il motivo per cui vale resta intero: dietro c'e' il DAI,
+# istituzione sovranazionale con una storia lunga, e dietro lo schema c'e' uno
+# strumento open source che qualcuno usa sul campo. Un template adottato per
+# convinzione in assenza di obbligo dice sulla pratica qualcosa che una norma
+# imposta non dice.
+#
+# ⚠ CAUTELA DEL DAI, e va letta prima di consumare questa definizione: non
+# esiste un modello dati congruente fra i progetti del DAI. Quasi tutto e'
+# configurabile e molte configurazioni di progetto non sono accessibili fuori
+# dal progetto. Gran parte di questo default e' effettivamente riusato, quindi
+# lo sforzo non e' vano — ma chi consuma questa definizione deve PREVEDERE che
+# questi campi e questi valori possano mancare (L. Steinmann, 2026-09-30).
+#
+# RISPOSTE RICEVUTE, 2026-09-30, L. Steinmann (DAI). Quattro domande su diciotto
+# sono chiuse; entrano nei verdetti con la 0.3.0, non qui.
+#   D1  shortDescription — descrizione breve LIBERA, un «titolo descrittivo»,
+#       senza vocabolario nella configurazione di default (nella configurazione
+#       archaeoDox e' invece una lista controllata). NON e' la definizione
+#       dell'unita': `identifier` e' il numero, `shortDescription` dice in poche
+#       parole che cosa e' — «riempimento di buca di palo», «orlo di anfora».
+#   D2  processor — il RESPONSABILE DELL'UNITA' SUL CAMPO, non l'autore della
+#       scheda. L'autore del record sta a livello di documento, in
+#       `resource.created` / `resource.modified`: due campi che questa lettura
+#       non aveva visto, e che sono il piano dell'autorialita'.
+#   D6  hasDisturbance — registra soltanto SE l'unita' e' disturbata, non come
+#       ne' perche'. Giudizio sullo stato, quindi qualia e non arco.
+#   D7/D8 featureForm e featureBorders — due cose distinte, confermate: la forma
+#       complessiva nel planum, e la consistenza dei limiti della macchia. Le due
+#       qualia aggiunte in s3Dgraphy (feature_shape, boundary_distinctness) sono
+#       giustificate da chi possiede lo schema. Fonte indicata da loro:
+#       A. Kinne, «Tabellen und Tafeln zur Grabungstechnik», p. 32 — dove i
+#       limiti sono descritti su TRE assi (Gestalt, Verlauf, Deutlichkeit) che
+#       `featureBorders` comprime in una lista sola, e la forma e' descritta due
+#       volte, in pianta (p. 32, con l'orientamento) e in sezione (p. 33).
+#   D15/D16 period e dating restano aperte, e loro hanno idee da portare.
+# Le altre quattordici posizioni restano aperte (L. Steinmann, stessa data).
+#
 template:
   id: dai-idaifield-layer-2026
   # 0.x = non ancora citabile: la lettura aspetta la verifica del DAI.
