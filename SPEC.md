@@ -787,16 +787,25 @@ refused.
   "languages": ["it", "en"],
   "vocabularies": [{"id": "iccd-us-consistenza", "status": "declared", ...}, ...],
   "digest": "sha256:<64 hex>",
-  "datamodel": {"nodes": "1.6.8", "connections": "1.6.19", "qualia": "1.6.1",
-                "em_ttl": "1.6.2", "s3dgraphy": "1.6.0.dev20",
-                "taken_from": {"git_commit": "8b91867…", "git_dirty": false},
+  "datamodel": {"nodes": "1.6.17", "node_registry": "1.6.17", "connections": "1.6.31",
+                "visual_rules": "1.6.27", "qualia": "1.6.2", "translations": "1.6",
+                "digest": "sha256:12c5d520…",
+                "em_ttl": "1.6.9", "s3dgraphy": "1.6.0.dev24",
+                "taken_from": {"git_commit": "4149db5…", "git_dirty": false},
                 "snapshot": "registry/s3dgraphy-snapshot.json"},
   "compiled_by": {"name": "stratigraph-templates", "version": "0.1.0"}
 }
 ```
 
 `datamodel` is **read from the snapshot** (§2.1), which in turn read it from the
-s3Dgraphy configuration files: no version is written by hand.
+s3Dgraphy configuration files: no version is written by hand. It has one version per
+datamodel, under the names of s3Dgraphy's fingerprint, and **`datamodel.digest`**, the
+fingerprint itself (`api.datamodel_fingerprint()`: SHA-256 over the six datamodel
+JSONs in RFC 8785 canonical form). A reader — StratiField — compares both with its own
+s3Dgraphy and can say *which* datamodel moved. `validate` and `build` compare the
+snapshot's fingerprint with the working tree's, and a divergence names the datamodel
+(`datamodel: nodes 1.6.12 vs 1.6.17`). Not to be confused with the header's own
+`digest`, below, which is the definition's.
 
 **The digest** is SHA-256 over the canonical JSON (sorted keys, no whitespace) of the
 document **without** `digest`, `datamodel` and `compiled_by`. So:

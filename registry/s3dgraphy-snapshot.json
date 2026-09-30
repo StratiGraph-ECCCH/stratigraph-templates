@@ -1,17 +1,17 @@
 {
-  "snapshot_format": 3,
+  "snapshot_format": 4,
   "source": "s3dgraphy working tree at ../s3Dgraphy/src/s3dgraphy/JSON_config",
   "taken_from": {
     "config_dir": "../s3Dgraphy/src/s3dgraphy/JSON_config",
-    "git_commit": "9badba048ab1d678d7d32eef02ef8e2d58983866",
+    "git_commit": "4149db555e61cd5888044be1e9fc0d0101d8089e",
     "git_dirty": false
   },
-  "taken_on": "2026-09-30",
-  "node_datamodel_version": "1.6.12",
-  "connections_version": "1.6.27",
+  "taken_on": "2026-10-01",
+  "node_datamodel_version": "1.6.17",
+  "connections_version": "1.6.31",
   "qualia_version": "1.6.2",
-  "em_ttl_version": "1.6.6",
-  "s3dgraphy_version": "1.6.0.dev22",
+  "em_ttl_version": "1.6.9",
+  "s3dgraphy_version": "1.6.0.dev24",
   "operations": [
     "add_node",
     "update_field",
@@ -54,6 +54,7 @@
     "RepresentationModelNode",
     "RepresentationModelNodeGroup",
     "RepresentationModelSpecialFindNode",
+    "ResourceFileNode",
     "ResourceNode",
     "SE",
     "SF",
@@ -114,6 +115,7 @@
     "RepresentationModelNode": "representation_model",
     "RepresentationModelNodeGroup": "RepresentationModelNodeGroup",
     "RepresentationModelSpecialFindNode": "representation_model_sf",
+    "ResourceFileNode": "resource_file",
     "ResourceNode": "resource",
     "ReusedSpecialFind": "RSF",
     "SemanticShapeNode": "semantic_shape",
@@ -156,6 +158,7 @@
     "has_digital_twin_component",
     "has_documentation",
     "has_embargo",
+    "has_file",
     "has_first_epoch",
     "has_gcp_set",
     "has_geoposition",
@@ -189,7 +192,8 @@
     "study_about_heritage",
     "study_produced_proposition_set",
     "survive_in_epoch",
-    "validated_by"
+    "validated_by",
+    "was_revision_of"
   ],
   "edges": {
     "abuts": {
@@ -475,6 +479,19 @@
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P104_is_subject_to",
         "subproperty": null,
         "extension": null,
+        "subject": "source"
+      }
+    },
+    "has_file": {
+      "reverse": "is_file_of",
+      "symmetric": false,
+      "type_tag": null,
+      "deprecated": false,
+      "spelling_of": null,
+      "rdf": {
+        "predicate": "http://www.cidoc-crm.org/cidoc-crm/P106_is_composed_of",
+        "subproperty": null,
+        "extension": "http://www.w3.org/ns/prov#hadMember",
         "subject": "source"
       }
     },
@@ -919,6 +936,19 @@
         "extension": "https://w3id.org/em/ontology#validatedBy",
         "subject": "source"
       }
+    },
+    "was_revision_of": {
+      "reverse": "had_revision",
+      "symmetric": false,
+      "type_tag": null,
+      "deprecated": false,
+      "spelling_of": null,
+      "rdf": {
+        "predicate": "http://www.cidoc-crm.org/extensions/crmdig/L21_used_as_derivation_source",
+        "subproperty": null,
+        "extension": "http://www.w3.org/ns/prov#wasRevisionOf",
+        "subject": "source"
+      }
     }
   },
   "qualia": [
@@ -1038,6 +1068,7 @@
     "ParadataNode": "crminf:I1_Argumentation",
     "ProjectNode": "hdto:HC13_Project",
     "RepresentationModelNode": "D1 Digital Object",
+    "ResourceFileNode": "crmdig:D1_Digital_Object",
     "SF": "E19 Physical Object",
     "StratigraphicNode": "A8 Stratigraphic Unit",
     "StudyNode": "hdto:HC9_Study",
@@ -1064,6 +1095,7 @@
     "https://w3id.org/em/ontology#GeoPositionNode",
     "https://w3id.org/em/ontology#HumanAuthor",
     "https://w3id.org/em/ontology#License",
+    "https://w3id.org/em/ontology#LocalSceneFrame",
     "https://w3id.org/em/ontology#LocationNodeGroup",
     "https://w3id.org/em/ontology#Narrative",
     "https://w3id.org/em/ontology#NegativeSU",
@@ -1077,6 +1109,7 @@
     "https://w3id.org/em/ontology#RegistrationTransform",
     "https://w3id.org/em/ontology#RepresentationModel",
     "https://w3id.org/em/ontology#RepresentationModelNodeGroup",
+    "https://w3id.org/em/ontology#ResourceFile",
     "https://w3id.org/em/ontology#ReusedSpecialFind",
     "https://w3id.org/em/ontology#SemanticShape",
     "https://w3id.org/em/ontology#SeriesOfDocumentarySU",
@@ -1179,6 +1212,16 @@
         "specialised_alternative": "em:hasDefinition"
       }
     },
+    "source_code": {
+      "declared_on": "StratigraphicUnit",
+      "applies_to": [
+        "StratigraphicUnit"
+      ],
+      "kind": "node_element",
+      "em_json": "data.source_code",
+      "value": "string",
+      "rdf": null
+    },
     "stratigraphic_kind": {
       "declared_on": "StratigraphicUnit",
       "applies_to": [
@@ -1188,6 +1231,33 @@
       "em_json": "data.stratigraphic_kind",
       "value": "enum",
       "rdf": null
+    }
+  },
+  "datamodel": {
+    "digest": "sha256:12c5d520cf393be752360210a2a1ac7e74cac67169d18edfb005e250f6bd3b91",
+    "versions": {
+      "nodes": "1.6.17",
+      "node_registry": "1.6.17",
+      "connections": "1.6.31",
+      "visual_rules": "1.6.27",
+      "qualia": "1.6.2",
+      "translations": "1.6"
+    },
+    "digests": {
+      "nodes": "sha256:98951a43c95667e9d350a86689fb57ab98e7c672f23520cf6952f210fb8cc390",
+      "node_registry": "sha256:51d679948273f419a93490b7eddf3fa9e16b0b861a82ce1d1bc06886080ebefa",
+      "connections": "sha256:a9050c06197622321caf5830fe0fa646c8bfa2af5ac029084fa4ad2e4d77c0d1",
+      "visual_rules": "sha256:144031cf5d87d59ebbbcb1da6dac7537b3998a2c2fa879ac9bd9d9a953fcd003",
+      "qualia": "sha256:deca6d94cf5356eab890cc6de2f100d18eecee08f377bcf6b6f650a48f093657",
+      "translations": "sha256:3a4adcf854df81c48705ed2174ae2ec45e2f076cf52e9d07f101cf09c2407188"
+    },
+    "files": {
+      "nodes": "s3Dgraphy_node_datamodel.json",
+      "node_registry": "node_registry.generated.json",
+      "connections": "s3Dgraphy_connections_datamodel.json",
+      "visual_rules": "em_visual_rules.json",
+      "qualia": "em_qualia_types.json",
+      "translations": "datamodel_translations.json"
     }
   }
 }

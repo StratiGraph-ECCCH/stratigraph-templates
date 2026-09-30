@@ -42,8 +42,13 @@ SNAPSHOT_PATH = REPO_ROOT / "registry" / "s3dgraphy-snapshot.json"
 #: Bumped when the SHAPE of the snapshot file changes. 1 = names only (≤ 2026-09);
 #: 2 = names + spellings + edge semantics + RDF + operations;
 #: 3 = + the NODE ELEMENTS (`properties.<x>` declared as an object, e.g.
-#: `StratigraphicNode.properties.definition`) and each edge's `spelling_of`.
-SNAPSHOT_FORMAT = 3
+#: `StratigraphicNode.properties.definition`) and each edge's `spelling_of`;
+#: 4 = + `datamodel`, s3Dgraphy's datamodel FINGERPRINT (`api.datamodel_fingerprint`:
+#: one digest over the six datamodel JSONs, a version and a digest per file).
+SNAPSHOT_FORMAT = 4
+#: Formats `from_snapshot` reads. 3 is read so that a stale snapshot is compared
+#: and its divergence NAMED; `registry-snapshot` always writes SNAPSHOT_FORMAT.
+_READABLE_FORMATS = (3, SNAPSHOT_FORMAT)
 
 #: Where to look for a source checkout of s3Dgraphy, in order.
 _CANDIDATE_SRC = (
@@ -99,6 +104,10 @@ class Registry:
     #: a NODE (like name and description) that the node datamodel declares
     #: beyond them — not qualia, not PropertyNodes. Read, never listed here.
     node_elements: Dict[str, Dict[str, Any]] = dc_field(default_factory=dict)
+    #: s3Dgraphy's datamodel fingerprint: {digest, versions, digests, files}. The
+    #: one identity of the datamodel a compiled sheet was checked against, the
+    #: same digest EMStudio and StratiField compare with.
+    datamodel: Dict[str, Any] = dc_field(default_factory=dict)
     node_datamodel_version: str = ""
     connections_version: str = ""
     qualia_version: str = ""
@@ -161,6 +170,7 @@ class Registry:
             "mapping_targets": dict(sorted(self.mapping_targets.items())),
             "em_ttl_terms": sorted(self.em_ttl_terms),
             "node_elements": {k: self.node_elements[k] for k in sorted(self.node_elements)},
+            "datamodel": self.datamodel,
         }
 
     def to_json(self) -> Dict[str, Any]:
@@ -173,11 +183,22 @@ class Registry:
         }
 
     def header(self) -> Dict[str, Any]:
-        """What a compiled definition says it was checked against."""
+        """What a compiled definition says it was checked against.
+
+        One version per datamodel, under the fingerprint's names (`nodes`,
+        `node_registry`, `connections`, `visual_rules`, `qualia`,
+        `translations`), and the fingerprint's `digest` beside them: a reader
+        compares its own s3Dgraphy on both and can name what moved.
+        """
+        versions = dict(self.datamodel.get("versions") or {})
         return {
             "nodes": self.node_datamodel_version,
+            "node_registry": versions.get("node_registry"),
             "connections": self.connections_version,
+            "visual_rules": versions.get("visual_rules"),
             "qualia": self.qualia_version,
+            "translations": versions.get("translations"),
+            "digest": self.datamodel.get("digest"),
             "em_ttl": self.em_ttl_version,
             "s3dgraphy": self.s3dgraphy_version,
             "taken_from": {k: self.taken_from.get(k) for k in ("git_commit", "git_dirty")},
@@ -365,6 +386,16 @@ def from_s3dgraphy() -> Registry:
         ttl_terms, ttl_version = _em_ttl(cfg)
     except ImportError as exc:
         raise RegistryUnavailable(f"s3dgraphy is importable but cannot be read fully ({exc})") from exc
+    try:
+        # the fingerprint is s3Dgraphy's to compute: its canonical form is shared
+        # with EMStudio and StratiField, and a second implementation here would
+        # be the first to drift
+        from s3dgraphy.datamodel import datamodel_fingerprint
+    except ImportError as exc:
+        raise RegistryUnavailable(
+            f"this s3dgraphy has no datamodel fingerprint ({exc}); it needs "
+            "s3dgraphy.datamodel (s3Dgraphy after 1.6.0.dev24)") from exc
+    fingerprint = datamodel_fingerprint(str(cfg))
 
     targets: Dict[str, str] = {}
     try:
@@ -390,6 +421,7 @@ def from_s3dgraphy() -> Registry:
         operations=list(OPS),
         em_ttl_terms=ttl_terms,
         node_elements=_node_elements(nodes, classes),
+        datamodel=fingerprint,
         node_datamodel_version=str(nodes.get("s3Dgraphy_data_model_version", "?")),
         connections_version=str(conns.get("s3Dgraphy_connections_model_version", "?")),
         qualia_version=str((qual.get("metadata") or {}).get("version", "?")),
@@ -411,7 +443,7 @@ def from_snapshot(path: Optional[Path] = None) -> Registry:
     if not path.is_file():
         raise RegistryUnavailable(f"no registry snapshot at {path}")
     doc = json.loads(path.read_text(encoding="utf-8"))
-    if doc.get("snapshot_format") != SNAPSHOT_FORMAT:
+    if doc.get("snapshot_format") not in _READABLE_FORMATS:
         raise RegistryUnavailable(
             f"{path.name} is snapshot format {doc.get('snapshot_format', 1)}, this code reads "
             f"{SNAPSHOT_FORMAT}: regenerate it with `registry-snapshot`")
@@ -426,6 +458,13 @@ def from_snapshot(path: Optional[Path] = None) -> Registry:
         operations=list(doc.get("operations", [])),
         em_ttl_terms=set(doc.get("em_ttl_terms", [])),
         node_elements=dict(doc.get("node_elements", {})),
+        # a format-3 snapshot predates the fingerprint: it is still READ, so that
+        # the divergence names the datamodels that moved instead of only saying
+        # "regenerate"; its three versions are all it can be compared on
+        datamodel=dict(doc.get("datamodel") or {"versions": {
+            "nodes": doc.get("node_datamodel_version"),
+            "connections": doc.get("connections_version"),
+            "qualia": doc.get("qualia_version")}}),
         node_datamodel_version=doc.get("node_datamodel_version", "?"),
         connections_version=doc.get("connections_version", "?"),
         qualia_version=doc.get("qualia_version", "?"),
@@ -447,6 +486,9 @@ def differences(a: Registry, b: Registry) -> List[str]:
         va, vb = ca[key], cb.get(key)
         if va == vb:
             continue
+        if key == "datamodel":  # said FIRST: it names which datamodel moved
+            out[:0] = [f"datamodel: {line}" for line in datamodel_differences(vb or {}, va or {})]
+            continue
         if isinstance(va, list) and isinstance(vb, list):
             plus = sorted(set(map(str, vb)) - set(map(str, va)))
             minus = sorted(set(map(str, va)) - set(map(str, vb)))
@@ -463,6 +505,29 @@ def differences(a: Registry, b: Registry) -> List[str]:
         else:
             out.append(f"{key}: {va!r} → {vb!r}")
     return out
+
+
+def datamodel_differences(expected: Dict[str, Any], found: Dict[str, Any]) -> List[str]:
+    """Which datamodel `found` (the copy: the snapshot, a sheet's header) holds
+    differently from `expected` (s3Dgraphy), one named line each — `nodes 1.6.12
+    vs 1.6.17`, the copy's version first. The same wording as s3Dgraphy's
+    `api.datamodel_differences`, restated because a sheet is read where
+    s3Dgraphy may be absent."""
+    lines: List[str] = []
+    want_v, have_v = expected.get("versions") or {}, found.get("versions") or {}
+    want_d, have_d = expected.get("digests") or {}, found.get("digests") or {}
+    for name, want in want_v.items():
+        if name not in have_v:
+            lines.append(f"{name}: absent in the copy ({want} in the source)")
+        elif have_v[name] != want:
+            lines.append(f"{name} {have_v[name]} vs {want}")
+        elif name in want_d and name in have_d and want_d[name] != have_d[name]:
+            lines.append(f"{name} {want}: same version, different content")
+    if not lines and expected.get("digest") and not found.get("digest"):
+        lines.append("the copy carries no digest (taken before the fingerprint existed)")
+    elif not lines and expected.get("digest") != found.get("digest"):
+        lines.append(f"digest {found.get('digest')} vs {expected.get('digest')}")
+    return lines
 
 
 def registry(check_live: bool = True, prefer_snapshot: Optional[bool] = None) -> Registry:

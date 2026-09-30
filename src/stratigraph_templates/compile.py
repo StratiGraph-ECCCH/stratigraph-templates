@@ -634,8 +634,10 @@ def write_index(out_dir: Path) -> Path:
             "digest": head["digest"],
             "standard": {k: head["standard"].get(k) for k in ("authority", "code", "version",
                                                              "invented")},
+            # `digest` here is the DATAMODEL's fingerprint (s3Dgraphy
+            # api.datamodel_fingerprint), not the sheet's: the sheet's is above
             "datamodel": {k: head["datamodel"].get(k) for k in ("nodes", "connections",
-                                                               "qualia", "em_ttl")},
+                                                               "qualia", "em_ttl", "digest")},
         }
     for entry in schede.values():
         ordered = sorted(entry["versions"], key=_semver_key)

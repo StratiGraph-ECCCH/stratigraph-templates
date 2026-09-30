@@ -99,13 +99,17 @@
     ],
     "digest": "sha256:87a606c82bd85484220c98dabbb813990d10ad669d597fa6331cbccbf973a0e1",
     "datamodel": {
-      "nodes": "1.6.12",
-      "connections": "1.6.27",
+      "nodes": "1.6.17",
+      "node_registry": "1.6.17",
+      "connections": "1.6.31",
+      "visual_rules": "1.6.27",
       "qualia": "1.6.2",
-      "em_ttl": "1.6.6",
-      "s3dgraphy": "1.6.0.dev22",
+      "translations": "1.6",
+      "digest": "sha256:12c5d520cf393be752360210a2a1ac7e74cac67169d18edfb005e250f6bd3b91",
+      "em_ttl": "1.6.9",
+      "s3dgraphy": "1.6.0.dev24",
       "taken_from": {
-        "git_commit": "9badba048ab1d678d7d32eef02ef8e2d58983866",
+        "git_commit": "4149db555e61cd5888044be1e9fc0d0101d8089e",
         "git_dirty": false
       },
       "snapshot": "registry/s3dgraphy-snapshot.json"
