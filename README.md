@@ -80,6 +80,26 @@ The format specification is in **[SPEC.md](SPEC.md)**.
 
 ## Usage
 
+One entry point, `./em.sh` (`em.bat` on Windows), with the commands below.
+Start with `./em.sh help`; `./em.sh help <command>` says what a command does and
+does not do, when to use it, an example, and what to do when it fails.
+
+```bash
+./em.sh setup            # create or repair .venv (python >= 3.11, pip install -e '.[dev]')
+./em.sh status           # snapshot vs the s3Dgraphy next door, on the files we read
+./em.sh after-bump       # after a datamodel change: snapshot → validate → build, lists what changed
+./em.sh validate
+./em.sh build            # → dist/schede/<id>/<version>.json + index.json
+./em.sh snapshot         # only when s3Dgraphy has changed: it is a decision
+./em.sh info iccd-us-2021
+./em.sh print iccd-us-2021 --record examples/us-3014-demo.yaml --lang it -o out/us.pdf
+./em.sh test
+```
+
+Every command runs `.venv/bin/python -m stratigraph_templates.cli`, so it works
+even when the `.venv/bin/stratigraph-templates` script is missing. Nothing
+commits or pushes. The long commands, for reference:
+
 ```bash
 python3 -m venv .venv && .venv/bin/pip install -e '.[dev]'
 
