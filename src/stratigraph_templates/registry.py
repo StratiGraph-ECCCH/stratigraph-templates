@@ -44,11 +44,15 @@ SNAPSHOT_PATH = REPO_ROOT / "registry" / "s3dgraphy-snapshot.json"
 #: 3 = + the NODE ELEMENTS (`properties.<x>` declared as an object, e.g.
 #: `StratigraphicNode.properties.definition`) and each edge's `spelling_of`;
 #: 4 = + `datamodel`, s3Dgraphy's datamodel FINGERPRINT (`api.datamodel_fingerprint`:
-#: one digest over the six datamodel JSONs, a version and a digest per file).
-SNAPSHOT_FORMAT = 4
-#: Formats `from_snapshot` reads. 3 is read so that a stale snapshot is compared
-#: and its divergence NAMED; `registry-snapshot` always writes SNAPSHOT_FORMAT.
-_READABLE_FORMATS = (3, SNAPSHOT_FORMAT)
+#: one digest over the six datamodel JSONs, a version and a digest per file);
+#: 5 = + each edge's `rdf.extension_when`, the GUARD of its extension predicate
+#: (`mapping.extension_when`: the classes the RDF subject and object must have
+#: for the extension to go out beside the core predicate).
+SNAPSHOT_FORMAT = 5
+#: Formats `from_snapshot` reads. 3 and 4 are read so that a stale snapshot is
+#: compared and its divergence NAMED; `registry-snapshot` always writes
+#: SNAPSHOT_FORMAT.
+_READABLE_FORMATS = (3, 4, SNAPSHOT_FORMAT)
 
 #: Where to look for a source checkout of s3Dgraphy, in order.
 _CANDIDATE_SRC = (
@@ -351,6 +355,11 @@ def _edges(conns: Dict, cfg: Path) -> Dict[str, Dict[str, Any]]:
     parenthesised labels, and inverts subject and object where the datamodel
     says `rdf_subject: target`, and a second reading of the same JSON would be a
     second opinion about all three.
+
+    The extension's GUARD is read the same way (`get_extension_condition`):
+    `has_documentation` goes out as P70i always and as em:derivedFromDocument
+    only from a USD, and an extension kept without its guard would tell the
+    recipe to write a predicate outside its domain.
     """
     from s3dgraphy.exporter import rdf_exporter as rx  # needs rdflib
 
@@ -363,6 +372,7 @@ def _edges(conns: Dict, cfg: Path) -> Dict[str, Dict[str, Any]]:
         predicate, extension, type_tag, deprecated = dm.get_edge_mapping(name)
         _canon, inverted = dm.resolve_edge_direction(name)
         sub = rx.AP11_SUBPROPS.get(type_tag) if type_tag else None
+        when = _extension_condition(dm, name) if extension else None
         out[name] = {
             "reverse": reverse,
             "symmetric": reverse is None,
@@ -373,10 +383,24 @@ def _edges(conns: Dict, cfg: Path) -> Dict[str, Dict[str, Any]]:
                 "predicate": str(predicate) if predicate else None,
                 "subproperty": str(sub) if sub else None,
                 "extension": str(extension) if extension else None,
+                "extension_when": when,
                 "subject": "target" if inverted else "source",
             },
         }
     return out
+
+
+def _extension_condition(dm: Any, name: str) -> Optional[Dict[str, List[str]]]:
+    """`{source_node_class, target_node_class}` of an edge's extension, as the
+    exporter honours it, or None when the extension is unconditional. The
+    classes are of the LOGICAL ends — the RDF subject and object, which are the
+    em.json target and source when `rdf.subject` is `target`."""
+    if hasattr(dm, "get_extension_condition"):  # s3Dgraphy 1.6.0.dev26 on
+        when = dm.get_extension_condition(name)
+    else:  # the target guard alone, as dev25 had it
+        targets = dm.get_extension_guard(name) if hasattr(dm, "get_extension_guard") else None
+        when = {"target_node_class": targets} if targets else None
+    return {k: sorted(v) for k, v in sorted(when.items())} if when else None
 
 
 def _em_ttl(cfg: Path) -> Tuple[Set[str], str]:

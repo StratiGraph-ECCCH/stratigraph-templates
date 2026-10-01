@@ -207,7 +207,33 @@ class _Ctx:
             return {"class": name, "node_type": name}
         return {"class": cls, "node_type": code}
 
-    def edge(self, name: str, where: str) -> Dict[str, Any]:
+    def unit_classes(self) -> Optional[set]:
+        """The classes the unit can be, as the definition decides them (the
+        table of its `node_type` field), or None when it does not decide."""
+        decider = next((d for d in self.t.fields
+                        if d.graph and d.graph.verdict == "node_type"), None)
+        if decider is None:
+            return None
+        return {self.node(nt, f"field '{decider.id}'")["class"]
+                for nt in decider.graph.node_types.values()}
+
+    def classes(self, ref: str, node_class: Optional[str] = None) -> Optional[set]:
+        """The classes the node at a recipe reference can be, or None when the
+        definition does not say: `$unit` is its node_type table, `$node` the
+        node the field creates, `$field.<id>.prop` a PropertyNode; `$item` of
+        an edge box and `$anchor.<name>` are found by the creator."""
+        if ref == "$unit":
+            return self.unit_classes()
+        if ref == "$node" and node_class:
+            return {node_class}
+        if ref.startswith("$field.") and ref.endswith(".prop"):
+            return {PROPERTY_CLASS}
+        return None
+
+    def edge(self, name: str, where: str, ends: Tuple[Optional[set], Optional[set]] = (None, None)
+             ) -> Dict[str, Any]:
+        """What the recipe says of an edge type. `ends` = the classes the em.json
+        source and target can be (`classes`), which decide its extension's guard."""
         entry = self.reg.edges.get(name)
         if entry is None:
             self.problems.append(f"{where}: edge type '{name}' is not in the connections "
@@ -222,7 +248,7 @@ class _Ctx:
                                  f"'{entry['spelling_of']}' in the connections datamodel "
                                  f"{self.reg.connections_version}: a recipe writes the canonical")
         spellings = sorted(k for k, e in self.reg.edges.items() if e.get("spelling_of") == name)
-        rdf = entry.get("rdf") or {}
+        rdf = _guarded(dict(entry.get("rdf") or {}), *ends)
         key = (rdf.get("predicate"), rdf.get("subproperty"))
         same = sorted(k for k, e in self.reg.edges.items()
                       if k != name and rdf.get("subproperty")
@@ -258,6 +284,42 @@ class _Ctx:
             return f"$field.{fid}.prop", [fid]
         self.anchors.setdefault(where, []).append(f.id)
         return f"$anchor.{where}", []
+
+
+def _guarded(rdf: Dict[str, Any], source: Optional[set], target: Optional[set]
+             ) -> Dict[str, Any]:
+    """An edge's RDF with its extension's guard DECIDED where the definition can.
+
+    The datamodel's guard (`extension_when`, read into the snapshot) names the
+    classes the RDF subject and object must have for the extension to go out —
+    the em.json target and source swapped when `subject` is `target`. Per
+    guarded end:
+
+    * every class the definition allows there passes → the guard holds;
+    * none passes → the extension is not written in the recipe at all
+      (has_documentation from a US is P70i alone, em:derivedFromDocument has
+      domain the USD);
+    * some pass, or the definition does not say (no `node_type` field, a node
+      the creator finds) → the extension stays WITH `extension_when`, and
+      whoever executes the recipe decides on the node it has.
+    """
+    when = rdf.pop("extension_when", None)
+    if not when or not rdf.get("extension"):
+        return rdf
+    subject, obj = (target, source) if rdf.get("subject") == "target" else (source, target)
+    undecided: Dict[str, List[str]] = {}
+    for key, known in (("source_node_class", subject), ("target_node_class", obj)):
+        allowed = set(when.get(key) or ())
+        if not allowed:
+            continue
+        if known is not None and not known & allowed:
+            del rdf["extension"]
+            return rdf
+        if known is None or not known <= allowed:
+            undecided[key] = sorted(allowed)
+    if undecided:
+        rdf["extension_when"] = undecided
+    return rdf
 
 
 def _property_steps(ctx: _Ctx, f: Field, property_type: str, anchor: str,
@@ -395,7 +457,6 @@ def _entry(ctx: _Ctx, f: Field) -> Dict[str, Any]:
 
     elif v == "node":
         target = ctx.node(g.node_type, where)
-        about = ctx.edge(g.edge_type, where)
         content = f.type == "longtext"
         if content:
             # a longtext is a CONTENT, not a name: the node is minted for it and
@@ -422,14 +483,16 @@ def _entry(ctx: _Ctx, f: Field) -> Dict[str, Any]:
             node = {"id": "$node", "node_type": target["node_type"], "name": key["name"]}
             steps = [{"emit": {"op": "add_node", "node": node}, "when": "created"}]
         src, dst = (anchor, "$node") if g.direction != "incoming" else ("$node", anchor)
+        about = ctx.edge(g.edge_type, where, (ctx.classes(src, target["class"]),
+                                              ctx.classes(dst, target["class"])))
         steps.append({"emit": {"op": "add_edge", "edge_type": g.edge_type,
                                "source": src, "target": dst}})
         out = {**base, "each": f.type in LIST_TYPES, "resolve": resolve, "steps": steps,
                "node": target, "edge": about}
 
     elif v == "edge":
-        about = ctx.edge(g.edge_type, where)
         src, dst = (anchor, "$item") if g.direction == "outgoing" else ("$item", anchor)
+        about = ctx.edge(g.edge_type, where, (ctx.classes(src), ctx.classes(dst)))
         out = {**base, "each": True,
                "resolve": {"$item": {"find": {"human_key": "$item", "kind": g.target},
                                      "when_missing": "not decided by the definition"}},

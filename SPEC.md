@@ -939,6 +939,23 @@ edge types that become **the same property**: `bonded_to` ≡ `is_bonded_to`
 the datamodel calls canonical; the compiled output says so, so a consumer does not
 double the arrows.
 
+**An extension with a guard.** An extension predicate can be narrower than the core
+one beside it, and the datamodel then says on which classes it holds
+(`mapping.extension_when`: `source_node_class`, `target_node_class` — the classes of
+the RDF subject and object, that is the em.json target and source swapped when
+`subject` is `target`). `has_documentation` is P70i always and
+`em:derivedFromDocument` only from a USD; `is_part_of` is P46i always and AP21i only
+into a US. The snapshot records the guard (`edges.<type>.rdf.extension_when`,
+snapshot format 5) and the compiler decides it against what the definition says of
+the two ends — the unit's `node_type` table, the node a `node` box creates, the
+PropertyNode a box mints. Every allowed class inside the guard: `extension`, no
+guard. None inside: no `extension` at all (the ICCD US documents a US, so its four
+documentation boxes are P70i alone). Some inside, or an end the definition does not
+decide (no `node_type` field, a record the creator finds): `extension` **with**
+`extension_when`, and whoever executes the recipe decides on the node it has — the
+ICCD US unit is US or USN, so `riferimenti_tabelle_materiali` carries AP21i guarded
+by `target_node_class: [StratigraphicUnit]`.
+
 **`open` — what the definition does not decide, declared.** The recipe does not
 invent: where the definition is silent, it writes that down. Today, for the ICCD US:
 `definizione` (verdict `vocabulary` with neither qualia nor `property_name`: no

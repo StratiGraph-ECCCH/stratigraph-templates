@@ -1,17 +1,17 @@
 {
-  "snapshot_format": 4,
+  "snapshot_format": 5,
   "source": "s3dgraphy working tree at ../s3Dgraphy/src/s3dgraphy/JSON_config",
   "taken_from": {
     "config_dir": "../s3Dgraphy/src/s3dgraphy/JSON_config",
-    "git_commit": "42ea27ca43df58784a55d0c6ace730db1ec5d1ae",
+    "git_commit": "f9726afa2a21a735582c85cb0453e90549d19bb1",
     "git_dirty": false
   },
   "taken_on": "2026-10-01",
-  "node_datamodel_version": "1.6.18",
-  "connections_version": "1.6.32",
-  "qualia_version": "1.6.3",
-  "em_ttl_version": "1.6.9",
-  "s3dgraphy_version": "1.6.0.dev25",
+  "node_datamodel_version": "1.6.20",
+  "connections_version": "1.6.34",
+  "qualia_version": "1.6.5",
+  "em_ttl_version": "1.6.10",
+  "s3dgraphy_version": "1.6.0.dev26",
   "operations": [
     "add_node",
     "update_field",
@@ -63,6 +63,7 @@
     "StudyNode",
     "TSU",
     "TimeBranchNodeGroup",
+    "TranslationNode",
     "UL",
     "US",
     "USD",
@@ -131,6 +132,7 @@
     "StudyNode": "study",
     "TimeBranchNodeGroup": "TimeBranchNodeGroup",
     "TransformationStratigraphicUnit": "TSU",
+    "TranslationNode": "translation",
     "UnknownNode": "unknown",
     "VirtualSpecialFindUnit": "VSF",
     "WorkingUnit": "UL"
@@ -174,6 +176,7 @@
     "has_semantic_shape",
     "has_sub_epoch",
     "has_timebranch",
+    "has_translation",
     "has_visual_reference",
     "heritage_part_of",
     "includes_study",
@@ -206,6 +209,7 @@
         "predicate": "http://www.cidoc-crm.org/extensions/crmarchaeo/AP11_has_physical_relation_to",
         "subproperty": "https://w3id.org/em/ontology#abuts",
         "extension": null,
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -219,6 +223,7 @@
         "predicate": "http://www.cidoc-crm.org/extensions/crmarchaeo/AP11_has_physical_relation_to",
         "subproperty": "https://w3id.org/em/ontology#bondedTo",
         "extension": null,
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -232,6 +237,7 @@
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P123i_resulted_from",
         "subproperty": null,
         "extension": "http://www.cidoc-crm.org/extensions/crmarchaeo/AP4_produced_surface",
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -245,6 +251,7 @@
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P16_used_specific_object",
         "subproperty": null,
         "extension": null,
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -258,6 +265,7 @@
         "predicate": "https://w3id.org/hdto/ontology#HP33_contains",
         "subproperty": null,
         "extension": null,
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -271,6 +279,7 @@
         "predicate": null,
         "subproperty": null,
         "extension": "https://w3id.org/em/ontology#contrastsWith",
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -284,6 +293,7 @@
         "predicate": "http://www.cidoc-crm.org/extensions/crmarchaeo/AP11_has_physical_relation_to",
         "subproperty": "https://w3id.org/em/ontology#cuts",
         "extension": null,
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -297,6 +307,7 @@
         "predicate": "http://www.cidoc-crm.org/extensions/crmdig/L21_used_as_derivation_source",
         "subproperty": null,
         "extension": "http://www.w3.org/ns/prov#wasDerivedFrom",
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -310,6 +321,7 @@
         "predicate": "http://www.cidoc-crm.org/extensions/crmdig/L10_had_input",
         "subproperty": null,
         "extension": "http://www.w3.org/ns/prov#used",
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -323,6 +335,7 @@
         "predicate": "http://www.cidoc-crm.org/extensions/crmdig/L11_had_output",
         "subproperty": null,
         "extension": "http://www.w3.org/ns/prov#generated",
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -336,6 +349,7 @@
         "predicate": "http://www.cidoc-crm.org/extensions/crmdig/L12_happened_on_device",
         "subproperty": null,
         "extension": null,
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -349,6 +363,7 @@
         "predicate": "http://www.cidoc-crm.org/extensions/crmarchaeo/AP11_has_physical_relation_to",
         "subproperty": "https://w3id.org/em/ontology#physicallyEquals",
         "extension": null,
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -362,6 +377,7 @@
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P67_refers_to",
         "subproperty": null,
         "extension": null,
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -375,6 +391,7 @@
         "predicate": "http://www.cidoc-crm.org/extensions/crmarchaeo/AP11_has_physical_relation_to",
         "subproperty": "https://w3id.org/em/ontology#fills",
         "extension": null,
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -388,6 +405,7 @@
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P130_shows_features_of",
         "subproperty": null,
         "extension": "http://www.cidoc-crm.org/extensions/crmarchaeo/AP11_has_physical_relation_to",
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -401,6 +419,7 @@
         "predicate": "http://www.w3.org/ns/prov#wasAttributedTo",
         "subproperty": null,
         "extension": "https://w3id.org/em/ontology#hasAuthor",
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -414,6 +433,7 @@
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P70i_is_documented_in",
         "subproperty": null,
         "extension": null,
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -427,6 +447,7 @@
         "predicate": "https://w3id.org/hdto/ontology#HP29_has_digital_object_part",
         "subproperty": null,
         "extension": "http://www.cidoc-crm.org/cidoc-crm/P106_is_composed_of",
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -440,6 +461,7 @@
         "predicate": "https://w3id.org/hdto/ontology#HP1_has_digital_twin",
         "subproperty": null,
         "extension": null,
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -453,6 +475,7 @@
         "predicate": "https://w3id.org/hdto/ontology#HP3i_has_digital_twin_component",
         "subproperty": null,
         "extension": null,
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -465,7 +488,13 @@
       "rdf": {
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P70i_is_documented_in",
         "subproperty": null,
-        "extension": null,
+        "extension": "https://w3id.org/em/ontology#derivedFromDocument",
+        "extension_when": {
+          "source_node_class": [
+            "DocumentaryStratigraphicUnit",
+            "SeriesOfDocumentaryStratigraphicUnit"
+          ]
+        },
         "subject": "source"
       }
     },
@@ -479,6 +508,7 @@
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P104_is_subject_to",
         "subproperty": null,
         "extension": null,
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -492,6 +522,7 @@
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P106_is_composed_of",
         "subproperty": null,
         "extension": "http://www.w3.org/ns/prov#hadMember",
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -505,6 +536,7 @@
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P10_falls_within",
         "subproperty": null,
         "extension": "https://w3id.org/em/ontology#firstAttestedInEpoch",
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -518,6 +550,7 @@
         "predicate": null,
         "subproperty": null,
         "extension": "http://www.w3.org/ns/prov#wasDerivedFrom",
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -531,6 +564,7 @@
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P53_has_former_or_current_location",
         "subproperty": null,
         "extension": null,
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -544,6 +578,7 @@
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P104_is_subject_to",
         "subproperty": null,
         "extension": null,
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -557,6 +592,7 @@
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P67_refers_to",
         "subproperty": null,
         "extension": null,
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -570,6 +606,7 @@
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P129i_is_subject_of",
         "subproperty": null,
         "extension": null,
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -583,6 +620,7 @@
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P43_has_dimension",
         "subproperty": null,
         "extension": "https://w3id.org/em/ontology#hasQualia",
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -596,6 +634,7 @@
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
         "subproperty": null,
         "extension": null,
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -609,6 +648,7 @@
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P138i_has_representation",
         "subproperty": null,
         "extension": null,
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -622,6 +662,7 @@
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P138i_has_representation",
         "subproperty": null,
         "extension": null,
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -635,6 +676,7 @@
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P138i_has_representation",
         "subproperty": null,
         "extension": null,
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -648,6 +690,7 @@
         "predicate": "http://www.cidoc-crm.org/extensions/crmarchaeo/AP22_is_equal_in_time_to",
         "subproperty": null,
         "extension": null,
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -661,6 +704,7 @@
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P138i_has_representation",
         "subproperty": null,
         "extension": "https://w3id.org/em/ontology#hasSemanticShape",
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -674,6 +718,7 @@
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P10_falls_within",
         "subproperty": null,
         "extension": "https://w3id.org/em/ontology#hasSubEpoch",
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -687,6 +732,21 @@
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P67_refers_to",
         "subproperty": null,
         "extension": "https://w3id.org/em/ontology#belongsToAlternative",
+        "extension_when": null,
+        "subject": "source"
+      }
+    },
+    "has_translation": {
+      "reverse": "is_translation_of",
+      "symmetric": false,
+      "type_tag": null,
+      "deprecated": false,
+      "spelling_of": null,
+      "rdf": {
+        "predicate": "http://www.cidoc-crm.org/cidoc-crm/P73_has_translation",
+        "subproperty": null,
+        "extension": null,
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -700,6 +760,7 @@
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P138i_has_representation",
         "subproperty": null,
         "extension": "https://w3id.org/em/ontology#hasVisualReference",
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -713,6 +774,7 @@
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P46i_forms_part_of",
         "subproperty": null,
         "extension": "http://www.cidoc-crm.org/cidoc-crm/P46i_forms_part_of",
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -726,6 +788,7 @@
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P9_consists_of",
         "subproperty": null,
         "extension": "http://www.cidoc-crm.org/cidoc-crm/P9_consists_of",
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -739,6 +802,7 @@
         "predicate": "http://www.cidoc-crm.org/extensions/crmarchaeo/AP28_occurs_before",
         "subproperty": null,
         "extension": null,
+        "extension_when": null,
         "subject": "target"
       }
     },
@@ -752,6 +816,7 @@
         "predicate": "http://www.cidoc-crm.org/extensions/crmarchaeo/AP11_has_physical_relation_to",
         "subproperty": "https://w3id.org/em/ontology#bondedTo",
         "extension": null,
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -765,6 +830,7 @@
         "predicate": null,
         "subproperty": null,
         "extension": "https://w3id.org/em/ontology#isInActivity",
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -778,6 +844,7 @@
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P46i_forms_part_of",
         "subproperty": null,
         "extension": null,
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -791,6 +858,7 @@
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P53_has_former_or_current_location",
         "subproperty": null,
         "extension": null,
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -804,6 +872,7 @@
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P106i_forms_part_of",
         "subproperty": null,
         "extension": null,
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -817,6 +886,7 @@
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P46i_forms_part_of",
         "subproperty": null,
         "extension": null,
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -830,6 +900,7 @@
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P67_refers_to",
         "subproperty": null,
         "extension": "https://w3id.org/em/ontology#belongsToAlternative",
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -843,6 +914,7 @@
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P106i_forms_part_of",
         "subproperty": null,
         "extension": "https://w3id.org/em/ontology#isOnResource",
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -856,6 +928,11 @@
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P46i_forms_part_of",
         "subproperty": null,
         "extension": "http://www.cidoc-crm.org/extensions/crmarchaeo/AP21i_is_contained_in",
+        "extension_when": {
+          "target_node_class": [
+            "StratigraphicUnit"
+          ]
+        },
         "subject": "source"
       }
     },
@@ -869,6 +946,7 @@
         "predicate": "http://www.cidoc-crm.org/extensions/crmarchaeo/AP11_has_physical_relation_to",
         "subproperty": "https://w3id.org/em/ontology#physicallyEquals",
         "extension": null,
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -882,6 +960,7 @@
         "predicate": "http://www.cidoc-crm.org/extensions/crmarchaeo/AP11_has_physical_relation_to",
         "subproperty": "https://w3id.org/em/ontology#overlies",
         "extension": null,
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -895,6 +974,7 @@
         "predicate": "https://w3id.org/hdto/ontology#HP23_was_about",
         "subproperty": null,
         "extension": "http://www.cidoc-crm.org/cidoc-crm/P16_used_specific_object",
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -908,6 +988,7 @@
         "predicate": "https://w3id.org/hdto/ontology#HP25_has_created",
         "subproperty": null,
         "extension": "http://www.cidoc-crm.org/cidoc-crm/P94_has_created",
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -921,6 +1002,7 @@
         "predicate": "http://www.cidoc-crm.org/cidoc-crm/P132_spatiotemporally_overlaps_with",
         "subproperty": null,
         "extension": "https://w3id.org/em/ontology#survivesInEpoch",
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -934,6 +1016,7 @@
         "predicate": "http://www.w3.org/ns/prov#wasInfluencedBy",
         "subproperty": null,
         "extension": "https://w3id.org/em/ontology#validatedBy",
+        "extension_when": null,
         "subject": "source"
       }
     },
@@ -947,6 +1030,7 @@
         "predicate": "http://www.cidoc-crm.org/extensions/crmdig/L21_used_as_derivation_source",
         "subproperty": null,
         "extension": "http://www.w3.org/ns/prov#wasRevisionOf",
+        "extension_when": null,
         "subject": "source"
       }
     }
@@ -1160,6 +1244,7 @@
     "https://w3id.org/em/ontology#modifiedAt",
     "https://w3id.org/em/ontology#onPage",
     "https://w3id.org/em/ontology#orcidVerified",
+    "https://w3id.org/em/ontology#originalLanguage",
     "https://w3id.org/em/ontology#overlies",
     "https://w3id.org/em/ontology#physicallyEquals",
     "https://w3id.org/em/ontology#promptReference",
@@ -1170,8 +1255,13 @@
     "https://w3id.org/em/ontology#removedBy",
     "https://w3id.org/em/ontology#residency",
     "https://w3id.org/em/ontology#resourceScope",
+    "https://w3id.org/em/ontology#reviewRequested",
+    "https://w3id.org/em/ontology#sourceDigest",
+    "https://w3id.org/em/ontology#sourceLanguage",
     "https://w3id.org/em/ontology#sphere",
     "https://w3id.org/em/ontology#survivesInEpoch",
+    "https://w3id.org/em/ontology#translatedField",
+    "https://w3id.org/em/ontology#translationMethod",
     "https://w3id.org/em/ontology#validatedAt",
     "https://w3id.org/em/ontology#validatedBy",
     "https://w3id.org/em/ontology#vertexCount",
@@ -1234,52 +1324,52 @@
     }
   },
   "datamodel": {
-    "digest": "sha256:aab44dda08bffbecac38e77e3049919362d4b3504b4190240a368871c3823260",
+    "digest": "sha256:0be1dcffb38a020e7023edb19d3764a0ff301525554755f7694c4af57945a605",
     "versions": {
-      "nodes": "1.6.18",
-      "node_registry": "1.6.18",
-      "connections": "1.6.32",
-      "visual_rules": "1.6.27",
-      "qualia": "1.6.3",
+      "nodes": "1.6.20",
+      "node_registry": "1.6.20",
+      "connections": "1.6.34",
+      "visual_rules": "1.6.28",
+      "qualia": "1.6.5",
       "translations": "1.6"
     },
     "digests": {
-      "nodes": "sha256:23f00ba102aef234d1e910b9734ff47237962e1967d435bccb2b005ee3eb9e5b",
-      "node_registry": "sha256:520037141f49ed532d94811c33e54a7a6d09819b67f02a375fdce77947c1789c",
-      "connections": "sha256:54389fe1cb987faf8bf6dd0275e8288979050c3eb34c325a43a8d9df447c0d5a",
-      "visual_rules": "sha256:144031cf5d87d59ebbbcb1da6dac7537b3998a2c2fa879ac9bd9d9a953fcd003",
-      "qualia": "sha256:658c15869821f03961c86adfb09034c3c602c1c1f81fd8179dcc46b2b9dcdd16",
-      "translations": "sha256:3a4adcf854df81c48705ed2174ae2ec45e2f076cf52e9d07f101cf09c2407188"
+      "nodes": "sha256:71d8c42672d09ad0c3fe8b09e508d823747e07c3d71da1b7b58b37edb8f7c8a3",
+      "node_registry": "sha256:e1aa6dadb526f6a01142a29cecc960e0a80b2489dfb1c7abfccdf7ae9d765394",
+      "connections": "sha256:8dbd24ca20ff80cace2820a4a3108aa77653378bb7204b1b1b9b0e81f7c8eb3b",
+      "visual_rules": "sha256:2cc5f4dfbfd4b3e13490566a0ee22cefa9f887186e568bbdd886f488d62a0a76",
+      "qualia": "sha256:557ea5e03af6a2b5f28bc83ced16d792300352145ba5f315ee0f8b4f87a78bb3",
+      "translations": "sha256:15b1f097ba22d6d06520db69c51e3cde42da72c5102341d7ef9306e4ccf2e2a4"
     },
     "files": {
       "nodes": {
         "file": "s3Dgraphy_node_datamodel.json",
-        "digest": "sha256:23f00ba102aef234d1e910b9734ff47237962e1967d435bccb2b005ee3eb9e5b",
-        "version": "1.6.18"
+        "digest": "sha256:71d8c42672d09ad0c3fe8b09e508d823747e07c3d71da1b7b58b37edb8f7c8a3",
+        "version": "1.6.20"
       },
       "node_registry": {
         "file": "node_registry.generated.json",
-        "digest": "sha256:520037141f49ed532d94811c33e54a7a6d09819b67f02a375fdce77947c1789c",
-        "version": "1.6.18"
+        "digest": "sha256:e1aa6dadb526f6a01142a29cecc960e0a80b2489dfb1c7abfccdf7ae9d765394",
+        "version": "1.6.20"
       },
       "connections": {
         "file": "s3Dgraphy_connections_datamodel.json",
-        "digest": "sha256:54389fe1cb987faf8bf6dd0275e8288979050c3eb34c325a43a8d9df447c0d5a",
-        "version": "1.6.32"
+        "digest": "sha256:8dbd24ca20ff80cace2820a4a3108aa77653378bb7204b1b1b9b0e81f7c8eb3b",
+        "version": "1.6.34"
       },
       "visual_rules": {
         "file": "em_visual_rules.json",
-        "digest": "sha256:144031cf5d87d59ebbbcb1da6dac7537b3998a2c2fa879ac9bd9d9a953fcd003",
-        "version": "1.6.27"
+        "digest": "sha256:2cc5f4dfbfd4b3e13490566a0ee22cefa9f887186e568bbdd886f488d62a0a76",
+        "version": "1.6.28"
       },
       "qualia": {
         "file": "em_qualia_types.json",
-        "digest": "sha256:658c15869821f03961c86adfb09034c3c602c1c1f81fd8179dcc46b2b9dcdd16",
-        "version": "1.6.3"
+        "digest": "sha256:557ea5e03af6a2b5f28bc83ced16d792300352145ba5f315ee0f8b4f87a78bb3",
+        "version": "1.6.5"
       },
       "translations": {
         "file": "datamodel_translations.json",
-        "digest": "sha256:3a4adcf854df81c48705ed2174ae2ec45e2f076cf52e9d07f101cf09c2407188",
+        "digest": "sha256:15b1f097ba22d6d06520db69c51e3cde42da72c5102341d7ef9306e4ccf2e2a4",
         "version": "1.6"
       }
     }
