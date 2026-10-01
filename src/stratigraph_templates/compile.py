@@ -248,7 +248,7 @@ class _Ctx:
                                  f"'{entry['spelling_of']}' in the connections datamodel "
                                  f"{self.reg.connections_version}: a recipe writes the canonical")
         spellings = sorted(k for k, e in self.reg.edges.items() if e.get("spelling_of") == name)
-        rdf = _guarded(dict(entry.get("rdf") or {}), *ends)
+        rdf = _guarded_inverse(_guarded(dict(entry.get("rdf") or {}), *ends), *ends)
         key = (rdf.get("predicate"), rdf.get("subproperty"))
         same = sorted(k for k, e in self.reg.edges.items()
                       if k != name and rdf.get("subproperty")
@@ -319,6 +319,39 @@ def _guarded(rdf: Dict[str, Any], source: Optional[set], target: Optional[set]
             undecided[key] = sorted(allowed)
     if undecided:
         rdf["extension_when"] = undecided
+    return rdf
+
+
+def _guarded_inverse(rdf: Dict[str, Any], source: Optional[set], target: Optional[set]
+                     ) -> Dict[str, Any]:
+    """An edge's INVERSE extension (`inverse_extension`: the same fact read from
+    the other side, `<target> pred <source>` — is_part_of → em:reconstructsFrom,
+    a VSF reconstructed from the SF that is part of it) with its guard decided
+    as `_guarded` decides the extension's: the guard names the classes of the
+    LOGICAL source and target; per guarded end, all the definition allows pass →
+    no guard, none passes → no inverse in the recipe, some or unknown → the
+    inverse WITH `inverse_extension_when`. Subject and object of the written
+    triple are the other way round from the core predicate's: whoever executes
+    the recipe writes `<logical target> inverse <logical source>`."""
+    when = rdf.pop("inverse_extension_when", None)
+    if not rdf.get("inverse_extension"):
+        rdf.pop("inverse_extension", None)
+        return rdf
+    if not when:
+        return rdf
+    subject, obj = (target, source) if rdf.get("subject") == "target" else (source, target)
+    undecided: Dict[str, List[str]] = {}
+    for key, known in (("source_node_class", subject), ("target_node_class", obj)):
+        allowed = set(when.get(key) or ())
+        if not allowed:
+            continue
+        if known is not None and not known & allowed:
+            del rdf["inverse_extension"]
+            return rdf
+        if known is None or not known <= allowed:
+            undecided[key] = sorted(allowed)
+    if undecided:
+        rdf["inverse_extension_when"] = undecided
     return rdf
 
 

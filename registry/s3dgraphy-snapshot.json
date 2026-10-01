@@ -1,16 +1,16 @@
 {
-  "snapshot_format": 5,
+  "snapshot_format": 6,
   "source": "s3dgraphy working tree at ../s3Dgraphy/src/s3dgraphy/JSON_config",
   "taken_from": {
     "config_dir": "../s3Dgraphy/src/s3dgraphy/JSON_config",
-    "git_commit": "f9726afa2a21a735582c85cb0453e90549d19bb1",
+    "git_commit": "4a95fde6fdba373cc91796d8f88017df549b4eea",
     "git_dirty": false
   },
   "taken_on": "2026-10-01",
-  "node_datamodel_version": "1.6.20",
-  "connections_version": "1.6.34",
-  "qualia_version": "1.6.5",
-  "em_ttl_version": "1.6.10",
+  "node_datamodel_version": "1.6.21",
+  "connections_version": "1.6.35",
+  "qualia_version": "1.6.6",
+  "em_ttl_version": "1.6.11",
   "s3dgraphy_version": "1.6.0.dev26",
   "operations": [
     "add_node",
@@ -210,6 +210,8 @@
         "subproperty": "https://w3id.org/em/ontology#abuts",
         "extension": null,
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -224,6 +226,8 @@
         "subproperty": "https://w3id.org/em/ontology#bondedTo",
         "extension": null,
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -238,6 +242,8 @@
         "subproperty": null,
         "extension": "http://www.cidoc-crm.org/extensions/crmarchaeo/AP4_produced_surface",
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -252,6 +258,8 @@
         "subproperty": null,
         "extension": null,
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -266,6 +274,8 @@
         "subproperty": null,
         "extension": null,
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -280,6 +290,8 @@
         "subproperty": null,
         "extension": "https://w3id.org/em/ontology#contrastsWith",
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -294,6 +306,8 @@
         "subproperty": "https://w3id.org/em/ontology#cuts",
         "extension": null,
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -308,6 +322,8 @@
         "subproperty": null,
         "extension": "http://www.w3.org/ns/prov#wasDerivedFrom",
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -322,6 +338,8 @@
         "subproperty": null,
         "extension": "http://www.w3.org/ns/prov#used",
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -336,6 +354,8 @@
         "subproperty": null,
         "extension": "http://www.w3.org/ns/prov#generated",
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -350,6 +370,8 @@
         "subproperty": null,
         "extension": null,
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -364,6 +386,8 @@
         "subproperty": "https://w3id.org/em/ontology#physicallyEquals",
         "extension": null,
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -378,6 +402,8 @@
         "subproperty": null,
         "extension": null,
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -392,6 +418,8 @@
         "subproperty": "https://w3id.org/em/ontology#fills",
         "extension": null,
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -406,6 +434,8 @@
         "subproperty": null,
         "extension": "http://www.cidoc-crm.org/extensions/crmarchaeo/AP11_has_physical_relation_to",
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -420,6 +450,8 @@
         "subproperty": null,
         "extension": "https://w3id.org/em/ontology#hasAuthor",
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -434,6 +466,8 @@
         "subproperty": null,
         "extension": null,
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -448,6 +482,8 @@
         "subproperty": null,
         "extension": "http://www.cidoc-crm.org/cidoc-crm/P106_is_composed_of",
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -462,6 +498,8 @@
         "subproperty": null,
         "extension": null,
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -476,6 +514,8 @@
         "subproperty": null,
         "extension": null,
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -495,6 +535,8 @@
             "SeriesOfDocumentaryStratigraphicUnit"
           ]
         },
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -509,6 +551,8 @@
         "subproperty": null,
         "extension": null,
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -523,6 +567,8 @@
         "subproperty": null,
         "extension": "http://www.w3.org/ns/prov#hadMember",
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -537,6 +583,8 @@
         "subproperty": null,
         "extension": "https://w3id.org/em/ontology#firstAttestedInEpoch",
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -551,6 +599,8 @@
         "subproperty": null,
         "extension": "http://www.w3.org/ns/prov#wasDerivedFrom",
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -565,6 +615,8 @@
         "subproperty": null,
         "extension": null,
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -579,6 +631,8 @@
         "subproperty": null,
         "extension": null,
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -593,6 +647,8 @@
         "subproperty": null,
         "extension": null,
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -607,6 +663,8 @@
         "subproperty": null,
         "extension": null,
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -621,6 +679,8 @@
         "subproperty": null,
         "extension": "https://w3id.org/em/ontology#hasQualia",
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -635,6 +695,8 @@
         "subproperty": null,
         "extension": null,
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -649,6 +711,8 @@
         "subproperty": null,
         "extension": null,
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -663,6 +727,8 @@
         "subproperty": null,
         "extension": null,
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -677,6 +743,8 @@
         "subproperty": null,
         "extension": null,
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -691,6 +759,8 @@
         "subproperty": null,
         "extension": null,
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -705,6 +775,8 @@
         "subproperty": null,
         "extension": "https://w3id.org/em/ontology#hasSemanticShape",
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -719,6 +791,8 @@
         "subproperty": null,
         "extension": "https://w3id.org/em/ontology#hasSubEpoch",
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -733,6 +807,8 @@
         "subproperty": null,
         "extension": "https://w3id.org/em/ontology#belongsToAlternative",
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -747,6 +823,8 @@
         "subproperty": null,
         "extension": null,
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -761,6 +839,8 @@
         "subproperty": null,
         "extension": "https://w3id.org/em/ontology#hasVisualReference",
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -775,6 +855,8 @@
         "subproperty": null,
         "extension": "http://www.cidoc-crm.org/cidoc-crm/P46i_forms_part_of",
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -789,6 +871,8 @@
         "subproperty": null,
         "extension": "http://www.cidoc-crm.org/cidoc-crm/P9_consists_of",
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -803,6 +887,8 @@
         "subproperty": null,
         "extension": null,
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "target"
       }
     },
@@ -817,6 +903,8 @@
         "subproperty": "https://w3id.org/em/ontology#bondedTo",
         "extension": null,
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -831,6 +919,8 @@
         "subproperty": null,
         "extension": "https://w3id.org/em/ontology#isInActivity",
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -845,6 +935,8 @@
         "subproperty": null,
         "extension": null,
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -859,6 +951,8 @@
         "subproperty": null,
         "extension": null,
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -873,6 +967,8 @@
         "subproperty": null,
         "extension": null,
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -887,6 +983,8 @@
         "subproperty": null,
         "extension": null,
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -901,6 +999,8 @@
         "subproperty": null,
         "extension": "https://w3id.org/em/ontology#belongsToAlternative",
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -915,6 +1015,8 @@
         "subproperty": null,
         "extension": "https://w3id.org/em/ontology#isOnResource",
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -933,6 +1035,15 @@
             "StratigraphicUnit"
           ]
         },
+        "inverse_extension": "https://w3id.org/em/ontology#reconstructsFrom",
+        "inverse_extension_when": {
+          "source_node_class": [
+            "SpecialFindUnit"
+          ],
+          "target_node_class": [
+            "VirtualSpecialFindUnit"
+          ]
+        },
         "subject": "source"
       }
     },
@@ -947,6 +1058,8 @@
         "subproperty": "https://w3id.org/em/ontology#physicallyEquals",
         "extension": null,
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -961,6 +1074,8 @@
         "subproperty": "https://w3id.org/em/ontology#overlies",
         "extension": null,
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -975,6 +1090,8 @@
         "subproperty": null,
         "extension": "http://www.cidoc-crm.org/cidoc-crm/P16_used_specific_object",
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -989,6 +1106,8 @@
         "subproperty": null,
         "extension": "http://www.cidoc-crm.org/cidoc-crm/P94_has_created",
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -1003,6 +1122,8 @@
         "subproperty": null,
         "extension": "https://w3id.org/em/ontology#survivesInEpoch",
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -1017,6 +1138,8 @@
         "subproperty": null,
         "extension": "https://w3id.org/em/ontology#validatedBy",
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     },
@@ -1031,6 +1154,8 @@
         "subproperty": null,
         "extension": "http://www.w3.org/ns/prov#wasRevisionOf",
         "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
         "subject": "source"
       }
     }
@@ -1215,18 +1340,24 @@
     "https://w3id.org/em/ontology#aiAssistedField",
     "https://w3id.org/em/ontology#aiModel",
     "https://w3id.org/em/ontology#aiPromptRef",
+    "https://w3id.org/em/ontology#attestedBy",
+    "https://w3id.org/em/ontology#authMode",
     "https://w3id.org/em/ontology#belongsToAlternative",
     "https://w3id.org/em/ontology#bondedTo",
+    "https://w3id.org/em/ontology#checkedAt",
     "https://w3id.org/em/ontology#checksum",
+    "https://w3id.org/em/ontology#checksumAt",
     "https://w3id.org/em/ontology#confidenceLevel",
     "https://w3id.org/em/ontology#contrastsWith",
     "https://w3id.org/em/ontology#convexShape",
     "https://w3id.org/em/ontology#createdBy",
+    "https://w3id.org/em/ontology#createdVia",
     "https://w3id.org/em/ontology#crs",
     "https://w3id.org/em/ontology#cuts",
     "https://w3id.org/em/ontology#derivedFromDocument",
     "https://w3id.org/em/ontology#fills",
     "https://w3id.org/em/ontology#firstAttestedInEpoch",
+    "https://w3id.org/em/ontology#hasAddress",
     "https://w3id.org/em/ontology#hasAuthor",
     "https://w3id.org/em/ontology#hasDefinition",
     "https://w3id.org/em/ontology#hasQualia",
@@ -1240,8 +1371,10 @@
     "https://w3id.org/em/ontology#isInActivity",
     "https://w3id.org/em/ontology#isOnResource",
     "https://w3id.org/em/ontology#lastEditedBy",
+    "https://w3id.org/em/ontology#locator",
     "https://w3id.org/em/ontology#modelIdentifier",
     "https://w3id.org/em/ontology#modifiedAt",
+    "https://w3id.org/em/ontology#modifiedVia",
     "https://w3id.org/em/ontology#onPage",
     "https://w3id.org/em/ontology#orcidVerified",
     "https://w3id.org/em/ontology#originalLanguage",
@@ -1249,6 +1382,7 @@
     "https://w3id.org/em/ontology#physicallyEquals",
     "https://w3id.org/em/ontology#promptReference",
     "https://w3id.org/em/ontology#propagation",
+    "https://w3id.org/em/ontology#reachable",
     "https://w3id.org/em/ontology#reconstructsAbsent",
     "https://w3id.org/em/ontology#reconstructsFrom",
     "https://w3id.org/em/ontology#removedAt",
@@ -1264,6 +1398,7 @@
     "https://w3id.org/em/ontology#translationMethod",
     "https://w3id.org/em/ontology#validatedAt",
     "https://w3id.org/em/ontology#validatedBy",
+    "https://w3id.org/em/ontology#validatedVia",
     "https://w3id.org/em/ontology#vertexCount",
     "https://w3id.org/em/ontology#wasReusedFrom"
   ],
@@ -1324,38 +1459,38 @@
     }
   },
   "datamodel": {
-    "digest": "sha256:0be1dcffb38a020e7023edb19d3764a0ff301525554755f7694c4af57945a605",
+    "digest": "sha256:adf75ab96734a07e6014420c36e6a000c7e835b6c94783e66edbdfb3f940a332",
     "versions": {
-      "nodes": "1.6.20",
-      "node_registry": "1.6.20",
-      "connections": "1.6.34",
+      "nodes": "1.6.21",
+      "node_registry": "1.6.21",
+      "connections": "1.6.35",
       "visual_rules": "1.6.28",
-      "qualia": "1.6.5",
+      "qualia": "1.6.6",
       "translations": "1.6"
     },
     "digests": {
-      "nodes": "sha256:71d8c42672d09ad0c3fe8b09e508d823747e07c3d71da1b7b58b37edb8f7c8a3",
-      "node_registry": "sha256:e1aa6dadb526f6a01142a29cecc960e0a80b2489dfb1c7abfccdf7ae9d765394",
-      "connections": "sha256:8dbd24ca20ff80cace2820a4a3108aa77653378bb7204b1b1b9b0e81f7c8eb3b",
+      "nodes": "sha256:1896fbb82ef33f7e2e0a64e2c5a5899dddba0f26a47ca8c321bd5c00121343de",
+      "node_registry": "sha256:cf035dd6cb09f6b798ab7d6e8a5baf7c1d809faf4e6fb1dace2fbc7250d8544f",
+      "connections": "sha256:fc7e8b27646e9cb0d0591a35873f8da9d153079beb947cd740356927aa1d7556",
       "visual_rules": "sha256:2cc5f4dfbfd4b3e13490566a0ee22cefa9f887186e568bbdd886f488d62a0a76",
-      "qualia": "sha256:557ea5e03af6a2b5f28bc83ced16d792300352145ba5f315ee0f8b4f87a78bb3",
+      "qualia": "sha256:f69c1ca287729791e8969f01425b10b8d342284c691bc81c4f9d1b9fa078e41b",
       "translations": "sha256:15b1f097ba22d6d06520db69c51e3cde42da72c5102341d7ef9306e4ccf2e2a4"
     },
     "files": {
       "nodes": {
         "file": "s3Dgraphy_node_datamodel.json",
-        "digest": "sha256:71d8c42672d09ad0c3fe8b09e508d823747e07c3d71da1b7b58b37edb8f7c8a3",
-        "version": "1.6.20"
+        "digest": "sha256:1896fbb82ef33f7e2e0a64e2c5a5899dddba0f26a47ca8c321bd5c00121343de",
+        "version": "1.6.21"
       },
       "node_registry": {
         "file": "node_registry.generated.json",
-        "digest": "sha256:e1aa6dadb526f6a01142a29cecc960e0a80b2489dfb1c7abfccdf7ae9d765394",
-        "version": "1.6.20"
+        "digest": "sha256:cf035dd6cb09f6b798ab7d6e8a5baf7c1d809faf4e6fb1dace2fbc7250d8544f",
+        "version": "1.6.21"
       },
       "connections": {
         "file": "s3Dgraphy_connections_datamodel.json",
-        "digest": "sha256:8dbd24ca20ff80cace2820a4a3108aa77653378bb7204b1b1b9b0e81f7c8eb3b",
-        "version": "1.6.34"
+        "digest": "sha256:fc7e8b27646e9cb0d0591a35873f8da9d153079beb947cd740356927aa1d7556",
+        "version": "1.6.35"
       },
       "visual_rules": {
         "file": "em_visual_rules.json",
@@ -1364,8 +1499,8 @@
       },
       "qualia": {
         "file": "em_qualia_types.json",
-        "digest": "sha256:557ea5e03af6a2b5f28bc83ced16d792300352145ba5f315ee0f8b4f87a78bb3",
-        "version": "1.6.5"
+        "digest": "sha256:f69c1ca287729791e8969f01425b10b8d342284c691bc81c4f9d1b9fa078e41b",
+        "version": "1.6.6"
       },
       "translations": {
         "file": "datamodel_translations.json",

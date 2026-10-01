@@ -47,12 +47,16 @@ SNAPSHOT_PATH = REPO_ROOT / "registry" / "s3dgraphy-snapshot.json"
 #: one digest over the six datamodel JSONs, a version and a digest per file);
 #: 5 = + each edge's `rdf.extension_when`, the GUARD of its extension predicate
 #: (`mapping.extension_when`: the classes the RDF subject and object must have
-#: for the extension to go out beside the core predicate).
-SNAPSHOT_FORMAT = 5
-#: Formats `from_snapshot` reads. 3 and 4 are read so that a stale snapshot is
+#: for the extension to go out beside the core predicate);
+#: 6 = + each edge's `rdf.inverse_extension` and `rdf.inverse_extension_when`
+#: (`mapping.inverse_extension`: a predicate that restates the edge FROM THE
+#: OTHER SIDE, `<target> pred <source>`, and the classes the logical source and
+#: target must have — is_part_of → em:reconstructsFrom, SF → VSF).
+SNAPSHOT_FORMAT = 6
+#: Formats `from_snapshot` reads. 3, 4 and 5 are read so that a stale snapshot is
 #: compared and its divergence NAMED; `registry-snapshot` always writes
 #: SNAPSHOT_FORMAT.
-_READABLE_FORMATS = (3, 4, SNAPSHOT_FORMAT)
+_READABLE_FORMATS = (3, 4, 5, SNAPSHOT_FORMAT)
 
 #: Where to look for a source checkout of s3Dgraphy, in order.
 _CANDIDATE_SRC = (
@@ -373,6 +377,7 @@ def _edges(conns: Dict, cfg: Path) -> Dict[str, Dict[str, Any]]:
         _canon, inverted = dm.resolve_edge_direction(name)
         sub = rx.AP11_SUBPROPS.get(type_tag) if type_tag else None
         when = _extension_condition(dm, name) if extension else None
+        inverse, inverse_when = _inverse_extension(dm, name)
         out[name] = {
             "reverse": reverse,
             "symmetric": reverse is None,
@@ -384,10 +389,27 @@ def _edges(conns: Dict, cfg: Path) -> Dict[str, Dict[str, Any]]:
                 "subproperty": str(sub) if sub else None,
                 "extension": str(extension) if extension else None,
                 "extension_when": when,
+                "inverse_extension": inverse,
+                "inverse_extension_when": inverse_when,
                 "subject": "target" if inverted else "source",
             },
         }
     return out
+
+
+def _inverse_extension(dm: Any, name: str
+                       ) -> Tuple[Optional[str], Optional[Dict[str, List[str]]]]:
+    """`(predicate, {source_node_class, target_node_class})` of an edge's
+    `inverse_extension` as the exporter writes it (`<target> pred <source>`,
+    guarded on the LOGICAL ends), or `(None, None)`. Read from s3Dgraphy's
+    exporter (`get_inverse_extension`, dev25 on), like the extension."""
+    if not hasattr(dm, "get_inverse_extension"):
+        return None, None
+    found = dm.get_inverse_extension(name)
+    if not found:
+        return None, None
+    predicate, when = found
+    return str(predicate), ({k: sorted(v) for k, v in sorted(when.items())} if when else None)
 
 
 def _extension_condition(dm: Any, name: str) -> Optional[Dict[str, List[str]]]:
