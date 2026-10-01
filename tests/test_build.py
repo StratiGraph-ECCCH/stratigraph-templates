@@ -346,14 +346,30 @@ def test_every_name_in_the_recipe_exists_in_the_datamodel_of_the_header(tid, reg
 
 # ── the golden file, and the committed dist/ ─────────────────────────────────
 
+#: Header keys that say what the sheet was COMPILED WITH, not what it is: the
+#: datamodel it was checked against (s3Dgraphy version, commit, fingerprint) and
+#: the compiler's version. The golden leaves them out, so it moves when the
+#: compiled sheet does and not after every snapshot; `header.digest` stays, and
+#: `test_the_committed_dist_is_what_the_definitions_compile_to` pins the whole file.
+GOLDEN_PROVENANCE = ("datamodel", "compiled_by")
+
+
+def _without_provenance(doc):
+    out = dict(doc)
+    out["header"] = {k: v for k, v in doc["header"].items() if k not in GOLDEN_PROVENANCE}
+    return out
+
+
 def test_golden_iccd(iccd):
-    """The compiled ICCD US, byte for byte. If this fails and the change is
-    intended, regenerate with STRATIGRAPH_UPDATE_GOLDEN=1 and read the diff."""
+    """The compiled ICCD US, byte for byte, without its provenance. If this
+    fails and the change is intended, regenerate with STRATIGRAPH_UPDATE_GOLDEN=1
+    and read the diff."""
     path = GOLDEN / f"{ICCD}.json"
+    body = dumps(_without_provenance(iccd))
     if os.environ.get("STRATIGRAPH_UPDATE_GOLDEN"):
         path.parent.mkdir(exist_ok=True)
-        path.write_text(dumps(iccd), encoding="utf-8")
-    assert dumps(iccd) == path.read_text(encoding="utf-8")
+        path.write_text(body, encoding="utf-8")
+    assert body == path.read_text(encoding="utf-8")
 
 
 @pytest.mark.parametrize("tid", ALL)

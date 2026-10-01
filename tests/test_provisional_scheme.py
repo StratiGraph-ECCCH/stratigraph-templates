@@ -122,10 +122,11 @@ def test_il_compilato_dice_il_provvisorio_sul_campo_sulla_ricetta_e_nella_testat
 
 
 def test_la_definizione_ha_alzato_la_versione(compiled):
-    # 1.0.2 = i concetti provvisori; 2.0.0 (natura → origin_type) li tiene tutti.
-    assert compiled["header"]["version"] in ("1.0.2", "2.0.0")
+    # 1.0.2 = i concetti provvisori; 2.0.0 (natura → origin_type) e 2.0.1 (la
+    # guardia di AP21i) li tengono tutti.
+    assert compiled["header"]["version"] in ("1.0.2", "2.0.0", "2.0.1")
     index = json.loads((REPO_ROOT / "dist/schede/index.json").read_text(encoding="utf-8"))
-    assert {"1.0.0", "1.0.1", "1.0.2", "2.0.0"} <= set(index["schede"]["iccd-us-2021"]["versions"]), \
+    assert {"1.0.0", "1.0.1", "1.0.2", "2.0.0", "2.0.1"} <= set(index["schede"]["iccd-us-2021"]["versions"]), \
         "le versioni vecchie restano: un record 1.0.1 si rilegge con la 1.0.1"
 
 

@@ -160,7 +160,45 @@
         "provisional_for": "iccd-us-affidabilita"
       }
     ],
-    "digest": "sha256:4802d763044f3eb47e08a118f94a0f194b4489d0dd129e1002482837a66bd0fb"
+    "digest": "sha256:4802d763044f3eb47e08a118f94a0f194b4489d0dd129e1002482837a66bd0fb",
+    "datamodel": {
+      "nodes": "1.6.20",
+      "node_registry": "1.6.20",
+      "connections": "1.6.34",
+      "visual_rules": "1.6.28",
+      "qualia": "1.6.5",
+      "translations": "1.6",
+      "digest": "sha256:0be1dcffb38a020e7023edb19d3764a0ff301525554755f7694c4af57945a605",
+      "files": {
+        "nodes": {
+          "digest": "sha256:71d8c42672d09ad0c3fe8b09e508d823747e07c3d71da1b7b58b37edb8f7c8a3",
+          "version": "1.6.20"
+        },
+        "node_registry": {
+          "digest": "sha256:e1aa6dadb526f6a01142a29cecc960e0a80b2489dfb1c7abfccdf7ae9d765394",
+          "version": "1.6.20"
+        },
+        "connections": {
+          "digest": "sha256:8dbd24ca20ff80cace2820a4a3108aa77653378bb7204b1b1b9b0e81f7c8eb3b",
+          "version": "1.6.34"
+        },
+        "qualia": {
+          "digest": "sha256:557ea5e03af6a2b5f28bc83ced16d792300352145ba5f315ee0f8b4f87a78bb3",
+          "version": "1.6.5"
+        }
+      },
+      "em_ttl": "1.6.10",
+      "s3dgraphy": "1.6.0.dev26",
+      "taken_from": {
+        "git_commit": "f9726afa2a21a735582c85cb0453e90549d19bb1",
+        "git_dirty": false
+      },
+      "snapshot": "registry/s3dgraphy-snapshot.json"
+    },
+    "compiled_by": {
+      "name": "stratigraph-templates",
+      "version": "0.1.0"
+    }
   },
   "visual": {
     "identity": {

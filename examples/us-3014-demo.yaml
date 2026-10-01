@@ -17,7 +17,7 @@
 
 record:
   template: iccd-us-2021
-  template_version: "2.0.0"   # quale versione della definizione ha seguito (SPEC §5)
+  template_version: "2.0.1"   # quale versione della definizione ha seguito (SPEC §5)
   uid: "01J9Z7QK4T8V2M6XW3B5Y0HRND"   # opaco, coniato da chi ha creato l'unità
 
   values:

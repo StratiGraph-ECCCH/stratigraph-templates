@@ -31,7 +31,15 @@ template:
   # stessa che legge il DAI (`isNatural`): il datamodel fa fede. MAJOR perché un
   # record 1.0.2 si rileggerebbe diversamente (un verdetto cambiato: altra proprietà,
   # altri valori — `naturale` → `natural`). Deciso da Cowork per E.D., 28 set 2026.
-  version: "2.0.0"
+  # 2.0.1 (2026-10-01) = la definizione non cambia di una riga: cambia il
+  # compilato, perché l'estensione RDF di un arco ora porta la sua GUARDIA
+  # (connections `mapping.extension_when`). `riferimenti_tabelle_materiali`
+  # (is_part_of) scriveva AP21i senza condizioni, e AP21i vale solo dentro una US
+  # (A2): l'unità di questa scheda può essere USN, quindi il compilato porta AP21i
+  # con `extension_when.target_node_class: [StratigraphicUnit]`. PATCH: stesse
+  # operazioni, stessi campi e verdetti, un record 2.0.0 si rilegge uguale; cambia
+  # solo che cosa diventa in RDF, ed era un errore della 2.0.0.
+  version: "2.0.1"
   standard:
     authority: ICCD
     code: US
