@@ -47,6 +47,11 @@ def test_a_compiled_sheet_carries_the_fingerprint(reg, vocab):
     assert head["digest"] == reg.datamodel["digest"]
     for name in NAMES:
         assert head[name] == reg.datamodel["versions"][name], name
+    # the files the sheet was built from, each with its own digest (dev25)
+    assert tuple(head["files"]) == reg_mod.DATAMODEL_READS
+    for name in reg_mod.DATAMODEL_READS:
+        assert head["files"][name] == {"digest": reg.datamodel["digests"][name],
+                                       "version": reg.datamodel["versions"][name]}, name
     # the sheet's own digest is another thing, and the datamodel stays outside it
     assert doc["header"]["digest"] != head["digest"]
 
@@ -92,11 +97,54 @@ def test_an_old_snapshot_fails_validate_with_the_name_of_the_datamodel(monkeypat
 def test_same_versions_different_content_is_still_named(monkeypatch):
     live = reg_mod.from_snapshot()
     edited = copy.deepcopy(live)
-    edited.datamodel["digests"]["visual_rules"] = "sha256:" + "1" * 64
+    edited.datamodel["digests"]["qualia"] = "sha256:" + "1" * 64
     edited.datamodel["digest"] = "sha256:" + "1" * 64
     assert reg_mod.differences(edited, live) == [
-        f"datamodel: visual_rules {live.datamodel['versions']['visual_rules']}: "
+        f"datamodel: qualia {live.datamodel['versions']['qualia']}: "
         "same version, different content"]
+
+
+def _live_moved(name: str) -> reg_mod.Registry:
+    """The working tree as it would be after a change to `name` alone: a new
+    version, a new digest for that file, a new one digest."""
+    live = reg_mod.from_snapshot()
+    live.datamodel["versions"][name] = "9.9.9"
+    live.datamodel["digests"][name] = "sha256:" + "9" * 64
+    live.datamodel["digest"] = "sha256:" + "9" * 64
+    return live
+
+
+@pytest.mark.parametrize("name", ["visual_rules", "translations"])
+def test_a_change_to_a_file_templates_does_not_read_does_not_stop_validate(
+        monkeypatch, capsys, name):
+    """D4 of the MICRO-DERIVA: templates reads four datamodel files, and the
+    visual rules and the translations are not among them."""
+    assert name not in reg_mod.DATAMODEL_READS
+    snap, live = reg_mod.from_snapshot(), _live_moved(name)
+    monkeypatch.setattr(reg_mod, "from_snapshot", lambda path=None: copy.deepcopy(snap))
+    monkeypatch.setattr(reg_mod, "from_s3dgraphy", lambda: copy.deepcopy(live))
+    assert reg_mod.differences(snap, live) == []
+    code = cli.main(["validate", "iccd-us-2021"])
+    assert code == 0, capsys.readouterr().err
+
+
+def test_a_change_to_the_node_datamodel_stops_validate_and_names_the_file(
+        monkeypatch, capsys):
+    snap, live = reg_mod.from_snapshot(), _live_moved("nodes")
+    monkeypatch.setattr(reg_mod, "from_snapshot", lambda path=None: copy.deepcopy(snap))
+    monkeypatch.setattr(reg_mod, "from_s3dgraphy", lambda: copy.deepcopy(live))
+    code = cli.main(["validate", "iccd-us-2021"])
+    err = capsys.readouterr().err
+    assert code != 0
+    assert f"datamodel: nodes {snap.datamodel['versions']['nodes']} vs 9.9.9" in err
+
+
+def test_the_snapshot_records_the_whole_fingerprint_and_compares_four():
+    doc = json.loads(reg_mod.SNAPSHOT_PATH.read_text(encoding="utf-8"))
+    assert tuple(doc["datamodel"]["versions"]) == NAMES and doc["datamodel"]["digest"]
+    read = reg_mod.from_snapshot().content()["datamodel"]
+    assert tuple(read["versions"]) == reg_mod.DATAMODEL_READS
+    assert "digest" not in read
 
 
 def test_a_format_3_snapshot_is_read_and_its_divergence_named(tmp_path, monkeypatch):

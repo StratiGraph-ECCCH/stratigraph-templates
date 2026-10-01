@@ -31,11 +31,11 @@
             "invented": false
           },
           "datamodel": {
-            "nodes": "1.6.17",
-            "connections": "1.6.31",
-            "qualia": "1.6.2",
+            "nodes": "1.6.18",
+            "connections": "1.6.32",
+            "qualia": "1.6.3",
             "em_ttl": "1.6.9",
-            "digest": "sha256:12c5d520cf393be752360210a2a1ac7e74cac67169d18edfb005e250f6bd3b91"
+            "digest": "sha256:aab44dda08bffbecac38e77e3049919362d4b3504b4190240a368871c3823260"
           }
         }
       },
@@ -70,11 +70,11 @@
             "invented": true
           },
           "datamodel": {
-            "nodes": "1.6.17",
-            "connections": "1.6.31",
-            "qualia": "1.6.2",
+            "nodes": "1.6.18",
+            "connections": "1.6.32",
+            "qualia": "1.6.3",
             "em_ttl": "1.6.9",
-            "digest": "sha256:12c5d520cf393be752360210a2a1ac7e74cac67169d18edfb005e250f6bd3b91"
+            "digest": "sha256:aab44dda08bffbecac38e77e3049919362d4b3504b4190240a368871c3823260"
           }
         }
       },
@@ -92,11 +92,11 @@
             "invented": true
           },
           "datamodel": {
-            "nodes": "1.6.17",
-            "connections": "1.6.31",
-            "qualia": "1.6.2",
+            "nodes": "1.6.18",
+            "connections": "1.6.32",
+            "qualia": "1.6.3",
             "em_ttl": "1.6.9",
-            "digest": "sha256:12c5d520cf393be752360210a2a1ac7e74cac67169d18edfb005e250f6bd3b91"
+            "digest": "sha256:aab44dda08bffbecac38e77e3049919362d4b3504b4190240a368871c3823260"
           }
         }
       },
@@ -165,11 +165,11 @@
             "invented": false
           },
           "datamodel": {
-            "nodes": "1.6.17",
-            "connections": "1.6.31",
-            "qualia": "1.6.2",
+            "nodes": "1.6.18",
+            "connections": "1.6.32",
+            "qualia": "1.6.3",
             "em_ttl": "1.6.9",
-            "digest": "sha256:12c5d520cf393be752360210a2a1ac7e74cac67169d18edfb005e250f6bd3b91"
+            "digest": "sha256:aab44dda08bffbecac38e77e3049919362d4b3504b4190240a368871c3823260"
           }
         }
       },

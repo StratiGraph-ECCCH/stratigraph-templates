@@ -787,11 +787,13 @@ refused.
   "languages": ["it", "en"],
   "vocabularies": [{"id": "iccd-us-consistenza", "status": "declared", ...}, ...],
   "digest": "sha256:<64 hex>",
-  "datamodel": {"nodes": "1.6.17", "node_registry": "1.6.17", "connections": "1.6.31",
-                "visual_rules": "1.6.27", "qualia": "1.6.2", "translations": "1.6",
-                "digest": "sha256:12c5d520…",
+  "datamodel": {"nodes": "1.6.18", "node_registry": "1.6.18", "connections": "1.6.32",
+                "visual_rules": "1.6.27", "qualia": "1.6.3", "translations": "1.6",
+                "digest": "sha256:aab44dda…",
+                "files": {"nodes": {"digest": "sha256:23f00ba1…", "version": "1.6.18"},
+                          "node_registry": {...}, "connections": {...}, "qualia": {...}},
                 "em_ttl": "1.6.9", "s3dgraphy": "1.6.0.dev24",
-                "taken_from": {"git_commit": "4149db5…", "git_dirty": false},
+                "taken_from": {"git_commit": "066ba2f…", "git_dirty": false},
                 "snapshot": "registry/s3dgraphy-snapshot.json"},
   "compiled_by": {"name": "stratigraph-templates", "version": "0.1.0"}
 }
@@ -801,10 +803,15 @@ refused.
 s3Dgraphy configuration files: no version is written by hand. It has one version per
 datamodel, under the names of s3Dgraphy's fingerprint, and **`datamodel.digest`**, the
 fingerprint itself (`api.datamodel_fingerprint()`: SHA-256 over the six datamodel
-JSONs in RFC 8785 canonical form). A reader — StratiField — compares both with its own
-s3Dgraphy and can say *which* datamodel moved. `validate` and `build` compare the
-snapshot's fingerprint with the working tree's, and a divergence names the datamodel
-(`datamodel: nodes 1.6.12 vs 1.6.17`). Not to be confused with the header's own
+JSONs in RFC 8785 canonical form), which says «the same datamodel, all of it».
+**`datamodel.files`** (since s3Dgraphy dev25) carries the digest and version of each
+file this repository **reads** — `nodes`, `node_registry`, `connections`, `qualia`
+(`registry.DATAMODEL_READS`; `em.ttl` is compared term by term) — which is what the
+sheet was built from. A reader — StratiField — compares `files` with its own s3Dgraphy
+and can say *which* datamodel moved. `validate` and `build` compare the snapshot with
+the working tree on those four files only, and a divergence names the file
+(`datamodel: nodes 1.6.12 vs 1.6.17`); a change to the visual rules or to the
+translations, which no sheet reads, does not stop them. Not to be confused with the header's own
 `digest`, below, which is the definition's.
 
 **The digest** is SHA-256 over the canonical JSON (sorted keys, no whitespace) of the

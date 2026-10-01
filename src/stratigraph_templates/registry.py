@@ -56,6 +56,13 @@ _CANDIDATE_SRC = (
     str(REPO_ROOT.parent / "s3Dgraphy" / "src"),
 )
 
+#: The datamodel files this repository READS, under the fingerprint's names
+#: (`from_s3dgraphy` opens exactly these, and em.ttl, which is compared term by
+#: term). A snapshot is compared with the working tree on these alone, and never
+#: on the one digest, which also covers the visual rules and the translations:
+#: a change there is none of a sheet's business (D4 of the MICRO-DERIVA).
+DATAMODEL_READS = ("nodes", "node_registry", "connections", "qualia")
+
 #: Keys of the snapshot that say WHERE it came from, not WHAT s3Dgraphy declares.
 #: Two snapshots that differ only here agree.
 _PROVENANCE_KEYS = ("snapshot_format", "source", "taken_from", "taken_on")
@@ -104,9 +111,9 @@ class Registry:
     #: a NODE (like name and description) that the node datamodel declares
     #: beyond them — not qualia, not PropertyNodes. Read, never listed here.
     node_elements: Dict[str, Dict[str, Any]] = dc_field(default_factory=dict)
-    #: s3Dgraphy's datamodel fingerprint: {digest, versions, digests, files}. The
-    #: one identity of the datamodel a compiled sheet was checked against, the
-    #: same digest EMStudio and StratiField compare with.
+    #: s3Dgraphy's datamodel fingerprint, WHOLE: {digest, versions, digests,
+    #: files}. Recorded in the snapshot and in every sheet's header as it is;
+    #: compared only on DATAMODEL_READS (`read_datamodel`).
     datamodel: Dict[str, Any] = dc_field(default_factory=dict)
     node_datamodel_version: str = ""
     connections_version: str = ""
@@ -153,8 +160,27 @@ class Registry:
                 return cls, code
         raise KeyError(name)
 
+    def read_datamodel(self) -> Dict[str, Any]:
+        """The part of the fingerprint this repository reads: `{versions,
+        digests, files}` for DATAMODEL_READS, with no one digest. `files` is
+        `{name: {digest, version}}`; a fingerprint written before s3Dgraphy
+        dev25 (whose `files` named only the file) is read from its `versions`
+        and `digests`, which are the same facts."""
+        versions = dict(self.datamodel.get("versions") or {})
+        digests = dict(self.datamodel.get("digests") or {})
+        names = [n for n in DATAMODEL_READS if n in versions]
+        return {
+            "versions": {n: versions[n] for n in names},
+            "digests": {n: digests[n] for n in names if n in digests},
+            "files": {n: {"digest": digests.get(n), "version": versions[n]} for n in names},
+        }
+
     def content(self) -> Dict[str, Any]:
-        """Everything s3Dgraphy declares, without where it was read from."""
+        """Everything s3Dgraphy declares, without where it was read from.
+
+        `datamodel` here is what this repository READS of it
+        (`read_datamodel`): two registries that differ only in the visual
+        rules or the translations agree."""
         return {
             "node_datamodel_version": self.node_datamodel_version,
             "connections_version": self.connections_version,
@@ -170,7 +196,7 @@ class Registry:
             "mapping_targets": dict(sorted(self.mapping_targets.items())),
             "em_ttl_terms": sorted(self.em_ttl_terms),
             "node_elements": {k: self.node_elements[k] for k in sorted(self.node_elements)},
-            "datamodel": self.datamodel,
+            "datamodel": self.read_datamodel(),
         }
 
     def to_json(self) -> Dict[str, Any]:
@@ -180,6 +206,8 @@ class Registry:
             "taken_from": self.taken_from,
             "taken_on": self.taken_on,
             **self.content(),
+            # the WHOLE fingerprint is recorded; only DATAMODEL_READS is compared
+            "datamodel": self.datamodel,
         }
 
     def header(self) -> Dict[str, Any]:
@@ -187,10 +215,14 @@ class Registry:
 
         One version per datamodel, under the fingerprint's names (`nodes`,
         `node_registry`, `connections`, `visual_rules`, `qualia`,
-        `translations`), and the fingerprint's `digest` beside them: a reader
-        compares its own s3Dgraphy on both and can name what moved.
+        `translations`), and the fingerprint's `digest` beside them; and, since
+        s3Dgraphy dev25, `files`: the digest and version of each file this
+        repository READS (DATAMODEL_READS), which is what the sheet was built
+        from. A reader compares its own s3Dgraphy on `files` and can name what
+        moved; the one `digest` says «the same datamodel, all of it».
         """
         versions = dict(self.datamodel.get("versions") or {})
+        read = self.read_datamodel()
         return {
             "nodes": self.node_datamodel_version,
             "node_registry": versions.get("node_registry"),
@@ -199,6 +231,7 @@ class Registry:
             "qualia": self.qualia_version,
             "translations": versions.get("translations"),
             "digest": self.datamodel.get("digest"),
+            "files": read["files"],
             "em_ttl": self.em_ttl_version,
             "s3dgraphy": self.s3dgraphy_version,
             "taken_from": {k: self.taken_from.get(k) for k in ("git_commit", "git_dirty")},
