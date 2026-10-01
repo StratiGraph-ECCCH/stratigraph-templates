@@ -229,9 +229,10 @@ WHAT IT DOES
 WHAT IT DOES NOT DO
   It does not commit, push or run the tests (./em.sh test does). It does not
   raise a template.version for you, and it does not refresh the golden file
-  tests/golden/iccd-us-2021.json — which records the s3dgraphy version, so
-  test_golden_iccd goes red after every snapshot (measured 2026-10-01: dev24 →
-  dev25, the only failure). It prints the command that refreshes it.
+  tests/golden/iccd-us-2021.json. Since bdb09e4 the golden file leaves out
+  header.datamodel and header.compiled_by, so a snapshot alone does not move it:
+  it moves with a recipe change, and then STRATIGRAPH_UPDATE_GOLDEN=1 refreshes
+  it (./em.sh help build).
 
 WHEN
   After s3Dgraphy's datamodel changed — typically right after a dev release
@@ -423,9 +424,8 @@ do_after_bump() {
   echo
   git -C "$ROOT" status --short -- registry/ dist/ || true
   ok "after-bump done — nothing committed. Review: git diff registry/ dist/"
-  echo "  next: ./em.sh test. tests/golden/iccd-us-2021.json records the s3dgraphy version too,"
-  echo "  so test_golden_iccd fails after every snapshot until you refresh it (a decision, like the snapshot):"
-  echo "    STRATIGRAPH_UPDATE_GOLDEN=1 ./em.sh test tests/test_build.py::test_golden_iccd"
+  echo "  next: ./em.sh test. The golden file (tests/golden/iccd-us-2021.json) has no provenance:"
+  echo "  only a changed RECIPE moves it, and a published version's recipe must not change."
 }
 
 # ── status ────────────────────────────────────────────────────────────────────

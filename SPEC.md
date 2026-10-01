@@ -956,6 +956,19 @@ decide (no `node_type` field, a record the creator finds): `extension` **with**
 ICCD US unit is US or USN, so `riferimenti_tabelle_materiali` carries AP21i guarded
 by `target_node_class: [StratigraphicUnit]`.
 
+**The same edge, read from the other side.** An edge can also restate itself from its
+other end (`mapping.inverse_extension`: a predicate written `<target> pred <source>`,
+with a guard on the classes of the logical source and target). `is_part_of` does: a
+special find (SF) that is part of a reassembled virtual find (VSF) says that the VSF is
+reconstructed from it, `<VSF> em:reconstructsFrom <SF>`. The snapshot records it
+(`edges.<type>.rdf.inverse_extension`, `inverse_extension_when`, snapshot format 6) and
+the compiler decides its guard as it decides the extension's: every allowed class
+inside, `inverse_extension` with no guard; none, no `inverse_extension`; some, or an
+end the definition does not decide, `inverse_extension` **with**
+`inverse_extension_when`. Whoever executes the recipe writes that triple with subject
+and object swapped. No published sheet carries it today: the ICCD US unit is US or
+USN, outside the guard.
+
 **`open` — what the definition does not decide, declared.** The recipe does not
 invent: where the definition is silent, it writes that down. Today, for the ICCD US:
 `definizione` (verdict `vocabulary` with neither qualia nor `property_name`: no
