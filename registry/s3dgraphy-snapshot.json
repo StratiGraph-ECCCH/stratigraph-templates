@@ -3,15 +3,15 @@
   "source": "s3dgraphy working tree at ../s3Dgraphy/src/s3dgraphy/JSON_config",
   "taken_from": {
     "config_dir": "../s3Dgraphy/src/s3dgraphy/JSON_config",
-    "git_commit": "404d73b48e0a7cfa7cdc82299b8903c74f931109",
+    "git_commit": "069fb1a196b5b52d66168107e7cb94ebe0402101",
     "git_dirty": false
   },
   "taken_on": "2026-10-02",
-  "node_datamodel_version": "1.6.22",
+  "node_datamodel_version": "1.6.23",
   "connections_version": "1.6.35",
   "qualia_version": "1.6.6",
-  "em_ttl_version": "1.6.12",
-  "s3dgraphy_version": "1.6.0.dev28",
+  "em_ttl_version": "1.6.13",
+  "s3dgraphy_version": "1.6.0.dev29",
   "operations": [
     "add_node",
     "update_field",
@@ -1348,6 +1348,7 @@
     "https://w3id.org/em/ontology#checksum",
     "https://w3id.org/em/ontology#checksumAt",
     "https://w3id.org/em/ontology#confidenceLevel",
+    "https://w3id.org/em/ontology#contentDigest",
     "https://w3id.org/em/ontology#contrastsWith",
     "https://w3id.org/em/ontology#convexShape",
     "https://w3id.org/em/ontology#createdBy",
@@ -1355,6 +1356,7 @@
     "https://w3id.org/em/ontology#crs",
     "https://w3id.org/em/ontology#cuts",
     "https://w3id.org/em/ontology#derivedFromDocument",
+    "https://w3id.org/em/ontology#digestCovers",
     "https://w3id.org/em/ontology#fills",
     "https://w3id.org/em/ontology#firstAttestedInEpoch",
     "https://w3id.org/em/ontology#hasAddress",
@@ -1379,6 +1381,8 @@
     "https://w3id.org/em/ontology#orcidVerified",
     "https://w3id.org/em/ontology#originalLanguage",
     "https://w3id.org/em/ontology#overlies",
+    "https://w3id.org/em/ontology#packaging",
+    "https://w3id.org/em/ontology#parameters",
     "https://w3id.org/em/ontology#physicallyEquals",
     "https://w3id.org/em/ontology#promptReference",
     "https://w3id.org/em/ontology#propagation",
@@ -1390,10 +1394,13 @@
     "https://w3id.org/em/ontology#residency",
     "https://w3id.org/em/ontology#resourceScope",
     "https://w3id.org/em/ontology#reviewRequested",
+    "https://w3id.org/em/ontology#software",
     "https://w3id.org/em/ontology#sourceDigest",
     "https://w3id.org/em/ontology#sourceLanguage",
     "https://w3id.org/em/ontology#sphere",
     "https://w3id.org/em/ontology#survivesInEpoch",
+    "https://w3id.org/em/ontology#technique",
+    "https://w3id.org/em/ontology#tier",
     "https://w3id.org/em/ontology#translatedField",
     "https://w3id.org/em/ontology#translationMethod",
     "https://w3id.org/em/ontology#validatedAt",
@@ -1459,33 +1466,33 @@
     }
   },
   "datamodel": {
-    "digest": "sha256:51db4eccac2e83518fa7743c0585d1022ec3b776fe0b956c29e7111e86d493a4",
+    "digest": "sha256:027b2eead5a2b9986f83b81ff75c81aa2c27272e5539b83cb733595c956795cb",
     "versions": {
-      "nodes": "1.6.22",
-      "node_registry": "1.6.22",
+      "nodes": "1.6.23",
+      "node_registry": "1.6.23",
       "connections": "1.6.35",
-      "visual_rules": "1.6.29",
+      "visual_rules": "1.6.30",
       "qualia": "1.6.6",
       "translations": "1.6"
     },
     "digests": {
-      "nodes": "sha256:9221ac207b3bfdd8b9e1b8fb812f90b40d02309d9e512e8d85ead00bb52b7c58",
-      "node_registry": "sha256:0ebd0ab43f47b9bf0f07c58fe8087d44e7e67c228503707d300b9ab63471d6f6",
+      "nodes": "sha256:294c150032938487250e2b4ed98242a9f83cc23c2ca00853777ff47f0bd3f5cf",
+      "node_registry": "sha256:107ed2c2324c1979d8966fcd603ce5681a04a7c1a6c2ebc0b6672b081c285d6b",
       "connections": "sha256:fc7e8b27646e9cb0d0591a35873f8da9d153079beb947cd740356927aa1d7556",
-      "visual_rules": "sha256:e202dd59ccdac5140582228a169015ee504a4c9ce98e9c34d183b524b898d434",
+      "visual_rules": "sha256:f0dbb71ad0c9432a0b68759e99580f6d4720fd4544ade907af00e5dd3ba8e05d",
       "qualia": "sha256:f69c1ca287729791e8969f01425b10b8d342284c691bc81c4f9d1b9fa078e41b",
-      "translations": "sha256:4e9dc6fd353f5af09def489310b309b10db760be6823538759e48753637a4a85"
+      "translations": "sha256:e006291f14ece97c155262e7c87de3233a451f1026f1cd1c044d4e773e7b57e1"
     },
     "files": {
       "nodes": {
         "file": "s3Dgraphy_node_datamodel.json",
-        "digest": "sha256:9221ac207b3bfdd8b9e1b8fb812f90b40d02309d9e512e8d85ead00bb52b7c58",
-        "version": "1.6.22"
+        "digest": "sha256:294c150032938487250e2b4ed98242a9f83cc23c2ca00853777ff47f0bd3f5cf",
+        "version": "1.6.23"
       },
       "node_registry": {
         "file": "node_registry.generated.json",
-        "digest": "sha256:0ebd0ab43f47b9bf0f07c58fe8087d44e7e67c228503707d300b9ab63471d6f6",
-        "version": "1.6.22"
+        "digest": "sha256:107ed2c2324c1979d8966fcd603ce5681a04a7c1a6c2ebc0b6672b081c285d6b",
+        "version": "1.6.23"
       },
       "connections": {
         "file": "s3Dgraphy_connections_datamodel.json",
@@ -1494,8 +1501,8 @@
       },
       "visual_rules": {
         "file": "em_visual_rules.json",
-        "digest": "sha256:e202dd59ccdac5140582228a169015ee504a4c9ce98e9c34d183b524b898d434",
-        "version": "1.6.29"
+        "digest": "sha256:f0dbb71ad0c9432a0b68759e99580f6d4720fd4544ade907af00e5dd3ba8e05d",
+        "version": "1.6.30"
       },
       "qualia": {
         "file": "em_qualia_types.json",
@@ -1504,7 +1511,7 @@
       },
       "translations": {
         "file": "datamodel_translations.json",
-        "digest": "sha256:4e9dc6fd353f5af09def489310b309b10db760be6823538759e48753637a4a85",
+        "digest": "sha256:e006291f14ece97c155262e7c87de3233a451f1026f1cd1c044d4e773e7b57e1",
         "version": "1.6"
       }
     }
