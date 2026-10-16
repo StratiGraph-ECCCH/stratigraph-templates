@@ -3,7 +3,7 @@
   "source": "s3dgraphy working tree at ../s3Dgraphy/src/s3dgraphy/JSON_config",
   "taken_from": {
     "config_dir": "../s3Dgraphy/src/s3dgraphy/JSON_config",
-    "git_commit": "a8f510634acdae34e1281d38495db1593ac58fc0",
+    "git_commit": "cb0ea82931acc8ba82cea5b35dfad4ab3e6b7f3e",
     "git_dirty": false
   },
   "taken_on": "2026-10-16",
@@ -11,7 +11,7 @@
   "connections_version": "1.6.40",
   "qualia_version": "1.6.9",
   "em_ttl_version": "1.6.16",
-  "s3dgraphy_version": "1.6.0.dev55",
+  "s3dgraphy_version": "1.6.0.dev56",
   "operations": [
     "add_node",
     "update_field",
@@ -1498,12 +1498,12 @@
     }
   },
   "datamodel": {
-    "digest": "sha256:249c7d9f0425d5c3876ff7050ec595f5fc5b2be919b22493d015b12c5758f8a3",
+    "digest": "sha256:3698710d5836071aa251e5e7769770cc71b3ce6850c35508068cf444253467e0",
     "versions": {
       "nodes": "1.6.30",
       "node_registry": "1.6.26",
       "connections": "1.6.40",
-      "visual_rules": "1.6.34",
+      "visual_rules": "1.6.35",
       "qualia": "1.6.9",
       "translations": "1.11"
     },
@@ -1511,7 +1511,7 @@
       "nodes": "sha256:6b76ec89c7982c35f44b37baafe54f0a9dfe15c0f8c4fea04d53554295cb2885",
       "node_registry": "sha256:f8d33c7643d3909254412a33a3622560cec44d8c158e0de7826d5f3466267a93",
       "connections": "sha256:84108206c7fd335c1c5b32683612267c56d4827f66b184d70a5c821903cfe49e",
-      "visual_rules": "sha256:5b3b87e81779261bc099e53679a149879ac2f68d075f450ffbfd1ae97804a419",
+      "visual_rules": "sha256:62adc8b150641c9491fa52fbf0bbd41527bd4a4cc720a30a60054c0a909dd5cf",
       "qualia": "sha256:1f83bb41e0e610f572c25f24dfe4fae2730ec15c973c6e1864794c147bb03d81",
       "translations": "sha256:1c29a0669b91775fa0cd6a779a8c903a650ce44f93cc9a8121487014c0a6fa83"
     },
@@ -1533,8 +1533,8 @@
       },
       "visual_rules": {
         "file": "em_visual_rules.json",
-        "digest": "sha256:5b3b87e81779261bc099e53679a149879ac2f68d075f450ffbfd1ae97804a419",
-        "version": "1.6.34"
+        "digest": "sha256:62adc8b150641c9491fa52fbf0bbd41527bd4a4cc720a30a60054c0a909dd5cf",
+        "version": "1.6.35"
       },
       "qualia": {
         "file": "em_qualia_types.json",
