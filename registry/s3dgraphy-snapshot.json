@@ -3,15 +3,15 @@
   "source": "s3dgraphy working tree at ../s3Dgraphy/src/s3dgraphy/JSON_config",
   "taken_from": {
     "config_dir": "../s3Dgraphy/src/s3dgraphy/JSON_config",
-    "git_commit": "18fbc03bc22b1a0adc754240cb9793be1b97e7b4",
+    "git_commit": "ef19f3152382ed3f04777fbf637d98f396999829",
     "git_dirty": false
   },
-  "taken_on": "2026-10-20",
-  "node_datamodel_version": "1.6.32",
-  "connections_version": "1.6.42",
+  "taken_on": "2026-10-23",
+  "node_datamodel_version": "1.6.36",
+  "connections_version": "1.6.46",
   "qualia_version": "1.6.9",
-  "em_ttl_version": "1.6.18",
-  "s3dgraphy_version": "1.6.0.dev60",
+  "em_ttl_version": "1.6.21",
+  "s3dgraphy_version": "1.6.0.dev62",
   "operations": [
     "add_node",
     "update_field",
@@ -79,6 +79,7 @@
     "serUSD",
     "serUSVn",
     "serUSVs",
+    "serVSF",
     "shared"
   ],
   "node_classes": {
@@ -127,6 +128,7 @@
     "SeriesOfNonStructuralVirtualStratigraphicUnit": "serUSVn",
     "SeriesOfStratigraphicUnit": "serSU",
     "SeriesOfStructuralVirtualStratigraphicUnit": "serUSVs",
+    "SeriesOfVirtualSpecialFindUnit": "serVSF",
     "SpecialFindUnit": "SF",
     "StratigraphicEventNode": "SE",
     "StratigraphicNode": "StratigraphicNode",
@@ -1319,6 +1321,11 @@
     "https://w3id.org/em/ontology#DocumentaryVirtualSU",
     "https://w3id.org/em/ontology#EMGraph",
     "https://w3id.org/em/ontology#Embargo",
+    "https://w3id.org/em/ontology#EndOfUnitDestroyed",
+    "https://w3id.org/em/ontology#EndOfUnitRelocated",
+    "https://w3id.org/em/ontology#EndOfUnitRemoved",
+    "https://w3id.org/em/ontology#EndOfUnitTransformed",
+    "https://w3id.org/em/ontology#EndOfUnitUnknown",
     "https://w3id.org/em/ontology#Extractor",
     "https://w3id.org/em/ontology#FunctionalUnit",
     "https://w3id.org/em/ontology#GCPSet",
@@ -1346,6 +1353,7 @@
     "https://w3id.org/em/ontology#SeriesOfNonStructuralVirtualSU",
     "https://w3id.org/em/ontology#SeriesOfSU",
     "https://w3id.org/em/ontology#SeriesOfStructuralVirtualSU",
+    "https://w3id.org/em/ontology#SeriesOfVirtualSpecialFind",
     "https://w3id.org/em/ontology#SpecialFindRepresentation",
     "https://w3id.org/em/ontology#StratigraphicEvent",
     "https://w3id.org/em/ontology#StratigraphicRepresentation",
@@ -1461,6 +1469,7 @@
         "SeriesOfNonStructuralVirtualStratigraphicUnit",
         "SeriesOfStratigraphicUnit",
         "SeriesOfStructuralVirtualStratigraphicUnit",
+        "SeriesOfVirtualSpecialFindUnit",
         "SpecialFindUnit",
         "StratigraphicEventNode",
         "StratigraphicNode",
@@ -1480,6 +1489,61 @@
         "concept_class": "crm:E55_Type",
         "label_only": null,
         "specialised_alternative": "em:hasDefinition"
+      }
+    },
+    "end_reason": {
+      "declared_on": "ContinuityNode",
+      "applies_to": [
+        "ContinuityNode"
+      ],
+      "kind": "node_element",
+      "em_json": "data.end_reason",
+      "value": "enum",
+      "rdf": {
+        "with_concept": "crm:P2_has_type",
+        "concept_class": "crm:E55_Type",
+        "concepts": {
+          "destroyed": "em:EndOfUnitDestroyed",
+          "transformed": "em:EndOfUnitTransformed",
+          "removed": "em:EndOfUnitRemoved",
+          "relocated": "em:EndOfUnitRelocated",
+          "unknown": "em:EndOfUnitUnknown"
+        },
+        "class_when": {
+          "destroyed": "crm:E6_Destruction",
+          "transformed": "crm:E81_Transformation",
+          "removed": "crm:E80_Part_Removal",
+          "relocated": "crm:E9_Move",
+          "unknown": "crm:E64_End_of_Existence"
+        },
+        "unit_predicate_when": {
+          "destroyed": "crm:P13_destroyed",
+          "transformed": "crm:P124_transformed",
+          "removed": "crm:P113_removed",
+          "relocated": "crm:P25_moved",
+          "unknown": "crm:P93_took_out_of_existence"
+        },
+        "also_when": {
+          "transformed": {
+            "predicate": "crm:P123_resulted_in",
+            "edge": "changed_from",
+            "from_unit": "in",
+            "_comment": "the units that changed_from the ended unit are what the transformation resulted in"
+          },
+          "removed": {
+            "predicate": "crm:P112_diminished",
+            "edge": "is_part_of",
+            "from_unit": "out",
+            "_comment": "the unit the ended one was part of is the one the removal diminished"
+          },
+          "relocated": {
+            "predicate": "crm:P27_moved_from",
+            "edge": "is_in_location",
+            "from_unit": "out",
+            "_comment": "the place (LocationNodeGroup, E53) the unit was in is where it was moved from"
+          }
+        },
+        "_verified": "Every IRI checked on the official RDFS of CIDOC CRM 7.1.3 (https://cidoc-crm.org/rdfs/7.1.3/CIDOC_CRM_v7.1.3.rdfs, 23 Oct 2026): E6_Destruction ⊂ E64; E81_Transformation ⊂ E63 + E64; E80_Part_Removal ⊂ E11; E9_Move ⊂ E7; E64_End_of_Existence ⊂ E5. P13_destroyed E6→E18; P124_transformed E81→E18; P123_resulted_in E81→E18; P113_removed E80→E18; P112_diminished E80→E18; P25_moved E9→E19; P27_moved_from E9→E53; P93_took_out_of_existence E64→E77."
       }
     },
     "source_code": {
@@ -1504,43 +1568,43 @@
     }
   },
   "datamodel": {
-    "digest": "sha256:6f15dcc599fa570def2814c27062b3c225da1cf988ddf64d2fb1cbee01f70f09",
+    "digest": "sha256:aa45250933cd3a2a6278c5cd610b0b63aa1597c829ad8e441f11dbd25e8cf585",
     "versions": {
-      "nodes": "1.6.32",
-      "node_registry": "1.6.26",
-      "connections": "1.6.42",
-      "visual_rules": "1.6.38",
+      "nodes": "1.6.36",
+      "node_registry": "1.6.36",
+      "connections": "1.6.46",
+      "visual_rules": "1.6.39",
       "qualia": "1.6.9",
-      "translations": "1.11"
+      "translations": "1.14"
     },
     "digests": {
-      "nodes": "sha256:d459139a96b06f3146c96513b9d3faa53b3d3afe55279b14abf98b8dcfe5f4d1",
-      "node_registry": "sha256:f8d33c7643d3909254412a33a3622560cec44d8c158e0de7826d5f3466267a93",
-      "connections": "sha256:ca22c680374a6161f650555822c6cd69a09a8a66a457f95f33f4a1d2d6b721cc",
-      "visual_rules": "sha256:6b7604c1b741af2e6ba7f6f5ad5cfeb3825dc78e98afff6a7d1326c8c68d7b46",
+      "nodes": "sha256:fdb8d3808c907eaab8b7b78500e49c9b718f56e86f4ee3330d5982ba0965c1fb",
+      "node_registry": "sha256:09245afa683bbdd735d3ce6c0c3426ad1ecdb3807ad52f58c7c05fdab0d66528",
+      "connections": "sha256:410def11c8737f7ab04e0123d21baf01ecec078b47c41941083a869e170b6c0a",
+      "visual_rules": "sha256:f90d065aad6f08a3c799ad3bcbccc07f82ac27dacd9b766e8adee9ed81175129",
       "qualia": "sha256:1f83bb41e0e610f572c25f24dfe4fae2730ec15c973c6e1864794c147bb03d81",
-      "translations": "sha256:b0e44fd290e84cf50a7507eb7df711bcdcc3d24a089f90885ea1a85678e9628b"
+      "translations": "sha256:7891293319be8f9877a148f4690d86074c81913f30df81ba7d3b9c0e741fe823"
     },
     "files": {
       "nodes": {
         "file": "s3Dgraphy_node_datamodel.json",
-        "digest": "sha256:d459139a96b06f3146c96513b9d3faa53b3d3afe55279b14abf98b8dcfe5f4d1",
-        "version": "1.6.32"
+        "digest": "sha256:fdb8d3808c907eaab8b7b78500e49c9b718f56e86f4ee3330d5982ba0965c1fb",
+        "version": "1.6.36"
       },
       "node_registry": {
         "file": "node_registry.generated.json",
-        "digest": "sha256:f8d33c7643d3909254412a33a3622560cec44d8c158e0de7826d5f3466267a93",
-        "version": "1.6.26"
+        "digest": "sha256:09245afa683bbdd735d3ce6c0c3426ad1ecdb3807ad52f58c7c05fdab0d66528",
+        "version": "1.6.36"
       },
       "connections": {
         "file": "s3Dgraphy_connections_datamodel.json",
-        "digest": "sha256:ca22c680374a6161f650555822c6cd69a09a8a66a457f95f33f4a1d2d6b721cc",
-        "version": "1.6.42"
+        "digest": "sha256:410def11c8737f7ab04e0123d21baf01ecec078b47c41941083a869e170b6c0a",
+        "version": "1.6.46"
       },
       "visual_rules": {
         "file": "em_visual_rules.json",
-        "digest": "sha256:6b7604c1b741af2e6ba7f6f5ad5cfeb3825dc78e98afff6a7d1326c8c68d7b46",
-        "version": "1.6.38"
+        "digest": "sha256:f90d065aad6f08a3c799ad3bcbccc07f82ac27dacd9b766e8adee9ed81175129",
+        "version": "1.6.39"
       },
       "qualia": {
         "file": "em_qualia_types.json",
@@ -1549,8 +1613,8 @@
       },
       "translations": {
         "file": "datamodel_translations.json",
-        "digest": "sha256:b0e44fd290e84cf50a7507eb7df711bcdcc3d24a089f90885ea1a85678e9628b",
-        "version": "1.11"
+        "digest": "sha256:7891293319be8f9877a148f4690d86074c81913f30df81ba7d3b9c0e741fe823",
+        "version": "1.14"
       }
     }
   }
