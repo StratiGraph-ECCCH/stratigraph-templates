@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-"""Publish originated SKOS modules to the Extended Matrix site.
+"""MOVED to ExtendedMatrix/vocabularies (25 October 2026): this copy refuses to run.
+
+Publish originated SKOS modules to the Extended Matrix site.
 
     python3 tools/publish_vocab.py <path to ExtendedMatrix-site> [module ...]
 
@@ -19,6 +21,15 @@ lines: two copies drift silently, and when the resolvable one is the old one
 nobody notices. Whoever changes a TTL republishes with this script.
 """
 from __future__ import annotations
+
+import sys
+
+if __name__ == "__main__":
+    sys.exit("The source of the vocabularies is now ExtendedMatrix/vocabularies\n"
+             "(https://github.com/ExtendedMatrix/vocabularies), and so is this script:\n"
+             "run tools/publish_vocab.py from a checkout of that repository.\n"
+             "vocabularies/ here is a copy: publishing it would put a stale copy\n"
+             "under the old provenance on the site.")
 
 import html
 import re

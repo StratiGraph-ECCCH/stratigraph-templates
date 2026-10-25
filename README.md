@@ -62,6 +62,8 @@ templates/<id>/template.yaml   the definitions (the substance, the graph binding
 vocabularies/schemes/          the vocabulary schemes, REFERENCED not embedded
 vocabularies/alignments/       the SKOS alignments between national vocabularies
 vocabularies/fixtures/         fake micro-schemes, for testing
+                               vocabularies/ is a COPY: the source is
+                               github.com/ExtendedMatrix/vocabularies (vocabularies/README.md)
 examples/                      test data
 registry/                      snapshot of what s3Dgraphy declares — THE source for validate and build
 dist/schede/                   the COMPILED definitions (self-contained JSON): what an app vendors
