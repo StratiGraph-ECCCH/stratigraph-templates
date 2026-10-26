@@ -3,15 +3,15 @@
   "source": "s3dgraphy working tree at ../s3Dgraphy/src/s3dgraphy/JSON_config",
   "taken_from": {
     "config_dir": "../s3Dgraphy/src/s3dgraphy/JSON_config",
-    "git_commit": "e7d0b459b207edd122e7814b8fecf1f7514dfa45",
+    "git_commit": "5aa0e2ca97226e637cc0f4e85ff34fbbe3ea8ad2",
     "git_dirty": false
   },
-  "taken_on": "2026-10-25",
+  "taken_on": "2026-10-26",
   "node_datamodel_version": "1.6.38",
   "connections_version": "1.6.49",
   "qualia_version": "1.6.9",
   "em_ttl_version": "1.6.22",
-  "s3dgraphy_version": "1.6.0.dev65",
+  "s3dgraphy_version": "1.6.0.dev66",
   "operations": [
     "add_node",
     "update_field",
