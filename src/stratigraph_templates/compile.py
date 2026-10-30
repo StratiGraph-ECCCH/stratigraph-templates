@@ -67,6 +67,12 @@ NATIVE_FIELDS = ("description",)
 #: element, its em.json place and its RDF are the datamodel's.
 ELEMENT_VALUE_TYPES = {"concept": ("term",)}
 
+#: What the unit is read as when the definition does not decide its node type
+#: (no field with verdict `node_type`, the two demos): the class every unit
+#: type of a recording sheet descends from. Used only to tell whether a
+#: `property_name` names one of the UNIT's node elements (`_is_unit_element`).
+UNIT_WHEN_UNDECIDED = "StratigraphicNode"
+
 #: The em.json `node_type` of a PropertyNode and the edge that hangs it on its
 #: subject. Not literals of this module's opinion: `em_node_type` resolves the
 #: class and the edge is checked against the registry like any other.
@@ -393,6 +399,30 @@ def _property_steps(ctx: _Ctx, f: Field, property_type: str, anchor: str,
     return entry
 
 
+def _unit_classes(ctx: _Ctx, where: str) -> List[str]:
+    """The classes the unit can be, as the definition's `node_type` field says
+    (empty when the definition has no such field)."""
+    return sorted({ctx.node(nt, where)["class"] for nt in
+                   next((d.graph.node_types for d in ctx.t.fields
+                         if d.graph and d.graph.verdict == "node_type"), {}).values()})
+
+
+def _is_unit_element(ctx: _Ctx, f: Field, name: str) -> bool:
+    """Whether `property_name` names a node element OF THE UNIT. The registry's
+    elements are keyed by name across all classes: `crs` is an element of a
+    ResourceNode (a GIS layer's CRS, node datamodel 1.6.39) and says nothing
+    about a unit whose sheet has a field called `crs`. An element none of the
+    unit's classes carries is not the unit's: the field stays a property. If
+    some of them carry it, it is the element, and `_element_steps` refuses the
+    classes that do not. When the definition does not say the unit's classes
+    (no `node_type` field), the unit is read as a `UNIT_WHEN_UNDECIDED`."""
+    rule = ctx.reg.node_elements.get(name)
+    if rule is None:
+        return False
+    classes = _unit_classes(ctx, f"field '{f.id}'") or [UNIT_WHEN_UNDECIDED]
+    return bool(set(classes) & set(rule.get("applies_to", [])))
+
+
 def _element_steps(ctx: _Ctx, f: Field, name: str, anchor: str) -> Dict[str, Any]:
     """A field that writes a NODE ELEMENT of the unit: one `update_field` on the
     em.json place the datamodel declares, with the whole value."""
@@ -410,9 +440,7 @@ def _element_steps(ctx: _Ctx, f: Field, name: str, anchor: str) -> Dict[str, Any
         ctx.problems.append(f"{where}: node element '{name}' holds a {rule.get('value')!r} "
                             f"value, which a field of type '{f.type}' does not write "
                             f"(writes it: {list(fits or ())})")
-    unit_classes = sorted({ctx.node(nt, where)["class"] for nt in
-                           next((d.graph.node_types for d in ctx.t.fields
-                                 if d.graph and d.graph.verdict == "node_type"), {}).values()})
+    unit_classes = _unit_classes(ctx, where)
     outside = [c for c in unit_classes if c not in rule.get("applies_to", [])]
     if outside:
         ctx.problems.append(f"{where}: node element '{name}' is declared on "
@@ -464,7 +492,7 @@ def _entry(ctx: _Ctx, f: Field) -> Dict[str, Any]:
 
     if v == "property":
         name = g.property_name or g.qualia
-        if g.property_name and g.property_name in ctx.reg.node_elements:
+        if g.property_name and _is_unit_element(ctx, f, g.property_name):
             out = {**base, **_element_steps(ctx, f, g.property_name, anchor)}
             out["scheme"] = f.vocabulary.scheme if f.vocabulary else None
         elif name in NATIVE_FIELDS and f.type not in LIST_TYPES:

@@ -916,7 +916,12 @@ and the recipe says so.
   RDF come from the snapshot (`node_elements`, format 3), not from this repository.
   The compiler refuses a field type that does not write that value (a `concept` is
   written only by a `term`) and a unit type that does not inherit the element
-  (decision by E.D., 2026-10-21: the DEFINITION of the US is a node element);
+  (decision by E.D., 2026-10-21: the DEFINITION of the US is a node element).
+  Only an element **of the unit** counts: the snapshot's elements are keyed by name
+  across all classes, and one that none of the unit's types carries (`crs`, an
+  element of a ResourceNode — a GIS layer — since nodes 1.6.39) leaves the field a
+  property. A definition that does not decide the unit's type is read, for this
+  test only, as a `StratigraphicNode` (`UNIT_WHEN_UNDECIDED`);
 * a `property_name` that is not a registered qualia still becomes a PropertyNode
   with that `property_type` — it is what `_create_property` does with column
   names — and the entry declares it (`registered_qualia: false`).

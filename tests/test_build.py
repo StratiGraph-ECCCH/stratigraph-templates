@@ -238,6 +238,23 @@ def test_an_element_written_by_the_wrong_field_type_does_not_compile(tmp_path, r
         compile_template(_written(tmp_path, doc), reg, vocab)
 
 
+def test_an_element_of_another_class_is_not_the_units(tmp_path, reg, vocab):
+    """`crs` is a node element of a ResourceNode (a GIS layer's CRS, nodes
+    1.6.39): a sheet's field named `crs` is a property of the unit, not that
+    element — with the unit's types decided (ICCD: US/USN) or not (the demos)."""
+    assert "StratigraphicUnit" not in reg.node_elements["crs"]["applies_to"]
+    doc = yaml.safe_load((ROOT / "templates" / ICCD / "template.yaml").read_text())
+    f = next(x for x in doc["template"]["fields"] if x["id"] == "osservazioni")
+    f["graph"] = {"verdict": "property", "property_name": "crs"}
+    out = compile_template(_written(tmp_path, doc), reg, vocab)
+    entry = out["recipe"]["fields"]["osservazioni"]
+    assert "element" not in entry
+    assert entry["property"]["property_type"] == "crs"
+    es = compile_template(find_template("es-ue-demo-2026"), reg, vocab)
+    assert "element" not in es["recipe"]["fields"]["crs"]
+    assert es["recipe"]["fields"]["definicion"]["element"]["name"] == "definition"
+
+
 def test_an_older_spelling_of_an_edge_does_not_compile(tmp_path, reg, vocab):
     """`is_bonded_to` is read (spelling_of: bonded_to) and never written."""
     doc = yaml.safe_load((ROOT / "templates" / ICCD / "template.yaml").read_text())
