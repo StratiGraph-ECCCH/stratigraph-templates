@@ -3,7 +3,7 @@
   "source": "s3dgraphy working tree at ../s3Dgraphy/src/s3dgraphy/JSON_config",
   "taken_from": {
     "config_dir": "../s3Dgraphy/src/s3dgraphy/JSON_config",
-    "git_commit": "87a0be532dc46b281993f20d41a0a0aee8f6b5b8",
+    "git_commit": "d6b9c5cdd907ee06970198a3ac44b874559fbac5",
     "git_dirty": false
   },
   "taken_on": "2026-11-13",
@@ -11,7 +11,7 @@
   "connections_version": "1.6.53",
   "qualia_version": "1.6.11",
   "em_ttl_version": "1.6.26",
-  "s3dgraphy_version": "1.6.0.dev107",
+  "s3dgraphy_version": "1.6.0.dev108",
   "operations": [
     "add_node",
     "update_field",
