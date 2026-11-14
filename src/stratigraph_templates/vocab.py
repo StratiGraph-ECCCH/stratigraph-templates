@@ -75,6 +75,10 @@ class Scheme:
     #: originated schemes only: languages whose labels nobody has verified yet
     #: (operational now, corrected after review — SPEC §3.3)
     unverified_languages: List[str] = dc_field(default_factory=list)
+    #: originated schemes only: who may add terms beside ours — ``project``:
+    #: a project keeps its own terms (``local:<slug>``, with who and when),
+    #: never in our namespace (em-media-role, 14 Nov 2026). None: nobody.
+    extensible: Optional[str] = None
 
     def skos_file(self) -> Optional[Path]:
         kind = self.resolve.get("kind")
@@ -238,6 +242,17 @@ class Vocabularies:
                     f"{p.name}: scheme '{s['id']}' is {origin}: only a module we maintain says which of "
                     f"its languages nobody has verified — an external scheme answers for its own labels"
                 )
+            extensible = s.get("extensible")
+            if extensible not in (None, "project"):
+                raise VocabularyError(
+                    f"{p.name}: scheme '{s['id']}' extensible must be 'project' or absent, "
+                    f"got {extensible!r}"
+                )
+            if extensible and origin != "originated":
+                raise VocabularyError(
+                    f"{p.name}: scheme '{s['id']}' is {origin}: only a module we maintain says "
+                    f"who may extend it"
+                )
             schemes[s["id"]] = Scheme(
                 id=s["id"],
                 authority=s.get("authority", "?"),
@@ -255,6 +270,7 @@ class Vocabularies:
                 path=str(p),
                 provisional=s.get("provisional"),
                 unverified_languages=list(unverified),
+                extensible=extensible,
             )
         _check_provisional(schemes)
         alignments: List[Alignment] = []

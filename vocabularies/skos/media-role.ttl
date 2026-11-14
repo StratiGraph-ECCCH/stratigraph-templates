@@ -1,0 +1,87 @@
+# Media role — modulo SKOS originato in Extended Matrix (em-media-role, 0.1.0).
+#
+# PERCHE' ESISTE. Il RUOLO di un file o di un insieme di file nel suo gruppo:
+# le foto di una fotogrammetria, l'immagine rappresentativa (frontespizio), un
+# dettaglio, un disegno, un modello, un'ortofoto, la documentazione d'archivio.
+# Deciso da E.D. il 14 nov 2026 (MICRO-B-DOCUMENTI-MEDIA §1): vocabolario
+# controllato ESTENDIBILE. In s3Dgraphy il concetto sta sul nodo dell'insieme
+# o del file (data.media_role), accanto a kind e media_type; il frontespizio e'
+# l'immagine che l'Inspector e il visore di EMStudio mostrano per primi.
+#
+# ESTENDIBILE DAL PROGETTO. Un termine che qui non c'e' lo aggiunge il progetto
+# (s3dgraphy.resources.media_roles.add_local_role): local:<slug>, sul nodo del
+# grafo, con chi e quando — MAI in questo namespace. Un termine locale che molti
+# progetti usano si propone qui, con la sua fonte.
+#
+# DA DOVE VENGONO I TERMINI. Dalla pratica della documentazione archeologica e
+# del rilievo (le cartelle di Basilica Iulia, Tempio di Marte, San Pietro di
+# Segni misurate il 14 nov 2026) e dai tipi di documento della scheda ICCD; le
+# definizioni sono scritte qui, non trascritte. Etichette it ed en dalla
+# decisione di E.D.; le altre lingue mancano (si aggiungono dopo la verifica).
+#
+# NAMESPACE. w3id.org/extendedmatrix, come em-taph-weathering (SPEC §3).
+
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix em:   <https://w3id.org/extendedmatrix/vocab/media-role/> .
+
+em: a skos:ConceptScheme ;
+    dct:title "Media role"@en ;
+    dct:title "Ruolo nel gruppo"@it ;
+    dct:description "The role of a file or a set of files in its group (a photogrammetric campaign, the representative image, a detail, a drawing, a model, an orthophoto, archival documentation). Extensible by the project with local terms (local:<slug>), traced with who and when, never in this namespace."@en ;
+    dct:creator "Extended Matrix — StratiGraph WP3, CNR-ISPC" ;
+    dct:license <https://creativecommons.org/licenses/by/4.0/> ;
+    owl:versionInfo "0.1.0" ;
+    dct:issued "2026-11-14"^^<http://www.w3.org/2001/XMLSchema#date> ;
+    skos:hasTopConcept em:photogrammetry, em:frontispiece, em:detail, em:vector_drawing,
+        em:raster_drawing, em:model_3d, em:orthophoto, em:archival_documentation .
+
+em:photogrammetry a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "fotogrammetria"@it ; skos:prefLabel "photogrammetry"@en ;
+    skos:definition "Le fotografie prese per una ricostruzione fotogrammetrica: valgono come insieme, orientate e allineate, più che una per una."@it ;
+    skos:definition "Photographs taken for a photogrammetric reconstruction: they count as a set, oriented and aligned, more than one by one."@en ;
+    dct:source "E.D., MICRO-B-DOCUMENTI-MEDIA, 14 nov 2026; Agisoft Metashape, chunk/cameras (le foto di un sensore)" .
+
+em:frontispiece a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "frontespizio"@it ; skos:prefLabel "frontispiece"@en ;
+    skos:altLabel "immagine rappresentativa"@it ; skos:altLabel "representative image"@en ;
+    skos:definition "L'immagine che rappresenta la cosa documentata e che un'interfaccia mostra per prima."@it ;
+    skos:definition "The image that represents the documented thing and that an interface shows first."@en ;
+    dct:source "E.D., MICRO-B-DOCUMENTI-MEDIA, 14 nov 2026 («il frontespizio è l'immagine che l'Inspector e il visore mostrano per primi»)" .
+
+em:detail a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "dettaglio"@it ; skos:prefLabel "detail"@en ;
+    skos:definition "Un'immagine ravvicinata di una parte: un segno di lavorazione, un'iscrizione, una giunzione."@it ;
+    skos:definition "A close view of one part: a tool mark, an inscription, a joint."@en ;
+    dct:source "E.D., MICRO-B-DOCUMENTI-MEDIA, 14 nov 2026" .
+
+em:vector_drawing a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "disegno vettoriale"@it ; skos:prefLabel "vector drawing"@en ;
+    skos:definition "Un disegno fatto di geometrie (linee, poligoni): una pianta, una sezione, un prospetto in formato vettoriale."@it ;
+    skos:definition "A drawing made of geometries (lines, polygons): a plan, a section, an elevation in a vector format."@en ;
+    dct:source "E.D., MICRO-B-DOCUMENTI-MEDIA, 14 nov 2026; pyArchInit, i disegni delle US (pyunitastratigrafiche)" .
+
+em:raster_drawing a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "disegno raster"@it ; skos:prefLabel "raster drawing"@en ;
+    skos:definition "Un disegno su carta o una sua scansione, un'immagine: la tavola, il lucido, lo schizzo."@it ;
+    skos:definition "A drawing on paper or its scan, an image: the plate, the tracing, the sketch."@en ;
+    dct:source "E.D., MICRO-B-DOCUMENTI-MEDIA, 14 nov 2026" .
+
+em:model_3d a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "modello 3D"@it ; skos:prefLabel "3D model"@en ;
+    skos:definition "Un modello tridimensionale (mesh, tileset, nuvola) della cosa documentata."@it ;
+    skos:definition "A three-dimensional model (mesh, tileset, cloud) of the documented thing."@en ;
+    dct:source "E.D., MICRO-B-DOCUMENTI-MEDIA, 14 nov 2026" .
+
+em:orthophoto a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "ortofoto"@it ; skos:prefLabel "orthophoto"@en ;
+    skos:definition "Un'immagine raddrizzata e in scala, proiettata su un piano: una pianta o un prospetto fotografico."@it ;
+    skos:definition "A rectified image at scale, projected on a plane: a photographic plan or elevation."@en ;
+    dct:source "E.D., MICRO-B-DOCUMENTI-MEDIA, 14 nov 2026" .
+
+em:archival_documentation a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "documentazione d'archivio"@it ; skos:prefLabel "archival documentation"@en ;
+    skos:definition "Documenti venuti da un archivio: foto storiche, schede, giornali di scavo, lettere."@it ;
+    skos:definition "Documents that come from an archive: historical photographs, record sheets, excavation diaries, letters."@en ;
+    dct:source "E.D., MICRO-B-DOCUMENTI-MEDIA, 14 nov 2026" .

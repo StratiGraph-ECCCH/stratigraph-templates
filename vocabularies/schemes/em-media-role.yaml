@@ -1,0 +1,26 @@
+# Modulo ORIGINATO: il ruolo di un file o di un insieme nel suo gruppo
+# (E.D., 14 nov 2026, MICRO-B-DOCUMENTI-MEDIA §1). Otto concetti di base; il
+# progetto aggiunge i suoi (`extensible: project`): local:<slug> sul nodo del
+# grafo, con chi e quando, mai in questo namespace (s3dgraphy.resources.media_roles).
+scheme:
+  id: em-media-role
+  authority: Extended Matrix
+  origin: originated
+  version: "0.1.0"
+  labels:
+    it: "Ruolo nel gruppo (file e insiemi, Extended Matrix)"
+    en: "Media role (files and sets, Extended Matrix)"
+  status: resolvable
+  uri: "https://w3id.org/extendedmatrix/vocab/media-role/"
+  license: "CC BY 4.0"
+  attribution: "Extended Matrix — vocabolario originato in StratiGraph WP3 (CNR-ISPC), deciso da E. Demetrescu il 14 nov 2026; definizioni scritte qui."
+  resolve:
+    kind: skos_file
+    path: "vocabularies/skos/media-role.ttl"
+  # chi può aggiungere termini: il progetto, tracciato (chi, quando), fuori dal namespace
+  extensible: project
+  note: >
+    Il ruolo sta sul nodo (data.media_role dell'insieme o del file), non
+    sull'arco: lo stesso insieme visto dall'unità, dal catalogo e dal visore è
+    un insieme solo con un ruolo solo. Il frontespizio è l'immagine che
+    l'Inspector e il visore di EMStudio mostrano per primi.
