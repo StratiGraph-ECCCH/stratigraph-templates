@@ -3,15 +3,15 @@
   "source": "s3dgraphy working tree at ../s3Dgraphy/src/s3dgraphy/JSON_config",
   "taken_from": {
     "config_dir": "../s3Dgraphy/src/s3dgraphy/JSON_config",
-    "git_commit": "01841377ea6bb56df1a87e32f06ac3886279ff65",
+    "git_commit": "dbf9d925aad892bcf7fc689a66dea839499aedcc",
     "git_dirty": false
   },
-  "taken_on": "2026-11-13",
-  "node_datamodel_version": "1.6.44",
-  "connections_version": "1.6.54",
+  "taken_on": "2026-11-14",
+  "node_datamodel_version": "1.6.46",
+  "connections_version": "1.6.55",
   "qualia_version": "1.6.11",
   "em_ttl_version": "1.6.26",
-  "s3dgraphy_version": "1.6.0.dev112",
+  "s3dgraphy_version": "1.6.0.dev113",
   "operations": [
     "add_node",
     "update_field",
@@ -192,6 +192,7 @@
     "has_same_time",
     "has_semantic_shape",
     "has_sub_epoch",
+    "has_sub_resource",
     "has_timebranch",
     "has_translation",
     "has_visual_reference",
@@ -814,6 +815,22 @@
         "inverse_extension": null,
         "inverse_extension_when": null,
         "subject": "target"
+      }
+    },
+    "has_sub_resource": {
+      "reverse": "is_sub_resource_of",
+      "symmetric": false,
+      "type_tag": null,
+      "deprecated": false,
+      "spelling_of": null,
+      "rdf": {
+        "predicate": "http://www.cidoc-crm.org/cidoc-crm/P106_is_composed_of",
+        "subproperty": null,
+        "extension": "http://www.w3.org/ns/prov#hadMember",
+        "extension_when": null,
+        "inverse_extension": null,
+        "inverse_extension_when": null,
+        "subject": "source"
       }
     },
     "has_timebranch": {
@@ -1508,6 +1525,26 @@
     "https://w3id.org/em/ontology#wasReusedFrom"
   ],
   "node_elements": {
+    "act_end": {
+      "declared_on": "ExtractorNode",
+      "applies_to": [
+        "ExtractorNode"
+      ],
+      "kind": "node_element",
+      "em_json": "data.act_end",
+      "value": null,
+      "rdf": null
+    },
+    "act_start": {
+      "declared_on": "ExtractorNode",
+      "applies_to": [
+        "ExtractorNode"
+      ],
+      "kind": "node_element",
+      "em_json": "data.act_start",
+      "value": null,
+      "rdf": null
+    },
     "active_alternative": {
       "declared_on": "RepresentationModelNodeGroup",
       "applies_to": [
@@ -1535,6 +1572,16 @@
       ],
       "kind": "node_element",
       "em_json": "data.bbox_wgs84",
+      "value": null,
+      "rdf": null
+    },
+    "catalog_stamp": {
+      "declared_on": "DocumentNode",
+      "applies_to": [
+        "DocumentNode"
+      ],
+      "kind": "node_element",
+      "em_json": "data.catalog_stamp",
       "value": null,
       "rdf": null
     },
@@ -1715,6 +1762,36 @@
       "value": null,
       "rdf": null
     },
+    "media_role": {
+      "declared_on": "ResourceNode",
+      "applies_to": [
+        "ResourceNode"
+      ],
+      "kind": "node_element",
+      "em_json": "data.media_role",
+      "value": null,
+      "rdf": null
+    },
+    "members": {
+      "declared_on": "ResourceNode",
+      "applies_to": [
+        "ResourceNode"
+      ],
+      "kind": "node_element",
+      "em_json": "data.members",
+      "value": null,
+      "rdf": null
+    },
+    "members_from": {
+      "declared_on": "ResourceNode",
+      "applies_to": [
+        "ResourceNode"
+      ],
+      "kind": "node_element",
+      "em_json": "data.members_from",
+      "value": null,
+      "rdf": null
+    },
     "raster": {
       "declared_on": "ResourceNode",
       "applies_to": [
@@ -1787,28 +1864,28 @@
     }
   },
   "datamodel": {
-    "digest": "sha256:82ca8b9ba7ce5b3addc90d8cf9976bad923762fe14df00cec5a6297701bb32bc",
+    "digest": "sha256:5cb1d279046421795b7d9ae8332d185c26e2d428ba5ab58a40e10e77ea60351c",
     "versions": {
-      "nodes": "1.6.44",
+      "nodes": "1.6.46",
       "node_registry": "1.6.41",
-      "connections": "1.6.54",
-      "visual_rules": "1.6.45",
+      "connections": "1.6.55",
+      "visual_rules": "1.6.46",
       "qualia": "1.6.11",
       "translations": "1.16"
     },
     "digests": {
-      "nodes": "sha256:162263a34c48a5b82c61495cc45be6376b176259e44ef72a41866fa36e665a5e",
+      "nodes": "sha256:1b987b65e96116ca8bbc0c640a971cfb93270598a93e10a7690d06c983f70ed3",
       "node_registry": "sha256:5669c0824d7149e22a25d424645b3b78b7c698c5338f3fd639d75c60b31483da",
-      "connections": "sha256:a5786632c5da448809d364ee085645a2c0c390c2953d6ce9a1e554411ebf8936",
-      "visual_rules": "sha256:c171c337031c5b4ea97dfd7d597b28de1a716c00ee4ab01653e6677298c266d5",
+      "connections": "sha256:c1d475a3ea9543dada7ac42ca73452f5c20f185ea56de2787914cad44389ad6b",
+      "visual_rules": "sha256:b634f5c4ea95846a09ec11e3272704033f8efe092118b6b6a03a017939104dd3",
       "qualia": "sha256:f7ac5853dddacd222e6b4eb75fe943a6a44e594742100160e6fad97f7c69da9c",
-      "translations": "sha256:9df60406f02a292d7e2c1b066ee649588f9668613f3f0f0365884efe37f7c6e5"
+      "translations": "sha256:96da13cc558fe923047f7eafacc575a1733d879f64ac04d065cadb72c0d3f767"
     },
     "files": {
       "nodes": {
         "file": "s3Dgraphy_node_datamodel.json",
-        "digest": "sha256:162263a34c48a5b82c61495cc45be6376b176259e44ef72a41866fa36e665a5e",
-        "version": "1.6.44"
+        "digest": "sha256:1b987b65e96116ca8bbc0c640a971cfb93270598a93e10a7690d06c983f70ed3",
+        "version": "1.6.46"
       },
       "node_registry": {
         "file": "node_registry.generated.json",
@@ -1817,13 +1894,13 @@
       },
       "connections": {
         "file": "s3Dgraphy_connections_datamodel.json",
-        "digest": "sha256:a5786632c5da448809d364ee085645a2c0c390c2953d6ce9a1e554411ebf8936",
-        "version": "1.6.54"
+        "digest": "sha256:c1d475a3ea9543dada7ac42ca73452f5c20f185ea56de2787914cad44389ad6b",
+        "version": "1.6.55"
       },
       "visual_rules": {
         "file": "em_visual_rules.json",
-        "digest": "sha256:c171c337031c5b4ea97dfd7d597b28de1a716c00ee4ab01653e6677298c266d5",
-        "version": "1.6.45"
+        "digest": "sha256:b634f5c4ea95846a09ec11e3272704033f8efe092118b6b6a03a017939104dd3",
+        "version": "1.6.46"
       },
       "qualia": {
         "file": "em_qualia_types.json",
@@ -1832,7 +1909,7 @@
       },
       "translations": {
         "file": "datamodel_translations.json",
-        "digest": "sha256:9df60406f02a292d7e2c1b066ee649588f9668613f3f0f0365884efe37f7c6e5",
+        "digest": "sha256:96da13cc558fe923047f7eafacc575a1733d879f64ac04d065cadb72c0d3f767",
         "version": "1.16"
       }
     }
