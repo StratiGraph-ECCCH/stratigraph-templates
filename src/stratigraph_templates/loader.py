@@ -269,6 +269,58 @@ def parse_template(doc: Dict[str, Any], path: Optional[str] = None) -> Template:
     )
 
 
+#: the keys of a compiled field (SPEC §9.2) that are not keys of a definition's
+#: field: `paragraph` is said by the paragraphs, `provisional` by the schemes
+_COMPILED_ONLY_FIELD_KEYS = {"paragraph"}
+_VOCABULARY_REF_KEYS = {"scheme", "binding", "level_expr"}
+
+
+def template_from_compiled(doc: Dict[str, Any]) -> Template:
+    """The VISUAL half of a compiled definition (SPEC §9), back into a `Template`.
+
+    For a reader that vendors the compiled form and prints with this package's
+    renderer — EMStudio's bridge since 2026-11-17 (MICRO-G-SCHEDE): the A4 it
+    prints is the one of the VERSION it vendored, not of whatever YAML a
+    checkout holds tonight. The graph binding is not read back (the compiled
+    form has the recipe instead): a template built here draws a form and a
+    sheet, and is not for `validate` or `build`. Same parser as the YAML, so
+    the shape errors are the same."""
+    if not isinstance(doc, dict) or not isinstance(doc.get("header"), dict) \
+            or not isinstance(doc.get("visual"), dict):
+        raise TemplateSyntaxError("a compiled definition has a 'header' and a 'visual' (SPEC §9)")
+    head, vis = doc["header"], doc["visual"]
+    ident = vis.get("identity") or {}
+    fields = []
+    for f in vis.get("fields") or []:
+        f = {k: v for k, v in f.items() if k not in _COMPILED_ONLY_FIELD_KEYS}
+        if isinstance(f.get("vocabulary"), dict):
+            f["vocabulary"] = {k: v for k, v in f["vocabulary"].items() if k in _VOCABULARY_REF_KEYS}
+        fields.append(f)
+    t: Dict[str, Any] = {
+        "id": head.get("id"),
+        "version": head.get("version"),
+        "standard": head.get("standard"),
+        "source_language": head.get("source_language"),
+        "languages": head.get("languages"),
+        "identity": {
+            "human_key": {"fields": ident.get("human_key") or [],
+                          "pattern": ident.get("pattern", ""),
+                          "unit_field": ident.get("unit_field", "")},
+            "uid": ident.get("uid") or {},
+            "deduplication": ident.get("deduplication", "by_human_key_in_context"),
+        },
+        "provenance": vis.get("provenance") or {},
+        "vocabularies": [v.get("id") for v in head.get("vocabularies") or []
+                         if isinstance(v, dict) and not v.get("provisional_for")],
+        "paragraphs": vis.get("paragraphs") or [],
+        "fields": fields,
+        "notes": vis.get("notes") or {},
+    }
+    if vis.get("sheet") is not None:
+        t["sheet"] = vis["sheet"]
+    return parse_template({"template": t})
+
+
 def load_template(path: str | Path) -> Template:
     p = Path(path)
     if p.is_dir():
