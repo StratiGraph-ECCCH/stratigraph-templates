@@ -7,6 +7,8 @@ scheme:
   authority: Extended Matrix
   origin: originated
   version: "0.1.0"
+  lifecycle: proposed
+  curators: ["@zalmoxes-laran"]
   labels:
     it: "Definizione dell'unità stratigrafica (scheda US, Extended Matrix)"
     en: "Definition of the stratigraphic unit (US sheet, Extended Matrix)"

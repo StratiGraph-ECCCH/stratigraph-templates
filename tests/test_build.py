@@ -313,8 +313,11 @@ def test_the_numbers(iccd):
         "fields": 59,
         "verdicts": {"edge": 13, "identity": 1, "node": 18, "node_type": 1, "none": 3,
                      "property": 19, "vocabulary": 4},
-        "steps": {"add_edge": 52, "add_node": 39, "update_field": 2},
-        "open": 3,
+        # 3.0.0: the three anchors are DEFINED (their steps are in recipe.anchors),
+        # ANNO and the two dates are act_start of the act (update_field), FASE
+        # adds its has_sub_epoch — nothing open any more
+        "steps": {"add_edge": 50, "add_node": 36, "update_field": 5},
+        "open": 0,
     }
 
 

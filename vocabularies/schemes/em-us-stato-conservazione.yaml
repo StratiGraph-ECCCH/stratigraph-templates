@@ -7,6 +7,8 @@ scheme:
   authority: Extended Matrix
   origin: originated
   version: "0.1.0"
+  lifecycle: proposed
+  curators: ["@zalmoxes-laran"]
   labels:
     it: "Stato di conservazione dell'unità (scheda US, Extended Matrix)"
     en: "State of preservation of the unit (US sheet, Extended Matrix)"

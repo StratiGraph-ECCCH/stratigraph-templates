@@ -1,0 +1,85 @@
+# Place level — modulo SKOS originato in Extended Matrix (em-place-level, 0.1.0).
+#
+# PERCHE' ESISTE. Le caselle di contesto di una scheda US (LOCALITÀ, AREA,
+# SAGGIO, SETTORE, QUADRATO, AMBIENTE) scrivono tutte un luogo raggiunto con lo
+# stesso arco (is_in_location): senza un discriminante dichiarato nessun lettore
+# sa quale luogo sia quale. Il discriminante C'ERA GIA' nel datamodel di
+# s3Dgraphy: il LocationNodeGroup porta `kind` (toponym | study | functional) e
+# `level` (sito; area, settore, saggio, quadrato: la colonna di pyArchInit da cui
+# l'importatore lo legge; nodes 1.6.39 / 1.6.43), e gis.footprint lo legge per
+# dire chi ha un'impronta. Questo modulo da' a quei valori un'identita'
+# citabile: il valore di `data.level` e' la chiave, il concetto e'
+# <namespace><chiave>. Deciso da E.D. il 17 nov 2026 (MICRO-J §B3): si estende
+# il tipo che c'e' solo se manca, e qui manca solo `ambiente` (kind functional,
+# la stanza di pyArchInit `ambient`).
+#
+# DA DOVE VENGONO I TERMINI. Dalle etichette del modello ICCD US 2021, dal
+# datamodel di s3Dgraphy e dalla mappatura di pyArchInit; definizioni scritte
+# qui. Etichette it ed en; le altre lingue si aggiungono dopo la verifica.
+
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix em:   <https://w3id.org/extendedmatrix/vocab/place-level/> .
+
+em: a skos:ConceptScheme ;
+    dct:title "Place level"@en ;
+    dct:title "Livello del luogo"@it ;
+    dct:description "The level of a place (an em.json LocationNodeGroup, data.level) a stratigraphic unit is in: the site, the operational places of an excavation (area, sector, trench, square) and the room. The value of data.level is the key; its kind (toponym, study, functional) is said by skos:note on each concept."@en ;
+    dct:creator "Extended Matrix — StratiGraph WP3, CNR-ISPC" ;
+    dct:license <https://creativecommons.org/licenses/by/4.0/> ;
+    owl:versionInfo "0.1.0" ;
+    dct:issued "2026-11-17"^^<http://www.w3.org/2001/XMLSchema#date> ;
+    skos:hasTopConcept em:sito, em:area, em:saggio, em:settore, em:quadrato, em:ambiente .
+
+em:sito a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "sito"@it ; skos:prefLabel "site"@en ;
+    skos:altLabel "località"@it ; skos:altLabel "locality"@en ;
+    skos:definition "Il luogo in cui uno studio si è svolto: l'ultimo anello della catena dei toponimi, non lo scavo (che è uno studio) né il bene."@it ;
+    skos:definition "The place a study took place at: the last ring of the toponym chain, neither the excavation (a study) nor the heritage entity."@en ;
+    skos:note "kind: toponym" ;
+    dct:source "ICCD, US — modello per il rilevamento sul campo 2021: casella «LOCALITÀ»" ;
+    dct:source "s3Dgraphy, s3Dgraphy_node_datamodel.json, LocationNodeGroup.level «sito» (nodes 1.6.39, D-LG4); s3dgraphy.hdto.make_site_place" .
+
+em:area a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "area"@it ; skos:prefLabel "area"@en ;
+    skos:altLabel "edificio"@it ; skos:altLabel "struttura"@it ;
+    skos:definition "La partizione operativa maggiore di uno scavo, o l'edificio o la struttura che lo scavo tratta come tale."@it ;
+    skos:definition "The largest operational partition of an excavation, or the building or structure the excavation treats as one."@en ;
+    skos:note "kind: study" ;
+    dct:source "ICCD, US — modello per il rilevamento sul campo 2021: casella «AREA/EDIFICIO/STRUTTURA»" ;
+    dct:source "pyArchInit, us_table.area (s3dgraphy mappings/pyarchinit/pyarchinit_us_mapping.json, location_kind study)" .
+
+em:saggio a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "saggio"@it ; skos:prefLabel "trench"@en ;
+    skos:altLabel "sondage"@en ;
+    skos:definition "Uno scavo delimitato, aperto per verificare la sequenza in un punto: è uno studio e insieme un luogo."@it ;
+    skos:definition "A bounded excavation opened to test the sequence at one point: a study and a place at once."@en ;
+    skos:note "kind: study" ;
+    dct:source "ICCD, US — modello per il rilevamento sul campo 2021: casella «SAGGIO»" ;
+    dct:source "pyArchInit, us_table.saggio (s3dgraphy mappings/pyarchinit/pyarchinit_us_mapping.json, location_kind study); s3Dgraphy nodes 1.6.29 «a saggio is a study AND a place»" .
+
+em:settore a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "settore"@it ; skos:prefLabel "sector"@en ;
+    skos:definition "Una partizione operativa di un'area di scavo."@it ;
+    skos:definition "An operational partition of an excavation area."@en ;
+    skos:note "kind: study" ;
+    dct:source "ICCD, US — modello per il rilevamento sul campo 2021: casella «SETTORE/I»" ;
+    dct:source "pyArchInit, us_table.settore (s3dgraphy mappings/pyarchinit/pyarchinit_us_mapping.json, location_kind study)" .
+
+em:quadrato a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "quadrato"@it ; skos:prefLabel "square"@en ;
+    skos:definition "Una maglia della quadrettatura con cui uno scavo è suddiviso."@it ;
+    skos:definition "A cell of the grid an excavation is divided by."@en ;
+    skos:note "kind: study" ;
+    dct:source "ICCD, US — modello per il rilevamento sul campo 2021: casella «QUADRATO/I»" ;
+    dct:source "s3Dgraphy, em_qualia_types.json 1.6.11, footprint.applies_to: «area, settore, saggio, quadrato»" .
+
+em:ambiente a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "ambiente"@it ; skos:prefLabel "room"@en ;
+    skos:altLabel "unità funzionale"@it ;
+    skos:definition "Uno spazio con una funzione riconosciuta (una stanza, un cortile): un luogo che risponde a «dove», non un componente che risponde a «che cosa»."@it ;
+    skos:definition "A space with a recognised function (a room, a courtyard): a place answering «where», not a component answering «what»."@en ;
+    skos:note "kind: functional" ;
+    dct:source "ICCD, US — modello per il rilevamento sul campo 2021: casella «AMBIENTE/UNITÀ FUNZIONALE»" ;
+    dct:source "pyArchInit, us_table.ambient (s3dgraphy mappings/pyarchinit/pyarchinit_us_mapping.json, location_kind functional); s3Dgraphy LocationNodeGroup kind functional «basilica, room A, courtyard»" .

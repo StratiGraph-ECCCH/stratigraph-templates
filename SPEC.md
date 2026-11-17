@@ -49,6 +49,8 @@ template:
   vocabularies: [<scheme id>] # the vocabulary schemes the fields refer to
   paragraphs: [...]           # the SUBSTANCE: how fields are grouped
   fields: [...]               # the SUBSTANCE + THE GRAPH BINDING, field by field
+  anchors: {...}              # what boxes hang on besides the unit (the acts) — optional, §2.5
+  record_status: {...}        # where the record's status lands on the unit — optional, §5
   sheet: {...}                # THE SHEET: where every box sits — optional, §4.1
   notes: {...}                # free: measurements, provenance of the reconstruction
 ```
@@ -332,9 +334,9 @@ having the right to.
 **What this format CANNOT say, and must be said here:** the definition makes
 the distinction computable **per field**, but applying it requires knowing whether
 *that compiled sheet* is still a field sheet or already reworked — and that is a
-state of the **record**, not of the definition. Today a record (§5) does not declare it.
-A validator of compiled sheets, when it exists, will need that one extra
-declaration; it already has the rest.
+state of the **record**, not of the definition. Since 17 November 2026 a record
+declares it (`status`, §5) and a definition may say where it lands on the unit
+(`record_status`, §5): a validator of compiled sheets has what it needs.
 
 ---
 
@@ -434,13 +436,86 @@ edge types** times **two directions** — `equals`, `bonded_to`, `abuts`,
 `overlies`, `cuts`, `fills` (all `AP11_has_physical_relation` with `type_tag`) and
 `is_after` (`P120_occurs_before` / `AP28`).
 
+### 2.4 · What tells a box's node from its siblings'
+
+Two boxes that write **the same address** — the same node type reached by the
+same edge — cannot be told apart by a reader, and a sheet read back from the
+graph then says «undecided». Measured on 17 November 2026 (EMStudio's sheet on
+TempluMare v10): PERIODO and FASE (both `has_first_epoch` → EpochNode), the five
+place boxes (all `is_in_location` → LocationNodeGroup), IDENTIFICATIVO and
+AMBIENTE, the three responsibles (all `has_author` from the unit), and MISURE,
+whose rows declare a quale no reader could map back to the box. A definition
+therefore DECLARES the discriminant, with the keys below — and the discriminant
+is always something the datamodel already has, never a convention of a reader.
+
+| key | on | what it says |
+|---|---|---|
+| `accepts: [<qualia>]` | a `quantity_list` | the qualia a row may declare: a PropertyNode of one of them is this box's (`height` → MISURE). Checked against the qualia of the snapshot. Two boxes of one definition should not accept the same quale |
+| `where: {<key>: <value>}` | a `node` verdict | what the node carries in em.json `data` to be THIS box's: it is found only among the nodes that carry it, and created carrying it. For a place, the pair `kind` + `level` of the LocationNodeGroup (s3Dgraphy nodes 1.6.39/1.6.43, the values named in the module **em-place-level**: `sito`, `area`, `saggio`, `settore`, `quadrato`, `ambiente`) |
+| `sub_epoch_of: <field>` | a `node` verdict on an EpochNode | the epoch is a SUB-EPOCH (`has_sub_epoch`) of the epoch of that other box. When this box has a value the unit's `has_first_epoch` goes to it, and the other box is reached through `has_sub_epoch`; when it is empty the other box keeps the unit's edge (§9.3, `yields_to`). With the other box empty, the sub-epoch is found by name among the sub-epochs of any epoch, and created only under one |
+| `find: [name, url]` | `resource_ref_list`, `record_ref_list` | how a cited node is found, in order. In EM a document is cited by its NAME (D.nn); a name is never created by a sheet — the door numbers documents — while a url still creates the document as before |
+
+The ICCD US 2021 (3.0.0) uses all four: PERIODO reads the parent epoch and FASE
+the child (E.D., 17 Nov 2026); LOCALITÀ is `{kind: toponym, level: sito}`, AREA,
+SAGGIO, SETTORE, QUADRATO `{kind: study, level: …}`, AMBIENTE
+`{kind: functional, level: ambiente}` — a room is a place that answers «where»,
+not a Functional Unit that answers «what», and IDENTIFICATIVO keeps the
+Functional Unit alone.
+
+### 2.5 · `anchors` — the acts a box hangs on
+
+`attaches_to: <name>` says that a box's statement is not about the unit but
+about something else the sheet names: in the ICCD US, the excavation (ANNO,
+RESPONSABILE SCIENTIFICO), the recording in the field (DATA RILEVAMENTO,
+RESPONSABILE COMPILAZIONE) and the revision (DATA RIELABORAZIONE, RESPONSABILE
+RIELABORAZIONE). Until 3.0.0 those names were declared and **not defined**, so
+ANNO and the two dates landed nowhere (§9.3, `open`). E.D., 17 November 2026:
+«rilevamento e rielaborazione sono ATTI DA TRACCIARE» — who and when, the
+history of the documentation of the unit, distinct from the DTC (the life cycle
+of the files). A definition defines them in `anchors`:
+
+```yaml
+anchors:
+  recording_act:
+    node_type: ActivityNodeGroup      # an act IS an E7 Activity
+    edge_type: is_in_activity         # the unit is_in_activity of the act
+    direction: incoming               # incoming: unit → anchor
+    where: {act_kind: recording}      # the discriminant, as in §2.4
+    scope: unit                       # one per unit (default)
+  excavation_activity:
+    node_type: ActivityNodeGroup
+    edge_type: is_in_activity
+    where: {act_kind: excavation}
+    scope: "value:anno"               # SHARED: found by the value of ANNO …
+    match: act_start                  # … matched on data.act_start
+```
+
+What the act carries is the datamodel's (s3Dgraphy nodes 1.6.47):
+`data.act_kind` (a key of the module **em-documentation-act**: `excavation`,
+`recording`, `revision`), `data.act_start` (a year or an ISO date — the same
+element extractors and combiners date their act with), and its author by
+`has_author`. So ANNO and the two dates are `property_name: act_start` with
+`attaches_to` the act — the compiler sees that `act_start` is a **node element
+of the anchor's class** and writes an `update_field` on it, as it does for the
+unit's `definition` — and the three responsibles are `has_author` **from the
+act**, not from the unit. A box that names an anchor the definition does not
+define stays open (§9.3); an anchor defined and named by no box is an error.
+
+A reader that shows ATTIVITÀ (`is_in_activity` → ActivityNodeGroup) reads only
+the activities **without** `act_kind`: those are the narrative ones.
+
 ---
 
 ## 3 · The vocabulary, and alignment across countries
 
 A definition **references** a thesaurus, it does not embed it: a vocabulary has
 its own life cycle and its own licence. The schemes live in
-`vocabularies/schemes/<id>.yaml`:
+`vocabularies/schemes/<id>.yaml` — a COPY: their source is
+[ExtendedMatrix/vocabularies](https://github.com/ExtendedMatrix/vocabularies),
+where every module is born and reviewed (a term a definition needs is a module
+there, never a file here), and `tools/sync_vocabularies.py` refreshes the copy
+from it. A reader that vendors vocabularies reads the source
+(`Vocabularies.from_repository`):
 
 ```yaml
 scheme:
@@ -677,6 +752,7 @@ record:
     copre: ["3018", "3020"]
     definizione: {concept: "…", label: "strato di crollo"}
     misure: [{qualia: thickness, label: "spessore max", value: "0,42", unit: "m"}]
+  status: from_field            # optional: from_field | revised (em-record-status)
   field_provenance:
     interpretazione: {state: human_validated, by: "ai:… · validato da …", ts: "…"}
 ```
@@ -686,6 +762,19 @@ follows, **and in which version** (`template` + `template_version`, the pair tha
 uses to archive the compiled form). Without the version, rereading a record would
 mean guessing which recipe it was written with. `print` and `form` refuse a record
 of another definition and flag a different version.
+
+**`status`** says whether the record is still the one written in the field
+(`from_field`) or has been revised (`revised`) — the keys of the module
+**em-record-status**. It is what §1.6 needs to tell «missing» from «filled in
+later». Absent = not said. A definition that writes it on the unit declares
+
+```yaml
+record_status: {scheme: em-record-status, values: [from_field, revised]}
+```
+
+and its recipe then carries `unit.record_status`: an `update_field` of
+`data.record_status` on the unit (s3Dgraphy nodes 1.6.47,
+`StratigraphicNode.record_status`), sent when the record gives a status.
 
 ---
 
@@ -854,10 +943,21 @@ An entry has **steps**; a step `emit`s an operation in the exact wire form (that
 | `$node` | the node the step finds or creates (see `resolve`) |
 | `$prop` | the PropertyNode the step mints |
 | `$field.<id>.prop` | the PropertyNode minted by the entry of ANOTHER field (the entry has `after: [<id>]`) |
-| `$anchor.<nome>` | something the definition names and does not define (see `open`) |
+| `$field.<id>.node` | the node ANOTHER field's entry finds or creates (FASE's parent epoch, §2.4) |
+| `$values.<id>` | the value of ANOTHER field (the year a shared act is found by, §2.5) |
+| `$record.status` | the record's `status` (§5) |
+| `$anchor.<nome>` | an anchor: defined in `recipe.anchors` (§2.5), or named and not defined (see `open`) |
 
-`when: created` on a step = send it only if `resolve` **created** the node instead of
-finding it. **Ids are minted by whoever creates** (`identity.uid.policy`): the recipe
+`when` on a step says when to send it, and it has four values:
+
+| `when` | send the step only if |
+|---|---|
+| `created` | `resolve` **created** the node instead of finding it |
+| `absent` | the graph does not have it yet (an edge from the unit to a shared act found by its year) |
+| `empty:<field>` | that other field has no value (PERIODO's edge from the unit, when FASE takes it) |
+| `given` | the record gives the value (`$record.status`) |
+
+No `when` = always. **Ids are minted by whoever creates** (`identity.uid.policy`): the recipe
 never writes one. `name` and `description` of an em.json node are strings: whoever
 substitutes a numeric value writes it as text.
 
@@ -975,11 +1075,20 @@ and object swapped. No published sheet carries it today: the ICCD US unit is US 
 USN, outside the guard.
 
 **`open` — what the definition does not decide, declared.** The recipe does not
-invent: where the definition is silent, it writes that down. Today, for the ICCD US:
-`definizione` (verdict `vocabulary` with neither qualia nor `property_name`: no
-operation until it says so), and three `attaches_to` that name undefined acts
-(`excavation_activity`, `recording_act`, `revision_act` → `$anchor.<nome>`, in
-`recipe.anchors`). For the two demos, the unit type too (no `node_type` field). The
+invent: where the definition is silent, it writes that down. Until 2.0.1 the
+ICCD US had three: `attaches_to` that named undefined acts (`excavation_activity`,
+`recording_act`, `revision_act` → `$anchor.<nome>`, `defined: false` in
+`recipe.anchors`). 3.0.0 defines them (§2.5): each one is in `recipe.anchors`
+with `defined: true`, its node, its discriminant, how it is found (`resolve`)
+and the steps that make it and tie it to the unit; nothing is open. For the two
+demos, the unit type is still open (no `node_type` field).
+
+**The discriminants in the recipe.** `where` is copied into the entry, into
+`resolve.$node.find.data` and into the `add_node`'s `data`; `sub_epoch_of` puts
+`sub_epoch_of: $field.<id>.node` in the find, an `add_edge has_sub_epoch` (when
+created) in the steps and `yields_to: <id>` on the other entry; `accepts` is
+`property.accepts`; `find` becomes `resolve.$node.find.any` (or `$item`'s for an
+edge box). The
 compiler instead **refuses** what is inconsistent: an `attaches_to: property:<x>`
 that no field produces, a name with no em.json spelling, an edge that is deprecated or
 whose `em:` RDF property is not in `em.ttl`, an operation outside the five.
@@ -991,3 +1100,26 @@ differs from the one already written: **bump `template.version`**. The same dige
 rewrites the file (the `datamodel` line may have been updated) and says so. The index
 lists every version present and the latest (`latest`, semver order): old versions
 stay, because a record compiled with one of them must be reread with that one.
+
+### 9.5 · Reading back: the sign of the box
+
+A reader that FILLS a sheet from the graph (StratiField, EMStudio's «Scheda»)
+reads the recipe backwards, and needs to know which box wrote which node. Two
+marks say it, declared in s3Dgraphy's node datamodel since 1.6.47 (kind
+`sheet_sign`: not node elements, never offered as fields to edit):
+
+* **`data.scheda`** on the node a box wrote (a PropertyNode, a context node):
+  `{field: <box id>, template: <definition id>, template_version: <semver>,
+  by: <reader>}`;
+* **`data.scheda_links.<box id>`** on the unit: the id of the node a box points
+  at, one flat key per box (`localita`, `periodo`, `fase`…).
+
+They were StratiField's convention (`operazioni.values_from_graph`), copied by
+EMStudio so a node written by one reader is attributed by the other; they are
+now part of the format. Since 3.0.0 the discriminants of §2.4–§2.5 make them a
+confirmation rather than the only way to know: a reader without a sign reads a
+box by its discriminant — a place by its `kind` + `level`, PERIODO as the parent
+of the unit's first epoch when that epoch has one (FASE the child), a quale by
+`accepts`, an act by its `act_kind` — and only when two nodes still answer does
+it say «undecided». A node with neither a sign nor a discriminant of this box
+is read with the LENS (same quale, nobody else's sign) and says so.

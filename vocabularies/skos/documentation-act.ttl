@@ -1,0 +1,48 @@
+# Documentation act — modulo SKOS originato in Extended Matrix (em-documentation-act, 0.1.0).
+#
+# PERCHE' ESISTE. Rilevamento e rielaborazione sono ATTI DA TRACCIARE (E.D.,
+# 17 nov 2026, MICRO-J §B4): chi e quando, la storia della documentazione
+# dell'unità, distinta dalla DTC (che è il ciclo di vita dei file). La scheda ICCD
+# US 2021 nomina tre atti con le loro date e i loro responsabili: lo scavo
+# (ANNO, RESPONSABILE SCIENTIFICO DELLE INDAGINI), il rilevamento sul campo e la
+# rielaborazione. In s3Dgraphy un atto è un ActivityNodeGroup (E7 Activity) che
+# porta `data.act_kind` = la chiave di uno di questi concetti, la data
+# (`data.act_start`, come estrattori e combiner) e il suo autore (has_author).
+#
+# DA DOVE VENGONO I TERMINI. Dalle etichette del modello ICCD US 2021, che
+# distingue il campo dalla rielaborazione con le sue parole; definizioni scritte qui.
+
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix em:   <https://w3id.org/extendedmatrix/vocab/documentation-act/> .
+
+em: a skos:ConceptScheme ;
+    dct:title "Documentation act"@en ;
+    dct:title "Atto di documentazione"@it ;
+    dct:description "The acts in the history of the documentation of a unit — the excavation that exposed it, the recording in the field, the revision afterwards — each with its author and its date. Distinct from the DTC, the life cycle of the files. The value of an ActivityNodeGroup's data.act_kind is the key."@en ;
+    dct:creator "Extended Matrix — StratiGraph WP3, CNR-ISPC" ;
+    dct:license <https://creativecommons.org/licenses/by/4.0/> ;
+    owl:versionInfo "0.1.0" ;
+    dct:issued "2026-11-17"^^<http://www.w3.org/2001/XMLSchema#date> ;
+    skos:hasTopConcept em:excavation, em:recording, em:revision .
+
+em:excavation a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "scavo"@it ; skos:prefLabel "excavation"@en ;
+    skos:altLabel "campagna di scavo"@it ; skos:altLabel "excavation campaign"@en ;
+    skos:definition "L'atto di indagine che ha messo in luce l'unità, con il suo anno e il suo responsabile scientifico."@it ;
+    skos:definition "The investigation that exposed the unit, with its year and its scientific director."@en ;
+    dct:source "ICCD, US — modello per il rilevamento sul campo 2021: caselle «ANNO» e «RESPONSABILE SCIENTIFICO DELLE INDAGINI»" ;
+    dct:source "CRMarchaeo A9 Archaeological Excavation (la classe dell'atto, non un termine)" .
+
+em:recording a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "rilevamento sul campo"@it ; skos:prefLabel "field recording"@en ;
+    skos:definition "La compilazione della scheda durante l'atto di scavo, da parte di chi ha le mani nel terreno."@it ;
+    skos:definition "Filling in the record during the excavation, by whoever has their hands in the soil."@en ;
+    dct:source "ICCD, US — modello per il rilevamento sul campo 2021: caselle «DATA RILEVAMENTO SUL CAMPO» e «RESPONSABILE COMPILAZIONE SUL CAMPO»" .
+
+em:revision a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "rielaborazione"@it ; skos:prefLabel "revision"@en ;
+    skos:definition "La ripresa della scheda dopo lo scavo — in laboratorio, in ufficio, in archivio — da parte di chi ne risponde."@it ;
+    skos:definition "The record taken up again after the excavation — in the laboratory, the office, the archive — by whoever answers for it."@en ;
+    dct:source "ICCD, US — modello per il rilevamento sul campo 2021: caselle «DATA RIELABORAZIONE» e «RESPONSABILE RIELABORAZIONE»" .

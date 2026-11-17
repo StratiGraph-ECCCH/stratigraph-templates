@@ -3,13 +3,13 @@
   "source": "s3dgraphy working tree at ../s3Dgraphy/src/s3dgraphy/JSON_config",
   "taken_from": {
     "config_dir": "../s3Dgraphy/src/s3dgraphy/JSON_config",
-    "git_commit": "0410afa83502a2a9dccb3eb6373b0a9f346badc3",
+    "git_commit": "ac75461598229630c34165a9a9f19b304ce7bcd5",
     "git_dirty": false
   },
   "taken_on": "2026-11-17",
-  "node_datamodel_version": "1.6.46",
+  "node_datamodel_version": "1.6.47",
   "connections_version": "1.6.55",
-  "qualia_version": "1.6.11",
+  "qualia_version": "1.6.12",
   "em_ttl_version": "1.6.26",
   "s3dgraphy_version": "1.6.0.dev115",
   "operations": [
@@ -1526,24 +1526,46 @@
   ],
   "node_elements": {
     "act_end": {
-      "declared_on": "ExtractorNode",
+      "declared_on": "ActivityNodeGroup",
       "applies_to": [
+        "ActivityNodeGroup",
+        "CombinerNode",
         "ExtractorNode"
       ],
       "kind": "node_element",
       "em_json": "data.act_end",
-      "value": null,
+      "value": "date",
+      "rdf": null,
+      "also_declared_on": [
+        "ExtractorNode",
+        "CombinerNode"
+      ]
+    },
+    "act_kind": {
+      "declared_on": "ActivityNodeGroup",
+      "applies_to": [
+        "ActivityNodeGroup"
+      ],
+      "kind": "node_element",
+      "em_json": "data.act_kind",
+      "value": "key",
       "rdf": null
     },
     "act_start": {
-      "declared_on": "ExtractorNode",
+      "declared_on": "ActivityNodeGroup",
       "applies_to": [
+        "ActivityNodeGroup",
+        "CombinerNode",
         "ExtractorNode"
       ],
       "kind": "node_element",
       "em_json": "data.act_start",
-      "value": null,
-      "rdf": null
+      "value": "date",
+      "rdf": null,
+      "also_declared_on": [
+        "ExtractorNode",
+        "CombinerNode"
+      ]
     },
     "active_alternative": {
       "declared_on": "RepresentationModelNodeGroup",
@@ -1725,12 +1747,18 @@
     "frame": {
       "declared_on": "RepresentationModelNodeGroup",
       "applies_to": [
-        "RepresentationModelNodeGroup"
+        "RepresentationModelNode",
+        "RepresentationModelNodeGroup",
+        "ResourceNode"
       ],
       "kind": "node_element",
       "em_json": "data.frame",
       "value": null,
-      "rdf": null
+      "rdf": null,
+      "also_declared_on": [
+        "ResourceNode",
+        "RepresentationModelNode"
+      ]
     },
     "geometry_type": {
       "declared_on": "ResourceNode",
@@ -1765,12 +1793,16 @@
     "media_role": {
       "declared_on": "ResourceNode",
       "applies_to": [
+        "ResourceFileNode",
         "ResourceNode"
       ],
       "kind": "node_element",
       "em_json": "data.media_role",
       "value": null,
-      "rdf": null
+      "rdf": null,
+      "also_declared_on": [
+        "ResourceFileNode"
+      ]
     },
     "members": {
       "declared_on": "ResourceNode",
@@ -1864,28 +1896,28 @@
     }
   },
   "datamodel": {
-    "digest": "sha256:5c5dcf150e758d734fe3f778d95ff7791f6257725828b4dc4cdb842a4d307ffd",
+    "digest": "sha256:5f48e71d48850da08200c7516ddf355a75abd4dab77a02728d82bb8390b97af8",
     "versions": {
-      "nodes": "1.6.46",
+      "nodes": "1.6.47",
       "node_registry": "1.6.41",
       "connections": "1.6.55",
       "visual_rules": "1.6.47",
-      "qualia": "1.6.11",
-      "translations": "1.16"
+      "qualia": "1.6.12",
+      "translations": "1.17"
     },
     "digests": {
-      "nodes": "sha256:1b987b65e96116ca8bbc0c640a971cfb93270598a93e10a7690d06c983f70ed3",
+      "nodes": "sha256:5dc72aec337b166ada9ef536747a8f55b585411dfbbf5c6f37a9b07740524d8e",
       "node_registry": "sha256:5669c0824d7149e22a25d424645b3b78b7c698c5338f3fd639d75c60b31483da",
       "connections": "sha256:c1d475a3ea9543dada7ac42ca73452f5c20f185ea56de2787914cad44389ad6b",
       "visual_rules": "sha256:b1458d56f999d8163d6a0fe29f748f45c3ce2e90f952afefe3c37725a482fb4f",
-      "qualia": "sha256:f7ac5853dddacd222e6b4eb75fe943a6a44e594742100160e6fad97f7c69da9c",
-      "translations": "sha256:96da13cc558fe923047f7eafacc575a1733d879f64ac04d065cadb72c0d3f767"
+      "qualia": "sha256:bfabd911a2b4d01c4b06cceff4f6171e35e18db8054cc7255ff43f1131392d95",
+      "translations": "sha256:bf4ce3673a1133afb50c9f6b1d4f326d24c6a19b848d87c8230ac7b4fed369f9"
     },
     "files": {
       "nodes": {
         "file": "s3Dgraphy_node_datamodel.json",
-        "digest": "sha256:1b987b65e96116ca8bbc0c640a971cfb93270598a93e10a7690d06c983f70ed3",
-        "version": "1.6.46"
+        "digest": "sha256:5dc72aec337b166ada9ef536747a8f55b585411dfbbf5c6f37a9b07740524d8e",
+        "version": "1.6.47"
       },
       "node_registry": {
         "file": "node_registry.generated.json",
@@ -1904,13 +1936,13 @@
       },
       "qualia": {
         "file": "em_qualia_types.json",
-        "digest": "sha256:f7ac5853dddacd222e6b4eb75fe943a6a44e594742100160e6fad97f7c69da9c",
-        "version": "1.6.11"
+        "digest": "sha256:bfabd911a2b4d01c4b06cceff4f6171e35e18db8054cc7255ff43f1131392d95",
+        "version": "1.6.12"
       },
       "translations": {
         "file": "datamodel_translations.json",
-        "digest": "sha256:96da13cc558fe923047f7eafacc575a1733d879f64ac04d065cadb72c0d3f767",
-        "version": "1.16"
+        "digest": "sha256:bf4ce3673a1133afb50c9f6b1d4f326d24c6a19b848d87c8230ac7b4fed369f9",
+        "version": "1.17"
       }
     }
   }

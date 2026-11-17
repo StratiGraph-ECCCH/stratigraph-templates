@@ -1,0 +1,30 @@
+# Livelli del luogo e atti di documentazione ↔ Getty AAT. Gli id sono stati letti
+# dallo SPARQL di vocab.getty.edu il 2026-11-17 (prefLabelGVP e scopeNote), non a
+# memoria. Dove AAT non ha un concetto evidente (area, settore, quadrato come
+# partizioni di scavo; scavo come ATTO; rielaborazione) non si allinea: un
+# allineamento forzato è peggio di nessuno.
+alignments:
+  - source: {scheme: em-place-level, concept: "https://w3id.org/extendedmatrix/vocab/place-level/sito"}
+    match: closeMatch
+    target: {scheme: getty-aat, concept: "http://vocab.getty.edu/aat/300000810"}
+    status: proposed
+    by: "MICRO-J (2026-11-17)"
+    note: "aat:300000810 = archaeological sites"
+  - source: {scheme: em-place-level, concept: "https://w3id.org/extendedmatrix/vocab/place-level/saggio"}
+    match: broadMatch
+    target: {scheme: getty-aat, concept: "http://vocab.getty.edu/aat/300266151"}
+    status: proposed
+    by: "MICRO-J (2026-11-17)"
+    note: "aat:300266151 = excavations (sites): un saggio è uno scavo, più ristretto"
+  - source: {scheme: em-place-level, concept: "https://w3id.org/extendedmatrix/vocab/place-level/ambiente"}
+    match: closeMatch
+    target: {scheme: getty-aat, concept: "http://vocab.getty.edu/aat/300004044"}
+    status: proposed
+    by: "MICRO-J (2026-11-17)"
+    note: "aat:300004044 = rooms (interior spaces); un ambiente può essere anche aperto (un cortile)"
+  - source: {scheme: em-documentation-act, concept: "https://w3id.org/extendedmatrix/vocab/documentation-act/recording"}
+    match: broadMatch
+    target: {scheme: getty-aat, concept: "http://vocab.getty.edu/aat/300077610"}
+    status: proposed
+    by: "MICRO-J (2026-11-17)"
+    note: "aat:300077610 = recording (creating a record of data in some lasting form)"

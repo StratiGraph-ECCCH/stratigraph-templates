@@ -39,7 +39,15 @@ template:
   # con `extension_when.target_node_class: [StratigraphicUnit]`. PATCH: stesse
   # operazioni, stessi campi e verdetti, un record 2.0.0 si rilegge uguale; cambia
   # solo che cosa diventa in RDF, ed era un errore della 2.0.0.
-  version: "2.0.1"
+  # 3.0.0 (2026-11-17, decisioni di E.D., MICRO-J) = la scheda dice DOVE scrive:
+  # le caselle di contesto si distinguono per il livello del luogo (`where`),
+  # AMBIENTE è un luogo funzionale e non più un'unità funzionale, FASE è la
+  # sotto-epoca di PERIODO, ANNO e le due date sono il tempo di ATTI definiti
+  # (scavo, rilevamento, rielaborazione) con i loro responsabili, MISURE e QUOTE
+  # dicono le qualia che accettano, i documenti si citano per nome o url, lo
+  # stato del record sta sull'unità. MAJOR: un record 2.0.1 si rileggerebbe
+  # diversamente. Il dettaglio è in CHANGELOG.md accanto a questo file.
+  version: "3.0.0"
   standard:
     authority: ICCD
     code: US
@@ -83,6 +91,46 @@ template:
     - iccd-us-colore
     - iccd-us-stato-conservazione
     - iccd-us-affidabilita
+    # 3.0.0: i valori che la scheda scrive fuori dalle caselle a termine — il
+    # livello di un luogo, il tipo di un atto, lo stato del record (moduli di
+    # ExtendedMatrix/vocabularies): un lettore ne mostra le etichette
+    - em-place-level
+    - em-documentation-act
+    - em-record-status
+
+  # 3.0.0 (SPEC §2.5) · gli ATTI della documentazione dell'unità: E.D., 17 nov
+  # 2026, «rilevamento e rielaborazione sono atti da tracciare» — autore e data,
+  # la storia della documentazione, distinta dalla DTC (il ciclo di vita dei
+  # file). Un atto è un ActivityNodeGroup con data.act_kind (em-documentation-act),
+  # data.act_start, has_author verso il responsabile; l'unità is_in_activity
+  # dell'atto (s3Dgraphy nodes 1.6.47). ATTIVITÀ legge solo le attività SENZA
+  # act_kind: quelle narrative.
+  anchors:
+    excavation_activity:
+      node_type: ActivityNodeGroup
+      edge_type: is_in_activity
+      direction: incoming
+      where: {act_kind: excavation}
+      scope: "value:anno"
+      match: act_start
+      note: "Lo scavo è uno per campagna: lo condividono le unità dello stesso anno."
+    recording_act:
+      node_type: ActivityNodeGroup
+      edge_type: is_in_activity
+      direction: incoming
+      where: {act_kind: recording}
+      note: "Un rilevamento per unità: la scheda compilata sul campo."
+    revision_act:
+      node_type: ActivityNodeGroup
+      edge_type: is_in_activity
+      direction: incoming
+      where: {act_kind: revision}
+      note: "Una rielaborazione per unità."
+
+  # 3.0.0 (SPEC §5) · lo stato del record sull'unità: da campo / rielaborato
+  record_status:
+    scheme: em-record-status
+    values: [from_field, revised]
 
   paragraphs:
     - id: intestazione
@@ -155,9 +203,10 @@ template:
       max_len: "4"
       graph:
         verdict: property
-        property_name: campaign_year
+        property_name: act_start
         attaches_to: excavation_activity
-        note: "È l'anno dell'ATTO di scavo, non una proprietà dell'unità."
+        note: "È l'anno dell'ATTO di scavo, non una proprietà dell'unità: data.act_start
+               dell'attività di scavo (3.0.0; era campaign_year su un'ancora non definita)."
 
     - id: ufficio_mic
       labels: {it: "UFFICIO MiC COMPETENTE PER TUTELA", en: "MiC OFFICE RESPONSIBLE FOR PROTECTION"}
@@ -193,6 +242,7 @@ template:
         edge_type: is_in_location
         direction: outgoing
         target: LocationNodeGroup
+        where: {kind: toponym, level: sito}
         note: "Parte della chiave umana e, insieme, appartenenza spaziale nel grafo."
 
     - id: area
@@ -206,6 +256,7 @@ template:
         edge_type: is_in_location
         direction: outgoing
         target: LocationNodeGroup
+        where: {kind: study, level: area}
 
     - id: saggio
       labels: {it: "SAGGIO", en: "TRENCH"}
@@ -216,16 +267,22 @@ template:
         edge_type: is_in_location
         direction: outgoing
         target: LocationNodeGroup
+        where: {kind: study, level: saggio}
 
     - id: ambiente
       labels: {it: "AMBIENTE/UNITÀ FUNZIONALE", en: "ROOM / FUNCTIONAL UNIT"}
       type: text
       graph:
         verdict: node
-        node_type: FunctionalUnitNodeGroup
-        edge_type: is_in_functional_unit
+        node_type: LocationNodeGroup
+        edge_type: is_in_location
         direction: outgoing
-        target: FunctionalUnitNodeGroup
+        target: LocationNodeGroup
+        where: {kind: functional, level: ambiente}
+        note: "3.0.0: un ambiente è un LUOGO che risponde a «dove» (LocationNodeGroup kind functional,
+               il datamodel: «room A, courtyard»; pyArchInit `ambient`), non un componente che
+               risponde a «che cosa» (FunctionalUnitNodeGroup, che resta a IDENTIFICATIVO). Fino alla
+               2.0.1 le due caselle scrivevano lo stesso arco verso lo stesso tipo."
 
     - id: posizione
       labels: {it: "POSIZIONE", en: "POSITION"}
@@ -245,6 +302,7 @@ template:
         edge_type: is_in_location
         direction: outgoing
         target: LocationNodeGroup
+        where: {kind: study, level: settore}
 
     - id: quadrato
       labels: {it: "QUADRATO/I", en: "SQUARE(S)"}
@@ -255,6 +313,7 @@ template:
         edge_type: is_in_location
         direction: outgoing
         target: LocationNodeGroup
+        where: {kind: study, level: quadrato}
 
     - id: quote
       labels: {it: "QUOTE", en: "ELEVATIONS"}
@@ -265,6 +324,8 @@ template:
       graph:
         verdict: property
         qualia: elevation
+        accepts: [elevation, elevation_relative, elevation_min_absolute, elevation_max_absolute,
+                  elevation_min_relative, elevation_max_relative, elevation_min_usm, elevation_max_usm]
         note: "Ogni riga può dichiarare la propria qualia (elevation, elevation_relative,
                elevation_min_absolute, elevation_max_absolute…): la casella è una, le quote sono molte."
 
@@ -310,6 +371,7 @@ template:
         edge_type: has_documentation
         direction: outgoing
         target: DocumentNode
+        find: [name, url]
         note: "La scheda distingue quattro voci (piante, prospetti, sezioni, fotografie) dove
                `us_table` ha un solo campo `documentazione`."
 
@@ -323,6 +385,7 @@ template:
         edge_type: has_documentation
         direction: outgoing
         target: DocumentNode
+        find: [name, url]
 
     - id: sezioni
       labels: {it: "SEZIONI", en: "SECTIONS"}
@@ -334,6 +397,7 @@ template:
         edge_type: has_documentation
         direction: outgoing
         target: DocumentNode
+        find: [name, url]
 
     - id: fotografie
       labels: {it: "FOTOGRAFIE", en: "PHOTOGRAPHS"}
@@ -347,6 +411,7 @@ template:
         edge_type: has_documentation
         direction: outgoing
         target: DocumentNode
+        find: [name, url]
 
     - id: riferimenti_tabelle_materiali
       labels: {it: "RIFERIMENTI TABELLE MATERIALI", en: "FINDS TABLE REFERENCES"}
@@ -359,6 +424,7 @@ template:
         edge_type: is_part_of
         direction: incoming
         target: special_find_record
+        find: [name]
         note: "Il reperto è parte dell'unità: l'arco canonico va dal reperto all'US, quindi da questa
                casella si scrive un arco ENTRANTE."
 
@@ -445,6 +511,9 @@ template:
       graph:
         verdict: property
         property_name: measurements
+        # 3.0.0 (E.D., MICRO-J §B1): le qualia dimensionali del datamodel
+        accepts: [height, width, depth, diameter, length, thickness, weight, volume, area,
+                  circumference]
         note: "Le righe dichiarano la qualia (height, width, length, thickness…): sei misure passate
                al generatore di pyarchinit-mini non arrivavano sul foglio perché la casella era una."
 
@@ -669,8 +738,12 @@ template:
         edge_type: has_first_epoch
         direction: outgoing
         target: EpochNode
+        sub_epoch_of: periodo
         note: "Periodo e fase sono entrambi EpochNode: la fase è una sotto-epoca (has_sub_epoch fra
-               epoche), non un secondo tipo di nodo."
+               epoche), non un secondo tipo di nodo. 3.0.0 (E.D., MICRO-J §B2): FASE è la
+               sotto-epoca dell'epoca di PERIODO — PERIODO legge l'epoca madre, FASE la figlia.
+               Con FASE scritta l'unità has_first_epoch la fase; il periodo si raggiunge per
+               has_sub_epoch."
 
     - id: attivita
       labels: {it: "ATTIVITÀ", en: "ACTIVITY"}
@@ -747,6 +820,8 @@ template:
         edge_type: has_author
         direction: outgoing
         target: AuthorNode
+        attaches_to: excavation_activity
+        note: "3.0.0: l'autore dell'atto di scavo, non dell'unità."
 
     - id: data_rilevamento
       labels: {it: "DATA RILEVAMENTO SUL CAMPO", en: "DATE OF FIELD RECORDING"}
@@ -755,7 +830,7 @@ template:
       # Base B · l'etichetta ICCD è «DATA RILEVAMENTO SUL CAMPO».
       graph:
         verdict: property
-        property_name: field_recording_date
+        property_name: act_start
         attaches_to: recording_act
         note: "La scheda nomina tre atti distinti (rilevamento, rielaborazione, responsabilità
                scientifica) con le loro date: la tabella li appiattiva accanto all'unità."
@@ -771,6 +846,7 @@ template:
         edge_type: has_author
         direction: outgoing
         target: AuthorNode
+        attaches_to: recording_act
 
     - id: data_rielaborazione
       labels: {it: "DATA RIELABORAZIONE", en: "DATE OF REVISION"}
@@ -779,7 +855,7 @@ template:
       # Base B · «DATA RIELABORAZIONE», che lo standard mette in contrasto esplicito con le due caselle SUL CAMPO poche righe sopra.
       graph:
         verdict: property
-        property_name: revision_date
+        property_name: act_start
         attaches_to: revision_act
 
     - id: responsabile_rielaborazione
@@ -793,6 +869,7 @@ template:
         edge_type: has_author
         direction: outgoing
         target: AuthorNode
+        attaches_to: revision_act
 
   sheet:
     page: A4

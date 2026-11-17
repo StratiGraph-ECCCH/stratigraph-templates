@@ -1,0 +1,39 @@
+# Record status — modulo SKOS originato in Extended Matrix (em-record-status, 0.1.0).
+#
+# PERCHE' ESISTE. Una scheda letta dal grafo deve distinguere «manca» da «si
+# compila dopo», e per farlo deve sapere se il record dell'unità è ancora quello
+# del campo o è già rielaborato: è uno stato del RECORD, non della definizione
+# (stratigraph-templates SPEC §1.6, «What this format CANNOT say»). E.D., 17 nov
+# 2026 (MICRO-J §B7): lo stato sta sull'unità, `data.record_status` = la chiave.
+#
+# DA DOVE VENGONO I TERMINI. Dai due valori di `recorded_in` (trench | lab) della
+# SPEC e dalla contrapposizione che il modello ICCD US 2021 fa nelle sue etichette.
+
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix em:   <https://w3id.org/extendedmatrix/vocab/record-status/> .
+
+em: a skos:ConceptScheme ;
+    dct:title "Record status"@en ;
+    dct:title "Stato del record"@it ;
+    dct:description "Whether the record of a unit is still the one written in the field or has been revised. The value of a unit's data.record_status is the key."@en ;
+    dct:creator "Extended Matrix — StratiGraph WP3, CNR-ISPC" ;
+    dct:license <https://creativecommons.org/licenses/by/4.0/> ;
+    owl:versionInfo "0.1.0" ;
+    dct:issued "2026-11-17"^^<http://www.w3.org/2001/XMLSchema#date> ;
+    skos:hasTopConcept em:from_field, em:revised .
+
+em:from_field a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "da campo"@it ; skos:prefLabel "from the field"@en ;
+    skos:definition "Il record è quello scritto durante lo scavo: le caselle che si compilano dopo sono vuote per costruzione, non mancanti."@it ;
+    skos:definition "The record is the one written during the excavation: the boxes filled in later are empty by construction, not missing."@en ;
+    dct:source "stratigraph-templates SPEC §1.6, recorded_in «trench»" ;
+    dct:source "ICCD, US — modello per il rilevamento sul campo 2021: «… SUL CAMPO»" .
+
+em:revised a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "rielaborato"@it ; skos:prefLabel "revised"@en ;
+    skos:definition "Il record è stato ripreso dopo lo scavo: una casella obbligatoria vuota ora manca davvero."@it ;
+    skos:definition "The record has been taken up after the excavation: an empty required box is now really missing."@en ;
+    dct:source "stratigraph-templates SPEC §1.6, recorded_in «lab»" ;
+    dct:source "ICCD, US — modello per il rilevamento sul campo 2021: «DATA RIELABORAZIONE»" .

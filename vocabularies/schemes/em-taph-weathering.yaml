@@ -10,6 +10,8 @@ scheme:
   authority: Extended Matrix
   origin: originated
   version: "0.1.0"
+  lifecycle: proposed
+  curators: ["@zalmoxes-laran"]
   labels:
     en: "Bone weathering stages (Behrensmeyer 1978)"
     it: "Stadi di alterazione dell'osso (Behrensmeyer 1978)"

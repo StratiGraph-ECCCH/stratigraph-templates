@@ -40,8 +40,8 @@ def _field(t, fid):
 
 
 def test_iccd_la_natura_scrive_la_qualia_del_datamodel(iccd, reg):
-    # 2.0.0 la porta; 2.0.1 (la guardia di AP21i) la tiene
-    assert iccd.version == "2.0.1"
+    # 2.0.0 la porta; 2.0.1 (la guardia di AP21i) e 3.0.0 (la scheda dice dove scrive) la tengono
+    assert iccd.version == "3.0.0"
     f = _field(iccd, "formazione_natura")
     assert f.graph.verdict == "property" and f.graph.qualia == "origin_type"
     assert not f.graph.property_name
@@ -60,8 +60,8 @@ def test_iccd_le_versioni_vecchie_restano_e_dicono_ancora_formation_mode():
     prop = old["recipe"]["fields"]["formazione_natura"]["property"]
     assert prop == {"property_type": "formation_mode", "registered_qualia": False}
     index = json.loads((DIST / "index.json").read_text(encoding="utf-8"))["schede"]["iccd-us-2021"]
-    assert index["latest"] == "2.0.1"
-    assert {"1.0.0", "1.0.1", "1.0.2", "2.0.0", "2.0.1"} <= set(index["versions"])
+    assert index["latest"] == "3.0.0"
+    assert {"1.0.0", "1.0.1", "1.0.2", "2.0.0", "2.0.1", "3.0.0"} <= set(index["versions"])
 
 
 @pytest.mark.parametrize("fid,qualia,scheme", [

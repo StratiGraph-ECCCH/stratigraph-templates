@@ -1,0 +1,21 @@
+# Modulo ORIGINATO (E.D., 17 nov 2026, MICRO-J-SCHEDA-SPEC-VOCABOLARI): un
+# termine chiesto dalla SPEC della scheda nasce qui, mai dentro un altro repo.
+# Il valore che il grafo porta è la CHIAVE del concetto (la parte dopo il
+# namespace); il commento in testa al Turtle dice dove sta e perché.
+scheme:
+  id: em-record-status
+  authority: Extended Matrix
+  origin: originated
+  version: "0.1.0"
+  lifecycle: proposed
+  curators: ["@zalmoxes-laran"]
+  labels:
+    it: "Stato del record dell'unità (da campo, rielaborato — Extended Matrix)"
+    en: "Record status of a unit (from the field, revised — Extended Matrix)"
+  status: resolvable
+  uri: "https://w3id.org/extendedmatrix/vocab/record-status/"
+  license: "CC BY 4.0"
+  attribution: "Extended Matrix — vocabolario originato in StratiGraph WP3 (CNR-ISPC), deciso da E. Demetrescu il 17 nov 2026; termini dalle etichette del modello ICCD US 2021 e dal datamodel di s3Dgraphy, definizioni scritte qui."
+  resolve:
+    kind: skos_file
+    path: "vocabularies/skos/record-status.ttl"
