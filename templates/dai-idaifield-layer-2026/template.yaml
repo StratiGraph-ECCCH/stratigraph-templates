@@ -95,7 +95,11 @@ template:
   # 0.x = non ancora citabile: la lettura aspetta la verifica del DAI.
   # 0.2.0 (2026-09-28) = featureForm e featureBorders passano da `none` + blocked_on
   # (D7, D8) a `vocabulary` sulle due qualia nuove di s3Dgraphy (qualia 1.6.2).
-  version: "0.2.0"
+  # 0.3.0 (2026-11-17, MICRO-K, correzione di E.D.): layerClassification, un
+  # termine, è il TERMINE della PropertyNode `definition` (data.concept, la sua
+  # etichetta il valore) — l'elemento del nodo `definition` è deprecato in
+  # s3Dgraphy nodes 1.6.48.
+  version: "0.3.0"
   standard:
     authority: DAI
     code: "iDAI.field Layer"
@@ -427,9 +431,9 @@ template:
         note: "Categories.json Layer.layerClassification: dropdown su
                Layer-layerClassification-default (Brandschicht, Kulturschicht, Laufhorizont,
                Planierschicht). «Bezeichnung bzw. Klassifikation» = la DEFINIZIONE dell'unita':
-               nel datamodel di s3Dgraphy (nodi 1.6.9) e' l'elemento del nodo `definition`,
-               dichiarato su StratigraphicNode, lo stesso che scrive la DEFINIZIONE ICCD
-               (data.definition). Due valori sono gia' allineati a em-us-definizione
+               dalla 0.3.0 (s3Dgraphy nodi 1.6.48) e' il termine (data.concept) della
+               PropertyNode `definition`, quella di cui la DEFINIZIONE ICCD scrive la frase
+               (fino alla 0.2.0: l'elemento del nodo data.definition, ora deprecato). Due valori sono gia' allineati a em-us-definizione
                (Planierschicht = strato di livellamento; Laufhorizont ~ strato di calpestio /
                piano d'uso). ⚠ la lista DAI ha 4 termini, quella della US 36: v. domanda D11."
 

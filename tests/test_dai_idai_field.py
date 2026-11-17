@@ -30,7 +30,7 @@ from stratigraph_templates.validate import ValidationError, draft_undecided, val
 
 ROOT = Path(__file__).resolve().parents[1]
 DRAFT = ROOT / "drafts" / "draft-idai-field-layer.yaml"
-DIST = ROOT / "dist" / "schede" / "dai-idaifield-layer-2026" / "0.2.0.json"
+DIST = ROOT / "dist" / "schede" / "dai-idaifield-layer-2026" / "0.3.0.json"
 COMMIT = "4b5c1e2c3c499d4bd125d0eda61cc6f5c94ffcd4"
 DAI = "dai-idaifield-layer-2026"
 
@@ -166,7 +166,7 @@ def test_a_missing_checkout_is_a_vocabulary_error_that_names_the_variable(tmp_pa
 def test_the_definition_has_no_sheet_and_validates(reg, vocab, dai):
     assert dai.sheet is None and dai.sides == []
     validate_template(dai, reg, known_schemes=vocab.scheme_ids())
-    assert (dai.version, dai.source_language, dai.languages) == ("0.2.0", "de", ["de", "en"])
+    assert (dai.version, dai.source_language, dai.languages) == ("0.3.0", "de", ["de", "en"])
     assert len(dai.fields) == 44
 
 
@@ -210,8 +210,10 @@ def test_it_compiles_with_a_null_sheet(reg, vocab, dai):
     assert doc["recipe"]["open"] == []
     assert doc["recipe"]["unit"]["node_type"]["decided_by"] == "category"
     entry = doc["recipe"]["fields"]["layerClassification"]
-    assert entry["element"]["name"] == "definition"
-    assert entry["steps"][0]["emit"]["field"] == "data.definition"
+    # 0.3.0 (MICRO-K): the term of the PropertyNode `definition`, data.concept
+    node = entry["steps"][0]["emit"]["node"]
+    assert node["name"] == "definition" and node["data"]["concept"] == "$value"
+    assert node["data"]["value"] == node["description"] == "$value.label"
     published = json.loads(DIST.read_text(encoding="utf-8"))
     assert published["header"]["digest"] == doc["header"]["digest"]
 

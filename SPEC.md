@@ -506,6 +506,45 @@ the activities **without** `act_kind`: those are the narrative ones.
 
 ---
 
+### 2.6 · The definition, its term and its interpretation — one node
+
+E.D., 17 November 2026 (MICRO-K-DEFINIZIONE-E-PASSI), correcting the reading of
+3.0.0: the DEFINITION of a unit is the immediate explanation of what it is
+(«fondazione in opera cementizia»), the **value** of its PropertyNode
+`definition`, with its chain of paradata; the INTERPRETATION, the longer argued
+text, is the **description of that same PropertyNode** — so text, definition and
+sources stay together. While the description equals the value there is no
+interpretation. The DESCRIPTION is the unit's own field (what is seen).
+
+Two keys of the graph binding say it, both from what the datamodel already has
+(s3Dgraphy nodes 1.6.48):
+
+- **`concept_scheme: <scheme>`** on a `property` box: a term of that scheme MAY
+  classify the PropertyNode the box writes, in its `data.concept`
+  (`PropertyNode.properties.concept`, `applies_when: {property_type:
+  definition}`). The box's value stays its text; a reader offers the term
+  beside it. Compiled into `property.concept` `{scheme, em_json, node,
+  optional}` and the visual field's `concept_vocabulary` (with its
+  `provisional`, §3.2).
+- **`attaches_to: "property:<name>"`** with `property_name: description`: the
+  box writes the description of the PropertyNode another box mints
+  (`update_field` on `$field.<id>.prop`, `after: [<id>]`). That other box then
+  writes its value in `data.value` too (`property.described_by`), so the two
+  places are two texts. A reader refuses the interpretation while there is no
+  definition: it has nowhere to go.
+
+A **`term` box** whose `property_name` is a property carrying its term as an
+element (the definition) writes the concept whole in `data.concept` and its
+label as the value (`description`, `data.value`): the term of a definition
+without a sentence (es-ue-demo 0.2.0, DAI 0.3.0).
+
+The node element `data.definition` (nodes 1.6.9) is **deprecated** (1.6.48): a
+deprecated element is read by those who find it and never compiled as a target
+(the registry carries `deprecated`; a box with that `property_name` becomes
+the PropertyNode). The PropertyNode `interpretation` the sheets up to ICCD US
+2021 3.0.0 wrote is read as the interpretation when the definition has none,
+and is no longer written.
+
 ## 3 · The vocabulary, and alignment across countries
 
 A definition **references** a thesaurus, it does not embed it: a vocabulary has

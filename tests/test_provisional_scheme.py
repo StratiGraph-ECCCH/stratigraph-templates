@@ -109,8 +109,11 @@ def compiled(vocabs):
 
 def test_il_compilato_dice_il_provvisorio_sul_campo_sulla_ricetta_e_nella_testata(compiled):
     fields = {f["id"]: f for f in compiled["visual"]["fields"]}
-    assert fields["definizione"]["vocabulary"] == {"scheme": "iccd-us-definizione",
-                                                   "provisional": "em-us-definizione"}
+    # 4.0.0: DEFINIZIONE is a sentence; the term that MAY classify it (MICRO-K)
+    assert fields["definizione"]["concept_vocabulary"] == {"scheme": "iccd-us-definizione",
+                                                           "provisional": "em-us-definizione"}
+    concept = compiled["recipe"]["fields"]["definizione"]["property"]["concept"]
+    assert concept["provisional"] == "em-us-definizione"
     assert compiled["recipe"]["fields"]["colore"]["provisional"] == "em-us-colore"
     header = [v["id"] for v in compiled["header"]["vocabularies"]]
     for m in MODULES:
@@ -124,7 +127,7 @@ def test_il_compilato_dice_il_provvisorio_sul_campo_sulla_ricetta_e_nella_testat
 def test_la_definizione_ha_alzato_la_versione(compiled):
     # 1.0.2 = i concetti provvisori; 2.0.0 (natura → origin_type) e 2.0.1 (la
     # guardia di AP21i) li tengono tutti.
-    assert compiled["header"]["version"] in ("1.0.2", "2.0.0", "2.0.1", "3.0.0")
+    assert compiled["header"]["version"] in ("1.0.2", "2.0.0", "2.0.1", "3.0.0", "4.0.0")
     index = json.loads((REPO_ROOT / "dist/schede/index.json").read_text(encoding="utf-8"))
     assert {"1.0.0", "1.0.1", "1.0.2", "2.0.0", "2.0.1"} <= set(index["schede"]["iccd-us-2021"]["versions"]), \
         "le versioni vecchie restano: un record 1.0.1 si rilegge con la 1.0.1"

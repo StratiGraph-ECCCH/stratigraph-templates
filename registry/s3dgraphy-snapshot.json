@@ -3,13 +3,13 @@
   "source": "s3dgraphy working tree at ../s3Dgraphy/src/s3dgraphy/JSON_config",
   "taken_from": {
     "config_dir": "../s3Dgraphy/src/s3dgraphy/JSON_config",
-    "git_commit": "81482b175990007375fce28c62801815c78c4790",
+    "git_commit": "fd86ac3c7d2c473d79be9c0954a548788b4ba8d6",
     "git_dirty": false
   },
   "taken_on": "2026-11-17",
-  "node_datamodel_version": "1.6.47",
+  "node_datamodel_version": "1.6.48",
   "connections_version": "1.6.55",
-  "qualia_version": "1.6.12",
+  "qualia_version": "1.6.13",
   "em_ttl_version": "1.6.26",
   "s3dgraphy_version": "1.6.0.dev116",
   "operations": [
@@ -1525,6 +1525,26 @@
     "https://w3id.org/em/ontology#wasReusedFrom"
   ],
   "node_elements": {
+    "acquired": {
+      "declared_on": "RepresentationModelNodeGroup",
+      "applies_to": [
+        "DocumentNode",
+        "RepresentationModelDocNode",
+        "RepresentationModelNode",
+        "RepresentationModelNodeGroup",
+        "RepresentationModelSpecialFindNode"
+      ],
+      "kind": "node_element",
+      "em_json": "data.acquired",
+      "value": "date",
+      "rdf": null,
+      "also_declared_on": [
+        "DocumentNode",
+        "RepresentationModelNode",
+        "RepresentationModelDocNode",
+        "RepresentationModelSpecialFindNode"
+      ]
+    },
     "act_end": {
       "declared_on": "ActivityNodeGroup",
       "applies_to": [
@@ -1607,6 +1627,24 @@
       "value": null,
       "rdf": null
     },
+    "concept": {
+      "declared_on": "PropertyNode",
+      "applies_to": [
+        "PropertyNode"
+      ],
+      "kind": "node_element",
+      "em_json": "data.concept",
+      "value": "concept",
+      "rdf": {
+        "subject": "owner",
+        "with_concept": "crm:P2_has_type",
+        "concept_class": "crm:E55_Type",
+        "label_only": null
+      },
+      "applies_when": {
+        "property_type": "definition"
+      }
+    },
     "crs": {
       "declared_on": "ResourceNode",
       "applies_to": [
@@ -1650,7 +1688,9 @@
         "concept_class": "crm:E55_Type",
         "label_only": null,
         "specialised_alternative": "em:hasDefinition"
-      }
+      },
+      "deprecated": "1.6.48",
+      "superseded_by": "PropertyNode definition (has_property from the unit): its value the definition, data.concept its term (PropertyNode.properties.concept)"
     },
     "district_kind": {
       "declared_on": "DistrictNode",
@@ -1864,6 +1904,26 @@
       "value": "enum",
       "rdf": null
     },
+    "valid_until": {
+      "declared_on": "RepresentationModelNodeGroup",
+      "applies_to": [
+        "DocumentNode",
+        "RepresentationModelDocNode",
+        "RepresentationModelNode",
+        "RepresentationModelNodeGroup",
+        "RepresentationModelSpecialFindNode"
+      ],
+      "kind": "node_element",
+      "em_json": "data.valid_until",
+      "value": "date",
+      "rdf": null,
+      "also_declared_on": [
+        "DocumentNode",
+        "RepresentationModelNode",
+        "RepresentationModelDocNode",
+        "RepresentationModelSpecialFindNode"
+      ]
+    },
     "vertical_exaggeration": {
       "declared_on": "LandscapeSurfaceNode",
       "applies_to": [
@@ -1896,28 +1956,28 @@
     }
   },
   "datamodel": {
-    "digest": "sha256:5f48e71d48850da08200c7516ddf355a75abd4dab77a02728d82bb8390b97af8",
+    "digest": "sha256:a6632923a44dcccae0d641dd1b8f4ea7be3fe9780592dfbd636868611a43d5e8",
     "versions": {
-      "nodes": "1.6.47",
+      "nodes": "1.6.48",
       "node_registry": "1.6.41",
       "connections": "1.6.55",
       "visual_rules": "1.6.47",
-      "qualia": "1.6.12",
+      "qualia": "1.6.13",
       "translations": "1.17"
     },
     "digests": {
-      "nodes": "sha256:5dc72aec337b166ada9ef536747a8f55b585411dfbbf5c6f37a9b07740524d8e",
+      "nodes": "sha256:03a49281a9f72e279abac53374670ba94ef040d821daf1fc3bbdb5b0e2b5f9e5",
       "node_registry": "sha256:5669c0824d7149e22a25d424645b3b78b7c698c5338f3fd639d75c60b31483da",
       "connections": "sha256:c1d475a3ea9543dada7ac42ca73452f5c20f185ea56de2787914cad44389ad6b",
       "visual_rules": "sha256:b1458d56f999d8163d6a0fe29f748f45c3ce2e90f952afefe3c37725a482fb4f",
-      "qualia": "sha256:bfabd911a2b4d01c4b06cceff4f6171e35e18db8054cc7255ff43f1131392d95",
+      "qualia": "sha256:175c189d760b4dc511b0b93ed16e95b354272152458cc9984a8d64bb6db50bca",
       "translations": "sha256:bf4ce3673a1133afb50c9f6b1d4f326d24c6a19b848d87c8230ac7b4fed369f9"
     },
     "files": {
       "nodes": {
         "file": "s3Dgraphy_node_datamodel.json",
-        "digest": "sha256:5dc72aec337b166ada9ef536747a8f55b585411dfbbf5c6f37a9b07740524d8e",
-        "version": "1.6.47"
+        "digest": "sha256:03a49281a9f72e279abac53374670ba94ef040d821daf1fc3bbdb5b0e2b5f9e5",
+        "version": "1.6.48"
       },
       "node_registry": {
         "file": "node_registry.generated.json",
@@ -1936,8 +1996,8 @@
       },
       "qualia": {
         "file": "em_qualia_types.json",
-        "digest": "sha256:bfabd911a2b4d01c4b06cceff4f6171e35e18db8054cc7255ff43f1131392d95",
-        "version": "1.6.12"
+        "digest": "sha256:175c189d760b4dc511b0b93ed16e95b354272152458cc9984a8d64bb6db50bca",
+        "version": "1.6.13"
       },
       "translations": {
         "file": "datamodel_translations.json",

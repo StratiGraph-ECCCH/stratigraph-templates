@@ -17,7 +17,7 @@
 
 record:
   template: iccd-us-2021
-  template_version: "3.0.0"   # quale versione della definizione ha seguito (SPEC §5)
+  template_version: "4.0.0"   # quale versione della definizione ha seguito (SPEC §5)
   status: revised              # lo stato del record (SPEC §5, em-record-status): già rielaborato
   uid: "01J9Z7QK4T8V2M6XW3B5Y0HRND"   # opaco, coniato da chi ha creato l'unità
 
@@ -51,9 +51,9 @@ record:
     # termine; colore e affidabilità restano PAROLE (solo `label`): «bruno chiaro
     # (10YR 6/3)» porta una lettura Munsell che il modulo dei nomi non ha, e «alta»
     # non è fra i quattro gradi di PyArchInit. La parola libera resta possibile.
-    definizione:
-      concept: "https://w3id.org/extendedmatrix/vocab/us-definizione/strato-di-crollo"
-      label: "strato di crollo"
+    # 4.0.0: la DEFINIZIONE è una frase breve (il valore della PropertyNode
+    # `definition`); il termine che la classifica sta sulla stessa PropertyNode
+    definizione: "Strato di crollo della copertura del vano 2"
     criteri_distinzione: >-
       Distinto da US 3009 per la presenza massiccia di frammenti di laterizio e per il colore
       più chiaro della matrice; il limite inferiore è netto sul piano pavimentale US 3018.

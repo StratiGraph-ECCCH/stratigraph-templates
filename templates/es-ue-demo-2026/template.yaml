@@ -20,8 +20,12 @@ template:
   id: es-ue-demo-2026
   # versione della definizione (SPEC §1.1): 0.x perché è una demo inventata,
   # non una lettura di una norma che qualcuno cita
-  version: "0.1.1"
+  version: "0.2.0"
   # 0.1.1 (2026-10-21): DEFINICIÓN è l'elemento `definition` del nodo
+  # 0.2.0 (2026-11-17, MICRO-K, correzione di E.D.): DEFINICIÓN, un termine, è
+  # il TERMINE della PropertyNode `definition` (data.concept, l'etichetta il
+  # suo valore: nodes 1.6.48 depreca l'elemento); INTERPRETACIÓN è la
+  # description di quella stessa PropertyNode
   standard:
     authority: "DEMO"
     code: "UE"
@@ -110,13 +114,14 @@ template:
       required: true
       vocabulary:
         scheme: fx-ue-definicion-es
-      # come la DEFINIZIONE della US ICCD (decisione di E.D., 2026-10-21): un
-      # elemento del nodo, `definition`, non una qualia.
+      # 0.2.0 (E.D., 2026-11-17, MICRO-K): il termine della PropertyNode
+      # `definition` (data.concept), la sua etichetta il valore — non più
+      # l'elemento del nodo, deprecato in s3Dgraphy nodes 1.6.48.
       graph:
         verdict: property
         property_name: definition
-        note: "Il valore è il CONCETTO (con l'etichetta vista): l'etichetta italiana arriva
-               dall'allineamento exactMatch."
+        note: "Il CONCETTO va intero in data.concept della PropertyNode, l'etichetta vista ne è il
+               valore: l'etichetta italiana arriva dall'allineamento exactMatch."
 
     - id: descripcion
       labels: {es: "DESCRIPCIÓN", it: "DESCRIZIONE"}
@@ -135,9 +140,11 @@ template:
       provenance:
         enabled: true
         authors: [human, ai]
+      # 0.2.0: la description della PropertyNode della DEFINICIÓN (MICRO-K)
       graph:
         verdict: property
-        property_name: interpretation
+        property_name: description
+        attaches_to: "property:definition"
 
     - id: igual_a
       labels: {es: "IGUAL A", it: "UGUALE A"}

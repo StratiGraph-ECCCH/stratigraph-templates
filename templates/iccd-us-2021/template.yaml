@@ -47,7 +47,15 @@ template:
   # dicono le qualia che accettano, i documenti si citano per nome o url, lo
   # stato del record sta sull'unità. MAJOR: un record 2.0.1 si rileggerebbe
   # diversamente. Il dettaglio è in CHANGELOG.md accanto a questo file.
-  version: "3.0.0"
+  # 4.0.0 (2026-11-17, correzione di E.D., MICRO-K) = la DEFINIZIONE è la
+  # spiegazione immediata di che cos'è l'unità: il VALORE della PropertyNode
+  # `definition` (una frase breve, con la sua catena), non più l'elemento
+  # `data.definition` (deprecato in s3Dgraphy nodes 1.6.48); un termine di
+  # iccd-us-definizione la può classificare sulla stessa PropertyNode
+  # (`concept_scheme`, data.concept). L'INTERPRETAZIONE è la DESCRIPTION di
+  # quella stessa PropertyNode, non più una PropertyNode `interpretation`.
+  # MAJOR: un record 3.0.0 si rileggerebbe diversamente.
+  version: "4.0.0"
   standard:
     authority: ICCD
     code: US
@@ -431,23 +439,24 @@ template:
     # ---------------------------------------------------------- definizione fisica
     - id: definizione
       labels: {it: "DEFINIZIONE", en: "DEFINITION"}
-      type: term
+      type: text
       recorded_in: trench
       # Base A · tools.py:398 — SPOKEN_FIELDS["definizione"], frasi «la definizione è», «è uno…». Aggiunto il 2026-09-24: era OBBLIGATORIA e non c'era modo di dirla a voce, ed e' il motivo per cui la scheda da trincea non chiudeva.
       required: true
-      vocabulary:
-        scheme: iccd-us-definizione
-      # Decisione di E.D. (2026-10-21): la definizione è un ELEMENTO DEL NODO US,
-      # come name e description, NON una qualia. s3Dgraphy la dichiara una volta
-      # (StratigraphicNode.properties.definition, node datamodel 1.6.9) e la
-      # ricetta scrive `update_field data.definition` con il termine intero
-      # {concept, label}: niente PropertyNode, niente has_property.
+      # 4.0.0 · correzione di E.D. (2026-11-17, MICRO-K §A, annulla la decisione
+      # del 2026-10-21 che ne faceva l'elemento data.definition): la DEFINIZIONE
+      # è la spiegazione immediata di che cos'è l'unità («fondazione in opera
+      # cementizia»), il VALORE della PropertyNode `definition` — come nei
+      # GraphML di EM (TempluMare v10: 99) — con la sua catena di paradati. Un
+      # termine di iccd-us-definizione la può classificare sulla stessa
+      # PropertyNode (data.concept): resta UNA cosa sola.
       graph:
         verdict: property
         property_name: definition
+        concept_scheme: iccd-us-definizione
         note: "In pyarchinit `d_stratigrafica` determinava il node_type; sulla scheda 2021 il tipo si
-               legge da POSITIVA/NEGATIVA e questa casella resta il termine controllato, elemento
-               del nodo (data.definition)."
+               legge da POSITIVA/NEGATIVA. Il valore è la frase; il termine, facoltativo, la
+               classifica (data.concept della stessa PropertyNode)."
 
     - id: criteri_distinzione
       labels: {it: "CRITERI DI DISTINZIONE", en: "CRITERIA OF DISTINCTION"}
@@ -705,11 +714,19 @@ template:
       provenance:
         enabled: true
         authors: [human, ai]
+      # 4.0.0 · E.D. (2026-11-17, MICRO-K §A): l'INTERPRETAZIONE è il testo
+      # argomentato DELLA STESSA PropertyNode della DEFINIZIONE — la sua
+      # description (il valore è la definizione breve) —, così testo,
+      # definizione e fonti stanno insieme. Finché la description è uguale al
+      # valore l'interpretazione non c'è. Un lettore la rifiuta senza una
+      # definizione (non ha dove scriverla).
       graph:
         verdict: property
-        property_name: interpretation
+        property_name: description
+        attaches_to: "property:definition"
         note: "Il campo dettato in trincea e ripulito da un modello: porta autore AI e stato di
-               validazione umana, per campo (Clock(ts, by) del CRDT)."
+               validazione umana, per campo (Clock(ts, by) del CRDT). Fino alla 3.0.0 era una
+               PropertyNode `interpretation`, che i lettori leggono ancora."
 
     # -------------------------------------------------------------------- cronologia
     - id: datazione

@@ -206,20 +206,37 @@ def test_the_box_that_is_the_nodes_description_writes_the_nodes_description(iccd
         {"op": "update_field", "node_id": "$unit", "field": "description", "value": "$value"}]
 
 
-# ── DEFINIZIONE: an element of the node, not a qualia (E.D., 2026-10-21) ──────
+# ── DEFINIZIONE: the PropertyNode `definition` (E.D., 2026-11-17, MICRO-K) ─────
+# (until 3.0.0 the element data.definition, E.D. 2026-10-21; deprecated in
+# s3Dgraphy nodes 1.6.48: read, never written)
 
-@pytest.mark.parametrize("tid,fid", [(ICCD, "definizione"), ("es-ue-demo-2026", "definicion")])
-def test_the_definition_is_the_units_own_element_written_by_update_field(tid, fid, reg, vocab):
-    """One `update_field` on the em.json place the node datamodel declares, with
-    the WHOLE term ({concept, label}): no PropertyNode, no has_property."""
-    entry = compile_template(find_template(tid), reg, vocab)["recipe"]["fields"][fid]
-    rule = reg.node_elements["definition"]
-    assert [s["emit"] for s in entry["steps"]] == [
-        {"op": "update_field", "node_id": "$unit", "field": rule["em_json"], "value": "$value"}]
-    assert rule["em_json"] == "data.definition"          # read from s3Dgraphy, not typed
-    assert entry["element"]["declared_on"] == "StratigraphicNode"
-    assert entry["element"]["rdf"]["with_concept"] == "crm:P2_has_type"
-    assert "resolve" not in entry and "property" not in entry
+def test_the_definition_is_the_property_and_the_interpretation_its_description(iccd, reg):
+    f = iccd["recipe"]["fields"]
+    node = f["definizione"]["steps"][0]["emit"]["node"]
+    assert node["name"] == "definition" and node["description"] == "$value"
+    assert node["data"] == {"property_type": "definition", "value": "$value"}
+    assert f["definizione"]["property"]["described_by"] == "interpretazione"
+    assert f["definizione"]["property"]["concept"]["em_json"] == "data.concept"
+    assert [s["emit"] for s in f["interpretazione"]["steps"]] == [
+        {"op": "update_field", "node_id": "$field.definizione.prop", "field": "description",
+         "value": "$value"}]
+    assert f["interpretazione"]["after"] == ["definizione"]
+    assert reg.node_elements["definition"]["deprecated"] == "1.6.48"
+
+
+def test_a_term_box_writes_the_term_of_the_definition(reg, vocab):
+    entry = compile_template(find_template("es-ue-demo-2026"), reg, vocab)["recipe"]["fields"]
+    node = entry["definicion"]["steps"][0]["emit"]["node"]
+    assert node["data"]["concept"] == "$value" and node["data"]["value"] == "$value.label"
+    assert entry["interpretacion"]["steps"][0]["emit"]["node_id"] == "$field.definicion.prop"
+
+
+def test_a_deprecated_element_is_never_written(tmp_path, reg, vocab):
+    doc = yaml.safe_load((ROOT / "templates" / ICCD / "template.yaml").read_text())
+    f = next(x for x in doc["template"]["fields"] if x["id"] == "definizione")
+    f["graph"].pop("concept_scheme")
+    out = compile_template(_written(tmp_path, doc), reg, vocab)
+    assert "element" not in out["recipe"]["fields"]["definizione"]
 
 
 def test_the_unit_types_the_sheet_decides_inherit_the_element(iccd, reg):
@@ -230,11 +247,12 @@ def test_the_unit_types_the_sheet_decides_inherit_the_element(iccd, reg):
 
 def test_an_element_written_by_the_wrong_field_type_does_not_compile(tmp_path, reg, vocab):
     doc = yaml.safe_load((ROOT / "templates" / ICCD / "template.yaml").read_text())
-    f = next(x for x in doc["template"]["fields"] if x["id"] == "definizione")
+    # an act's time (act_start, a date) written by a text box (MICRO-K: the
+    # definition is no longer an element, so the act's date stands in for it)
+    f = next(x for x in doc["template"]["fields"] if x["id"] == "data_rilevamento")
     f["type"] = "text"
-    f.pop("vocabulary")
     from stratigraph_templates.compile import CompileError
-    with pytest.raises(CompileError, match="holds a 'concept' value"):
+    with pytest.raises(CompileError, match="holds a 'date' value"):
         compile_template(_written(tmp_path, doc), reg, vocab)
 
 
@@ -252,7 +270,7 @@ def test_an_element_of_another_class_is_not_the_units(tmp_path, reg, vocab):
     assert entry["property"]["property_type"] == "crs"
     es = compile_template(find_template("es-ue-demo-2026"), reg, vocab)
     assert "element" not in es["recipe"]["fields"]["crs"]
-    assert es["recipe"]["fields"]["definicion"]["element"]["name"] == "definition"
+    assert "element" not in es["recipe"]["fields"]["definicion"]
 
 
 def test_an_older_spelling_of_an_edge_does_not_compile(tmp_path, reg, vocab):

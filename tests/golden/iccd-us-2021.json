@@ -3,7 +3,7 @@
   "format_version": "1",
   "header": {
     "id": "iccd-us-2021",
-    "version": "3.0.0",
+    "version": "4.0.0",
     "standard": {
       "authority": "ICCD",
       "code": "US",
@@ -187,7 +187,7 @@
         "license": "CC BY 4.0"
       }
     ],
-    "digest": "sha256:1c78ba15bb59770a2e8c11f730db739b1564b3a59d6a24ea4b67dab959746989"
+    "digest": "sha256:52156fc0e2ea888c91d781b4c7c4a21eda0b1b78f973174dcccd1d91b80a5528"
   },
   "visual": {
     "identity": {
@@ -647,7 +647,7 @@
       {
         "id": "definizione",
         "paragraph": "definizione_fisica",
-        "type": "term",
+        "type": "text",
         "required": true,
         "repeatable": false,
         "recorded_in": "trench",
@@ -655,7 +655,7 @@
           "it": "DEFINIZIONE",
           "en": "DEFINITION"
         },
-        "vocabulary": {
+        "concept_vocabulary": {
           "scheme": "iccd-us-definizione",
           "provisional": "em-us-definizione"
         }
@@ -2937,29 +2937,48 @@
       "definizione": {
         "verdict": "property",
         "each": false,
-        "element": {
-          "name": "definition",
-          "declared_on": "StratigraphicNode",
-          "value": "concept",
-          "rdf": {
-            "with_concept": "crm:P2_has_type",
-            "concept_class": "crm:E55_Type",
-            "label_only": null,
-            "specialised_alternative": "em:hasDefinition"
+        "resolve": {
+          "$prop": {
+            "mint": true
           }
         },
         "steps": [
           {
             "emit": {
-              "op": "update_field",
-              "node_id": "$unit",
-              "field": "data.definition",
-              "value": "$value"
+              "op": "add_node",
+              "node": {
+                "id": "$prop",
+                "node_type": "property",
+                "name": "definition",
+                "description": "$value",
+                "data": {
+                  "property_type": "definition",
+                  "value": "$value"
+                }
+              }
+            }
+          },
+          {
+            "emit": {
+              "op": "add_edge",
+              "edge_type": "has_property",
+              "source": "$unit",
+              "target": "$prop"
             }
           }
         ],
-        "scheme": "iccd-us-definizione",
-        "provisional": "em-us-definizione"
+        "property": {
+          "property_type": "definition",
+          "registered_qualia": false,
+          "described_by": "interpretazione",
+          "concept": {
+            "scheme": "iccd-us-definizione",
+            "em_json": "data.concept",
+            "node": "$prop",
+            "optional": true,
+            "provisional": "em-us-definizione"
+          }
+        }
       },
       "criteri_distinzione": {
         "verdict": "property",
@@ -3734,39 +3753,19 @@
       "interpretazione": {
         "verdict": "property",
         "each": false,
-        "resolve": {
-          "$prop": {
-            "mint": true
-          }
-        },
         "steps": [
           {
             "emit": {
-              "op": "add_node",
-              "node": {
-                "id": "$prop",
-                "node_type": "property",
-                "name": "interpretation",
-                "description": "$value",
-                "data": {
-                  "property_type": "interpretation"
-                }
-              }
-            }
-          },
-          {
-            "emit": {
-              "op": "add_edge",
-              "edge_type": "has_property",
-              "source": "$unit",
-              "target": "$prop"
+              "op": "update_field",
+              "node_id": "$field.definizione.prop",
+              "field": "description",
+              "value": "$value"
             }
           }
         ],
-        "property": {
-          "property_type": "interpretation",
-          "registered_qualia": false
-        }
+        "after": [
+          "definizione"
+        ]
       },
       "datazione": {
         "verdict": "property",
