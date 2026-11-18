@@ -135,3 +135,45 @@ def test_no_standard_is_named_in_the_implementation():
         text = py.read_text(encoding="utf-8")
         for token in forbidden:
             assert token not in text, f"{py.name} mentions {token!r}"
+
+
+# ── MICRO-PL002: a key whose fields are missing keeps no trace of them ──
+
+def test_a_key_with_missing_fields_prints_no_empty_brackets():
+    from stratigraph_templates.model import Record
+    from stratigraph_templates.render import human_key
+
+    us = find_template("iccd-us-2021")      # "US {us} — {area} ({localita})"
+    rec = lambda **v: Record(template=us.id, template_version=us.version, values=v)
+    assert human_key(us, rec(us="RSF008"), "en") == "US RSF008"
+    assert human_key(us, rec(us="8", area="A"), "en") == "US 8 — A"
+    assert human_key(us, rec(us="8", localita="Roma"), "en") == "US 8 — (Roma)"
+    assert human_key(us, rec(us="8", area="A", localita="Roma"), "en") == "US 8 — A (Roma)"
+    assert human_key(us, rec(us="RSF-008"), "en") == "US RSF-008"   # the hyphen is the value's
+
+
+def test_the_title_and_the_running_head_carry_no_empty_brackets(vocab):
+    from stratigraph_templates.model import Record
+
+    us = find_template("iccd-us-2021")
+    html = sheet_html(us, Record(template=us.id, template_version=us.version, values={"us": "RSF008"}),
+                      lang="en", mode="print", vocab=vocab)
+    assert "()" not in html
+    assert "<title>ICCD US 2021 — US RSF008</title>" in html
+    assert re.search(r"<div class=\"side\">[^<]* · US RSF008</div>", html)
+
+
+def test_the_print_css_takes_the_sheets_own_page_and_its_slack():
+    import dataclasses
+
+    from stratigraph_templates.render import PRINT_SLACK_MM, RenderError
+
+    us = find_template("iccd-us-2021")
+    html = sheet_html(us, None, mode="print")
+    assert "@page { size: A4;" in html
+    assert f".sheet {{ padding-right: {PRINT_SLACK_MM:g}mm;" in html
+    a3 = dataclasses.replace(us, sheet=dataclasses.replace(us.sheet, page="A3"))
+    assert "@page { size: A3;" in sheet_html(a3, None, mode="print")
+    bad = dataclasses.replace(us, sheet=dataclasses.replace(us.sheet, page="B5"))
+    with pytest.raises(RenderError):
+        sheet_html(bad, None, mode="print")

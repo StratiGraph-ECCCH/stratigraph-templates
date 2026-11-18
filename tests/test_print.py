@@ -101,3 +101,41 @@ def test_a_row_of_four_equal_cells_inside_a_block_stays_on_the_page(fixture_temp
     them — measured at 19 px (5 mm) off the page before the fix."""
     t = fixture_template("tight-nested")
     assert _widest_cell_overflow(t, vocab) < 6
+
+
+# ── MICRO-PL002 (18 Nov 2026): the right edge on the paper, the key without «()» ──
+
+def _cells_right_edge(html):
+    """(the rightmost border edge of any cell, the page's content right edge), px."""
+    from weasyprint import HTML
+
+    def walk(box):
+        for child in getattr(box, "all_children", lambda: [])():
+            yield child
+            yield from walk(child)
+
+    worst, limit = 0.0, None
+    for page in HTML(string=html).render().pages:
+        box = page._page_box
+        limit = box.content_box_x() + box.width
+        for cell in walk(box):
+            el = getattr(cell, "element", None)
+            if el is None or "cell" not in (el.get("class") or ""):
+                continue
+            worst = max(worst, cell.position_x + cell.margin_width())
+    return worst, limit
+
+
+def test_the_right_rule_stays_inside_what_webkit_prints(vocab):
+    """WebKit's print (the desktop's) clips an A4 at 197.5 mm, not 198: the
+    sheet stops PRINT_SLACK_MM inside the printable area, its right rule
+    included — measured as the cells' border edge, with no tolerance."""
+    from stratigraph_templates.render import PRINT_SLACK_MM, sheet_html
+
+    t = find_template("iccd-us-2021")
+    html = sheet_html(t, load_record("examples/us-3014-demo.yaml"), lang="it", mode="print", vocab=vocab)
+    right, limit = _cells_right_edge(html)
+    px_per_mm = 96 / 25.4
+    assert right <= limit - (PRINT_SLACK_MM - 0.2) * px_per_mm, (right, limit)
+    # …and not much more: the sheet still fills the line
+    assert right >= limit - (PRINT_SLACK_MM + 0.5) * px_per_mm, (right, limit)
