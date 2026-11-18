@@ -9,7 +9,12 @@ scheme:
     it: "Vocabolario per la definizione della materia (reperti archeologici)"
     en: "Vocabulary for material definition (archaeological finds)"
   status: resolvable
-  uri: "http://dati.beniculturali.it/vocabularies/reperti_archeologici/mat/"
+  # L'IRI dello ConceptScheme come lo dichiara il file dell'ICCD (corretto il
+  # 18 nov 2026, MICRO-U: prima diceva «reperti_archeologici/mat/», che non è
+  # nel file; i concetti stanno sotto questo).
+  uri: "http://dati.beniculturali.it/vocabularies/materia_e_tecnica-ra/def/"
+  # Il pacchetto EM installabile: packages/iccd-ra-materia (fascia B, file separato e non modificato)
+  package: iccd-ra-materia
   license: "CC BY-SA 3.0 IT"
   attribution: "ICCD — MiC; a cura di M. L. Mancinelli, C. Veninata, M. T. Natale, M. Porena"
   binding_thes_id: "VC_MTC_RA"

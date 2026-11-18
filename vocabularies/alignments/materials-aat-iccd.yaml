@@ -1,0 +1,337 @@
+# iccd-ra-materia ↔ getty-aat-materials: PROPOSED by tools/align_by_label.py
+# (the same label in the same language → closeMatch, never exactMatch).
+# Source index 2018-09 (sha256 05f8a3b8339e), target index 2026-11-18 (sha256 99a3ae4a1293).
+# No published ICCD-materia ↔ AAT alignment was found to reuse (18 Nov 2026):
+# Bulla et al., SWODCH 2022, publish no data for it; ARIADNE's mappings are not public.
+# Every row waits for a person: status proposed until verified, with who verified it.
+alignments:
+- source:
+    scheme: iccd-ra-materia
+    concept: http://dati.beniculturali.it/vocabularies/materia_e_tecnica-ra/def/001
+  match: closeMatch
+  target:
+    scheme: getty-aat
+    concept: http://vocab.getty.edu/aat/300133751
+  status: proposed
+  by: MICRO-U (2026-11-18), proposta per etichetta uguale
+  note: «acciaio» (it) = 300133751 «steel»
+- source:
+    scheme: iccd-ra-materia
+    concept: http://dati.beniculturali.it/vocabularies/materia_e_tecnica-ra/def/003
+  match: closeMatch
+  target:
+    scheme: getty-aat
+    concept: http://vocab.getty.edu/aat/300011135
+  status: proposed
+  by: MICRO-U (2026-11-18), proposta per etichetta uguale
+  note: «agata» (it) = 300011135 «agate»
+- source:
+    scheme: iccd-ra-materia
+    concept: http://dati.beniculturali.it/vocabularies/materia_e_tecnica-ra/def/005
+  match: closeMatch
+  target:
+    scheme: getty-aat
+    concept: http://vocab.getty.edu/aat/300011101
+  status: proposed
+  by: MICRO-U (2026-11-18), proposta per etichetta uguale
+  note: «alabastro» (it) = 300011101 «alabaster»
+- source:
+    scheme: iccd-ra-materia
+    concept: http://dati.beniculturali.it/vocabularies/materia_e_tecnica-ra/def/016
+  match: closeMatch
+  target:
+    scheme: getty-aat
+    concept: http://vocab.getty.edu/aat/300012934
+  status: proposed
+  by: MICRO-U (2026-11-18), proposta per etichetta uguale
+  note: «ambra» (it) = 300012934 «amber» — 2 candidates for this label
+- source:
+    scheme: iccd-ra-materia
+    concept: http://dati.beniculturali.it/vocabularies/materia_e_tecnica-ra/def/016
+  match: closeMatch
+  target:
+    scheme: getty-aat
+    concept: http://vocab.getty.edu/aat/300266222
+  status: proposed
+  by: MICRO-U (2026-11-18), proposta per etichetta uguale
+  note: «ambra» (it) = 300266222 «ambergris» — 2 candidates for this label
+- source:
+    scheme: iccd-ra-materia
+    concept: http://dati.beniculturali.it/vocabularies/materia_e_tecnica-ra/def/020
+  match: closeMatch
+  target:
+    scheme: getty-aat
+    concept: http://vocab.getty.edu/aat/300011029
+  status: proposed
+  by: MICRO-U (2026-11-18), proposta per etichetta uguale
+  note: «argento» (it) = 300011029 «silver»
+- source:
+    scheme: iccd-ra-materia
+    concept: http://dati.beniculturali.it/vocabularies/materia_e_tecnica-ra/def/022
+  match: closeMatch
+  target:
+    scheme: getty-aat
+    concept: http://vocab.getty.edu/aat/300011857
+  status: proposed
+  by: MICRO-U (2026-11-18), proposta per etichetta uguale
+  note: «avorio» (it) = 300011857 «ivory»
+- source:
+    scheme: iccd-ra-materia
+    concept: http://dati.beniculturali.it/vocabularies/materia_e_tecnica-ra/def/026
+  match: closeMatch
+  target:
+    scheme: getty-aat
+    concept: http://vocab.getty.edu/aat/300010957
+  status: proposed
+  by: MICRO-U (2026-11-18), proposta per etichetta uguale
+  note: «bronzo» (it) = 300010957 «bronze»
+- source:
+    scheme: iccd-ra-materia
+    concept: http://dati.beniculturali.it/vocabularies/materia_e_tecnica-ra/def/031
+  match: closeMatch
+  target:
+    scheme: getty-aat
+    concept: http://vocab.getty.edu/aat/300011134
+  status: proposed
+  by: MICRO-U (2026-11-18), proposta per etichetta uguale
+  note: «calcedonio» (it) = 300011134 «chalcedony» — 2 candidates for this label
+- source:
+    scheme: iccd-ra-materia
+    concept: http://dati.beniculturali.it/vocabularies/materia_e_tecnica-ra/def/031
+  match: closeMatch
+  target:
+    scheme: getty-aat
+    concept: http://vocab.getty.edu/aat/300206149
+  status: proposed
+  by: MICRO-U (2026-11-18), proposta per etichetta uguale
+  note: «calcedonio» (it) = 300206149 «agate glass» — 2 candidates for this label
+- source:
+    scheme: iccd-ra-materia
+    concept: http://dati.beniculturali.it/vocabularies/materia_e_tecnica-ra/def/044
+  match: closeMatch
+  target:
+    scheme: getty-aat
+    concept: http://vocab.getty.edu/aat/300011152
+  status: proposed
+  by: MICRO-U (2026-11-18), proposta per etichetta uguale
+  note: «cristallo di rocca» (it) = 300011152 «quartz crystal»
+- source:
+    scheme: iccd-ra-materia
+    concept: http://dati.beniculturali.it/vocabularies/materia_e_tecnica-ra/def/048
+  match: closeMatch
+  target:
+    scheme: getty-aat
+    concept: http://vocab.getty.edu/aat/300011214
+  status: proposed
+  by: MICRO-U (2026-11-18), proposta per etichetta uguale
+  note: «diorite» (it) = 300011214 «diorite»
+- source:
+    scheme: iccd-ra-materia
+    concept: http://dati.beniculturali.it/vocabularies/materia_e_tecnica-ra/def/054
+  match: closeMatch
+  target:
+    scheme: getty-aat
+    concept: http://vocab.getty.edu/aat/300011002
+  status: proposed
+  by: MICRO-U (2026-11-18), proposta per etichetta uguale
+  note: «ferro» (it) = 300011002 «iron»
+- source:
+    scheme: iccd-ra-materia
+    concept: http://dati.beniculturali.it/vocabularies/materia_e_tecnica-ra/def/057
+  match: closeMatch
+  target:
+    scheme: getty-aat
+    concept: http://vocab.getty.edu/aat/300011099
+  status: proposed
+  by: MICRO-U (2026-11-18), proposta per etichetta uguale
+  note: «gesso» (it) = 300011099 «gypsum» — 2 candidates for this label
+- source:
+    scheme: iccd-ra-materia
+    concept: http://dati.beniculturali.it/vocabularies/materia_e_tecnica-ra/def/057
+  match: closeMatch
+  target:
+    scheme: getty-aat
+    concept: http://vocab.getty.edu/aat/300014952
+  status: proposed
+  by: MICRO-U (2026-11-18), proposta per etichetta uguale
+  note: «gesso» (it) = 300014952 «gesso» — 2 candidates for this label
+- source:
+    scheme: iccd-ra-materia
+    concept: http://dati.beniculturali.it/vocabularies/materia_e_tecnica-ra/def/061
+  match: closeMatch
+  target:
+    scheme: getty-aat
+    concept: http://vocab.getty.edu/aat/300011119
+  status: proposed
+  by: MICRO-U (2026-11-18), proposta per etichetta uguale
+  note: «giada» (it) = 300011119 «jade»
+- source:
+    scheme: iccd-ra-materia
+    concept: http://dati.beniculturali.it/vocabularies/materia_e_tecnica-ra/def/068
+  match: closeMatch
+  target:
+    scheme: getty-aat
+    concept: http://vocab.getty.edu/aat/300048626
+  status: proposed
+  by: MICRO-U (2026-11-18), proposta per etichetta uguale
+  note: «intonaco» (it) = 300048626 «intonaco»
+- source:
+    scheme: iccd-ra-materia
+    concept: http://dati.beniculturali.it/vocabularies/materia_e_tecnica-ra/def/077
+  match: closeMatch
+  target:
+    scheme: getty-aat
+    concept: http://vocab.getty.edu/aat/300011835
+  status: proposed
+  by: MICRO-U (2026-11-18), proposta per etichetta uguale
+  note: «madreperla» (it) = 300011835 «mother of pearl»
+- source:
+    scheme: iccd-ra-materia
+    concept: http://dati.beniculturali.it/vocabularies/materia_e_tecnica-ra/def/078
+  match: closeMatch
+  target:
+    scheme: getty-aat
+    concept: http://vocab.getty.edu/aat/300011123
+  status: proposed
+  by: MICRO-U (2026-11-18), proposta per etichetta uguale
+  note: «malachite» (it) = 300011123 «malachite»
+- source:
+    scheme: iccd-ra-materia
+    concept: http://dati.beniculturali.it/vocabularies/materia_e_tecnica-ra/def/079
+  match: closeMatch
+  target:
+    scheme: getty-aat
+    concept: http://vocab.getty.edu/aat/300011443
+  status: proposed
+  by: MICRO-U (2026-11-18), proposta per etichetta uguale
+  note: «marmo» (it) = 300011443 «marble»
+- source:
+    scheme: iccd-ra-materia
+    concept: http://dati.beniculturali.it/vocabularies/materia_e_tecnica-ra/def/157
+  match: closeMatch
+  target:
+    scheme: getty-aat
+    concept: http://vocab.getty.edu/aat/300011136
+  status: proposed
+  by: MICRO-U (2026-11-18), proposta per etichetta uguale
+  note: «onice» (it) = 300011136 «onyx»
+- source:
+    scheme: iccd-ra-materia
+    concept: http://dati.beniculturali.it/vocabularies/materia_e_tecnica-ra/def/159
+  match: closeMatch
+  target:
+    scheme: getty-aat
+    concept: http://vocab.getty.edu/aat/300195994
+  status: proposed
+  by: MICRO-U (2026-11-18), proposta per etichetta uguale
+  note: «oricalco» (it) = 300195994 «orichalcum»
+- source:
+    scheme: iccd-ra-materia
+    concept: http://dati.beniculturali.it/vocabularies/materia_e_tecnica-ra/def/160
+  match: closeMatch
+  target:
+    scheme: getty-aat
+    concept: http://vocab.getty.edu/aat/300011021
+  status: proposed
+  by: MICRO-U (2026-11-18), proposta per etichetta uguale
+  note: «oro» (it) = 300011021 «gold»
+- source:
+    scheme: iccd-ra-materia
+    concept: http://dati.beniculturali.it/vocabularies/materia_e_tecnica-ra/def/162
+  match: closeMatch
+  target:
+    scheme: getty-aat
+    concept: http://vocab.getty.edu/aat/300011798
+  status: proposed
+  by: MICRO-U (2026-11-18), proposta per etichetta uguale
+  note: «osso» (it) = 300011798 «bone»
+- source:
+    scheme: iccd-ra-materia
+    concept: http://dati.beniculturali.it/vocabularies/materia_e_tecnica-ra/def/177
+  match: closeMatch
+  target:
+    scheme: getty-aat
+    concept: http://vocab.getty.edu/aat/300011022
+  status: proposed
+  by: MICRO-U (2026-11-18), proposta per etichetta uguale
+  note: «piombo» (it) = 300011022 «lead»
+- source:
+    scheme: iccd-ra-materia
+    concept: http://dati.beniculturali.it/vocabularies/materia_e_tecnica-ra/def/192
+  match: closeMatch
+  target:
+    scheme: getty-aat
+    concept: http://vocab.getty.edu/aat/300011132
+  status: proposed
+  by: MICRO-U (2026-11-18), proposta per etichetta uguale
+  note: «quarzo» (it) = 300011132 «quartz»
+- source:
+    scheme: iccd-ra-materia
+    concept: http://dati.beniculturali.it/vocabularies/materia_e_tecnica-ra/def/194
+  match: closeMatch
+  target:
+    scheme: getty-aat
+    concept: http://vocab.getty.edu/aat/300011020
+  status: proposed
+  by: MICRO-U (2026-11-18), proposta per etichetta uguale
+  note: «rame» (it) = 300011020 «copper»
+- source:
+    scheme: iccd-ra-materia
+    concept: http://dati.beniculturali.it/vocabularies/materia_e_tecnica-ra/def/195
+  match: closeMatch
+  target:
+    scheme: getty-aat
+    concept: http://vocab.getty.edu/aat/300011082
+  status: proposed
+  by: MICRO-U (2026-11-18), proposta per etichetta uguale
+  note: «rubino» (it) = 300011082 «ruby»
+- source:
+    scheme: iccd-ra-materia
+    concept: http://dati.beniculturali.it/vocabularies/materia_e_tecnica-ra/def/203
+  match: closeMatch
+  target:
+    scheme: getty-aat
+    concept: http://vocab.getty.edu/aat/300243428
+  status: proposed
+  by: MICRO-U (2026-11-18), proposta per etichetta uguale
+  note: «seta» (it) = 300243428 «silk»
+- source:
+    scheme: iccd-ra-materia
+    concept: http://dati.beniculturali.it/vocabularies/materia_e_tecnica-ra/def/207
+  match: closeMatch
+  target:
+    scheme: getty-aat
+    concept: http://vocab.getty.edu/aat/300014966
+  status: proposed
+  by: MICRO-U (2026-11-18), proposta per etichetta uguale
+  note: «stucco» (it) = 300014966 «stucco»
+- source:
+    scheme: iccd-ra-materia
+    concept: http://dati.beniculturali.it/vocabularies/materia_e_tecnica-ra/def/211
+  match: closeMatch
+  target:
+    scheme: getty-aat
+    concept: http://vocab.getty.edu/aat/300162391
+  status: proposed
+  by: MICRO-U (2026-11-18), proposta per etichetta uguale
+  note: «tessuto» (it) = 300162391 «cloth»
+- source:
+    scheme: iccd-ra-materia
+    concept: http://dati.beniculturali.it/vocabularies/materia_e_tecnica-ra/def/216
+  match: closeMatch
+  target:
+    scheme: getty-aat
+    concept: http://vocab.getty.edu/aat/300011329
+  status: proposed
+  by: MICRO-U (2026-11-18), proposta per etichetta uguale
+  note: «travertino» (it) = 300011329 «travertine»
+- source:
+    scheme: iccd-ra-materia
+    concept: http://dati.beniculturali.it/vocabularies/materia_e_tecnica-ra/def/226
+  match: closeMatch
+  target:
+    scheme: getty-aat
+    concept: http://vocab.getty.edu/aat/300010797
+  status: proposed
+  by: MICRO-U (2026-11-18), proposta per etichetta uguale
+  note: «vetro» (it) = 300010797 «glass»
