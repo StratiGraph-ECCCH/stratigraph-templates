@@ -108,6 +108,7 @@ python3 -m venv .venv && .venv/bin/pip install -e '.[dev]'
 .venv/bin/stratigraph-templates validate
 .venv/bin/stratigraph-templates build                 # → dist/schede/<id>/<versione>.json + index.json
 .venv/bin/stratigraph-templates registry-snapshot     # only when s3Dgraphy has changed: it is a decision
+.venv/bin/stratigraph-templates package-build ../em-profiles/examples/esempio-statuaria   # a community package's sheets
 .venv/bin/stratigraph-templates info iccd-us-2021
 .venv/bin/stratigraph-templates print iccd-us-2021 --record examples/us-3014-demo.yaml --lang it -o out/us.pdf
 .venv/bin/stratigraph-templates form  iccd-us-2021 --record examples/us-3014-demo.yaml --lang it -o out/us.html
@@ -188,6 +189,17 @@ is StratiGraph Server: whoever fills in the sheet sends those operations to the 
 same pact as `sync-brand.sh` and `sync-datamodels.sh`: **this is where it is produced; the
 app vendors and commits the copy**. A published version does not change: different content
 under the same number is rejected. SPEC §9.
+
+**The sheets of a community package** (EM Profiles 0.2 §5.7, MICRO-PL11): a package
+carries a definition of this repository and its compiled form. `package-build <folder>`
+compiles it against the snapshot of the core **plus the overlay of the package** (its
+qualia, read by s3Dgraphy's `s3dgraphy.profiles`; its carried vocabularies as schemes
+`<prefix>:<slug>`), writes the compiled file where the package's `forms[].compiled`
+says and stamps `forms[].digest` in its `profile.json`. The snapshot is never written
+with a package in it; the compiled header names the packages in `header.packages`,
+outside the digest. `--with <folder>` lays a package it requires over the core too;
+`--check` writes nothing. A reader verifies a package's compiled form with
+`packages.verify_compiled` (the file's digest, the content's digest, id, version).
 
 ## Licences — two layers, and why this road is clean
 
