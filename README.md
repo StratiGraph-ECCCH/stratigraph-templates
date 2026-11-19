@@ -7,7 +7,7 @@ write the knowledge graph.**
 Part of **StratiGraph — Knowledge Graphs for Stratigraphy**, a Horizon Europe project
 (grant agreement [101232855](https://cordis.europa.eu/project/id/101232855), 2025–2029)
 coordinated by CNR-ISPC. Documentation:
-[docs.extendedmatrix.org/projects/stratigraph-templates](https://docs.extendedmatrix.org/projects/stratigraph-templates/)
+[docs.stratigraph-eccch.eu/projects/templates](https://docs.stratigraph-eccch.eu/projects/templates/)
 (English, with an Italian translation).
 
 ## Why it exists
@@ -75,7 +75,7 @@ docs/                          the documentation site, plus dated working notes 
 
 The definitions in `templates/` today — with their fields, languages and licences — are
 listed in the
-[catalogue of definitions](https://docs.extendedmatrix.org/projects/stratigraph-templates/en/latest/pages/catalogue-definitions.html),
+[catalogue of definitions](https://docs.stratigraph-eccch.eu/projects/templates/en/latest/pages/catalogue-definitions.html),
 which is generated from the repository at every build of the documentation.
 
 The format specification is in **[SPEC.md](SPEC.md)**.
