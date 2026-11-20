@@ -29,7 +29,7 @@ sys.path.insert(0, os.path.join(HERE, '_tools'))
 
 # -- Project ----------------------------------------------------------------
 project = 'stratigraph-templates'
-copyright = f'2026-{datetime.datetime.now().year}, Emanuel Demetrescu — CNR-ISPC'
+copyright = f'2026-{datetime.datetime.now().year}, Consiglio Nazionale delle Ricerche (CNR) — Istituto di Scienze del Patrimonio Culturale'
 author = 'Emanuel Demetrescu'
 
 
@@ -99,6 +99,7 @@ suppress_warnings = [
 
 # -- HTML -------------------------------------------------------------------
 html_theme = 'sphinx_rtd_theme'
+templates_path = ['_templates']
 html_static_path = ['_static']
 
 # Il marchio, vendorizzato da `stratigraph-brand` con il suo
