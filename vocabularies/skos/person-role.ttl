@@ -1,0 +1,33 @@
+# Person role — modulo SKOS originato in Extended Matrix (em-person-role, 0.1.0).
+#
+# PERCHE' ESISTE. Una persona sta nella documentazione di un'unità come autrice
+# di un ATTO (em-documentation-act: scavo, rilevamento, rielaborazione), e il tipo
+# dell'atto dice già il suo ruolo. Questo modulo tiene soltanto i ruoli che
+# nessun atto dice (E.D., 27 nov 2026): il valore di attributes.role sull'arco
+# has_author da un atto alla persona (s3Dgraphy connections 1.6.62), proiettato
+# in RDF come crm:P14.1_in_the_role_of (il concetto è un crm:E55_Type).
+#
+# DA DOVE VENGONO I TERMINI. Dalle caselle delle schede dei partner; ogni
+# concetto porta la sua fonte. Definizioni scritte qui.
+
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix em:   <https://w3id.org/extendedmatrix/vocab/person-role/> .
+
+em: a skos:ConceptScheme ;
+    dct:title "Person role in an act"@en ;
+    dct:title "Ruolo di una persona in un atto"@it ;
+    dct:description "The role a person has in an act of the documentation of a unit when the kind of the act does not say it (the author of a recording act is its recorder, of an excavation act its director: those roles are not here). The key of a concept is the value of attributes.role on the has_author edge from the act to the person; in RDF, P14.1 in the role of."@en ;
+    dct:creator "Extended Matrix — StratiGraph WP3, CNR-ISPC" ;
+    dct:license <https://creativecommons.org/licenses/by/4.0/> ;
+    owl:versionInfo "0.1.0" ;
+    dct:issued "2026-11-27"^^<http://www.w3.org/2001/XMLSchema#date> ;
+    skos:hasTopConcept em:sector_supervisor .
+
+em:sector_supervisor a skos:Concept ; skos:inScheme em: ; skos:topConceptOf em: ;
+    skos:prefLabel "responsabile di settore"@it ; skos:prefLabel "sector supervisor"@en ;
+    skos:altLabel "responsabile dell'unità sul campo"@it ;
+    skos:definition "Chi, durante la campagna, risponde sul campo delle unità di un settore o di un'area: ne segue lo scavo e la documentazione per conto della direzione. Non è chi compila la scheda (l'autore dell'atto di rilevamento) né chi dirige lo scavo (l'autore dell'atto di scavo)."@it ;
+    skos:definition "Whoever, during the campaign, answers in the field for the units of a sector or an area, following their excavation and their documentation on behalf of the direction. Not whoever fills in the record (the author of the recording act), nor whoever directs the excavation (the author of the excavation act)."@en ;
+    dct:source "DAI, iDAI.field — configurazione di default, commonFields.processor «Bearbeiterin/Bearbeiter»: «the person(s) who is/are responsible for the resource or the object during the campaign»; il responsabile dell'unità sul campo, non l'autore del record (risposta D2, L. Steinmann, 30 set 2026)" .

@@ -1,0 +1,19 @@
+# Dichiarato per poter ANCORARE i nostri concetti (em-person-role), non per
+# risolverne le etichette. DataCite non conia URI per i valori della lista: i
+# concetti sono LOCATORI che costruiamo noi, l'ancora della voce nella pagina
+# della versione 4.6 dello schema (…/contributorType/#supervisor), come per le
+# valuelist di iDAI.field. Letto il 27 nov 2026.
+scheme:
+  id: datacite-contributor-type
+  authority: DataCite
+  origin: external
+  labels:
+    en: "DataCite Metadata Schema 4.6 — contributorType"
+    it: "DataCite Metadata Schema 4.6 — contributorType (tipo di contributore)"
+  status: declared
+  uri: "https://datacite-metadata-schema.readthedocs.io/en/4.6/appendices/appendix-1/contributorType/"
+  license: "CC BY 4.0"
+  attribution: "DataCite Metadata Working Group, DataCite Metadata Schema 4.6"
+  note: >
+    Una lista pensata per i dataset: ventidue valori (ContactPerson … Supervisor,
+    WorkPackageLeader, Other). Ogni allineamento verso di essa è closeMatch al più.

@@ -498,7 +498,11 @@ element extractors and combiners date their act with), and its author by
 `attaches_to` the act — the compiler sees that `act_start` is a **node element
 of the anchor's class** and writes an `update_field` on it, as it does for the
 unit's `definition` — and the three responsibles are `has_author` **from the
-act**, not from the unit. A box that names an anchor the definition does not
+act**, not from the unit. The kind of the act says the person's role (the
+author of the recording is its recorder); a role it does not say — a sector
+supervisor — goes on that edge as `attributes.role`, a key of the module
+**em-person-role** (s3Dgraphy connections 1.6.62; in RDF P14.1 in the role
+of). A box that names an anchor the definition does not
 define stays open (§9.3); an anchor defined and named by no box is an error.
 
 A reader that shows ATTIVITÀ (`is_in_activity` → ActivityNodeGroup) reads only

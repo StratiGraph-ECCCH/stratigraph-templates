@@ -1,0 +1,23 @@
+# Ruolo di una persona in un atto ↔ DataCite contributorType e MARC relators
+# (MICRO-RUOLI-PERSONE, 27 nov 2026). Definizioni lette alla fonte quel giorno:
+# DataCite 4.6, appendix 1, contributorType; MARC, relaterm.html. Nessun
+# exactMatch: nessuno dei due vocabolari è pensato per lo scavo.
+#
+# ICCD: nessuna casella. Il modello US 2021 nomina tre responsabili (scientifico,
+# compilazione, rielaborazione) e sono i tre ATTI di em-documentation-act, non
+# ruoli; le normative di catalogo (SAS 3.00: CMPN, RSR, FUR, DSCA, AGG) nemmeno
+# hanno un responsabile di settore. Le caselle ICCD non hanno URI: un
+# allineamento verso di esse andrebbe coniato, e non c'è niente da allineare.
+alignments:
+  - source: {scheme: em-person-role, concept: "https://w3id.org/extendedmatrix/vocab/person-role/sector_supervisor"}
+    match: closeMatch
+    target: {scheme: datacite-contributor-type, concept: "https://datacite-metadata-schema.readthedocs.io/en/4.6/appendices/appendix-1/contributorType/#supervisor"}
+    status: proposed
+    by: "MICRO-RUOLI-PERSONE (2026-11-27)"
+    note: "Supervisor = «Designated administrator over one or more groups/teams working to produce a resource, or over one or more steps of a development process»: la squadra di un settore, non l'intero scavo"
+  - source: {scheme: em-person-role, concept: "https://w3id.org/extendedmatrix/vocab/person-role/sector_supervisor"}
+    match: broadMatch
+    target: {scheme: marc-relators, concept: "http://id.loc.gov/vocabulary/relators/fld"}
+    status: proposed
+    by: "MICRO-RUOLI-PERSONE (2026-11-27)"
+    note: "fld Field director = «A person or organization that manages or supervises the work done to collect raw data or do research in an actual setting or environment»: più largo (vale anche per chi dirige lo scavo); il responsabile di settore ne è un caso"

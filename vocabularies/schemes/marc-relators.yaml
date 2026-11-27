@@ -1,0 +1,20 @@
+# Dichiarato per poter ANCORARE i nostri concetti (em-person-role), non per
+# risolverne le etichette. Le definizioni lette il 27 nov 2026 dalla lista per
+# termine (www.loc.gov/marc/relators/relaterm.html); id.loc.gov rispose 403 il
+# 27 nov 2026 (MICRO pyArchInit campi in nodi, Parte D), gli URI dei codici sono
+# quelli che la Library of Congress pubblica (…/relators/<codice>).
+scheme:
+  id: marc-relators
+  authority: "Library of Congress"
+  origin: external
+  labels:
+    en: "MARC Code List for Relators"
+    it: "MARC Code List for Relators (Library of Congress)"
+  status: declared
+  uri: "http://id.loc.gov/vocabulary/relators/"
+  license: "Public domain (U.S. Government work)"
+  attribution: "Library of Congress, Network Development and MARC Standards Office"
+  note: >
+    Non c'è un relatore per chi scava o per chi compila una scheda di scavo
+    (rcd Recordist è la registrazione audio e video); fld Field director è il
+    più vicino al lavoro sul campo.

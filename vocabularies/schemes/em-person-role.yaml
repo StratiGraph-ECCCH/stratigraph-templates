@@ -1,0 +1,45 @@
+# Modulo ORIGINATO: il ruolo di una persona in un atto, quando l'atto non lo
+# dice (E.D., 27 nov 2026, MICRO-RUOLI-PERSONE). PRIMA GLI ATTI: chi compila la
+# scheda è l'autore dell'atto di rilevamento, chi dirige lo scavo l'autore
+# dell'atto di scavo, chi rielabora l'autore dell'atto di rielaborazione
+# (em-documentation-act) — quei ruoli NON stanno qui. Qui sta solo ciò che una
+# scheda porta e nessun atto copre: un concetto entra se almeno una scheda lo ha
+# (fonte, casella) e un atto non lo dice.
+#
+# Dove sta nel grafo: sull'arco has_author da un atto (ActivityNodeGroup con
+# data.act_kind) verso la persona, attributes.role = la CHIAVE del concetto
+# (s3Dgraphy connections 1.6.62). In RDF: crm:P14_carried_out_by e, per il
+# ruolo, crm:P14.1_in_the_role_of su un'istanza di crm:PC14_carried_out_by
+# (l'estensione PC ufficiale di CIDOC CRM 7.1.3); il concetto è un E55 Type.
+#
+# Perché uno scheme a sé e non un'estensione di em-documentation-act: quello
+# dà il TIPO di un atto (E55 via P2 su un E7), questo il RUOLO di chi vi
+# partecipa (E55 via P14.1 su P14). Due caselle diverse, due liste diverse.
+scheme:
+  id: em-person-role
+  authority: Extended Matrix
+  origin: originated
+  version: "0.1.0"
+  lifecycle: proposed
+  curators: ["@zalmoxes-laran"]
+  labels:
+    it: "Ruolo di una persona in un atto (Extended Matrix)"
+    en: "Person role in an act (Extended Matrix)"
+  status: resolvable
+  uri: "https://w3id.org/extendedmatrix/vocab/person-role/"
+  license: "CC BY 4.0"
+  attribution: "Extended Matrix — vocabolario originato in StratiGraph WP3 (CNR-ISPC), deciso da E. Demetrescu il 27 nov 2026; concetti dalle caselle delle schede dei partner (iDAI.field), definizioni scritte qui."
+  resolve:
+    kind: skos_file
+    path: "vocabularies/skos/person-role.ttl"
+  note: >
+    Schede guardate il 27 nov 2026 per le caselle di responsabilità: ICCD US 2021
+    (responsabile scientifico, compilazione, rielaborazione: i tre atti),
+    ficha UE demo (responsable del registro: l'atto di rilevamento), iDAI.field
+    Layer (processor: il responsabile dell'unità nella campagna — questo
+    modulo), RL ungherese demo (nessuna casella di persona), IAA DANA locus
+    (export 2026-04-29: nessuna casella di persona). Liste INP/CIMEC (Romania),
+    schede di Cipro e della Polonia (PAS): non presenti nei repository, non
+    guardate. NON citato come fonte: responsabile_us di pyArchInit, che la
+    scheda di pyArchInit stessa intitola «Responsabile rielaborazione»
+    (gui/ui/US_USM.ui, pyarchinit_exp_USsheet_pdf.py) — un atto, non un ruolo.
